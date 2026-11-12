@@ -1,0 +1,1911 @@
+<!-- © 2026 El Atajo IA (@El_AtajoIA) — Corazón Fuerte. Todos los derechos reservados. Prohibida su copia, reventa o redistribución sin permiso expreso. -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<title>Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón</title>
+<meta name="description" content="Corazón Fuerte: registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada, tus datos en tu Google Drive." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://corazon-fuerte.pages.dev/" />
+<meta name="theme-color" content="#C81E3A" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Corazón Fuerte" />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:url" content="https://corazon-fuerte.pages.dev/" />
+<meta property="og:title" content="Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón" />
+<meta property="og:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada." />
+<meta property="og:image" content="https://corazon-fuerte.pages.dev/logo.webp" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón" />
+<meta name="twitter:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada." />
+<meta name="twitter:image" content="https://corazon-fuerte.pages.dev/logo.webp" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Corazón Fuerte","applicationCategory":"HealthApplication","operatingSystem":"Web","inLanguage":"es","description":"Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Corazón Fuerte" />
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#FFF5F0; --card:#FFFFFF; --ink:#2B1218; --muted:#64424B; --line:#F3D9CE;
+  --red:#C81E3A; --red-dark:#991B1B; --green:#15803D; --blue:#2563EB; --amber:#B45309;
+  --violet:#7C3AED; --teal:#0F766E; --orange:#C2410C; --navy:#1E40AF; --grey:#475569;
+  --input-bg:#FFFDFC; --input-ink:#2B1218; --input-border:#D9A8B0; --link:#C81E3A;
+  --danger-bg:#FDECEC; --ok-bg:#EAF7EE; --warn-bg:#FFF4E0; --shadow:0 10px 26px rgba(120,40,50,.10);
+}
+[data-theme="dark"]{
+  --bg:#261014; --card:#352027; --ink:#FBEDED; --muted:#E4B8C1; --line:#57333D;
+  --input-bg:#2C1A20; --input-ink:#FBEDED; --input-border:#8A5A64; --link:#FF9AAE;
+  --danger-bg:#421619; --ok-bg:#143A26; --warn-bg:#3D2C12; --shadow:0 10px 26px rgba(0,0,0,.45);
+}
+[data-theme="dark"] .pill{color:#4ADE80}
+[data-theme="dark"] .pill.bad{color:#FF9AAE}
+[data-theme="dark"] .pill.warn{color:#FBBF24}
+[data-theme="dark"] .pill.info{background:#22366B;color:#C7D8FF}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px}
+a{color:var(--link)}
+h1{font-size:24px;margin:0}
+h2{font-size:22px;margin:0 0 10px}
+h3{font-size:18px;margin:18px 0 6px}
+p{margin:8px 0}
+small,.muted{color:var(--muted)}
+header.top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:8px;padding:8px 10px;background:linear-gradient(135deg,#B3122E,#E11D48 70%,#F43F5E);color:#fff;box-shadow:0 4px 14px rgba(120,20,40,.28)}
+header.top .brand{flex:1;min-width:0;display:flex;align-items:center;gap:8px}
+header.top .brand>div{min-width:0}
+header.top .brand b{font-size:18px}
+.logo-round{width:46px;height:46px;border-radius:50%;border:3px solid rgba(255,255,255,.9);flex:none;background:#C81E3A}
+.logo-round.small{width:44px;height:44px}
+.logo-round.tiny{width:28px;height:28px;border-width:2px}
+.drawer h2{display:flex;align-items:center;gap:10px}
+header.top .brand b{font-size:20px;display:block;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .brand span{font-size:12px;opacity:.95;white-space:nowrap}
+header.top .brand span a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+.iconbtn{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:16px;min-width:44px;min-height:48px;font-size:22px;cursor:pointer;flex:none}
+.iconbtn.sos{background:#fff;color:var(--red-dark);font-weight:800;font-size:17px;padding:2px 10px;text-decoration:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
+.iconbtn.sos .sos-tel{font-size:14px;line-height:1}
+main{max-width:720px;margin:0 auto;padding:14px 12px 90px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin:0 0 16px;box-shadow:var(--shadow)}
+.view{display:none}
+.view.active{display:block}
+.view-head{display:flex;gap:12px;align-items:flex-start;border-radius:22px;padding:18px;margin-bottom:16px;color:#fff;box-shadow:0 8px 20px rgba(120,40,50,.16)}
+.view-head .ic{font-size:34px;line-height:1;background:rgba(255,255,255,.22);border-radius:16px;padding:8px;flex:none}
+.view-head h1{font-size:23px}
+.view-head p{margin:4px 0 0;opacity:.95;font-size:15px}
+.c-hoy{background:linear-gradient(135deg,#C81E3A,#E11D48)}
+.c-pauta{background:linear-gradient(135deg,#2563EB,#1E40AF)}
+.c-andar{background:linear-gradient(135deg,#15803D,#166534)}
+.c-tension{background:linear-gradient(135deg,#C2410C,#9A3412)}
+.c-pastillero{background:linear-gradient(135deg,#7C3AED,#5B21B6)}
+.c-dolor{background:linear-gradient(135deg,#991B1B,#7F1D1D)}
+.c-programa{background:linear-gradient(135deg,#B45309,#92400E)}
+.c-medico{background:linear-gradient(135deg,#1E40AF,#1E3A8A)}
+.c-config{background:linear-gradient(135deg,#475569,#334155)}
+.c-alimentacion{background:linear-gradient(135deg,#0F766E,#115E59)}
+.aviso-orientativo{background:var(--warn-bg);border:2px solid var(--amber);border-radius:16px;padding:12px 14px;font-weight:800;margin:0 0 14px;box-shadow:0 4px 12px rgba(180,83,9,.12)}
+.semaforo-wrap{display:flex;flex-direction:column;gap:16px;align-items:stretch;margin-top:12px}
+.semaforo{background:#1F2937;border-radius:22px;padding:14px 12px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;align-self:center;flex:none;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.luz{width:56px;height:56px;border-radius:50%;background:#4B5563;opacity:.22}
+.luz.roja{background:#E5484D}
+.luz.ambar{background:#F5A623}
+.luz.verde{background:#2FBF71}
+.luz.encendida{opacity:1}
+.luz.roja.encendida{box-shadow:0 0 22px 6px rgba(229,72,77,.85)}
+.luz.ambar.encendida{box-shadow:0 0 22px 6px rgba(245,166,35,.85)}
+.luz.verde.encendida{box-shadow:0 0 22px 6px rgba(47,191,113,.85)}
+.semaforo-mini{display:flex;flex-direction:column;gap:4px;align-items:center;min-width:40px}
+.semaforo-mini .luz{width:20px;height:20px}
+.semaforo-mini .num{font-weight:800;font-size:14px;white-space:nowrap}
+.semaforo-mini .sin-rango{font-size:12px;color:var(--muted);text-align:center;max-width:120px}
+.semaforo-linea{padding:6px 0;color:var(--muted)}
+.semaforo-linea.activa{font-weight:800;color:var(--ink)}
+label{display:block;font-weight:700;margin:14px 0 5px;font-size:16px}
+input,select,textarea{width:100%;font-size:17px;padding:14px 14px;border:2px solid var(--input-border);border-radius:14px;background:var(--input-bg);color:var(--input-ink)}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--red);outline-offset:2px;border-color:var(--red)}
+textarea{min-height:76px;resize:vertical}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.btn{display:block;width:100%;min-height:56px;margin:14px 0 0;padding:14px 18px;font-size:18px;font-weight:800;border:none;border-radius:999px;background:linear-gradient(135deg,#B3122E,#E11D48);color:#fff;cursor:pointer;text-align:center;text-decoration:none;box-shadow:0 6px 16px rgba(200,30,58,.35)}
+.btn:active{transform:scale(.98)}
+.btn.secondary{background:var(--card);color:var(--link);border:2px solid var(--link);box-shadow:0 4px 12px rgba(120,40,50,.10)}
+.btn.green{background:linear-gradient(135deg,#15803D,#22A355);box-shadow:0 6px 16px rgba(21,128,61,.32)}
+.btn.dark{background:var(--ink);color:var(--bg);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.btn.small{width:auto;display:inline-block;min-height:48px;font-size:16px;padding:11px 18px;margin:8px 6px 0 0}
+.btn:disabled{opacity:.55;cursor:default}
+.pill{display:inline-block;padding:5px 12px;border-radius:999px;font-size:14px;font-weight:700;background:var(--ok-bg);color:var(--green);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.pill.warn{background:var(--warn-bg);color:var(--amber)}
+.pill.bad{background:var(--danger-bg);color:var(--red-dark)}
+.pill.info{background:#E8EEFB;color:var(--navy)}
+.rutina{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.rutina li{margin:0}
+.rutina button.paso{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;cursor:pointer;font:inherit;color:var(--ink);min-height:56px}
+.rutina button.paso.hecho{border-color:var(--green);background:var(--ok-bg)}
+.rutina .num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--danger-bg);color:var(--red-dark);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:17px}
+.rutina button.paso.hecho .num{background:var(--green);color:#fff}
+.rutina .txt{flex:1;min-width:0}
+.rutina .txt b{display:block;font-size:17px}
+.rutina .txt span{font-size:14px;color:var(--muted)}
+.rutina li{display:block}
+.rutina li .paso{width:100%}
+.paso-quitar{flex:none;width:48px;align-self:center;height:48px;border:1.5px solid var(--line);border-radius:16px;background:var(--bg);color:var(--muted);font-size:22px;line-height:1;cursor:pointer}
+.paso-controles{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+.paso-mover{flex:none;width:48px;height:48px;border:1.5px solid var(--line);border-radius:16px;background:var(--bg);color:var(--muted);font-size:20px;line-height:1;cursor:pointer}
+.paso-mover:disabled{opacity:.35;cursor:default}
+.widget-opcion{display:flex;flex-direction:column;gap:10px;align-items:stretch;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;margin-top:8px;cursor:pointer;background:var(--bg)}
+.widget-opcion .pill{align-self:flex-start}
+.widget-opcion input{width:24px;height:24px;flex:none;margin-top:2px}
+.widget-opcion b{font-size:16px}
+.compra-add{display:flex;gap:8px;margin-top:10px;align-items:center}
+.compra-add input{flex:1;min-width:0}
+.compra-add .btn{flex:none;width:auto;margin:0;min-height:48px}
+.alert{background:var(--danger-bg);border:2px solid var(--red);border-radius:18px;padding:16px;box-shadow:0 6px 16px rgba(200,30,58,.14)}
+.okbox{background:var(--ok-bg);border:1px solid var(--green);border-radius:18px;padding:16px}
+.warnbox{background:var(--warn-bg);border:1px solid var(--amber);border-radius:18px;padding:16px}
+.infobox{background:var(--card);border:1px dashed var(--muted);border-radius:18px;padding:16px}
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;flex:none;border:1.5px solid var(--link);color:var(--link);background:var(--card);font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:.95rem;vertical-align:4px;margin-left:8px;padding:0;line-height:1;cursor:pointer}
+.info-btn[aria-expanded="true"]{background:var(--link);color:var(--card)}
+.info-text{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+.clave-guardada{font-size:1.15rem;font-weight:800;color:var(--ink);margin:8px 0 16px}
+.panel-flash{outline:3px solid var(--link);outline-offset:4px}
+details{margin-top:10px}
+details summary{cursor:pointer;font-weight:800;color:var(--link);font-size:16px;padding:6px 0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:9px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:14px;color:var(--muted)}
+tr.alerta td{background:var(--danger-bg)}
+.table-wrap{overflow-x:auto;margin:0 -4px;padding:0 4px}
+.table-wrap table{min-width:640px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:16px}
+.kv dt{font-weight:700;color:var(--muted)}
+.kv dd{margin:0}
+ul.tight{margin:8px 0;padding-left:22px}
+ul.tight li{margin:7px 0}
+.big-num{font-size:42px;font-weight:800;line-height:1.05}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(120,40,50,.08)}
+.stat b{display:block;font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.stat span{font-size:22px;font-weight:800}
+.drawer{position:fixed;top:0;left:0;bottom:0;width:300px;max-width:86vw;background:var(--card);color:var(--ink);z-index:60;transform:translateX(-105%);transition:transform .22s ease;box-shadow:4px 0 24px rgba(0,0,0,.25);overflow-y:auto;padding:16px 0}
+.drawer.open{transform:translateX(0)}
+.drawer h2{padding:4px 18px 10px;font-size:19px}
+.drawer button{display:flex;width:calc(100% - 16px);margin:0 8px;gap:12px;align-items:center;text-align:left;background:none;border:none;border-radius:14px;padding:15px 14px;font-size:17px;color:var(--ink);cursor:pointer}
+.drawer button .ic{font-size:22px;width:30px;text-align:center}
+.drawer button.active{font-weight:800;color:var(--link);background:var(--danger-bg)}
+.drawer .foot{padding:14px 18px;font-size:14px;color:var(--muted)}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55;display:none}
+.scrim.show{display:block}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:22px;z-index:80;background:var(--ink);color:var(--bg);padding:13px 18px;border-radius:12px;font-size:16px;font-weight:700;max-width:92vw;text-align:center;display:none;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+footer{max-width:720px;margin:0 auto;padding:0 14px 40px;text-align:center;font-size:14px;color:var(--muted)}
+footer a{color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:18px;margin:10px 0;background:var(--card);box-shadow:0 4px 12px rgba(120,40,50,.07)}
+.check input{width:26px;height:26px;flex:none;margin-top:2px;accent-color:var(--green)}
+.check.done{opacity:.65}
+.check.done .nm{text-decoration:line-through}
+.thumb{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
+.free-badge{background:var(--ok-bg);border:2px solid var(--green);border-radius:16px;padding:10px 14px;font-weight:800;margin:0 0 14px;text-align:center}
+.chart-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
+.chart-box svg{width:100%;height:auto;display:block}
+.chart-toggle{display:flex;gap:8px;margin:0 0 10px}
+.chart-toggle button{flex:1;min-height:44px;border-radius:999px;border:2px solid var(--link);background:var(--card);color:var(--link);font-weight:800;font-size:15px;cursor:pointer}
+.chart-toggle button.on{background:var(--link);color:#fff}
+.chart-empty{color:var(--muted);padding:14px 4px}
+.mic-btn{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:10px 16px;border-radius:999px;border:2px solid var(--link);background:var(--card);color:var(--link);font-weight:800;font-size:16px;cursor:pointer;margin:8px 0 0}
+.push-row{display:flex;gap:10px;align-items:flex-start}
+.push-row input[type=checkbox]{width:28px;height:28px;flex:none;margin-top:2px;accent-color:var(--green)}
+@media print{
+  .chart-box svg{max-width:100%}
+  .chart-toggle{display:none !important}
+  header.top,.drawer,.scrim,#toast,.no-print,footer{display:none !important}
+  body{background:#fff;color:#000}
+  .view{display:none !important}
+  .view.active{display:block !important}
+  .card{box-shadow:none;border:1px solid #999}
+}
+@media (max-width:420px){ .frow{grid-template-columns:1fr} header.top .brand b{font-size:18px} }
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="iconbtn" id="btn-menu" aria-label="Abrir menú">☰</button>
+  <div class="brand"><a href="#" data-goto="hoy" aria-label="Ir a la pantalla de inicio"><img class="logo-round" src="logo-round.png" alt="Logotipo de Corazón Fuerte"></a><div><b>Corazón Fuerte</b><span><a href="#" data-goto="andar">Andar</a> · <a href="#" data-goto="tension">Tensión</a> · <a href="#" data-goto="pastillero">Pastillero</a></span></div></div>
+  <button class="iconbtn" id="btn-theme" aria-label="Cambiar claro u oscuro">🌙</button>
+  <a class="iconbtn sos" href="tel:112" aria-label="Llamar al 112">112<span class="sos-tel">📞</span></a>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="Menú principal">
+  <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
+  <div id="drawer-nav"></div>
+  <div class="foot">Versión v1.18 · Gratis, sin instalar nada.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+</nav>
+
+<main>
+<!-- ============ HOY ============ -->
+<section class="view active" id="view-hoy">
+  <div class="view-head c-hoy"><span class="ic">❤️</span><div><h1>Hoy</h1><p>Tu día de un vistazo: andar, tensión y pastillas.</p></div></div>
+  <p class="free-badge">Gratis · Sin instalar · Sin cuenta · Tus datos en tu navegador y tu Google Drive</p>
+  <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  <div class="card"><h2>☀️ Tu día</h2><ol class="rutina" id="hoy-rutina"></ol>
+<button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px">➕ Añadir Widget</button>
+<div id="selector-widgets" hidden style="margin-top:10px"></div></div>
+  <div id="hoy-revision"></div>
+  <div id="hoy-pauta-vacia"></div>
+  <div class="card"><h2>🚶 ¿Has andado hoy?</h2><div id="hoy-andar"></div>
+    <button class="btn" onclick="goto('andar')">Apuntar la marcha de hoy</button></div>
+  <div class="card"><h2>🩺 Última tensión y pulso</h2><div id="hoy-tension"></div>
+    <button class="btn secondary" onclick="goto('tension')">Apuntar tensión y pulso</button></div>
+  <div class="card"><h2>💊 Próxima pastilla</h2><div id="hoy-pastilla"></div>
+    <button class="btn secondary" onclick="goto('pastillero')">Ver el pastillero</button></div>
+  <div class="card"><h2>Tu pauta, de un vistazo</h2><div id="hoy-pauta"></div>
+    <button class="btn secondary" onclick="goto('pauta')">Ver o cambiar mi pauta</button></div>
+  <div class="alert"><b>🚨 ¿Dolor en el pecho?</b><br>Para, siéntate y sigue tu protocolo. Si no se te pasa, llama al 112.
+    <a class="btn" href="tel:112" style="margin-top:10px">📞 Llamar al 112</a>
+    <button class="btn secondary" onclick="goto('dolor')">Ver qué hacer ante el dolor</button></div>
+</section>
+
+<!-- ============ MI PAUTA ============ -->
+<section class="view" id="view-pauta">
+  <div class="view-head c-pauta"><span class="ic">📋</span><div><h1>Mi pauta</h1><p>Tu pauta es la tuya, no la de nadie más. Se rellena una sola vez y queda guardada.</p></div></div>
+  <div class="card">
+    <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+    <p class="muted">Estos son los valores que te ha pautado tu médico o tu unidad de rehabilitación. La app los usa para comparar tus registros y avisarte. Si tu médico te los cambia, los cambias aquí y queda guardada la pauta nueva.</p>
+    <label for="p-tipo">Tipo de ejercicio</label>
+    <input id="p-tipo" type="text" placeholder="Por ejemplo: caminar" autocomplete="off">
+    <div class="frow">
+      <div><label for="p-duracion">Duración (minutos)</label><input id="p-duracion" type="number" min="1" max="300" inputmode="numeric" placeholder="Minutos"></div>
+      <div><label for="p-dias">Días por semana</label><input id="p-dias" type="number" min="1" max="7" inputmode="numeric" placeholder="1 a 7"></div>
+    </div>
+    <div class="frow">
+      <div><label for="p-pulso">Pulso objetivo (l.p.m.)</label><input id="p-pulso" type="number" min="40" max="200" inputmode="numeric" placeholder="l.p.m."></div>
+    </div>
+    <div class="frow">
+      <div><label for="p-borgmin">BORG mínimo</label><input id="p-borgmin" type="number" min="6" max="20" inputmode="numeric" placeholder="6 a 20"></div>
+      <div><label for="p-borgmax">BORG máximo</label><input id="p-borgmax" type="number" min="6" max="20" inputmode="numeric" placeholder="6 a 20"></div>
+    </div>
+    <button class="btn" id="btn-guardar-pauta">Guardar mi pauta</button>
+    <p class="muted" id="pauta-guardada"></p>
+    <details><summary>¿Qué es la escala BORG?</summary>
+      <p>La escala BORG mide, del 6 al 20, cómo de duro notas el esfuerzo: 6 extraordinariamente ligero, 7 muy ligero, 9 ligero, 11 ligero, 13 algo duro, 15 duro, 17 muy duro, 19 extraordinariamente duro.</p>
+      <p>Como información general de tu hospital: en la fase II de rehabilitación cardiaca, lo adecuado es entre 13 y 14 («algo duro»), y a partir de 17 se está en el límite del trabajo aeróbico indicado. Tu objetivo personal es el que pongas arriba, en tu pauta.</p>
+    </details>
+  </div>
+  <div class="card"><h2>Mis datos de salud</h2>
+    <label for="p-diag">Diagnóstico</label>
+    <select id="p-diag">
+      <option value="">— Elige —</option>
+      <option>Infarto</option>
+      <option>Infarto Agudo de Miocardio</option>
+      <option>Insuficiencia cardiaca</option>
+      <option>Infarto e insuficiencia cardiaca</option>
+      <option>Otra dolencia del corazón</option>
+    </select>
+    <label for="p-disp">Dispositivo</label>
+    <select id="p-disp">
+      <option value="">— Elige —</option>
+      <option>Ninguno</option>
+      <option>Marcapasos</option>
+      <option>Desfibrilador</option>
+      <option>Marcapasos y desfibrilador</option>
+    </select>
+    <label for="p-modelo">Modelo del dispositivo (si lo sabes)</label>
+    <input id="p-modelo" type="text" placeholder="Modelo" autocomplete="off">
+    <label for="p-revision">Fecha de la próxima revisión del dispositivo</label>
+    <input id="p-revision" type="date">
+    <div id="pauta-revision-aviso" style="margin-top:10px"></div>
+    <label for="p-medico">Médico de contacto</label>
+    <input id="p-medico" type="text" placeholder="Nombre del médico o de la unidad" autocomplete="off">
+    <label for="p-telmedico">Teléfono del médico o de la unidad</label>
+    <input id="p-telmedico" type="tel" placeholder="Teléfono" autocomplete="off">
+    <button class="btn" id="btn-guardar-datos">Guardar mis datos de salud</button>
+  </div>
+</section>
+
+<!-- ============ ANDAR ============ -->
+<section class="view" id="view-andar">
+  <div class="view-head c-andar"><span class="ic">🚶</span><div><h1>Andar</h1><p>Tu tabla de marchas, como la de papel, pero en el móvil.</p></div></div>
+  <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  <div class="card" id="andar-pauta"></div>
+  <div class="card"><h2>Apuntar una marcha</h2>
+    <label for="w-fecha">Fecha</label><input id="w-fecha" type="date">
+    <div class="frow">
+      <div><label for="w-reposo">Pulso en reposo</label><input id="w-reposo" type="number" min="30" max="200" inputmode="numeric" placeholder="l.p.m."></div>
+      <div><label for="w-medio">Pulso medio</label><input id="w-medio" type="number" min="30" max="220" inputmode="numeric" placeholder="l.p.m."></div>
+    </div>
+    <div class="frow">
+      <div><label for="w-maximo">Pulso máximo</label><input id="w-maximo" type="number" min="30" max="230" inputmode="numeric" placeholder="l.p.m."></div>
+      <div><label for="w-borg">BORG</label><input id="w-borg" type="number" min="6" max="20" inputmode="numeric" placeholder="6 a 20"></div>
+    </div>
+    <div class="frow">
+      <div><label for="w-minutos">Tiempo de duración (min)</label><input id="w-minutos" type="number" min="1" max="600" inputmode="numeric" placeholder="Minutos"></div>
+      <div><label for="w-km">Distancia recorrida (km)</label><input id="w-km" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="Km"></div>
+    </div>
+    <label for="w-coment">Comentarios / Incidencias</label>
+    <textarea id="w-coment" placeholder="Por ejemplo: dolor en el cuello, ciática, fatiga…"></textarea>
+    <button class="btn" id="btn-guardar-marcha">Guardar marcha</button>
+  </div>
+  <div class="card"><h2>Mis marchas</h2><p class="muted">En rojo, los días en los que el pulso medio pasó tu objetivo, el BORG salió de tu rango, o apuntaste dolor en el pecho o en el cuello. A la derecha de cada marcha, el semáforo BORG se enciende en verde, ámbar o rojo según TU rango.</p>
+    <div id="sheets-aviso"></div>
+    <p><button class="btn secondary" id="btn-guardar-hoja" style="display:none">Actualizar hoja en Sheets</button>
+    <a class="btn secondary" id="link-hoja-sheets" href="#" target="_blank" rel="noopener" style="display:none">Abrir hoja en Sheets</a></p>
+    <p class="muted" id="sheets-estado"></p>
+    <div id="lista-marchas"></div></div>
+  <div class="card"><h2>Evolución de tus marchas</h2>
+    <div class="chart-toggle" id="toggle-andar"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button></div>
+    <div class="chart-box" id="grafico-andar"></div></div>
+</section>
+
+<!-- ============ TENSIÓN ============ -->
+<section class="view" id="view-tension">
+  <div class="view-head c-tension"><span class="ic">🩺</span><div><h1>Tensión y pulso</h1><p>Apúntalos las veces que quieras, a mano o con una foto al tensiómetro.</p></div></div>
+  <div class="card"><h2>Apuntar a mano <button type="button" class="info-btn" data-info-toggle="tension-manual" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
+    <p data-info-for="tension-manual" hidden class="info-text">Apunta la tensión y el pulso a mano, las veces que quieras. Quedan guardados en «Mis registros» y, si conectas Google, también en tu Google Drive.</p>
+    <label for="t-fecha">Fecha y hora</label><input id="t-fecha" type="datetime-local">
+    <div class="frow">
+      <div><label for="t-sis">Tensión sistólica (la alta)</label><input id="t-sis" type="number" min="50" max="260" inputmode="numeric" placeholder="Ej.: 120"></div>
+      <div><label for="t-dia">Tensión diastólica (la baja)</label><input id="t-dia" type="number" min="30" max="180" inputmode="numeric" placeholder="Ej.: 80"></div>
+    </div>
+    <label for="t-pulso">Pulso (l.p.m.)</label><input id="t-pulso" type="number" min="30" max="220" inputmode="numeric" placeholder="Ej.: 72">
+    <label for="t-obs">Observaciones</label>
+    <textarea id="t-obs" placeholder="Cómo te encuentras, qué estabas haciendo…"></textarea>
+    <button type="button" class="mic-btn" id="btn-voz-obs" style="display:none">🎤 Dictar observaciones</button>
+    <button type="button" class="mic-btn" id="btn-voz-tension" style="display:none">🎤 Dictar tensión y pulso</button>
+    <button class="btn" id="btn-guardar-tension">Guardar tensión y pulso</button>
+  </div>
+  <div class="card"><h2>Foto al tensiómetro <button type="button" class="info-btn" data-info-toggle="tension-foto" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
+    <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+    <div data-info-for="tension-foto" hidden class="info-text">
+      <p style="margin-top:0">Haz una foto a la pantalla del tensiómetro y Gemini leerá la tensión y el pulso. Te los enseñará para que los confirmes antes de guardarlos. Nada se guarda sin tu confirmación.</p>
+      <p class="muted" id="foto-ayuda" style="margin-bottom:0"></p>
+    </div>
+    <label class="btn green" for="foto-tensiometro" style="margin-top:6px">📷 Foto al tensiómetro</label>
+    <input id="foto-tensiometro" type="file" accept="image/*" capture="environment" style="display:none">
+    <div id="foto-preview"></div>
+    <div id="foto-resultado"></div>
+  </div>
+  <div class="card"><h2>Evolución de tensión y pulso</h2>
+    <div class="chart-toggle" id="toggle-tension"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button></div>
+    <div class="chart-box" id="grafico-tension"></div></div>
+  <div class="card"><h2>Mis registros</h2><div id="lista-tensiones"></div></div>
+</section>
+
+<!-- ============ PASTILLERO ============ -->
+<section class="view" id="view-pastillero">
+  <div class="view-head c-pastillero"><span class="ic">💊</span><div><h1>Pastillero</h1><p>Tus medicinas, con sus horas y su recordatorio.</p></div></div>
+  <div class="card"><h2>Añadir una medicina</h2>
+    <label for="m-nombre">Medicamento</label><input id="m-nombre" type="text" placeholder="Nombre del medicamento" autocomplete="off">
+    <label for="m-dosis">Dosis</label><input id="m-dosis" type="text" placeholder="Por ejemplo: 1 comprimido de 5 mg" autocomplete="off">
+    <label for="m-horas">Horas (separadas por comas)</label><input id="m-horas" type="text" placeholder="Por ejemplo: 08:00, 20:00" autocomplete="off">
+    <label for="m-notas">Notas (opcional)</label><input id="m-notas" type="text" placeholder="Con la comida, antes de dormir…" autocomplete="off">
+    <button class="btn" id="btn-guardar-medicina">Añadir medicina</button>
+  </div>
+  <div class="card"><h2>Foto a la receta o caja del medicamento</h2>
+    <p>Haz una foto a la receta o a la caja y Gemini leerá el nombre, la dosis y las horas. Te lo enseñará para que lo confirmes antes de guardar. Nada se guarda sin tu confirmación.</p>
+    <label class="btn green" for="foto-receta" style="margin-top:6px">📷 Foto a la receta o caja</label>
+    <input id="foto-receta" type="file" accept="image/*" capture="environment" style="display:none">
+    <div id="receta-preview"></div>
+    <div id="receta-resultado"></div>
+    <p class="muted" id="receta-ayuda"></p>
+  </div>
+  <div class="card"><h2>Hoy</h2>
+    <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+    <p class="muted">Marca cada toma cuando te la tomes. El recordatorio avisa mientras la app está abierta; si la cierras, al abrirla verás las tomas pendientes.</p>
+    <button class="btn secondary" id="btn-avisos">🔔 Activar recordatorios</button>
+    <p class="muted">¿Quieres avisos aunque la app esté cerrada? <a href="#" id="link-push-config">Actívalo en Configuración</a>.</p>
+    <div id="lista-pastillero"></div>
+  </div>
+</section>
+
+
+<!-- ============ ALIMENTACIÓN / SEMÁFORO ============ -->
+<section class="view" id="view-alimentacion">
+  <div class="view-head c-alimentacion"><span class="ic">🥗</span><div><h1>Alimentación</h1><p>El semáforo: fotografía el cuadro nutricional y los ingredientes y te dice si es verde, ámbar o rojo, según tus límites.</p></div></div>
+  <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  <div class="card"><h2>Foto al cuadro nutricional</h2>
+    <p>Fotografía la tabla de valores nutricionales y/o la lista de ingredientes del producto y Gemini las leerá. Te enseñará lo leído para que lo confirmes antes de guardar. Nada se guarda sin tu confirmación.</p>
+    <label class="btn green" for="foto-nutricion" style="margin-top:6px">📷 Foto al cuadro nutricional</label>
+    <input id="foto-nutricion" type="file" accept="image/*" capture="environment" style="display:none">
+    <div id="nutri-preview"></div>
+    <div id="nutri-resultado"></div>
+    <p class="muted" id="nutri-ayuda"></p>
+  </div>
+  <div class="card"><h2>Escaneo por código de barras</h2>
+    <p>Escanea el código de barras del producto y buscamos sus valores en Open Food Facts. La búsqueda por código de barras necesita internet.</p>
+    <button type="button" class="btn green" id="btn-barcode-cam" style="display:none">📷 Escanear código de barras</button>
+    <div id="barcode-camera"></div>
+    <label for="barcode-codigo">Código de barras (a mano)</label>
+    <input id="barcode-codigo" type="text" inputmode="numeric" placeholder="Por ejemplo: 8410000000000" autocomplete="off">
+    <button class="btn" id="btn-barcode-buscar">Buscar por código</button>
+    <div id="barcode-resultado"></div>
+  </div>
+  <div class="card"><h2>Comprobar a mano</h2>
+    <p>Sin foto, escribe lo que pone en la etiqueta y te sale el semáforo.</p>
+    <label for="n-producto">Producto (opcional)</label><input id="n-producto" type="text" placeholder="Nombre del producto" autocomplete="off">
+    <div class="frow">
+      <div><label for="n-sal">Sal (g por 100 g)</label><input id="n-sal" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g"></div>
+      <div><label for="n-sat">Grasas saturadas (g por 100 g)</label><input id="n-sat" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g"></div>
+    </div>
+    <div id="campos-manuales"></div>
+    <label for="n-ingredientes">Ingredientes (opcional, pega la lista)</label>
+    <textarea id="n-ingredientes" placeholder="Por ejemplo: harina, aceite de palma, azúcar, sal…"></textarea>
+    <button class="btn" id="btn-comprobar-sal">Comprobar semáforo</button>
+    <div id="semaforo-manual"></div>
+  </div>
+  <div class="card"><h2>Qué comer: verde, ámbar y rojo</h2>
+    <p class="muted">Guía de la pauta base. Si tu médico te pauta otra cosa, manda la suya.</p>
+    <p>🟢 <b>Verde — lo de todos los días:</b> verduras naturales; queso fresco 0% grasa con sal controlada; lácteos altos en proteína sin azúcares añadidos; cereales integrales limpios como la avena; aceite de oliva virgen extra (verde, máximo 5 ml al día).</p>
+    <p>🟡 <b>Ámbar — con medida:</b> frutos secos sin sal en raciones de 15-20 g; versiones light ocasionales, solo si pasan el filtro de sal.</p>
+    <p>🔴 <b>Rojo — evitar:</b> azúcares libres y refinados; snacks ultraprocesados; quesos blandos grasos; verduras congeladas prefritas en aceites refinados o con exceso de sal.</p>
+    <p>🍳 <b>Preparación:</b> freidora de aire o vapor.</p>
+    <p>🎉 <b>Excepciones sociales:</b> solo puntuales y en porción mínima.</p>
+  </div>
+  <div class="card"><h2>Productos comprobados</h2><div id="lista-semaforo"></div></div>
+  <div class="card"><h2>Lista de la compra</h2>
+<div id="lista-compra"></div>
+<div class="compra-add"><input id="compra-nuevo" type="text" placeholder="Producto (por ejemplo: tomates)" autocomplete="off"><button class="btn" id="btn-compra-anadir">Añadir</button></div>
+</div>
+  <div class="card"><h2>Tus límites</h2>
+    <p id="limites-resumen"></p>
+    <button class="btn secondary" id="btn-ir-limites">Modificar mis límites</button>
+  </div>
+</section>
+
+<!-- ============ DOLOR ============ -->
+<section class="view" id="view-dolor">
+  <div class="view-head c-dolor"><span class="ic">🚨</span><div><h1>Dolor en el pecho</h1><p>Qué hacer, paso a paso, según tu protocolo pautado.</p></div></div>
+  <div class="alert">
+    <h2 style="margin-top:0">Si tienes dolor en el pecho</h2>
+    <p><small>Protocolo pautado por tu Unidad de Prevención Cardiovascular y Rehabilitación Cardíaca. Es tu protocolo personal: si tu médico te lo cambia, cambia también este texto en tu pauta.</small></p>
+    <ol style="font-size:18px;line-height:1.7;margin:10px 0;padding-left:24px">
+      <li><b>Descansar.</b></li>
+      <li>Si persiste o es muy intenso, <b>masticar un comprimido de Cafinitrina y ponerlo debajo de la lengua, estando sentado</b>.</li>
+      <li>Si persiste el dolor torácico tras 10 minutos, <b>masticar un segundo comprimido de Cafinitrina, estando sentado, y avisar a un Servicio de urgencias</b>.</li>
+    </ol>
+    <a class="btn" href="tel:112">📞 Llamar al 112</a>
+    <p class="muted" style="margin-top:10px">No conduzcas tú mismo. Pide ayuda a alguien o llama al 112.</p>
+    <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  </div>
+  <div class="card"><h2>¿Cuándo NO andar ese día?</h2>
+    <ul class="tight">
+      <li>Si tienes fiebre.</li>
+      <li>Si te encuentras muy cansado.</li>
+      <li>Si tienes dolor en el pecho.</li>
+    </ul>
+    <p>Si durante el ejercicio aparece dolor en el pecho, o parecido al del evento inicial, para y sigue el protocolo de arriba.</p></div>
+  <div class="card"><h2>Apuntar un episodio</h2>
+    <p>Si has tenido dolor, fatiga o falta de aire, apúntalo aquí para enseñárselo a tu médico.</p>
+    <label for="d-fecha">Fecha y hora</label><input id="d-fecha" type="datetime-local">
+    <label for="d-que">¿Qué te ha pasado?</label>
+    <textarea id="d-que" placeholder="Dolor en el pecho, dolor en el cuello, fatiga, falta de aire…"></textarea>
+    <button class="btn" id="btn-guardar-episodio">Guardar episodio</button>
+    <div id="lista-episodios" style="margin-top:14px"></div>
+  </div>
+</section>
+
+<!-- ============ MI PROGRAMA ============ -->
+<section class="view" id="view-programa">
+  <div class="view-head c-programa"><span class="ic">📖</span><div><h1>Mi programa</h1><p>Las recomendaciones de tu programa de entrenamiento domiciliario.</p></div></div>
+  <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  <div class="card"><h2>Recomendaciones generales</h2>
+    <ul class="tight">
+      <li>Evitar realizar el programa en las <b>2 horas siguientes a la comida principal</b>.</li>
+      <li>Tiempo recomendado de marcha: <b>60 minutos</b> (o el que ponga tu pauta).</li>
+      <li><b>Descansar 30 minutos</b> después del ejercicio.</li>
+      <li>Usar <b>ropa cómoda</b>.</li>
+      <li><b>Hidratarse bien</b>.</li>
+      <li>Caminar por <b>terreno llano al menos los primeros 15 días</b>.</li>
+      <li><b>No caminar ese día</b> si hay fiebre, mucho cansancio o dolor en el pecho.</li>
+      <li><b>Calentamiento de 5-10 minutos</b> y otros <b>5-10 minutos de recuperación</b>.</li>
+      <li><b>No superar la frecuencia cardiaca</b> ni los días y horarios pautados.</li>
+    </ul>
+    <h3>Si tienes diabetes</h3>
+    <ul class="tight">
+      <li>Control glucémico capilar previo a las marchas.</li>
+      <li>Llevar consigo aporte de azúcares por si aparecen síntomas de hipoglucemia.</li>
+      <li>No pinchar la insulina en los grupos musculares con los que se vaya a trabajar (piernas y brazos).</li>
+    </ul>
+    <p class="muted"><small>Fuente: «Programa de Entrenamiento Domiciliario», Unidad de Prevención Cardiovascular y Rehabilitación Cardíaca. Este programa se revisa y renueva periódicamente, sobre todo si hay cambios en la medicación o en las condiciones físicas.</small></p>
+  </div>
+  <div class="card"><h2>La escala BORG, para entender tu esfuerzo</h2>
+    <p>Del 6 al 20. Apunta el número que mejor describa cómo de duro notas el esfuerzo en ese momento.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Número</th><th>Cómo se nota</th></tr>
+      <tr><td>6</td><td>Extraordinariamente ligero</td></tr>
+      <tr><td>7</td><td>Muy ligero</td></tr>
+      <tr><td>9</td><td>Ligero</td></tr>
+      <tr><td>11</td><td>Ligero</td></tr>
+      <tr><td>13</td><td>Algo duro</td></tr>
+      <tr><td>15</td><td>Duro</td></tr>
+      <tr><td>17</td><td>Muy duro</td></tr>
+      <tr><td>19</td><td>Extraordinariamente duro</td></tr>
+    </table></div>
+    <p>Como información general: en la fase II de rehabilitación cardiaca, lo adecuado es entre <b>13 y 14 («algo duro»)</b>. A partir de 17 se está en el límite del trabajo aeróbico indicado. Tu objetivo personal es el de tu pauta.</p>
+  </div>
+</section>
+
+<!-- ============ PARA EL MÉDICO ============ -->
+<section class="view" id="view-medico">
+  <div class="view-head c-medico"><span class="ic">👨‍⚕️</span><div><h1>Para el médico</h1><p>Un resumen para llevar a la consulta o imprimir.</p></div></div>
+  <div class="card" id="resumen-medico"></div>
+  <button class="btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
+</section>
+
+<!-- ============ CONFIGURACIÓN ============ -->
+<section class="view" id="view-config">
+  <div class="view-head c-config"><span class="ic">⚙️</span><div><h1>Configuración</h1><p>Tu cuenta de Google, tu clave de Gemini y tus datos.</p></div></div>
+  <div class="card"><h2>Entrar con Google</h2>
+    <p>Entra con tu correo de Google para que todos tus valores se guarden también en tu Google Drive, en una carpeta llamada exactamente «Corazón Fuerte», y en una hoja de Google Sheets llamada «Corazón Fuerte - Control», con tu tabla de marchas y su semáforo BORG. La conexión pide Drive y Sheets juntos, una sola vez. Si no te conectas, los datos se quedan solo en este dispositivo.</p>
+    <div id="google-estado"></div>
+    <button class="btn" id="btn-google">Entrar con Google</button>
+    <button class="btn secondary" id="btn-google-salir" style="display:none">Desconectar Google</button>
+    <button class="btn secondary" id="btn-drive-ahora" style="display:none">Guardar ahora en Drive</button>
+    <p class="muted" id="drive-sync"></p>
+    <div id="google-pendiente"></div>
+  </div>
+  <div class="card"><h2>Clave de Gemini</h2>
+    <div id="clave-sin-guardar">
+    <p>Tu clave, solo para leer fotos (tensiómetro, comida, receta). Se guarda solo en este navegador.</p>
+    <label for="gemini-key">Tu clave de Gemini</label>
+    <input id="gemini-key" type="password" placeholder="Pega aquí tu clave" autocomplete="off">
+    <p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Conseguir mi clave de Gemini</a></p>
+    <p class="muted">Entra con tu cuenta de Google, crea la clave gratis y pégala aquí.</p>
+    <button class="btn" id="btn-guardar-clave">Guardar clave</button>
+    <p class="muted">Sin clave, puedes apuntar la tensión a mano. La foto del tensiómetro necesita la clave.</p>
+    </div>
+    <div id="clave-guardada" hidden>
+    <p id="clave-estado" class="clave-guardada">✅ Clave de Gemini guardada en este navegador.</p>
+    <button class="btn" id="btn-cambiar-clave">Cambiar clave</button>
+    <button class="btn secondary" id="btn-borrar-clave">Borrar clave</button>
+    </div>
+  </div>
+  <div class="card" id="card-push"><h2>Avisos aunque la app esté cerrada <button type="button" class="info-btn" data-info-toggle="push-iphone" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
+    <p>Te avisa de cada pastilla y de la revisión, aunque la app esté cerrada.</p>
+    <label for="push-worker-url">Dirección del Worker de avisos</label>
+    <input id="push-worker-url" type="url" placeholder="https://corazon-fuerte-push.tu-cuenta.workers.dev" autocomplete="off">
+    <label class="push-row"><input type="checkbox" id="push-toggle"><span><b>Avisos aunque la app esté cerrada</b><br><span class="muted" id="push-estado">Avisos con la app cerrada: desactivados.</span></span></label>
+    <p data-info-for="push-iphone" hidden class="info-text">En el iPhone, los avisos con la app cerrada solo funcionan si instalas la app en la pantalla de inicio (iOS 16.4 o posterior). Los recordatorios pueden llegar con unos minutos de retraso.</p>
+  </div>
+  <div class="card" id="card-limites-alimentacion"><h2>Alimentación — mis límites</h2>
+    <p><b>Pauta base orientativa: sal por debajo de 0,80 g por 100 g.</b> Si tu médico te pauta otra cosa, cámbiala aquí con él: se guarda, y puedes volver a la base cuando quieras.</p>
+    <p><b>Añade tus propias pautas</b> <button type="button" class="info-btn" data-info-toggle="pautas-propias" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>
+    <p data-info-for="pautas-propias" hidden class="info-text">Añade lo que quieras que Gemini revise en cada foto: otro nutriente con su límite, o un ingrediente o palabra a evitar. Se guardan, se pueden cambiar y se pueden borrar.</p>
+    <div id="lista-campos"></div>
+    <label for="nc-nombre">Nombre del campo</label>
+    <input id="nc-nombre" type="text" placeholder="Por ejemplo: azúcares, o aceite de palma" autocomplete="off">
+    <label for="nc-tipo">Tipo de campo</label>
+    <select id="nc-tipo">
+      <option value="nutriente">Límite de nutriente por 100 g</option>
+      <option value="ingrediente">Ingrediente o palabra a evitar</option>
+    </select>
+    <div id="nc-limite-wrap">
+      <label for="nc-limite">Límite máximo (gramos por cada 100 g)</label>
+      <input id="nc-limite" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    </div>
+    <button class="btn secondary" id="btn-anadir-campo">＋ Añadir campo</button>
+    <p><b>Reglas fijas (no se cambian):</b><br>🔴 <b>Aceites:</b> luz roja, excepto el aceite de oliva virgen extra (verde, máximo 5 ml al día).<br>🔴 <b>Azúcares:</b> luz roja.</p>
+    <label for="sal-limite">Sal — mi límite (gramos por cada 100 g)</label>
+    <input id="sal-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    <label for="sat-limite">Grasas saturadas — mi límite (gramos por cada 100 g)</label>
+    <input id="sat-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    <button class="btn" id="btn-guardar-limites">Guardar mis límites</button>
+    <button class="btn secondary" id="btn-reset-alimentacion">↩ Restablecer pauta base</button>
+    <p class="muted">Cómo se enciende el semáforo: es el peor de todos tus criterios. Cualquier criterio en rojo = luz roja; si no, ámbar si algún criterio está en ámbar; si no, verde. Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente que marcaste evitar, si aparece en la lista, es luz roja. Además, hay dos reglas fijas: todos los aceites son luz roja salvo el aceite de oliva virgen extra (verde, máximo 5 ml al día), y los azúcares son luz roja.</p>
+  </div>
+  <div class="card"><h2>Mis datos</h2>
+    <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
+    <button class="btn" id="btn-exportar">Descargar copia de mis datos (JSON)</button>
+    <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
+    <p class="muted">Versión v1.18 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+  </div>
+  <div class="card"><h2>Privacidad</h2>
+    <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
+    <p>Esta app no sustituye el consejo de tu médico. Ante un dolor en el pecho, sigue tu protocolo pautado y llama al 112.</p>
+    <p>Tus datos de salud son tuyos: se guardan en tu dispositivo y, solo si te conectas, en tu propio Google Drive. No se venden ni se comparten. La app no tiene servidor propio.</p>
+    <p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.18 · Gratis, sin instalar nada</p>
+  <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+  <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
+</footer>
+<div id="toast" role="status"></div>
+<script>
+"use strict";
+/* Corazón Fuerte — v1.18. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
+var APP_VERSION = "v1.18";
+var DATA_KEY = "corazon-fuerte-datos-v1";
+var GEMINI_KEY = "corazon-fuerte-gemini-key";
+var THEME_KEY = "corazon-fuerte-tema";
+var DRIVE_TOKENS_KEY = "corazon-fuerte-drive-tokens";
+var DRIVE_FOLDER_ID_KEY = "corazon-fuerte-drive-folder-id";
+var DRIVE_FILE_ID_KEY = "corazon-fuerte-drive-file-id";
+var DRIVE_LAST_KEY = "corazon-fuerte-drive-ultima";
+var SHEET_TITLE = "Corazón Fuerte - Control";
+var SHEET_TAB = "Andar";
+var SHEET_ID_KEY = "corazon-fuerte-sheet-id";
+var SHEET_URL_KEY = "corazon-fuerte-sheet-url";
+var SHEET_LAST_KEY = "corazon-fuerte-sheet-ultima";
+var SHEET_403_KEY = "corazon-fuerte-sheet-403";
+/* Client ID real de Google Cloud (proyecto «Corazon Fuerte», cliente «Corazón Fuerte Web»). Es público por diseño: identifica la app ante Google, no es un secreto. */
+var GOOGLE_CLIENT_ID = "956211762586-p02odtpmgqacutm9e4vb8ibn2bo1a6gt.apps.googleusercontent.com";
+var DRIVE_FOLDER = "Corazón Fuerte";
+var DATA_FILE = "corazon-fuerte-datos.json";
+/* Clave pública VAPID (es pública por diseño): identifica el Worker de avisos al suscribirse a las notificaciones push. La clave PRIVADA nunca va en la app. */
+var VAPID_PUBLIC_KEY = "BDdiaT4ycCUHg_CrQclpNgCrDu2XbKNXQWlk-zicdpQxPxXKkV3dAEFfyiG_SMU9i5-UMIN1NhcjUm80OLu8_LQ";
+var PUSH_WORKER_URL_KEY = "corazon-fuerte-push-worker-url";
+/* Dirección del Worker de avisos de Pedro, ya puesta por defecto (es una URL pública, no un secreto). El usuario puede cambiarla si hace falta; si no ha puesto otra, se usa esta. */
+var PUSH_WORKER_URL_DEFAULT = "https://corazon-fuerte-push.fpsupra76.workers.dev";
+/* Dirección del Worker de entrada con Google de Pedro (corazon-fuerte-auth): guarda el client_secret y cambia el código de autorización por los tokens, porque Google exige el secreto para clientes web y la app no puede guardarlo. Es una URL pública, no un secreto. */
+var AUTH_WORKER_URL_DEFAULT = "https://corazon-fuerte-auth.fpsupra76.workers.dev";
+var PUSH_ENABLED_KEY = "corazon-fuerte-push-enabled";
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+function uid(){ return "id" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+function hoyISO(){ var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function ahoraLocal(){ var d = new Date(); function p(n){ return String(n).padStart(2,"0"); } return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes()); }
+function fmtFecha(iso){ if(!iso) return "—"; var p = iso.split("-"); return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso; }
+function fmtFechaHora(v){ if(!v) return "—"; var d = new Date(v); if(isNaN(d)) return esc(v); function p(n){ return String(n).padStart(2,"0"); } return p(d.getDate())+"/"+p(d.getMonth()+1)+"/"+d.getFullYear()+" "+p(d.getHours())+":"+p(d.getMinutes()); }
+function num(v){ var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? null : n; }
+var toastTimer = null;
+function toast(msg){ var t = $("toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.style.display = "none"; }, 3200); }
+
+/* ---------- Datos ---------- */
+function datosVacios(){ return { pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"0.8", limiteSaturadas:"", campos:[], historial:[] }, creado: new Date().toISOString() }; }
+function loadData(){ try{ var d = JSON.parse(localStorage.getItem(DATA_KEY) || "null"); if(d && typeof d === "object"){ if(!d.pauta) d.pauta = datosVacios().pauta; ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"0.8", limiteSaturadas:"", campos:[], historial:[] };
+    if(d.semaforo.limiteSaturadas == null) d.semaforo.limiteSaturadas = "";
+    delete d.semaforo.objetivoLdl; delete d.semaforo.objetivoTrig; /* v1.17: los objetivos de LDL y triglicéridos ya no existen */
+    if(d.semaforo.limiteSal === "" && !d.semaforo.limiteSaturadas && !d.semaforo.campos.length && !d.semaforo.historial.length) d.semaforo.limiteSal = "0.8"; /* pauta base de alimentación, solo si nunca se guardó nada */
+    if(!Array.isArray(d.semaforo.campos)) d.semaforo.campos = [];
+    if(!Array.isArray(d.semaforo.historial)) d.semaforo.historial = [];
+    d.semaforo.historial.forEach(function(h){ if(!h.valores){ h.valores = { "sal": h.sal != null ? h.sal : null, "grasas saturadas": h.saturadas != null && h.saturadas !== "" ? h.saturadas : null, "azucares": h.azucares != null && h.azucares !== "" ? h.azucares : null }; } if(h.ingredientes == null) h.ingredientes = ""; }); return d; } }catch(e){} return datosVacios(); }
+var data = loadData();
+var driveSaveTimer = null;
+function saveLocal(){ try{ localStorage.setItem(DATA_KEY, JSON.stringify(data)); }catch(e){ toast("No se pudo guardar en este dispositivo."); } }
+function saveAll(syncDrive){ saveLocal(); if(syncDrive !== false){ clearTimeout(driveSaveTimer); driveSaveTimer = setTimeout(function(){ saveToDrive(true); }, 1500); } }
+
+/* ---------- Navegación ---------- */
+var VIEWS = [
+  ["hoy","❤️","Hoy"],["pauta","📋","Mi pauta"],["andar","🚶","Andar"],["tension","🩺","Tensión y pulso"],
+  ["pastillero","💊","Pastillero"],["alimentacion","🥗","Alimentación"],["dolor","🚨","Dolor en el pecho"],["programa","📖","Mi programa"],
+  ["medico","👨‍⚕️","Para el médico"],["config","⚙️","Configuración"]
+];
+var currentView = "hoy";
+function buildDrawer(){ $("drawer-nav").innerHTML = VIEWS.map(function(v){ return '<button data-view="'+v[0]+'" class="'+(v[0]===currentView?"active":"")+'"><span class="ic">'+v[1]+'</span><span>'+v[2]+'</span></button>'; }).join("");
+  Array.prototype.forEach.call(document.querySelectorAll("#drawer-nav button"), function(b){ b.addEventListener("click", function(){ goto(b.getAttribute("data-view")); closeDrawer(); }); }); }
+function goto(view){ currentView = view; document.querySelectorAll(".view").forEach(function(s){ s.classList.toggle("active", s.id === "view-" + view); }); buildDrawer(); window.scrollTo({top:0}); renderAll(); }
+function openDrawer(){ $("drawer").classList.add("open"); $("scrim").classList.add("show"); }
+function closeDrawer(){ $("drawer").classList.remove("open"); $("scrim").classList.remove("show"); }
+$("btn-menu").addEventListener("click", openDrawer);
+Array.prototype.forEach.call(document.querySelectorAll(".brand a[data-goto]"), function(a){ a.addEventListener("click", function(ev){ ev.preventDefault(); goto(a.getAttribute("data-goto")); closeDrawer(); }); });
+$("scrim").addEventListener("click", closeDrawer);
+
+/* ---------- Menú lateral por deslizamiento (móvil) ---------- */
+/* En el móvil, el menú también se abre deslizando el dedo de izquierda a derecha desde el borde izquierdo, y se cierra deslizando a la izquierda. Solo táctil; nunca se cancela el gesto, así que no interfiere con el desplazamiento vertical ni con los toques normales. */
+(function(){
+  var startX = null, startY = null, tracking = false, edgeSwipe = false;
+  var EDGE = 25, MIN_DX = 50;
+  function isTouch(){ return ("ontouchstart" in window) || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }
+  function drawerOpen(){ return $("drawer").classList.contains("open"); }
+  document.addEventListener("touchstart", function(ev){
+    if(!isTouch() || !ev.touches || ev.touches.length !== 1) return;
+    var t = ev.touches[0];
+    startX = t.clientX; startY = t.clientY; tracking = true;
+    edgeSwipe = !drawerOpen() && startX <= EDGE;
+  }, {passive:true});
+  document.addEventListener("touchend", function(ev){
+    if(!tracking || startX === null){ tracking = false; return; }
+    tracking = false;
+    var t = ev.changedTouches && ev.changedTouches[0];
+    if(!t) return;
+    var dx = t.clientX - startX, dy = t.clientY - startY;
+    if(Math.abs(dx) < MIN_DX || Math.abs(dx) <= Math.abs(dy)) return; /* gesto corto o más vertical que horizontal: no es abrir/cerrar el menú */
+    if(edgeSwipe && dx > 0) openDrawer();
+    else if(drawerOpen() && dx < 0) closeDrawer();
+  }, {passive:true});
+})();
+
+/* ---------- Tema claro / oscuro ---------- */
+function applyTheme(){ var t = localStorage.getItem(THEME_KEY); if(!t){ t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-theme", t); $("btn-theme").textContent = t === "dark" ? "☀️" : "🌙"; }
+$("btn-theme").addEventListener("click", function(){ var t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"; localStorage.setItem(THEME_KEY, t); applyTheme(); });
+/* Botones (i): muestran u ocultan la explicación (patrón de la oficina) */
+document.addEventListener("click", function(ev){
+  var btn = ev.target && ev.target.closest ? ev.target.closest(".info-btn[data-info-toggle]") : null;
+  if(!btn) return;
+  var key = btn.getAttribute("data-info-toggle");
+  var open = btn.getAttribute("aria-expanded") === "true";
+  btn.setAttribute("aria-expanded", String(!open));
+  Array.prototype.forEach.call(document.querySelectorAll('[data-info-for="' + key + '"]'), function(el){ el.hidden = open; });
+});
+
+/* ---------- Pauta ---------- */
+function pautaCompleta(){ var p = data.pauta; return !!(p.tipo || p.duracion || p.pulso); }
+function pautaResumenHTML(){ var p = data.pauta; if(!pautaCompleta()) return '<p>No has rellenado tu pauta todavía. <b>Rellénala una vez y queda guardada.</b></p>';
+  return '<dl class="kv"><dt>Ejercicio</dt><dd>'+esc(p.tipo||"—")+'</dd><dt>Duración</dt><dd>'+(p.duracion?esc(p.duracion)+" min":"—")+'</dd><dt>Días / semana</dt><dd>'+esc(p.dias||"—")+'</dd><dt>Pulso objetivo</dt><dd>'+(p.pulso?esc(p.pulso)+" l.p.m.":"—")+'</dd><dt>BORG</dt><dd>'+(p.borgMin||p.borgMax?esc(p.borgMin||"—")+" – "+esc(p.borgMax||"—"):"—")+'</dd><dt>FC máxima</dt><dd>'+(p.fcMaxima?esc(p.fcMaxima)+" l.p.m.":"—")+'</dd></dl>'; }
+function fillPautaForm(){ var p = data.pauta; $("p-tipo").value = p.tipo||""; $("p-duracion").value = p.duracion||""; $("p-dias").value = p.dias||""; $("p-pulso").value = p.pulso||""; $("p-borgmin").value = p.borgMin||""; $("p-borgmax").value = p.borgMax||""; $("p-diag").value = p.diagnostico||""; $("p-disp").value = p.dispositivo||""; $("p-modelo").value = p.modelo||""; $("p-revision").value = p.revision||""; $("p-medico").value = p.medico||""; $("p-telmedico").value = p.telMedico||""; }
+$("btn-guardar-pauta").addEventListener("click", function(){ var p = data.pauta;
+  p.tipo = $("p-tipo").value.trim(); p.duracion = $("p-duracion").value.trim(); p.dias = $("p-dias").value.trim();
+  p.pulso = $("p-pulso").value.trim(); p.borgMin = $("p-borgmin").value.trim(); p.borgMax = $("p-borgmax").value.trim();
+  saveAll(); $("pauta-guardada").textContent = "Tu pauta queda guardada. Si tu médico te la cambia, la cambias aquí."; toast("Pauta guardada."); renderAll(); });
+$("btn-guardar-datos").addEventListener("click", function(){ var p = data.pauta;
+  p.diagnostico = $("p-diag").value; p.dispositivo = $("p-disp").value; p.modelo = $("p-modelo").value.trim();
+  p.revision = $("p-revision").value; p.medico = $("p-medico").value.trim(); p.telMedico = $("p-telmedico").value.trim();
+  saveAll(); resendPushSchedule(); toast("Datos de salud guardados."); renderAll(); });
+
+/* ---------- Andar ---------- */
+function walkAlerta(w){ var p = data.pauta; var motivos = [];
+  var medio = num(w.medio), borg = num(w.borg);
+  if(p.pulso && medio != null && medio > num(p.pulso)) motivos.push("pulso medio por encima de tu objetivo (" + p.pulso + ")");
+  if((p.borgMin && borg != null && borg < num(p.borgMin)) || (p.borgMax && borg != null && borg > num(p.borgMax))) motivos.push("BORG fuera de tu rango (" + (p.borgMin||"—") + "–" + (p.borgMax||"—") + ")");
+  if(/dolor/i.test(w.comentarios || "")) motivos.push("apuntaste dolor");
+  return motivos; }
+/* Semáforo BORG: verde dentro de TU rango, ámbar a 1 punto, rojo a 2 o más.
+   El rango lo rellena cada usuario en Mi pauta; nunca se usa el 10-13 de Pedro
+   ni el 13-14 de la hoja del hospital como objetivo (solo texto de ayuda). */
+function borgLuz(w){ var p = data.pauta; var borg = num(w.borg);
+  if(borg == null) return null;
+  var mn = num(p.borgMin), mx = num(p.borgMax);
+  if(mn == null && mx == null) return "sin-rango";
+  if(mn != null && borg < mn) return borg >= mn - 1 ? "ambar" : "rojo";
+  if(mx != null && borg > mx) return borg <= mx + 1 ? "ambar" : "rojo";
+  return "verde"; }
+function borgLuzTexto(luz){ return luz === "verde" ? "Verde" : luz === "ambar" ? "Ámbar" : luz === "rojo" ? "Rojo" : ""; }
+function borgSemaforoHTML(w){ var luz = borgLuz(w);
+  if(luz === "sin-rango") return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG sin rango"><div class="luz"></div><div class="luz"></div><div class="luz"></div><div class="sin-rango">Pon tu rango BORG en Mi pauta</div></div>';
+  if(!luz) return '<div class="semaforo-mini"><span class="muted">—</span></div>';
+  return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG: luz ' + luz + ' encendida"><div class="luz roja' + (luz === "rojo" ? " encendida" : "") + '"></div><div class="luz ambar' + (luz === "ambar" ? " encendida" : "") + '"></div><div class="luz verde' + (luz === "verde" ? " encendida" : "") + '"></div><div class="num">' + esc(String(num(w.borg))) + ' · ' + borgLuzTexto(luz) + '</div></div>'; }
+$("btn-guardar-marcha").addEventListener("click", function(){
+  var w = { id: uid(), fecha: $("w-fecha").value || hoyISO(), reposo: $("w-reposo").value.trim(), medio: $("w-medio").value.trim(), maximo: $("w-maximo").value.trim(), borg: $("w-borg").value.trim(), minutos: $("w-minutos").value.trim(), km: $("w-km").value.trim(), comentarios: $("w-coment").value.trim() };
+  if(!w.fecha){ toast("Pon la fecha de la marcha."); return; }
+  data.walks.push(w); data.walks.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
+  ["w-reposo","w-medio","w-maximo","w-borg","w-minutos","w-km","w-coment"].forEach(function(id){ $(id).value = ""; });
+  saveAll(); scheduleSheetSync(); toast("Marcha guardada."); renderAll(); });
+function renderWalks(){ var el = $("lista-marchas");
+  if(!data.walks.length){ el.innerHTML = '<p class="muted">Todavía no hay marchas apuntadas. La primera, cuando andes hoy.</p>'; return; }
+  var rows = data.walks.map(function(w){ var al = walkAlerta(w);
+    var row = '<tr class="'+(al.length?"alerta":"")+'"><td>'+fmtFecha(w.fecha)+'</td><td>'+esc(w.reposo||"—")+'</td><td>'+esc(w.medio||"—")+'</td><td>'+esc(w.maximo||"—")+'</td><td>'+esc(w.borg||"—")+'</td><td>'+esc(w.minutos||"—")+'</td><td>'+esc(w.km||"—")+'</td><td>'+esc(w.comentarios||"—")+'</td><td>'+borgSemaforoHTML(w)+'</td><td><button class="btn small secondary" data-del-walk="'+w.id+'">Borrar</button></td></tr>';
+    if(al.length) row += '<tr class="alerta"><td colspan="10"><span class="pill bad">⚠️ '+esc(al.join("; "))+'</span></td></tr>';
+    return row; }).join("");
+  el.innerHTML = '<div class="table-wrap"><table><tr><th>Fecha</th><th>Pulso en reposo</th><th>Pulso medio</th><th>Pulso máximo</th><th>BORG</th><th>Tiempo (min)</th><th>Distancia (km)</th><th>Comentarios / Incidencias</th><th>Semáforo BORG</th><th></th></tr>' + rows + '</table></div>';
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-walk]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar esta marcha?")) return; data.walks = data.walks.filter(function(w){ return w.id !== b.getAttribute("data-del-walk"); }); saveAll(); scheduleSheetSync(); toast("Marcha borrada."); renderAll(); }); }); }
+
+/* ---------- Gráficos de evolución (SVG propio, sin librerías, funciona sin internet) ---------- */
+var chartRange = { tension: "semana", andar: "semana" };
+function chartDays(range){ return range === "mes" ? 30 : 7; }
+function chartEmpty(msg){ return '<p class="chart-empty">📊 ' + esc(msg) + '</p>'; }
+function svgLine(points, color){ return '<polyline points="' + points.map(function(p){ return p[0] + "," + p[1]; }).join(" ") + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'; }
+function chartTensionSVG(days){
+  var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - (days - 1)); cutoff.setHours(0,0,0,0);
+  var rows = data.tensions.filter(function(t){ var d = new Date(t.fecha); return !isNaN(d) && d >= cutoff && num(t.sistolica) != null; })
+    .sort(function(a,b){ return new Date(a.fecha) - new Date(b.fecha); });
+  if(!rows.length) return chartEmpty("Aún no hay datos de tensión. Apunta la primera y aquí verás cómo evoluciona.");
+  var W = 340, H = 190, PL = 34, PR = 8, PT = 12, PB = 24;
+  function y(v){ return PT + (1 - (v - 40) / 170) * (H - PT - PB); }
+  function x(i){ return PL + (rows.length === 1 ? (W - PL - PR) / 2 : i * (W - PL - PR) / (rows.length - 1)); }
+  var grid = [60, 100, 140, 180].map(function(g){ return '<line x1="' + PL + '" y1="' + y(g) + '" x2="' + (W - PR) + '" y2="' + y(g) + '" stroke="#E5D5CE" stroke-width="1"/><text x="4" y="' + (y(g) + 4) + '" font-size="10" fill="#64424B">' + g + '</text>'; }).join("");
+  var labels = rows.map(function(t, i){ var d = new Date(t.fecha); return '<text x="' + x(i) + '" y="' + (H - 6) + '" font-size="10" fill="#64424B" text-anchor="middle">' + d.getDate() + '/' + (d.getMonth() + 1) + '</text>'; }).join("");
+  function series(key, color){ var pts = rows.map(function(t, i){ return [x(i), y(Math.max(40, Math.min(210, num(t[key]))))]; }); return svgLine(pts, color) + pts.map(function(p){ return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="' + color + '"/>'; }).join(""); }
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de evolución de tensión y pulso">' + grid
+    + series("sistolica", "#C81E3A") + series("diastolica", "#2563EB") + series("pulso", "#15803D") + labels + '</svg>'
+    + '<p class="muted" style="margin:8px 0 0"><span style="color:#C81E3A">●</span> Sistólica (alta) &nbsp;<span style="color:#2563EB">●</span> Diastólica (baja) &nbsp;<span style="color:#15803D">●</span> Pulso</p>';
+}
+function chartWalkSVG(days){
+  var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - (days - 1)); cutoff.setHours(0,0,0,0);
+  var perDay = {};
+  data.walks.forEach(function(w){ if(!w.fecha) return; var d = new Date(w.fecha + "T12:00:00"); if(isNaN(d) || d < cutoff) return;
+    if(!perDay[w.fecha]) perDay[w.fecha] = { min: 0, borg: null };
+    perDay[w.fecha].min += num(w.minutos) || 0;
+    var b = num(w.borg); if(b != null) perDay[w.fecha].borg = perDay[w.fecha].borg == null ? b : Math.max(perDay[w.fecha].borg, b); });
+  var keys = Object.keys(perDay).sort();
+  if(!keys.length) return chartEmpty("Aún no hay datos de marchas. Apunta la primera y aquí verás tus minutos y tu BORG por día.");
+  var W = 340, H = 190, PL = 30, PR = 6, PT = 38, PB = 24;
+  var maxMin = Math.max.apply(null, keys.map(function(k){ return perDay[k].min; }).concat([30]));
+  var slot = (W - PL - PR) / keys.length, bw = Math.max(6, Math.min(34, slot * 0.62));
+  function y(v){ return PT + (1 - v / maxMin) * (H - PT - PB); }
+  var bars = keys.map(function(k, i){ var cx = PL + slot * i + slot / 2; var m = perDay[k].min; var b = perDay[k].borg;
+    var d = new Date(k + "T12:00:00");
+    return '<rect x="' + (cx - bw / 2) + '" y="' + y(m) + '" width="' + bw + '" height="' + Math.max(2, (H - PB) - y(m)) + '" rx="3" fill="#15803D"/>'
+      + '<text x="' + cx + '" y="' + (y(m) - 4) + '" font-size="11" font-weight="700" fill="#2B1218" text-anchor="middle">' + m + '′</text>'
+      + (b != null ? '<text x="' + cx + '" y="12" font-size="10" fill="#B45309" text-anchor="middle">BORG ' + b + '</text>' : '')
+      + '<text x="' + cx + '" y="' + (H - 6) + '" font-size="10" fill="#64424B" text-anchor="middle">' + d.getDate() + '/' + (d.getMonth() + 1) + '</text>'; }).join("");
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de minutos andados y BORG por día">' + bars + '</svg>'
+    + '<p class="muted" style="margin:8px 0 0">🟩 Minutos andados por día · BORG encima de cada barra.</p>';
+}
+function renderCharts(){
+  var gt = $("grafico-tension"); if(gt) gt.innerHTML = chartTensionSVG(chartDays(chartRange.tension));
+  var ga = $("grafico-andar"); if(ga) ga.innerHTML = chartWalkSVG(chartDays(chartRange.andar));
+}
+document.addEventListener("click", function(ev){
+  var b = ev.target && ev.target.closest ? ev.target.closest(".chart-toggle button") : null; if(!b) return;
+  var box = b.parentElement; Array.prototype.forEach.call(box.querySelectorAll("button"), function(x){ x.classList.remove("on"); });
+  b.classList.add("on");
+  if(box.id === "toggle-tension") chartRange.tension = b.getAttribute("data-range");
+  if(box.id === "toggle-andar") chartRange.andar = b.getAttribute("data-range");
+  renderCharts();
+});
+
+/* ---------- Tensión y pulso ---------- */
+function addTension(sis, dia, pulso, obs, origen){ var t = { id: uid(), fecha: $("t-fecha").value || ahoraLocal(), sistolica: String(sis||"").trim(), diastolica: String(dia||"").trim(), pulso: String(pulso||"").trim(), observaciones: String(obs||"").trim(), origen: origen || "manual" };
+  if(!t.sistolica && !t.diastolica && !t.pulso){ toast("Pon al menos la tensión o el pulso."); return false; }
+  data.tensions.push(t); data.tensions.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); }); saveAll(); renderAll(); return true; }
+$("btn-guardar-tension").addEventListener("click", function(){ if(addTension($("t-sis").value, $("t-dia").value, $("t-pulso").value, $("t-obs").value, "manual")){ ["t-sis","t-dia","t-pulso","t-obs"].forEach(function(id){ $(id).value = ""; }); toast("Tensión guardada."); } });
+/* ---------- Dictado por voz (tensión y observaciones) ---------- */
+/* SpeechRecognition del navegador, en español. Los botones de micrófono solo se ven si el navegador lo admite. Nada se guarda: el dictado solo rellena los campos y guarda quien pulsa Guardar. */
+var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+function palabrasANumero(texto){
+  var mapa = { cero:0, uno:1, una:1, dos:2, tres:3, cuatro:4, cinco:5, seis:6, siete:7, ocho:8, nueve:9, diez:10, once:11, doce:12, trece:13, catorce:14, quince:15, dieciseis:16, diecisiete:17, dieciocho:18, diecinueve:19, veinte:20, veintiuno:21, veintidos:22, veintitres:23, veinticuatro:24, veinticinco:25, veintiseis:26, veintisiete:27, veintiocho:28, veintinueve:29, treinta:30, cuarenta:40, cincuenta:50, sesenta:60, setenta:70, ochenta:80, noventa:90, cien:100, ciento:100, doscientos:200, "y": null };
+  var toks = String(texto || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter(Boolean);
+  var nums = [], cur = null, has = false;
+  function flush(){ if(has && cur != null){ nums.push(cur); } cur = null; has = false; }
+  toks.forEach(function(t){
+    if(/^[0-9]+$/.test(t)){ flush(); nums.push(parseInt(t, 10)); return; }
+    if(t === "y"){ return; }
+    if(mapa[t] == null){ flush(); return; }
+    var v = mapa[t];
+    if(v === 100){ if(cur != null && cur >= 100) flush(); cur = (cur == null ? 1 : cur) * 100; has = true; }
+    else if(v >= 20){ if(cur != null && (cur % 100) >= 20){ flush(); } cur = (cur == null ? 0 : cur) + v; has = true; }
+    else { cur = (cur == null ? 0 : cur) + v; has = true; }
+  });
+  flush();
+  return nums;
+}
+function dictar(onResult){
+  if(!SpeechRec){ toast("Este navegador no admite el dictado por voz."); return; }
+  var rec = new SpeechRec(); rec.lang = "es-ES"; rec.interimResults = false; rec.maxAlternatives = 1;
+  rec.onresult = function(ev){ var txt = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : ""; onResult(txt); };
+  rec.onerror = function(){ toast("No se pudo dictar. Prueba de nuevo."); };
+  try{ rec.start(); toast("🎤 Escuchando… di la tensión, por ejemplo «ciento veinte ochenta»."); }catch(e){ toast("No se pudo empezar el dictado."); }
+}
+function initVoz(){
+  if(!SpeechRec) return; /* sin soporte, los botones de micrófono quedan ocultos */
+  var bT = $("btn-voz-tension"), bO = $("btn-voz-obs");
+  if(bT) bT.style.display = "inline-flex";
+  if(bO) bO.style.display = "inline-flex";
+  if(bT) bT.addEventListener("click", function(){
+    dictar(function(txt){
+      var nums = palabrasANumero(txt);
+      if(nums.length >= 2){ $("t-sis").value = nums[0]; $("t-dia").value = nums[1]; if(nums[2] != null) $("t-pulso").value = nums[2]; toast("Dictado rellenado: revisa los números y pulsa Guardar."); }
+      else { $("t-obs").value = ($("t-obs").value ? $("t-obs").value + " " : "") + txt; toast("Dictado puesto en observaciones. Revisa y pulsa Guardar."); }
+    });
+  });
+  if(bO) bO.addEventListener("click", function(){
+    dictar(function(txt){ $("t-obs").value = ($("t-obs").value ? $("t-obs").value + " " : "") + txt; toast("Dictado añadido a observaciones."); });
+  });
+}
+function renderTensions(){ var el = $("lista-tensiones");
+  if(!data.tensions.length){ el.innerHTML = '<p class="muted">Todavía no hay registros. Apunta la tensión las veces que quieras.</p>'; return; }
+  el.innerHTML = data.tensions.map(function(t){ return '<div class="check" style="display:block"><b>'+esc(t.sistolica||"—")+' / '+esc(t.diastolica||"—")+'</b> · pulso '+esc(t.pulso||"—")+' l.p.m.<br><span class="muted">'+fmtFechaHora(t.fecha)+(t.origen==="foto"?" · 📷 foto al tensiómetro":"")+'</span>'+(t.observaciones?'<br>'+esc(t.observaciones):"")+'<br><button class="btn small secondary" data-del-tension="'+t.id+'">Borrar</button></div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-tension]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este registro?")) return; data.tensions = data.tensions.filter(function(t){ return t.id !== b.getAttribute("data-del-tension"); }); saveAll(); toast("Registro borrado."); renderAll(); }); }); }
+
+/* ---------- Pastillero ---------- */
+$("btn-guardar-medicina").addEventListener("click", function(){
+  var nombre = $("m-nombre").value.trim(); var horas = $("m-horas").value.split(",").map(function(h){ return h.trim(); }).filter(Boolean);
+  if(!nombre){ toast("Pon el nombre del medicamento."); return; }
+  if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return; }
+  data.pills.push({ id: uid(), nombre: nombre, dosis: $("m-dosis").value.trim(), horas: horas, notas: $("m-notas").value.trim(), tomadas: {} });
+  ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
+  saveAll(); resendPushSchedule(); toast("Medicina añadida al pastillero."); renderAll(); });
+function hoyKey(){ return hoyISO(); }
+function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
+  if(!data.pills.length){ el.innerHTML = '<p class="muted">Todavía no hay medicinas. Añade la primera arriba.</p>'; return; }
+  el.innerHTML = data.pills.map(function(m){ var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
+    var checks = m.horas.map(function(h){ var done = tomadas.indexOf(h) >= 0;
+      return '<label class="check'+(done?" done":"")+'"><input type="checkbox" data-pill="'+m.id+'" data-hora="'+esc(h)+'"'+(done?" checked":"")+'><span><span class="nm"><b>'+esc(h)+'</b> — '+esc(m.nombre)+'</span>'+(m.dosis?'<br><span class="muted">'+esc(m.dosis)+'</span>':"")+'</span></label>'; }).join("");
+    return '<div style="margin-bottom:14px"><b>'+esc(m.nombre)+'</b>'+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+(m.notas?'<br><span class="muted">'+esc(m.notas)+'</span>':"")+'<br><button class="btn small secondary" data-del-pill="'+m.id+'">Quitar medicina</button>'+checks+'</div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-pill]"), function(cb){ cb.addEventListener("change", function(){ var m = data.pills.find(function(x){ return x.id === cb.getAttribute("data-pill"); }); if(!m) return; if(!m.tomadas) m.tomadas = {}; if(!m.tomadas[hoy]) m.tomadas[hoy] = []; var h = cb.getAttribute("data-hora");
+    if(cb.checked && m.tomadas[hoy].indexOf(h) < 0) m.tomadas[hoy].push(h);
+    if(!cb.checked) m.tomadas[hoy] = m.tomadas[hoy].filter(function(x){ return x !== h; });
+    saveAll(); renderAll(); }); });
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-pill]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Quitar esta medicina del pastillero?")) return; data.pills = data.pills.filter(function(m){ return m.id !== b.getAttribute("data-del-pill"); }); saveAll(); toast("Medicina quitada."); renderAll(); }); }); }
+$("btn-avisos").addEventListener("click", function(){
+  if(!("Notification" in window)){ toast("Este navegador no admite avisos."); return; }
+  Notification.requestPermission().then(function(p){ toast(p === "granted" ? "Recordatorios activados. Avisan mientras la app está abierta." : "Sin permiso, no puedo avisarte. Las tomas pendientes se ven en Hoy."); }); });
+function checkReminders(){ if(!("Notification" in window) || Notification.permission !== "granted") return; var now = new Date(); var hh = String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"); var hoy = hoyKey();
+  data.pills.forEach(function(m){ m.horas.forEach(function(h){ if(h === hh){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0){ try{ new Notification("💊 " + m.nombre, { body: "Es la hora: " + h + (m.dosis ? " — " + m.dosis : "") }); }catch(e){} } } }); }); }
+setInterval(checkReminders, 60000);
+
+/* ---------- Episodios (dolor) ---------- */
+$("btn-guardar-episodio").addEventListener("click", function(){ var q = $("d-que").value.trim(); if(!q){ toast("Describe qué te ha pasado."); return; }
+  data.episodios.push({ id: uid(), fecha: $("d-fecha").value || ahoraLocal(), texto: q }); data.episodios.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
+  $("d-que").value = ""; saveAll(); toast("Episodio guardado."); renderAll(); });
+function renderEpisodios(){ var el = $("lista-episodios"); if(!el) return;
+  if(!data.episodios.length){ el.innerHTML = '<p class="muted">Sin episodios apuntados.</p>'; return; }
+  el.innerHTML = data.episodios.map(function(e){ return '<div class="check" style="display:block"><b>'+fmtFechaHora(e.fecha)+'</b><br>'+esc(e.texto)+'<br><button class="btn small secondary" data-del-ep="'+e.id+'">Borrar</button></div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-ep]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este episodio?")) return; data.episodios = data.episodios.filter(function(e){ return e.id !== b.getAttribute("data-del-ep"); }); saveAll(); renderAll(); }); }); }
+
+/* ---------- Hoy y resumen ---------- */
+/* ---------- Aviso de revisión del marcapasos / desfibrilador ---------- */
+/* Usa los campos que ya existen en la pauta: pauta.dispositivo y pauta.revision. */
+function reviewWarningHTML(){
+  var p = data.pauta; if(!p.revision) return "";
+  var dev = (p.dispositivo || "").indexOf("Ninguno") === 0 || !p.dispositivo ? "dispositivo" : p.dispositivo.toLowerCase();
+  var parts = p.revision.split("-"); if(parts.length !== 3) return "";
+  var rev = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+  var now = new Date(); var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var dias = Math.round((rev - today) / 86400000);
+  var fecha = parts[2] + "/" + parts[1] + "/" + parts[0];
+  if(dias < 0) return '<div class="alert"><b>⚠️ Revisión del ' + esc(dev) + ' el ' + fecha + ' — ya pasada</b><br>Pide cita para la revisión cuanto antes.</div>';
+  if(dias <= 30) return '<div class="warnbox"><b>⚠️ Revisión del ' + esc(dev) + ' el ' + fecha + ' — quedan ' + dias + (dias === 1 ? ' día' : ' días') + '</b><br>Apunta la fecha para no olvidarla.</div>';
+  return "";
+}
+/* ---------- Rutina de «Tu día» en Hoy ---------- */
+/* «Tu día» es configurable: cada widget es una actividad elegida por el
+   usuario (ver TIPOS_WIDGET). La tensión se puede repetir (una por toma);
+   la medicación se separa por comida (desayuno <12:00, comida 12:00-18:00,
+   cena ≥18:00). La duración de la marcha es la de la pauta del usuario;
+   solo si no la ha rellenado se muestra 60 min. */
+function tensionesHoy(){ var hoy = hoyISO();
+  return data.tensions.filter(function(t){ return (t.fecha||"").slice(0,10) === hoy; }).sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }); }
+function horaCorta(v){ return (v||"").slice(11,16) || "—"; }
+/* Widgets de «Tu día»: el usuario elige qué actividades aparecen.
+   data.widgets es una lista ORDENADA de tipos; «tension» puede repetirse
+   (una por cada toma). Los demás tipos son únicos. Sin configurar o con
+   la lista vacía, «Tu día» empieza vacío: cada usuario añade lo que
+   necesita. Migración v1.15: tension1/tension2 → tension,
+   medicacion → medicacion-desayuno (el orden se conserva). */
+var TIPOS_WIDGET = [
+  { tipo: "tension", titulo: "Tomar la tensión", vista: "tension" },
+  { tipo: "medicacion-desayuno", titulo: "Medicación del desayuno", vista: "pastillero" },
+  { tipo: "medicacion-comida", titulo: "Medicación de la comida", vista: "pastillero" },
+  { tipo: "medicacion-cena", titulo: "Medicación de la cena", vista: "pastillero" },
+  { tipo: "andar", titulo: null, vista: "andar" }
+];
+var TIPOS_UNICOS = ["medicacion-desayuno", "medicacion-comida", "medicacion-cena", "andar"];
+var MIGRAR_WIDGET = { tension1: "tension", tension2: "tension", medicacion: "medicacion-desayuno" };
+function widgetsElegidos(){
+  if(!Array.isArray(data.widgets)) return [];
+  var validos = TIPOS_WIDGET.map(function(t){ return t.tipo; });
+  return data.widgets.map(function(id){ return MIGRAR_WIDGET[id] || id; })
+    .filter(function(id){ return validos.indexOf(id) >= 0; });
+}
+function medStats(desde, hasta){
+  var hoy = hoyISO(); var total = 0, hechas = 0;
+  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
+    if(h >= desde && h < hasta){ total++; var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) >= 0) hechas++; }
+  }); });
+  return { total: total, hechas: hechas };
+}
+function ordinalToma(n){
+  return ["Primera toma del día", "Segunda toma del día", "Tercera toma del día", "Cuarta toma del día"][n] || ("Toma " + (n + 1) + " del día");
+}
+function pasosPara(elegidos){
+  var tens = tensionesHoy();
+  var andado = data.walks.some(function(w){ return w.fecha === hoyISO(); });
+  var dur = (data.pauta.duracion || "").trim();
+  var andarTxt = dur ? "Andar " + esc(dur) + " min" : "Andar 60 min";
+  var nTension = 0;
+  return elegidos.map(function(tipo){
+    if(tipo === "tension"){
+      var n = nTension++;
+      return { tipo: tipo, vista: "tension", titulo: "Tomar la tensión", hecho: tens.length > n,
+        detalle: tens.length > n ? "Apuntada a las " + horaCorta(tens[n].fecha) : ordinalToma(n) };
+    }
+    if(tipo === "andar"){
+      return { tipo: tipo, vista: "andar", titulo: andarTxt, hecho: andado,
+        detalle: andado ? "Marcha de hoy apuntada" : "Tu marcha de hoy" };
+    }
+    var win = tipo === "medicacion-desayuno" ? ["00:00", "12:00"] : tipo === "medicacion-comida" ? ["12:00", "18:00"] : ["18:00", "24:00"];
+    var comida = tipo === "medicacion-desayuno" ? "desayuno" : tipo === "medicacion-comida" ? "comida" : "cena";
+    var tituloMed = tipo === "medicacion-desayuno" ? "Medicación del desayuno" : tipo === "medicacion-comida" ? "Medicación de la comida" : "Medicación de la cena";
+    var cuando = tipo === "medicacion-desayuno" ? "la mañana" : tipo === "medicacion-comida" ? "la comida" : "la cena";
+    var st = medStats(win[0], win[1]);
+    return { tipo: tipo, vista: "pastillero", titulo: tituloMed, hecho: st.total > 0 && st.hechas === st.total, neutro: st.total === 0,
+      detalle: st.total === 0 ? "No tienes medicación de " + comida + " apuntada" : (st.hechas === st.total ? "Todas las tomas de " + cuando + ", hechas" : "Te faltan " + (st.total - st.hechas) + " de " + st.total + " tomas de " + cuando) };
+  });
+}
+function quitarWidget(i){
+  var elegidos = widgetsElegidos();
+  elegidos.splice(i, 1);
+  data.widgets = elegidos;
+  saveAll(); renderAll(); toast("Widget quitado. Puedes volver a ponerlo con «Añadir Widget»."); }
+function moverWidget(i, dir){
+  var elegidos = widgetsElegidos();
+  var j = i + dir;
+  if(j < 0 || j >= elegidos.length) return;
+  var tmp = elegidos[i]; elegidos[i] = elegidos[j]; elegidos[j] = tmp;
+  data.widgets = elegidos;
+  saveAll(); renderAll(); }
+function renderSelectorWidgets(){
+  var box = $("selector-widgets");
+  if(!box) return;
+  var elegidos = widgetsElegidos();
+  var dur = (data.pauta.duracion || "").trim();
+  var andarTxt = dur ? "Andar " + dur + " min" : "Andar 60 min";
+  var desc = {
+    "tension": "Añade una toma más: primera, segunda, tercera…",
+    "medicacion-desayuno": "Pastillas de la mañana (antes de las 12:00)",
+    "medicacion-comida": "Pastillas del mediodía (de 12:00 a 18:00)",
+    "medicacion-cena": "Pastillas de la noche (desde las 18:00)",
+    "andar": andarTxt + ": tu marcha de hoy"
+  };
+  var titulos = { "tension": "Tomar la tensión", "medicacion-desayuno": "Medicación del desayuno", "medicacion-comida": "Medicación de la comida", "medicacion-cena": "Medicación de la cena", "andar": andarTxt };
+  box.innerHTML = '<p class="muted" style="margin-top:0">Añade actividades a «Tu día». La tensión se puede añadir varias veces, una por cada toma. Cada widget marca hecho o pendiente con los datos de hoy.</p>' + TIPOS_WIDGET.map(function(t){
+    var n = elegidos.filter(function(x){ return x === t.tipo; }).length;
+    var unico = TIPOS_UNICOS.indexOf(t.tipo) >= 0;
+    var extra = t.tipo === "tension" && n > 0 ? ' <span class="muted">· ya tienes ' + n + '</span>' : '';
+    var boton = (unico && n > 0) ? '<span class="pill">Ya está en Tu día</span>' : '<button class="btn" data-anadir="' + t.tipo + '">Añadir</button>';
+    return '<div class="widget-opcion"><span style="flex:1"><b>' + esc(titulos[t.tipo]) + '</b>' + extra + '<br><span class="muted">' + esc(desc[t.tipo]) + '</span></span>' + boton + '</div>';
+  }).join("") + '<button class="btn secondary" id="btn-cerrar-widgets" style="margin-top:10px">Cerrar</button>';
+  Array.prototype.forEach.call(box.querySelectorAll("[data-anadir]"), function(b){
+    b.addEventListener("click", function(){
+      var actual = widgetsElegidos();
+      actual.push(b.getAttribute("data-anadir"));
+      data.widgets = actual;
+      saveAll(); renderAll();
+    });
+  });
+  var cerrar = $("btn-cerrar-widgets");
+  if(cerrar) cerrar.addEventListener("click", function(){ box.hidden = true; });
+}
+function renderRutina(){
+  var elegidos = widgetsElegidos();
+  var pasos = pasosPara(elegidos);
+  if(!pasos.length){
+    $("hoy-rutina").innerHTML = '<li><p class="muted">Añade tu primera actividad para montar tu día.</p></li>';
+  } else {
+    $("hoy-rutina").innerHTML = pasos.map(function(p, i){
+      var estado = p.neutro ? '<span class="pill info">Sin medicación</span>' : (p.hecho ? '<span class="pill">✅ Hecho</span>' : '<span class="pill warn">⏳ Pendiente</span>');
+      var subir = i === 0
+        ? '<button type="button" class="paso-mover" disabled aria-label="Este widget ya está arriba">↑</button>'
+        : '<button type="button" class="paso-mover" aria-label="Subir este widget" data-subir="' + i + '">↑</button>';
+      var bajar = i === pasos.length - 1
+        ? '<button type="button" class="paso-mover" disabled aria-label="Este widget ya está abajo">↓</button>'
+        : '<button type="button" class="paso-mover" aria-label="Bajar este widget" data-bajar="' + i + '">↓</button>';
+      return '<li><button type="button" class="paso' + (p.hecho ? ' hecho' : '') + '" onclick="goto(\'' + p.vista + '\')"><span class="num">' + (i + 1) + '</span><span class="txt"><b>' + p.titulo + '</b><span>' + esc(p.detalle) + '</span></span>' + estado + '</button><div class="paso-controles">' + subir + bajar + '<button type="button" class="paso-quitar" aria-label="Quitar este widget" data-quitar="' + i + '">×</button></div></li>';
+    }).join("");
+    Array.prototype.forEach.call(document.querySelectorAll("#hoy-rutina [data-quitar]"), function(b){
+      b.addEventListener("click", function(){ quitarWidget(parseInt(b.getAttribute("data-quitar"), 10)); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#hoy-rutina [data-subir]"), function(b){
+      b.addEventListener("click", function(){ moverWidget(parseInt(b.getAttribute("data-subir"), 10), -1); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#hoy-rutina [data-bajar]"), function(b){
+      b.addEventListener("click", function(){ moverWidget(parseInt(b.getAttribute("data-bajar"), 10), 1); });
+    });
+  }
+  renderSelectorWidgets();
+}
+$("btn-anadir-widget").addEventListener("click", function(){ var box = $("selector-widgets"); if(box){ box.hidden = !box.hidden; renderSelectorWidgets(); } });
+function renderHoy(){ var hoy = hoyISO();
+  renderRutina();
+  $("hoy-revision").innerHTML = reviewWarningHTML();
+  var pr = $("pauta-revision-aviso"); if(pr) pr.innerHTML = reviewWarningHTML();
+  var andado = data.walks.some(function(w){ return w.fecha === hoy; });
+  $("hoy-andar").innerHTML = andado ? '<p><span class="pill">✅ Marcha de hoy apuntada</span></p>' : '<p><span class="pill warn">⏳ Hoy todavía no has apuntado la marcha</span></p>';
+  var ult = data.tensions[0];
+  $("hoy-tension").innerHTML = ult ? '<p class="big-num">'+esc(ult.sistolica||"—")+' / '+esc(ult.diastolica||"—")+'</p><p class="muted">Pulso '+esc(ult.pulso||"—")+' l.p.m. · '+fmtFechaHora(ult.fecha)+'</p>' : '<p class="muted">Todavía no hay ningún registro de tensión.</p>';
+  var next = null;
+  data.pills.forEach(function(m){ m.horas.forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0 && (!next || h < next.hora)) next = { hora: h, med: m }; }); });
+  $("hoy-pastilla").innerHTML = !data.pills.length ? '<p class="muted">No hay medicinas en el pastillero.</p>' : (next ? '<p><b>'+esc(next.hora)+'</b> — '+esc(next.med.nombre)+(next.med.dosis?' ('+esc(next.med.dosis)+')':"")+'</p>' : '<p><span class="pill">✅ Todas las tomas de hoy, hechas</span></p>');
+  $("hoy-pauta").innerHTML = pautaResumenHTML();
+  $("hoy-pauta-vacia").innerHTML = pautaCompleta() ? "" : '<div class="warnbox"><b>👋 Empieza por tu pauta.</b><br>Rellena una sola vez tus valores (ejercicio, pulso, BORG…) y queda guardada. <button class="btn small" onclick="goto(\'pauta\')" style="margin-top:10px">Rellenar mi pauta</button></div>';
+  $("andar-pauta").innerHTML = '<h2>Tu pauta</h2>' + pautaResumenHTML() + (pautaCompleta() ? "" : '<p><button class="btn secondary" onclick="goto(\'pauta\')">Rellenar mi pauta</button></p>');
+}
+function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
+  var walks = data.walks.slice(0, 10).map(function(w){ return '<tr><td>'+fmtFecha(w.fecha)+'</td><td>'+esc(w.reposo||"—")+'</td><td>'+esc(w.medio||"—")+'</td><td>'+esc(w.maximo||"—")+'</td><td>'+esc(w.borg||"—")+'</td><td>'+esc(w.minutos||"—")+'</td><td>'+esc(w.km||"—")+'</td><td>'+esc(w.comentarios||"—")+'</td></tr>'; }).join("");
+  var tens = data.tensions.slice(0, 10).map(function(t){ return '<tr><td>'+fmtFechaHora(t.fecha)+'</td><td>'+esc(t.sistolica||"—")+' / '+esc(t.diastolica||"—")+'</td><td>'+esc(t.pulso||"—")+'</td><td>'+esc(t.observaciones||"—")+'</td></tr>'; }).join("");
+  el.innerHTML = '<h2>Resumen para el médico</h2><p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p><p class="muted">Generado el ' + fmtFecha(hoyISO()) + ' · Corazón Fuerte v1.18</p>'
+    + '<h3>Mi pauta</h3>' + pautaResumenHTML()
+    + '<h3>Pauta alimenticia</h3>' + (function(){ var s = data.semaforo; var partes = [];
+      if(s.limiteSal) partes.push("Límite de sal: <b>" + esc(s.limiteSal) + " g por 100 g</b>");
+      if(s.limiteSaturadas) partes.push("Límite de grasas saturadas: <b>" + esc(s.limiteSaturadas) + " g por 100 g</b>");
+      return partes.length ? '<p>' + partes.join(" · ") + '</p>' : '<p class="muted">Sin pauta alimenticia guardada.</p>'; })()
+    + '<h3>Salud</h3><dl class="kv"><dt>Diagnóstico</dt><dd>'+esc(p.diagnostico||"—")+'</dd><dt>Dispositivo</dt><dd>'+esc(p.dispositivo||"—")+(p.modelo?" ("+esc(p.modelo)+")":"")+'</dd><dt>Próxima revisión</dt><dd>'+(p.revision?fmtFecha(p.revision):"—")+'</dd><dt>Médico</dt><dd>'+esc(p.medico||"—")+(p.telMedico?" · "+esc(p.telMedico):"")+'</dd></dl>'
+    + '<h3>Evolución — tensión y pulso (últimos 30 días)</h3><div class="chart-box">' + chartTensionSVG(30) + '</div>'
+    + '<h3>Evolución — andar (últimos 30 días)</h3><div class="chart-box">' + chartWalkSVG(30) + '</div>'
+    + '<h3>Últimas marchas</h3>' + (walks ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Reposo</th><th>Medio</th><th>Máximo</th><th>BORG</th><th>Min</th><th>Km</th><th>Comentarios</th></tr>'+walks+'</table></div>' : '<p class="muted">Sin marchas apuntadas.</p>')
+    + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión.</p>')
+    + '<h3>Episodios</h3>' + (data.episodios.length ? '<ul class="tight">' + data.episodios.slice(0,10).map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados.</p>')
+    + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>'); }
+function renderAll(){ renderHoy(); renderWalks(); renderTensions(); renderPills(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); }
+</script>
+<script>
+"use strict";
+/* ---------- Google: entrar con tu correo (PKCE, sin secreto en la página) ---------- */
+function folderUrl(){ /* La redirección vuelve a la carpeta de la app, nunca a la raíz del dominio (lección de la v62). */
+  var path = location.pathname.replace(/[^\/]*$/, "");
+  if(!path.endsWith("/")) path += "/";
+  return location.origin + path; }
+function clientConfigured(){ return GOOGLE_CLIENT_ID && GOOGLE_CLIENT_ID.indexOf("PON_AQUI") !== 0; }
+function getTokens(){ try{ return JSON.parse(localStorage.getItem(DRIVE_TOKENS_KEY) || "null"); }catch(e){ return null; } }
+function setTokens(t){ if(t) localStorage.setItem(DRIVE_TOKENS_KEY, JSON.stringify(t)); else localStorage.removeItem(DRIVE_TOKENS_KEY); }
+function isConnected(){ var t = getTokens(); return !!(t && t.refresh_token); }
+function b64url(buf){ var s = btoa(String.fromCharCode.apply(null, new Uint8Array(buf))); return s.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+function randomStr(n){ var a = new Uint8Array(n); crypto.getRandomValues(a); return Array.prototype.map.call(a, function(x){ return ("0"+x.toString(16)).slice(-2); }).join(""); }
+async function startGoogleLogin(){
+  if(!clientConfigured()){
+    $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Pedro tiene que crear el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google y guardar tus datos en tu Drive. Además, en ese proyecto hay que activar la API de Google Sheets.</div>';
+    toast("Google aún no está activado en esta versión."); return; }
+  var verifier = randomStr(48);
+  var digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier));
+  sessionStorage.setItem("corazon-fuerte-pkce-verifier", verifier);
+  sessionStorage.setItem("corazon-fuerte-oauth-state", randomStr(16));
+  var state = sessionStorage.getItem("corazon-fuerte-oauth-state");
+  var url = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + encodeURIComponent(GOOGLE_CLIENT_ID)
+    + "&redirect_uri=" + encodeURIComponent(folderUrl())
+    + "&response_type=code&scope=" + encodeURIComponent("https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/spreadsheets")
+    + "&code_challenge=" + b64url(digest) + "&code_challenge_method=S256"
+    + "&access_type=offline&prompt=consent&state=" + encodeURIComponent(state);
+  location.href = url; }
+async function handleOAuthCallback(){
+  var params = new URLSearchParams(location.search);
+  var code = params.get("code"), err = params.get("error"), state = params.get("state");
+  if(err){ history.replaceState(null, "", folderUrl()); toast("No se pudo entrar con Google: " + err); return; }
+  if(!code) return;
+  if(state !== sessionStorage.getItem("corazon-fuerte-oauth-state")){ history.replaceState(null, "", folderUrl()); toast("La entrada con Google no se pudo verificar. Inténtalo de nuevo."); return; }
+  var verifier = sessionStorage.getItem("corazon-fuerte-pkce-verifier");
+  try{
+    var r = await fetch(AUTH_WORKER_URL_DEFAULT + "/exchange", { method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ code: code, code_verifier: verifier, redirect_uri: folderUrl() }) });
+    var j = await r.json();
+    if(!r.ok || !j.access_token) throw new Error(j.error_description || j.error || ("HTTP " + r.status));
+    setTokens({ access_token: j.access_token, refresh_token: j.refresh_token || (getTokens()||{}).refresh_token, expires_at: Date.now() + (j.expires_in||3600)*1000 });
+    history.replaceState(null, "", folderUrl());
+    toast("Has entrado con Google. Tus datos se guardan también en Drive.");
+    await saveToDrive(true);
+  }catch(e){ history.replaceState(null, "", folderUrl()); toast("No se pudo entrar con Google: " + e.message); }
+  sessionStorage.removeItem("corazon-fuerte-pkce-verifier"); sessionStorage.removeItem("corazon-fuerte-oauth-state"); }
+async function getAccessToken(){
+  var t = getTokens(); if(!t) return null;
+  if(t.access_token && t.expires_at && Date.now() < t.expires_at - 60000) return t.access_token;
+  if(!t.refresh_token) return null;
+  var r = await fetch(AUTH_WORKER_URL_DEFAULT + "/refresh", { method:"POST", headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ refresh_token: t.refresh_token }) });
+  var j = await r.json(); if(!r.ok || !j.access_token) return null;
+  t.access_token = j.access_token; t.expires_at = Date.now() + (j.expires_in||3600)*1000; setTokens(t); return t.access_token; }
+async function driveFetch(url, opts, retry){
+  var token = await getAccessToken(); if(!token) throw new Error("Sin sesión de Google");
+  opts = opts || {}; opts.headers = Object.assign({}, opts.headers || {}, { "Authorization": "Bearer " + token });
+  var r = await fetch(url, opts);
+  if(r.status === 401 && retry !== false){ var t2 = await getAccessToken(); if(t2){ opts.headers.Authorization = "Bearer " + t2; r = await fetch(url, opts); } }
+  return r; }
+async function ensureDriveFolder(){
+  var cached = localStorage.getItem(DRIVE_FOLDER_ID_KEY); if(cached) return cached;
+  var q = encodeURIComponent("name = '" + DRIVE_FOLDER + "' and mimeType = 'application/vnd.google-apps.folder' and trashed = false");
+  var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name)&spaces=drive");
+  var j = await r.json(); if(!r.ok) throw new Error((j.error && j.error.message) || ("Drive " + r.status));
+  if(j.files && j.files.length){ localStorage.setItem(DRIVE_FOLDER_ID_KEY, j.files[0].id); return j.files[0].id; }
+  var c = await driveFetch("https://www.googleapis.com/drive/v3/files", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: DRIVE_FOLDER, mimeType:"application/vnd.google-apps.folder" }) });
+  var cj = await c.json(); if(!c.ok) throw new Error((cj.error && cj.error.message) || ("Drive " + c.status));
+  localStorage.setItem(DRIVE_FOLDER_ID_KEY, cj.id); return cj.id; }
+async function findDriveFile(folderId, name){
+  var q = encodeURIComponent("name = '" + name + "' and '" + folderId + "' in parents and trashed = false");
+  var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name)&spaces=drive");
+  var j = await r.json(); if(!r.ok) throw new Error((j.error && j.error.message) || ("Drive " + r.status));
+  return (j.files && j.files.length) ? j.files[0] : null; }
+async function saveToDrive(manual){
+  if(!isConnected()){ updateDriveUI(); return false; }
+  try{
+    var folderId = await ensureDriveFolder();
+    var body = JSON.stringify(data, null, 2);
+    var existing = await findDriveFile(folderId, DATA_FILE);
+    var fileId = existing ? existing.id : localStorage.getItem(DRIVE_FILE_ID_KEY);
+    if(fileId){
+      var up = await driveFetch("https://www.googleapis.com/upload/drive/v3/files/" + fileId + "?uploadType=media", { method:"PATCH", headers:{ "Content-Type":"application/json" }, body: body });
+      if(!up.ok){ var uj = await up.json().catch(function(){ return {}; }); throw new Error((uj.error && uj.error.message) || ("Drive " + up.status)); }
+    } else {
+      var boundary = "corazon-fuerte-" + Date.now();
+      var meta = JSON.stringify({ name: DATA_FILE, parents:[folderId], mimeType:"application/json" });
+      var multipart = "--" + boundary + "\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n" + meta + "\r\n--" + boundary + "\r\nContent-Type: application/json\r\n\r\n" + body + "\r\n--" + boundary + "--";
+      var cr = await driveFetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", { method:"POST", headers:{ "Content-Type":"multipart/related; boundary=" + boundary }, body: multipart });
+      var cj = await cr.json(); if(!cr.ok) throw new Error((cj.error && cj.error.message) || ("Drive " + cr.status));
+      localStorage.setItem(DRIVE_FILE_ID_KEY, cj.id);
+    }
+    /* Copia con fecha, una al día, como en Ticket a ticket. */
+    var dated = "corazon-fuerte-datos-" + hoyISO() + ".json";
+    var already = await findDriveFile(folderId, dated);
+    if(!already){
+      var boundary2 = "corazon-fuerte-" + Date.now();
+      var meta2 = JSON.stringify({ name: dated, parents:[folderId], mimeType:"application/json" });
+      var mp2 = "--" + boundary2 + "\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n" + meta2 + "\r\n--" + boundary2 + "\r\nContent-Type: application/json\r\n\r\n" + body + "\r\n--" + boundary2 + "--";
+      await driveFetch("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", { method:"POST", headers:{ "Content-Type":"multipart/related; boundary=" + boundary2 }, body: mp2 });
+    }
+    var stamp = new Date().toLocaleString("es-ES");
+    localStorage.setItem(DRIVE_LAST_KEY, stamp);
+    updateDriveUI();
+    if(manual) toast("Guardado en tu Drive.");
+    return true;
+  }catch(e){
+    localStorage.setItem(DRIVE_LAST_KEY, "Error: " + e.message);
+    updateDriveUI();
+    if(manual) toast("No se pudo guardar en Drive: " + e.message);
+    return false; } }
+async function loadFromDrive(){
+  if(!isConnected()) return false;
+  try{
+    var folderId = await ensureDriveFolder();
+    var f = await findDriveFile(folderId, DATA_FILE); if(!f) return false;
+    var r = await driveFetch("https://www.googleapis.com/drive/v3/files/" + f.id + "?alt=media");
+    if(!r.ok) return false;
+    var remote = await r.json();
+    if(remote && typeof remote === "object" && (remote.pauta || remote.walks)){ data = remote; saveLocal(); renderAll(); return true; }
+    return false;
+  }catch(e){ return false; } }
+/* ---------- Google Sheets: «Corazón Fuerte - Control», pestaña Andar ----------
+   Hoja nativa de Sheets: NO funciona solo con drive.file (lección de la v44 de
+   Ticket a ticket). La conexión pide drive.file + spreadsheets juntos, una sola
+   vez. Si el token es solo de Drive, Sheets da 403 y se avisa para reconectar
+   una vez con el mismo botón, sin romper el guardado en Drive/JSON. */
+var sheetSaveTimer = null;
+function scheduleSheetSync(){ clearTimeout(sheetSaveTimer); sheetSaveTimer = setTimeout(function(){ saveToSheets(false); }, 2000); }
+function andarSheetValues(){ var rows = [["Fecha","Pulso en Reposo","Pulso Medio","Pulso Máximo","BORG","Tiempo (min)","Distancia (km)","Comentarios / Incidencias","Semáforo BORG"]];
+  data.walks.forEach(function(w){ rows.push([fmtFecha(w.fecha), w.reposo||"", w.medio||"", w.maximo||"", w.borg||"", w.minutos||"", w.km||"", w.comentarios||"", borgLuzTexto(borgLuz(w))]); });
+  return rows; }
+async function sheetsFetch(url, opts){ var r = await driveFetch(url, opts); if(r.status === 403){ var e = new Error("Sheets 403"); e.sheets403 = true; throw e; } return r; }
+async function ensureSheet(){
+  var cached = localStorage.getItem(SHEET_ID_KEY); if(cached) return { id: cached, url: localStorage.getItem(SHEET_URL_KEY) || ("https://docs.google.com/spreadsheets/d/" + cached) };
+  var folderId = await ensureDriveFolder();
+  var q = encodeURIComponent("name = '" + SHEET_TITLE + "' and '" + folderId + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false");
+  var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name,webViewLink)&spaces=drive");
+  var j = await r.json(); if(!r.ok) throw new Error((j.error && j.error.message) || ("Drive " + r.status));
+  var file = (j.files && j.files.length) ? j.files[0] : null;
+  if(!file){
+    var cr = await driveFetch("https://www.googleapis.com/drive/v3/files", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ name: SHEET_TITLE, parents:[folderId], mimeType:"application/vnd.google-apps.spreadsheet" }) });
+    var cj = await cr.json(); if(!cr.ok) throw new Error((cj.error && cj.error.message) || ("Drive " + cr.status));
+    file = cj;
+  }
+  localStorage.setItem(SHEET_ID_KEY, file.id);
+  var url = file.webViewLink || ("https://docs.google.com/spreadsheets/d/" + file.id);
+  localStorage.setItem(SHEET_URL_KEY, url);
+  try{
+    var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + file.id + "?fields=sheets.properties");
+    var gj = await g.json();
+    var has = gj.sheets && gj.sheets.some(function(s){ return s.properties && s.properties.title === SHEET_TAB; });
+    if(!has){ await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + file.id + ":batchUpdate", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ requests:[{ addSheet:{ properties:{ title: SHEET_TAB } } }] }) }); }
+  }catch(e){ if(e.sheets403) throw e; }
+  return { id: file.id, url: url }; }
+async function saveToSheets(manual){
+  if(!isConnected()){ updateSheetsUI(); return false; }
+  try{
+    var sheet = await ensureSheet();
+    var values = andarSheetValues();
+    var range = SHEET_TAB + "!A1:I" + values.length;
+    var wr = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + "/values/" + encodeURIComponent(range) + "?valueInputOption=USER_ENTERED", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ range: range, majorDimension:"ROWS", values: values }) });
+    if(!wr.ok){ var wj = await wr.json().catch(function(){ return {}; }); var err = new Error((wj.error && wj.error.message) || ("Sheets " + wr.status)); if(wr.status === 403) err.sheets403 = true; throw err; }
+    try{
+      var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + "?fields=sheets.properties");
+      var gj = await g.json();
+      var tab = gj.sheets && gj.sheets.filter(function(s){ return s.properties && s.properties.title === SHEET_TAB; })[0];
+      if(tab){ var COLORES = { "Verde":{ red:0.18, green:0.75, blue:0.44 }, "Ámbar":{ red:0.96, green:0.65, blue:0.14 }, "Rojo":{ red:0.90, green:0.28, blue:0.30 } };
+        var reqs = [];
+        for(var i = 1; i < values.length; i++){ var luz = values[i][8]; if(!COLORES[luz]) continue;
+          reqs.push({ repeatCell:{ range:{ sheetId: tab.properties.sheetId, startRowIndex: i, endRowIndex: i + 1, startColumnIndex: 8, endColumnIndex: 9 }, cell:{ userEnteredFormat:{ backgroundColor: COLORES[luz], textFormat:{ bold: true } } }, fields:"userEnteredFormat(backgroundColor,textFormat)" } }); }
+        if(reqs.length) await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + ":batchUpdate", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ requests: reqs }) });
+      }
+    }catch(e){ /* el formato es opcional: los valores ya están guardados */ }
+    localStorage.removeItem(SHEET_403_KEY);
+    localStorage.setItem(SHEET_LAST_KEY, new Date().toLocaleString("es-ES"));
+    updateSheetsUI();
+    if(manual) toast("Hoja en Sheets actualizada.");
+    return true;
+  }catch(e){
+    if(e.sheets403 || /403/.test(e.message || "")){
+      localStorage.setItem(SHEET_403_KEY, "1");
+      updateSheetsUI();
+      if(manual) toast("Sheets necesita el permiso nuevo: vuelve a conectar con Google una sola vez con el mismo botón. Tus datos en Drive siguen guardándose.");
+      return false;
+    }
+    localStorage.setItem(SHEET_LAST_KEY, "Error: " + e.message);
+    updateSheetsUI();
+    if(manual) toast("No se pudo actualizar la hoja: " + e.message);
+    return false; } }
+function updateSheetsUI(){ var link = $("link-hoja-sheets"); if(!link) return;
+  var url = localStorage.getItem(SHEET_URL_KEY);
+  var connected = isConnected();
+  var b = $("btn-guardar-hoja"); if(b) b.style.display = connected ? "block" : "none";
+  link.style.display = (connected && url) ? "inline-block" : "none";
+  if(url) link.href = url;
+  var last = localStorage.getItem(SHEET_LAST_KEY);
+  var st = $("sheets-estado"); if(st) st.textContent = connected ? ("Hoja en Sheets: " + (last ? "actualizada " + last : "todavía no se ha actualizado")) : "";
+  var av = $("sheets-aviso"); if(av){ av.innerHTML = localStorage.getItem(SHEET_403_KEY)
+    ? '<div class="warnbox"><b>⚠️ Sheets necesita un permiso nuevo.</b><br>Tu sesión de Google es solo de Drive. Vuelve a conectar con Google una sola vez con el mismo botón de Configuración para añadir Sheets. Tus datos en Drive y en este dispositivo siguen guardándose.</div>'
+    : ""; } }
+async function disconnectGoogle(){
+  var t = getTokens();
+  if(t && t.access_token){ try{ await fetch("https://oauth2.googleapis.com/revoke", { method:"POST", headers:{ "Content-Type":"application/x-www-form-urlencoded" }, body: new URLSearchParams({ token: t.access_token }) }); }catch(e){} }
+  setTokens(null); localStorage.removeItem(DRIVE_FOLDER_ID_KEY); localStorage.removeItem(DRIVE_FILE_ID_KEY); localStorage.removeItem(DRIVE_LAST_KEY); localStorage.removeItem(SHEET_ID_KEY); localStorage.removeItem(SHEET_URL_KEY); localStorage.removeItem(SHEET_LAST_KEY); localStorage.removeItem(SHEET_403_KEY);
+  updateDriveUI(); toast("Google desconectado. Tus datos siguen en este dispositivo."); }
+$("btn-google").addEventListener("click", startGoogleLogin);
+$("btn-google-salir").addEventListener("click", function(){ if(confirm("¿Desconectar Google? Tus datos seguirán en este dispositivo, pero ya no se guardarán en Drive.")) disconnectGoogle(); });
+$("btn-drive-ahora").addEventListener("click", function(){ saveToDrive(true); });
+$("btn-guardar-hoja").addEventListener("click", function(){ saveToSheets(true); });
+function updateDriveUI(){
+  var connected = isConnected();
+  $("google-estado").innerHTML = connected
+    ? '<p><span class="pill">● Conectado con Google</span></p><p class="muted">Tus datos se guardan en tu Drive, en la carpeta «Corazón Fuerte».</p>'
+    : '<p><span class="pill warn">○ Sin conectar</span></p><p class="muted">Sin conectar, los datos se guardan solo en este dispositivo.</p>';
+  $("btn-google").style.display = connected ? "none" : "block";
+  $("btn-google-salir").style.display = connected ? "block" : "none";
+  $("btn-drive-ahora").style.display = connected ? "block" : "none";
+  var last = localStorage.getItem(DRIVE_LAST_KEY);
+  $("drive-sync").textContent = connected ? ("Última sincronización con Drive: " + (last || "todavía no se ha guardado")) : "";
+  if(!clientConfigured()){ $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Pedro tiene que crear el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google. Además, en ese proyecto hay que activar la API de Google Sheets.</div>'; }
+  else { $("google-pendiente").innerHTML = ""; } }
+
+/* ---------- Gemini: leer la foto del tensiómetro (Lite primero, Flash de reserva) ---------- */
+var editandoClave = false;
+function updateKeyUI(){ var k = localStorage.getItem(GEMINI_KEY); var guardada = !!k && !editandoClave; $("clave-sin-guardar").hidden = guardada; $("clave-guardada").hidden = !guardada; if(k){ $("clave-estado").textContent = "✅ Clave de Gemini guardada en este navegador."; } $("foto-ayuda").textContent = k ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración."; updateRecetaUI(); }
+$("btn-guardar-clave").addEventListener("click", function(){ var k = $("gemini-key").value.trim(); if(!k){ toast("Pega tu clave de Gemini."); return; } localStorage.setItem(GEMINI_KEY, k); $("gemini-key").value = ""; editandoClave = false; updateKeyUI(); toast("Clave guardada solo en este navegador."); });
+$("btn-cambiar-clave").addEventListener("click", function(){ editandoClave = true; updateKeyUI(); var inp = $("gemini-key"); if(inp) inp.focus(); });
+$("btn-borrar-clave").addEventListener("click", function(){ localStorage.removeItem(GEMINI_KEY); editandoClave = false; updateKeyUI(); toast("Clave borrada."); });
+function compressImage(file){ return new Promise(function(resolve, reject){ var img = new Image(); var url = URL.createObjectURL(file);
+  img.onload = function(){ var max = 1024; var w = img.naturalWidth, h = img.naturalHeight; var s = Math.min(1, max / Math.max(w, h));
+    var c = document.createElement("canvas"); c.width = Math.round(w*s); c.height = Math.round(h*s);
+    c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+    resolve(c.toDataURL("image/jpeg", 0.85).split(",")[1]); };
+  img.onerror = function(){ URL.revokeObjectURL(url); reject(new Error("No se pudo leer la foto.")); };
+  img.src = url; }); }
+function parseGeminiJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
+  try{ var j = JSON.parse(m[0]); var sis = j.sistolica != null ? j.sistolica : (j.systolic != null ? j.systolic : null); var dia = j.diastolica != null ? j.diastolica : (j.diastolic != null ? j.diastolic : null); var pul = j.pulso != null ? j.pulso : (j.pulse != null ? j.pulse : null);
+    if(sis == null && dia == null && pul == null) return null; return { sistolica: sis, diastolica: dia, pulso: pul }; }catch(e){ return null; } }
+async function geminiCallImage(base64, prompt){
+  /* Una sola llamada con imagen para todo: Lite primero, Flash de reserva en 429/503 con reintentos de 2/4/8/16 s. */
+  var key = localStorage.getItem(GEMINI_KEY); if(!key) throw new Error("Sin clave de Gemini");
+  var models = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
+  for(var mi = 0; mi < models.length; mi++){
+    var delay = 2000;
+    for(var attempt = 0; attempt < 4; attempt++){
+      try{
+        var r = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + models[mi] + ":generateContent?key=" + encodeURIComponent(key),
+          { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ contents:[{ parts:[{ text: prompt }, { inline_data:{ mime_type:"image/jpeg", data: base64 } }] }] }) });
+        if(r.status === 429 || r.status === 503){ await sleep(delay); delay *= 2; continue; }
+        if(!r.ok) throw new Error("Gemini " + r.status);
+        var j = await r.json();
+        return (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts || []).map(function(pp){ return pp.text || ""; }).join("");
+      }catch(e){ if(attempt === 3) break; await sleep(delay); delay *= 2; }
+    }
+  }
+  throw new Error("Gemini no responde."); }
+async function geminiReadTensiometer(base64){
+  var prompt = "Lee la pantalla de este tensiómetro (aparato de medir la tensión arterial). Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"sistolica\": 120, \"diastolica\": 80, \"pulso\": 72}. Sistólica es la tensión alta (SYS), diastólica la baja (DIA) y pulso es PUL o el corazón. Si algún valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
+  var text = await geminiCallImage(base64, prompt);
+  var parsed = parseGeminiJson(text);
+  if(parsed) return parsed;
+  throw new Error("No se pudo leer el tensiómetro en la foto"); }
+function parseNutritionJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
+  try{ var j = JSON.parse(m[0]);
+    var sal = j.sal != null ? j.sal : (j.salt != null ? j.salt : null);
+    if(sal == null) return null;
+    return { producto: (j.producto != null ? j.producto : (j.product != null ? j.product : "")) || "",
+      sal: sal,
+      saturadas: (j.grasasSaturadas != null ? j.grasasSaturadas : (j.saturatedFat != null ? j.saturatedFat : null)),
+      azucares: (j.azucares != null ? j.azucares : (j.sugars != null ? j.sugars : null)) }; }catch(e){ return null; } }
+async function geminiReadNutrition(base64){
+  var prompt = "Lee el cuadro nutricional de este producto (tabla de valores nutricionales por 100 g). Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"producto\": \"nombre si se ve\", \"sal\": 1.2, \"grasasSaturadas\": 3.4, \"azucares\": 5.6}. Los valores son gramos por cada 100 g. Si la tabla indica sodio en mg, convierte a sal en gramos (sal = sodio x 2,5 / 1000). Si algún valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
+  var text = await geminiCallImage(base64, prompt);
+  var parsed = parseNutritionJson(text);
+  if(parsed) return parsed;
+  throw new Error("No se pudo leer el cuadro nutricional en la foto"); }
+var pendingTension = null;
+$("foto-tensiometro").addEventListener("change", async function(ev){
+  var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
+  if(!file) return;
+  var key = localStorage.getItem(GEMINI_KEY);
+  if(!key){ $("foto-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto del tensiómetro necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes apuntar la tensión a mano.</div>'; goto("config"); return; }
+  $("foto-resultado").innerHTML = '<p>⏳ Leyendo la foto del tensiómetro…</p>';
+  try{
+    var base64 = await compressImage(file);
+    $("foto-preview").innerHTML = '<img class="thumb" alt="Foto del tensiómetro" src="data:image/jpeg;base64,' + base64 + '">';
+    var vals = await geminiReadTensiometer(base64);
+    pendingTension = vals;
+    $("foto-resultado").innerHTML = '<div class="okbox"><h3 style="margin-top:0">He leído esto. ¿Es correcto?</h3>'
+      + '<p class="big-num">' + esc(vals.sistolica == null ? "—" : vals.sistolica) + ' / ' + esc(vals.diastolica == null ? "—" : vals.diastolica) + '</p>'
+      + '<p>Pulso: <b>' + esc(vals.pulso == null ? "—" : vals.pulso) + ' l.p.m.</b></p>'
+      + '<p class="muted">Revisa los números antes de guardar. Si alguno está mal, corrígelo a mano abajo.</p>'
+      + '<p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>'
+      + '<button class="btn green" id="btn-confirmar-tension">✅ Sí, guardar</button>'
+      + '<button class="btn secondary" id="btn-cancelar-tension">No, lo apunto a mano</button></div>';
+    $("btn-confirmar-tension").addEventListener("click", function(){
+      if(addTension(vals.sistolica, vals.diastolica, vals.pulso, "Leído de la foto del tensiómetro", "foto")){ $("foto-resultado").innerHTML = ""; $("foto-preview").innerHTML = ""; pendingTension = null; toast("Tensión guardada."); } });
+    $("btn-cancelar-tension").addEventListener("click", function(){
+      if(vals.sistolica != null) $("t-sis").value = vals.sistolica; if(vals.diastolica != null) $("t-dia").value = vals.diastolica; if(vals.pulso != null) $("t-pulso").value = vals.pulso;
+      $("foto-resultado").innerHTML = ""; pendingTension = null; toast("Corrige los valores a mano y pulsa Guardar."); });
+  }catch(e){ $("foto-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Apunta la tensión a mano.</div>'; } });
+
+
+/* ---------- Semáforo de la sal (y de todo lo que tú marques) ---------- */
+/* Regla PROVISIONAL (Pedro: si su médico le da otros márgenes, se cambian). Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente evitado, si aparece, es rojo. La luz final es la peor de todos tus criterios. */
+function fmtG(n){ var v = Math.round(Number(n)*100)/100; return String(v).replace(".", ","); }
+function normKey(s){ return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); }
+function normValores(obj){ var out = {}; if(!obj) return out; Object.keys(obj).forEach(function(k){ var v = num(obj[k]); out[normKey(k)] = v; }); return out; }
+function nutrientLabel(key){
+  if(key === "sal") return "Sal";
+  if(key === "grasas saturadas") return "Grasas saturadas";
+  if(key === "azucares") return "Azúcares";
+  var f = data.semaforo.campos.find(function(c){ return c.tipo === "nutriente" && normKey(c.nombre) === key; });
+  return f ? f.nombre : key; }
+function evaluarSemaforo(valores, ingredientesTexto){
+  valores = normValores(valores);
+  var criterios = [];
+  function nut(nombre, valor, limite){
+    var v = num(valor), l = num(limite);
+    if(v == null || l == null || l <= 0) return;
+    var luz = v > l ? "rojo" : (v > l * 0.5 ? "ambar" : "verde");
+    var motivo = luz === "rojo" ? nombre + " " + fmtG(v) + " g por 100 g, supera tu límite de " + fmtG(l) + " g"
+      : luz === "ambar" ? nombre + " " + fmtG(v) + " g por 100 g, más de la mitad de tu límite de " + fmtG(l) + " g" : "";
+    criterios.push({ nombre: nombre, valor: v, limite: l, luz: luz, motivo: motivo, tipo: "nutriente" });
+  }
+  nut("Sal", valores["sal"], data.semaforo.limiteSal);
+  nut("Grasas saturadas", valores["grasas saturadas"], data.semaforo.limiteSaturadas);
+  data.semaforo.campos.forEach(function(c){
+    if(c.tipo !== "nutriente") return;
+    if(normKey(c.nombre) === "sal" || normKey(c.nombre) === "grasas saturadas") return; /* ya evaluados arriba */
+    nut(c.nombre, valores[normKey(c.nombre)], c.limite);
+  });
+  var ingNorm = normKey(ingredientesTexto || "");
+  data.semaforo.campos.forEach(function(c){
+    if(c.tipo !== "ingrediente") return;
+    var palabra = normKey(c.nombre);
+    if(palabra && ingNorm.indexOf(palabra) >= 0){
+      criterios.push({ nombre: c.nombre, valor: null, limite: null, luz: "rojo", motivo: "Contiene «" + c.nombre + "», un ingrediente que marcaste evitar", tipo: "ingrediente" });
+    }
+  });
+  /* Reglas fijas de la pauta (Pedro): aceites y azúcares. No se pueden cambiar ni borrar. */
+  var ACEITES = [
+    ["aceite de girasol", "aceite de girasol"], ["aceite de palma", "aceite de palma"],
+    ["aceite de soja", "aceite de soja"], ["aceite de maiz", "aceite de maíz"],
+    ["aceite de colza", "aceite de colza"], ["aceite de coco", "aceite de coco"],
+    ["aceite de cacahuete", "aceite de cacahuete"], ["aceite de sesamo", "aceite de sésamo"],
+    ["aceite de oliva virgen", "aceite de oliva virgen"], ["aceite de oliva", "aceite de oliva"],
+    ["aceite de palmiste", "aceite de palmiste"], ["aceite de canola", "aceite de canola"],
+    ["aceite de aguacate", "aceite de aguacate"], ["aceites vegetales", "aceites vegetales"],
+    ["aceite vegetal", "aceite vegetal"], ["grasa vegetal", "grasa vegetal"],
+    ["grasa de coco", "grasa de coco"], ["grasa de palma", "grasa de palma"],
+    ["manteca de cacao", "manteca de cacao"], ["manteca de karite", "manteca de karité"]
+  ];
+  var AZUCARES = [
+    ["azucar invertido", "azúcar invertido"], ["azucar moreno", "azúcar moreno"],
+    ["azucares", "azúcares"], ["azucar", "azúcar"],
+    ["jarabe", "jarabe"], ["sirope", "sirope"], ["glucosa", "glucosa"],
+    ["fructosa", "fructosa"], ["sacarosa", "sacarosa"], ["dextrosa", "dextrosa"],
+    ["maltodextrina", "maltodextrina"], ["miel", "miel"], ["melaza", "melaza"],
+    ["caramelo", "caramelo"]
+  ];
+  var aove = ingNorm.indexOf("aceite de oliva virgen extra") >= 0 || /\baove\b/.test(ingNorm);
+  var restoAceites = ingNorm.split("aceite de oliva virgen extra").join(" ").replace(/\baove\b/g, " ");
+  var aceiteHallado = null;
+  for(var ai = 0; ai < ACEITES.length; ai++){ if(restoAceites.indexOf(ACEITES[ai][0]) >= 0){ aceiteHallado = ACEITES[ai][1]; break; } }
+  if(!aceiteHallado && restoAceites.indexOf("aceite") >= 0) aceiteHallado = "aceite";
+  if(aceiteHallado){
+    criterios.push({ nombre: "Aceites", valor: null, limite: null, luz: "rojo", motivo: "Contiene " + aceiteHallado + ": todos los aceites son luz roja", tipo: "regla", texto: "Contiene " + aceiteHallado + ": todos los aceites son luz roja" });
+  } else if(aove){
+    criterios.push({ nombre: "Aceite de oliva virgen extra", valor: null, limite: null, luz: "verde", motivo: "Aceite de oliva virgen extra: verde, máximo 5 ml al día", tipo: "regla", texto: "Aceite de oliva virgen extra: verde, máximo 5 ml al día" });
+  }
+  var azucarHallado = null;
+  for(var zi = 0; zi < AZUCARES.length; zi++){ if(ingNorm.indexOf(AZUCARES[zi][0]) >= 0){ azucarHallado = AZUCARES[zi][1]; break; } }
+  if(azucarHallado){
+    criterios.push({ nombre: "Azúcares", valor: null, limite: null, luz: "rojo", motivo: "Contiene " + azucarHallado + ": los azúcares son luz roja", tipo: "regla", texto: "Contiene " + azucarHallado + ": los azúcares son luz roja" });
+  } else {
+    var az = num(valores["azucares"]);
+    if(az != null && az > 0 && ingNorm.length === 0){
+      criterios.push({ nombre: "Azúcares", valor: az, limite: null, luz: "rojo", motivo: "Azúcares " + fmtG(az) + " g por 100 g: los azúcares son luz roja", tipo: "regla", texto: "Azúcares " + fmtG(az) + " g por 100 g: los azúcares son luz roja" });
+    }
+  }
+  var luz = null;
+  if(criterios.length){
+    luz = "verde";
+    if(criterios.some(function(c){ return c.luz === "ambar"; })) luz = "ambar";
+    if(criterios.some(function(c){ return c.luz === "rojo"; })) luz = "rojo";
+  }
+  var motivos = criterios.filter(function(c){ return c.motivo; }).map(function(c){ return c.motivo; });
+  return { luz: luz, criterios: criterios, motivos: motivos }; }
+function semaforoHTML(ev, valores){
+  if(!ev || !ev.luz) return '<div class="warnbox"><b>Sin criterios para comprobar.</b><br>Guarda al menos un límite (sal, grasas saturadas o un campo propio) para que el semáforo pueda encenderse.</div>';
+  /* Debajo del semáforo, solo la explicación de la luz encendida: los motivos de los criterios de ese color. Un criterio verde no tiene motivo en texto, así que se muestra su valor leído y su límite. */
+  var motivosLuz = ev.criterios.filter(function(c){ return c.luz === ev.luz; }).map(function(c){
+    if(c.motivo) return esc(c.motivo);
+    return esc(c.nombre) + ": " + fmtG(c.valor) + " g por 100 g (tu límite: " + fmtG(c.limite) + " g)";
+  });
+  var leyenda = ev.luz === "rojo" ? "🔴 ROJA — por encima de tu límite" : ev.luz === "ambar" ? "🟡 ÁMBAR — cerca de tu límite" : "🟢 VERDE — en la mitad o por debajo";
+  var titulo = ev.luz === "rojo" ? "🔴 LUZ ROJA" : ev.luz === "ambar" ? "🟡 LUZ ÁMBAR" : "🟢 LUZ VERDE";
+  return '<div class="semaforo-wrap"><div class="semaforo" role="img" aria-label="Semáforo: luz ' + ev.luz + ' encendida">'
+    + '<div class="luz roja' + (ev.luz === "rojo" ? " encendida" : "") + '"></div>'
+    + '<div class="luz ambar' + (ev.luz === "ambar" ? " encendida" : "") + '"></div>'
+    + '<div class="luz verde' + (ev.luz === "verde" ? " encendida" : "") + '"></div></div>'
+    + '<div><div class="semaforo-linea activa">' + leyenda + '</div>'
+    + '<p style="margin-top:10px"><b>' + titulo + '</b>'
+    + (motivosLuz.length ? '<br><b>Por qué:</b><ul class="tight">' + motivosLuz.map(function(m){ return "<li>" + m + "</li>"; }).join("") + "</ul>" : "<br>Ningún criterio superado.")
+    + '</p></div></div>'; }
+function addSemaforo(producto, valores, ingredientes, ev){
+  data.semaforo.historial.unshift({ id: uid(), fecha: hoyISO(), producto: String(producto || "").trim(), valores: normValores(valores), ingredientes: String(ingredientes || ""), luz: ev.luz, motivos: ev.motivos });
+  saveAll(); renderAll(); }
+
+/* ---------- Lista de la compra ---------- */
+function addACompra(nombre, luz){
+  nombre = String(nombre || "").trim();
+  if(!nombre){ toast("Sin nombre: no se puede añadir a la lista."); return; }
+  if(!Array.isArray(data.compra)) data.compra = [];
+  var ya = data.compra.some(function(c){ return c.nombre.toLowerCase() === nombre.toLowerCase(); });
+  if(ya){ toast("«" + nombre + "» ya está en la lista de la compra."); return; }
+  data.compra.unshift({ id: uid(), nombre: nombre, luz: luz || null });
+  saveAll(); renderAll(); toast("«" + nombre + "» añadido a la lista de la compra."); }
+function renderCompra(){
+  var el = $("lista-compra");
+  if(!el) return;
+  if(!Array.isArray(data.compra)) data.compra = [];
+  if(!data.compra.length){ el.innerHTML = '<p class="muted">Tu lista está vacía. Añade productos desde una comprobación o escribe uno a mano.</p>'; return; }
+  el.innerHTML = data.compra.map(function(c){
+    var luzTxt = c.luz === "rojo" ? "🔴 LUZ ROJA" : c.luz === "ambar" ? "🟡 LUZ ÁMBAR" : c.luz === "verde" ? "🟢 LUZ VERDE" : "sin luz";
+    return '<div class="check" style="display:block"><b>' + esc(c.nombre) + '</b> · ' + luzTxt
+      + '<br><button class="btn small secondary" data-del-compra="' + c.id + '">× Quitar</button></div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-compra]"), function(b){ b.addEventListener("click", function(){ data.compra = data.compra.filter(function(c){ return c.id !== b.getAttribute("data-del-compra"); }); saveAll(); renderAll(); }); }); }
+$("btn-compra-anadir").addEventListener("click", function(){
+  var nombre = $("compra-nuevo").value.trim();
+  if(!nombre){ toast("Escribe el nombre del producto."); return; }
+  addACompra(nombre, null);
+  $("compra-nuevo").value = ""; });
+$("compra-nuevo").addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); $("btn-compra-anadir").click(); } });
+var editCampoId = null;
+$("nc-tipo").addEventListener("change", function(){ $("nc-limite-wrap").style.display = $("nc-tipo").value === "nutriente" ? "block" : "none"; });
+$("btn-guardar-limites").addEventListener("click", function(){
+  var sal = $("sal-limite").value.trim(), sat = $("sat-limite").value.trim();
+  if(sal !== "" && (num(sal) == null || num(sal) < 0)){ toast("Revisa el límite de sal."); return; }
+  if(sat !== "" && (num(sat) == null || num(sat) < 0)){ toast("Revisa el límite de grasas saturadas."); return; }
+  data.semaforo.limiteSal = sal === "" ? "" : String(num(sal));
+  data.semaforo.limiteSaturadas = sat === "" ? "" : String(num(sat));
+  saveAll(); toast("Límites guardados."); renderAll(); });
+$("btn-reset-alimentacion").addEventListener("click", function(){
+  data.semaforo.limiteSal = "0.8";
+  saveAll(); toast("Pauta base de alimentación restablecida: sal 0,80 g."); renderAll(); });
+$("btn-ir-limites").addEventListener("click", function(){
+  goto("config");
+  setTimeout(function(){
+    var c = $("card-limites-alimentacion");
+    if(!c) return;
+    c.scrollIntoView({ behavior: "smooth", block: "start" });
+    c.classList.add("panel-flash");
+    setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000);
+  }, 100); });
+$("btn-anadir-campo").addEventListener("click", function(){
+  var nombre = $("nc-nombre").value.trim();
+  var tipo = $("nc-tipo").value;
+  var limite = $("nc-limite").value.trim();
+  if(!nombre){ toast("Pon el nombre del campo."); return; }
+  if(tipo === "nutriente" && (limite === "" || num(limite) == null || num(limite) <= 0)){ toast("Pon el límite máximo en gramos por 100 g."); return; }
+  if(tipo === "nutriente" && ["sal","grasas saturadas"].indexOf(normKey(nombre)) >= 0){ toast("«" + nombre + "» ya tiene su propio campo: pon su límite en Configuración."); return; }
+  if(editCampoId){
+    var f = data.semaforo.campos.find(function(c){ return c.id === editCampoId; });
+    if(f){ f.nombre = nombre; f.tipo = tipo; f.limite = tipo === "nutriente" ? String(num(limite)) : ""; }
+    editCampoId = null; $("btn-anadir-campo").textContent = "＋ Añadir campo";
+  } else {
+    data.semaforo.campos.push({ id: uid(), nombre: nombre, tipo: tipo, limite: tipo === "nutriente" ? String(num(limite)) : "" });
+  }
+  $("nc-nombre").value = ""; $("nc-limite").value = "";
+  saveAll(); toast("Campo guardado. Gemini lo revisará en cada foto."); renderAll(); });
+$("btn-comprobar-sal").addEventListener("click", function(){
+  var valores = { "sal": $("n-sal").value.trim(), "grasas saturadas": $("n-sat").value.trim() };
+  Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){
+    var f = data.semaforo.campos.find(function(c){ return c.id === inp.getAttribute("data-campo"); });
+    if(f) valores[normKey(f.nombre)] = inp.value.trim();
+  });
+  var ingredientes = $("n-ingredientes").value.trim();
+  var ev = evaluarSemaforo(valores, ingredientes);
+  if(!ev.luz){ $("semaforo-manual").innerHTML = semaforoHTML(ev, valores); return; }
+  addSemaforo($("n-producto").value, valores, ingredientes, ev);
+  $("semaforo-manual").innerHTML = semaforoHTML(ev, valores) + '<p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>';
+  ["n-producto","n-sal","n-sat","n-ingredientes"].forEach(function(id){ $(id).value = ""; });
+  Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){ inp.value = ""; });
+  toast("Producto comprobado."); });
+function renderSemaforo(){
+  $("sal-limite").value = data.semaforo.limiteSal || "";
+  $("sat-limite").value = data.semaforo.limiteSaturadas || "";
+  var resumen = [];
+  if(data.semaforo.limiteSal) resumen.push("sal " + fmtG(num(data.semaforo.limiteSal)) + " g por 100 g");
+  if(data.semaforo.limiteSaturadas) resumen.push("grasas saturadas " + fmtG(num(data.semaforo.limiteSaturadas)) + " g por 100 g");
+  $("limites-resumen").textContent = resumen.length
+    ? ("Tus límites: " + resumen.join(" · ") + ".")
+    : "Todavía no has puesto tus límites. Ponlos en Configuración.";
+  $("nutri-ayuda").textContent = localStorage.getItem(GEMINI_KEY) ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración.";
+  var lc = $("lista-campos");
+  if(!data.semaforo.campos.length){ lc.innerHTML = '<p class="muted">Todavía no has añadido ninguna pauta propia. Añade la primera aquí.</p>'; }
+  else{
+    lc.innerHTML = data.semaforo.campos.map(function(c){
+      return '<div class="check" style="display:block"><b>' + esc(c.nombre) + '</b> — ' + (c.tipo === "nutriente" ? "límite " + esc(c.limite) + " g por 100 g" : "ingrediente a evitar")
+        + '<br><button class="btn small secondary" data-edit-campo="' + c.id + '">Cambiar</button> <button class="btn small secondary" data-del-campo="' + c.id + '">Borrar</button></div>'; }).join("");
+    Array.prototype.forEach.call(lc.querySelectorAll("[data-del-campo]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este campo propio?")) return; data.semaforo.campos = data.semaforo.campos.filter(function(c){ return c.id !== b.getAttribute("data-del-campo"); }); saveAll(); toast("Campo borrado."); renderAll(); }); });
+    Array.prototype.forEach.call(lc.querySelectorAll("[data-edit-campo]"), function(b){ b.addEventListener("click", function(){
+      var f = data.semaforo.campos.find(function(c){ return c.id === b.getAttribute("data-edit-campo"); }); if(!f) return;
+      editCampoId = f.id; $("nc-nombre").value = f.nombre; $("nc-tipo").value = f.tipo;
+      $("nc-limite-wrap").style.display = f.tipo === "nutriente" ? "block" : "none";
+      $("nc-limite").value = f.limite || ""; $("btn-anadir-campo").textContent = "Guardar cambios del campo";
+      $("nc-nombre").focus(); }); });
+  }
+  var cm = $("campos-manuales");
+  var nuts = data.semaforo.campos.filter(function(c){ return c.tipo === "nutriente" && ["sal","grasas saturadas"].indexOf(normKey(c.nombre)) < 0; });
+  cm.innerHTML = nuts.map(function(c){
+    return '<label>' + esc(c.nombre) + ' (g por 100 g, opcional)</label><input type="number" min="0" max="100" step="0.01" inputmode="decimal" data-campo="' + c.id + '" placeholder="g por 100 g">'; }).join("");
+  var el = $("lista-semaforo");
+  if(!data.semaforo.historial.length){ el.innerHTML = '<p class="muted">Todavía no has comprobado ningún producto.</p>'; return; }
+  el.innerHTML = data.semaforo.historial.map(function(h){
+    var ev = (h.luz && h.motivos) ? { luz: h.luz, motivos: h.motivos } : evaluarSemaforo(h.valores, h.ingredientes);
+    var salTxt = h.valores && h.valores["sal"] != null ? "Sal: <b>" + fmtG(h.valores["sal"]) + " g / 100 g</b>" : "";
+    return '<div class="check" style="display:block"><b>' + esc(h.producto || "Producto sin nombre") + '</b> · ' + fmtFecha(h.fecha)
+      + '<br>' + salTxt + (salTxt ? " · " : "") + (ev.luz ? (ev.luz === "rojo" ? "🔴 LUZ ROJA" : ev.luz === "ambar" ? "🟡 LUZ ÁMBAR" : "🟢 LUZ VERDE") : "sin criterios")
+      + (ev.motivos && ev.motivos.length ? '<br><span class="muted">' + esc(ev.motivos.join(" · ")) + '</span>' : "")
+      + '<br><button class="btn small secondary" data-del-sem="' + h.id + '">Borrar</button></div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-sem]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este producto comprobado?")) return; data.semaforo.historial = data.semaforo.historial.filter(function(h){ return h.id !== b.getAttribute("data-del-sem"); }); saveAll(); toast("Producto borrado."); renderAll(); }); }); }
+function promptNutricion(){
+  var extras = data.semaforo.campos.filter(function(c){ return c.tipo === "nutriente"; }).map(function(c){ return c.nombre.toLowerCase(); });
+  var nombres = ["sal", "grasas saturadas", "azucares"].concat(extras).filter(function(v, i, a){ return a.indexOf(v) === i; });
+  var p = "Lee el cuadro nutricional y la lista de ingredientes de este producto. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"producto\": \"nombre si se ve\", \"nutrientes\": {\"sal\": 1.2, \"grasas saturadas\": 3.4, \"azucares\": 5.6}, \"ingredientes\": \"texto completo de la lista de ingredientes\"}. En \"nutrientes\", incluye todos estos nutrientes que se vean, con sus gramos por 100 g y usando exactamente estos nombres en minúsculas: " + nombres.join(", ") + ". Si la tabla indica sodio en mg, convierte a sal en gramos (sal = sodio x 2,5 / 1000). Si un valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
+  return p; }
+function parseNutritionJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
+  try{ var j = JSON.parse(m[0]); if(!j.nutrientes) return null;
+    var nuts = {}; Object.keys(j.nutrientes).forEach(function(k){ nuts[normKey(k)] = j.nutrientes[k]; });
+    if(nuts["sal"] == null && Object.keys(nuts).every(function(k){ return nuts[k] == null; })) return null;
+    return { producto: j.producto || "", nutrientes: nuts, ingredientes: j.ingredientes || "" }; }catch(e){ return null; } }
+async function geminiReadNutrition(base64){
+  var text = await geminiCallImage(base64, promptNutricion());
+  var parsed = parseNutritionJson(text);
+  if(parsed) return parsed;
+  throw new Error("No se pudo leer el cuadro nutricional en la foto"); }
+function parseMedicinaJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
+  try{ var j = JSON.parse(m[0]); if(!j.nombre) return null;
+    var horas = Array.isArray(j.horas) ? j.horas.map(function(h){ return String(h).trim(); }).filter(Boolean) : [];
+    return { nombre: j.nombre, dosis: j.dosis || "", horas: horas, notas: j.notas || "" }; }catch(e){ return null; } }
+async function geminiReadMedicina(base64){
+  var prompt = "Lee esta receta médica o la caja de este medicamento. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"nombre\": \"nombre del medicamento\", \"dosis\": \"dosis, por ejemplo 1 comprimido de 5 mg\", \"horas\": [\"08:00\", \"20:00\"], \"notas\": \"con la comida, antes de dormir, o vacío si no se ve\"}. Las horas en formato 24 h (HH:MM). Si algún dato no se ve, pon cadena vacía o lista vacía. No inventes ningún dato que no se vea en la foto.";
+  var text = await geminiCallImage(base64, prompt);
+  var parsed = parseMedicinaJson(text);
+  if(parsed) return parsed;
+  throw new Error("No se pudo leer la receta o la caja en la foto"); }
+function updateRecetaUI(){ var k = localStorage.getItem(GEMINI_KEY); var el = $("receta-ayuda"); if(el) el.textContent = k ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración."; }
+$("foto-receta").addEventListener("change", async function(ev){
+  var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
+  if(!file) return;
+  var key = localStorage.getItem(GEMINI_KEY);
+  if(!key){ $("receta-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto de la receta necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes añadir la medicina a mano.</div>'; goto("config"); return; }
+  $("receta-resultado").innerHTML = '<p>⏳ Leyendo la receta o la caja…</p>';
+  try{
+    var base64 = await compressImage(file);
+    $("receta-preview").innerHTML = '<img class="thumb" alt="Foto de la receta o caja" src="data:image/jpeg;base64,' + base64 + '">';
+    var vals = await geminiReadMedicina(base64);
+    $("receta-resultado").innerHTML = '<div class="okbox"><h3 style="margin-top:0">He leído esto. ¿Es correcto?</h3>'
+      + '<p><b>' + esc(vals.nombre) + '</b>' + (vals.dosis ? '<br>Dosis: ' + esc(vals.dosis) : '') + (vals.horas.length ? '<br>Horas: <b>' + esc(vals.horas.join(", ")) + '</b>' : '<br><span class="muted">Sin horas legibles: ponlas a mano al confirmar.</span>') + (vals.notas ? '<br><span class="muted">' + esc(vals.notas) + '</span>' : '') + '</p>'
+      + '<p class="muted">Revisa los datos antes de guardar. Si algo está mal, corrígelo a mano abajo.</p>'
+      + '<button class="btn green" id="btn-confirmar-receta">✅ Sí, añadir al pastillero</button>'
+      + '<button class="btn secondary" id="btn-cancelar-receta">No, lo apunto a mano</button></div>';
+    $("btn-confirmar-receta").addEventListener("click", function(){
+      if(!vals.horas.length){ toast("Pon las horas a mano: la foto no las traía."); $("m-nombre").value = vals.nombre; $("m-dosis").value = vals.dosis; $("m-notas").value = vals.notas; $("receta-resultado").innerHTML = ""; return; }
+      data.pills.push({ id: uid(), nombre: vals.nombre, dosis: vals.dosis, horas: vals.horas, notas: vals.notas, tomadas: {} });
+      saveAll(); resendPushSchedule(); $("receta-resultado").innerHTML = ""; $("receta-preview").innerHTML = ""; toast("Medicina añadida al pastillero."); renderAll(); });
+    $("btn-cancelar-receta").addEventListener("click", function(){
+      $("m-nombre").value = vals.nombre; $("m-dosis").value = vals.dosis; $("m-horas").value = vals.horas.join(", "); $("m-notas").value = vals.notas;
+      $("receta-resultado").innerHTML = ""; toast("Corrige los datos a mano y pulsa Añadir medicina."); });
+  }catch(e){ $("receta-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Añade la medicina a mano.</div>'; } });
+$("foto-nutricion").addEventListener("change", async function(ev){
+  var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
+  if(!file) return;
+  var key = localStorage.getItem(GEMINI_KEY);
+  if(!key){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto del cuadro nutricional necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes comprobar la sal a mano.</div>'; goto("config"); return; }
+  $("nutri-resultado").innerHTML = '<p>⏳ Leyendo el cuadro nutricional y los ingredientes…</p>';
+  try{
+    var base64 = await compressImage(file);
+    $("nutri-preview").innerHTML = '<img class="thumb" alt="Foto del cuadro nutricional" src="data:image/jpeg;base64,' + base64 + '">';
+    var vals = await geminiReadNutrition(base64);
+    var ev = evaluarSemaforo(vals.nutrientes, vals.ingredientes);
+    var leido = Object.keys(vals.nutrientes).filter(function(k){ return vals.nutrientes[k] != null; })
+      .map(function(k){ return nutrientLabel(k) + ": " + fmtG(vals.nutrientes[k]) + " g por 100 g"; }).join(" · ");
+    $("nutri-resultado").innerHTML = '<div class="okbox"><h3 style="margin-top:0">He leído esto. ¿Es correcto?</h3>'
+      + '<p>Producto: <b>' + esc(vals.producto || "sin nombre") + '</b><br>' + (leido ? esc(leido) : "No se leyó ningún nutriente")
+      + (vals.ingredientes ? '<br><span class="muted">Ingredientes: ' + esc(String(vals.ingredientes).slice(0, 200)) + '</span>' : "") + '</p>'
+      + semaforoHTML(ev, vals.nutrientes)
+      + '<p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>'
+      + '<button class="btn green" id="btn-confirmar-nutri">✅ Sí, guardar</button>'
+      + '<button class="btn secondary" id="btn-cancelar-nutri">No, lo apunto a mano</button>'
+      + '<button class="btn secondary" id="btn-nutri-lista">🛒 Añadir a la lista</button></div>';
+    $("btn-nutri-lista").addEventListener("click", function(){ addACompra(vals.producto || "Producto sin nombre", ev.luz); });
+    $("btn-confirmar-nutri").addEventListener("click", function(){
+      if(!ev.luz){ toast("Sin criterios con límite guardado: no se puede valorar el producto."); return; }
+      addSemaforo(vals.producto, vals.nutrientes, vals.ingredientes, ev);
+      $("nutri-resultado").innerHTML = ""; $("nutri-preview").innerHTML = ""; toast("Producto guardado."); });
+    $("btn-cancelar-nutri").addEventListener("click", function(){
+      if(vals.producto) $("n-producto").value = vals.producto;
+      if(vals.nutrientes["sal"] != null) $("n-sal").value = vals.nutrientes["sal"];
+      if(vals.nutrientes["grasas saturadas"] != null) $("n-sat").value = vals.nutrientes["grasas saturadas"];
+      if(vals.ingredientes) $("n-ingredientes").value = vals.ingredientes;
+      Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){
+        var f = data.semaforo.campos.find(function(c){ return c.id === inp.getAttribute("data-campo"); });
+        if(f && vals.nutrientes[normKey(f.nombre)] != null) inp.value = vals.nutrientes[normKey(f.nombre)];
+      });
+      $("nutri-resultado").innerHTML = ""; toast("Corrige los valores a mano y pulsa Comprobar semáforo."); });
+  }catch(e){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Apunta los valores a mano.</div>'; } });
+
+/* ---------- Código de barras (Open Food Facts, necesita internet) ---------- */
+function barcodeCamSupported(){ return typeof window !== "undefined" && "BarcodeDetector" in window; }
+async function buscarPorCodigo(codigo){
+  codigo = String(codigo || "").replace(/\D/g, "");
+  var box = $("barcode-resultado");
+  if(!codigo){ box.innerHTML = '<div class="warnbox">Escribe el código de barras o escánalo con la cámara.</div>'; return; }
+  if(!navigator.onLine){ box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>La búsqueda por código de barras necesita internet. Sin conexión, comprueba el producto a mano.</div>'; return; }
+  box.innerHTML = '<p>⏳ Buscando el código ' + esc(codigo) + ' en Open Food Facts…</p>';
+  try{
+    var r = await fetch("https://world.openfoodfacts.org/api/v0/product/" + encodeURIComponent(codigo) + ".json");
+    if(!r.ok) throw new Error("sin respuesta");
+    var j = await r.json();
+    if(!j || j.status !== 1 || !j.product){ box.innerHTML = '<div class="warnbox"><b>Producto no encontrado.</b><br>No hay ningún producto con ese código en Open Food Facts. Compruébalo a mano.<br><button class="btn green" id="btn-barcode-foto" style="margin-top:8px">📷 Comprobar con la foto del cuadro</button></div>'; $("btn-barcode-foto").addEventListener("click", function(){ box.innerHTML = ""; var inp = $("foto-nutricion"); if(inp){ inp.closest(".card").scrollIntoView(); inp.click(); } }); return; }
+    var p = j.product, n = p.nutriments || {};
+    var valores = { "sal": n["salt_100g"], "grasas saturadas": n["saturated-fat_100g"], "azucares": n["sugars_100g"] };
+    var ingredientes = p.ingredients_text_es || p.ingredients_text || "";
+    var ev = evaluarSemaforo(valores, ingredientes);
+    var nombre = p.product_name_es || p.product_name || ("Código " + codigo);
+    box.innerHTML = '<div class="okbox"><h3 style="margin-top:0">' + esc(nombre) + '</h3>'
+      + '<p class="muted">Código ' + esc(codigo) + ' · Open Food Facts (por 100 g): sal ' + (n["salt_100g"] != null ? fmtG(n["salt_100g"]) + " g" : "—") + ', grasas saturadas ' + (n["saturated-fat_100g"] != null ? fmtG(n["saturated-fat_100g"]) + " g" : "—") + ', azúcares ' + (n["sugars_100g"] != null ? fmtG(n["sugars_100g"]) + " g" : "—") + '.</p>'
+      + semaforoHTML(ev, valores)
+      + (ingredientes ? '<p class="muted">Ingredientes: ' + esc(String(ingredientes).slice(0, 200)) + '</p>' : '')
+      + '<p class="aviso-orientativo">⚠️ Orientativo. Ante cualquier duda, consulta con tu médico.</p>'
+      + '<button class="btn green" id="btn-confirmar-barcode">✅ Sí, guardar</button>'
+      + '<button class="btn secondary" id="btn-cancelar-barcode">No, lo apunto a mano</button>'
+      + '<button class="btn secondary" id="btn-barcode-lista">🛒 Añadir a la lista</button></div>';
+    $("btn-barcode-lista").addEventListener("click", function(){ addACompra(nombre, ev.luz); });
+    $("btn-confirmar-barcode").addEventListener("click", function(){
+      if(!ev.luz){ toast("Sin criterios con límite guardado: no se puede valorar el producto."); return; }
+      addSemaforo(nombre, valores, ingredientes, ev);
+      box.innerHTML = ""; $("barcode-codigo").value = ""; toast("Producto guardado."); });
+    $("btn-cancelar-barcode").addEventListener("click", function(){
+      $("n-producto").value = nombre;
+      if(n["salt_100g"] != null) $("n-sal").value = n["salt_100g"];
+      if(n["saturated-fat_100g"] != null) $("n-sat").value = n["saturated-fat_100g"];
+      if(ingredientes) $("n-ingredientes").value = ingredientes;
+      box.innerHTML = ""; toast("Corrige los valores a mano y pulsa Comprobar semáforo."); });
+  }catch(e){
+    box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>No se pudo conectar con Open Food Facts. Comprueba el producto a mano.</div>';
+  }
+}
+$("btn-barcode-buscar").addEventListener("click", function(){ buscarPorCodigo($("barcode-codigo").value); });
+$("barcode-codigo").addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); buscarPorCodigo($("barcode-codigo").value); } });
+var barcodeStream = null;
+function stopBarcodeCam(){ if(barcodeStream){ barcodeStream.getTracks().forEach(function(t){ t.stop(); }); barcodeStream = null; } var c = $("barcode-camera"); if(c) c.innerHTML = ""; }
+$("btn-barcode-cam").addEventListener("click", async function(){
+  if(!barcodeCamSupported()) return;
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){ toast("Este navegador no admite la cámara para escanear."); return; }
+  try{
+    barcodeStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    $("barcode-camera").innerHTML = '<video id="barcode-video" autoplay playsinline muted style="width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px"></video><p class="muted" id="barcode-estado">Apunta la cámara al código de barras…</p><button class="btn secondary" id="btn-barcode-cancelar">Cancelar escaneo</button>';
+    $("barcode-video").srcObject = barcodeStream;
+    $("btn-barcode-cancelar").addEventListener("click", stopBarcodeCam);
+    var detector = new BarcodeDetector({ formats: ["ean_13", "ean_8", "upc_a", "upc_e", "code_128"] });
+    var scanning = true;
+    var errores = 0, inicioEscaneo = Date.now(), aviso10s = false, avisoError = false;
+    (async function loop(){
+      while(scanning && barcodeStream){
+        try{
+          var codes = await detector.detect($("barcode-video"));
+          errores = 0;
+          if(codes && codes.length){ var v = codes[0].rawValue; scanning = false; stopBarcodeCam(); $("barcode-codigo").value = v; buscarPorCodigo(v); return; }
+        }catch(e){
+          errores++;
+          if(errores >= 3 && !avisoError){
+            avisoError = true; errores = 0;
+            var st = $("barcode-estado");
+            if(st) st.textContent = "La cámara no está detectando el código. Acércate al código o escribe el código a mano.";
+          }
+        }
+        if(!aviso10s && !avisoError && Date.now() - inicioEscaneo > 10000){
+          aviso10s = true;
+          var st2 = $("barcode-estado");
+          if(st2) st2.textContent = "Si no lo detecta, acércate, mejora la luz, o escribe el código a mano.";
+        }
+        await sleep(400);
+      }
+    })();
+  }catch(e){ toast("No se pudo abrir la cámara. Escribe el código a mano."); }
+});
+function initBarcode(){ var b = $("btn-barcode-cam"); if(b && barcodeCamSupported()) b.style.display = "block"; }
+
+/* ---------- Configuración: exportar / borrar ---------- */
+$("btn-exportar").addEventListener("click", function(){
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
+  var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "corazon-fuerte-datos.json"; a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000); toast("Copia descargada. No incluye tu clave de Gemini."); });
+$("btn-borrar-todo").addEventListener("click", function(){
+  if(!confirm("¿Borrar TODOS tus datos de esta app (pauta, marchas, tensiones, pastillero y semáforo)? No se puede deshacer.")) return;
+  data = datosVacios(); saveLocal(); fillPautaForm(); renderAll(); toast("Todos los datos borrados."); });
+
+/* ---------- Avisos push aunque la app esté cerrada (Worker de Pedro) ---------- */
+function getPushWorkerUrl(){ return (localStorage.getItem(PUSH_WORKER_URL_KEY) || PUSH_WORKER_URL_DEFAULT).trim().replace(/\/$/, ""); }
+function pushEnabled(){ return localStorage.getItem(PUSH_ENABLED_KEY) === "1"; }
+function pushDeviceValue(){
+  var d = (data.pauta && data.pauta.dispositivo) || "";
+  if(d.indexOf("Desfibrilador") >= 0) return "desfibrilador";
+  if(d.indexOf("Marcapasos") >= 0) return "marcapasos";
+  return null;
+}
+function pushSchedulePayload(sub){
+  return { subscription: sub || null,
+    pills: data.pills.map(function(m){ return { name: m.nombre, dose: m.dosis || "", times: m.horas || [] }; }),
+    reviewDate: (data.pauta && data.pauta.revision) || null,
+    device: pushDeviceValue(),
+    timezone: "Europe/Madrid" };
+}
+function urlBase64ToUint8Array(b64){
+  var padding = "=".repeat((4 - (b64.length % 4)) % 4);
+  var b = (b64 + padding).replace(/-/g, "+").replace(/_/g, "/");
+  var raw = atob(b); var out = new Uint8Array(raw.length);
+  for(var i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+  return out;
+}
+async function getPushSubscription(){
+  if(!("serviceWorker" in navigator)) return null;
+  try{ var reg = await navigator.serviceWorker.ready; return await reg.pushManager.getSubscription(); }catch(e){ return null; }
+}
+async function updatePushUI(){
+  var t = $("push-toggle"), st = $("push-estado"), url = $("push-worker-url");
+  if(!t) return;
+  if(url && url.value !== getPushWorkerUrl()) url.value = getPushWorkerUrl();
+  var wurl = getPushWorkerUrl();
+  if(!wurl){ t.checked = false; st.textContent = "Avisos con la app cerrada: desactivados. Aún no has puesto la dirección del Worker de avisos."; return; }
+  if(pushEnabled()){ var sub = await getPushSubscription(); t.checked = true; st.textContent = sub ? "Avisos con la app cerrada: activados." : "Avisos con la app cerrada: activados, pero la suscripción no está en este navegador. Desactívalos y vuelve a activarlos."; }
+  else { t.checked = false; st.textContent = "Avisos con la app cerrada: desactivados."; }
+}
+async function enablePush(){
+  var wurl = getPushWorkerUrl();
+  if(!wurl){ toast("Aún no has puesto la dirección del Worker de avisos."); updatePushUI(); return; }
+  if(!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)){ toast("Este navegador no admite avisos con la app cerrada."); updatePushUI(); return; }
+  var perm = await Notification.requestPermission();
+  if(perm !== "granted"){ toast("Sin permiso, no puedo avisarte con la app cerrada."); updatePushUI(); return; }
+  try{
+    var reg = await navigator.serviceWorker.ready;
+    var sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) });
+    var r = await fetch(wurl + "/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(pushSchedulePayload(sub.toJSON())) });
+    if(!r.ok) throw new Error("Worker " + r.status);
+    localStorage.setItem(PUSH_ENABLED_KEY, "1");
+    toast("Avisos activados: te avisaré aunque la app esté cerrada.");
+  }catch(e){ toast("No se pudieron activar los avisos: " + e.message); localStorage.removeItem(PUSH_ENABLED_KEY); }
+  updatePushUI();
+}
+async function disablePush(){
+  var wurl = getPushWorkerUrl();
+  try{
+    var sub = await getPushSubscription();
+    if(wurl && sub) { try{ await fetch(wurl + "/unsubscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) }); }catch(e){} }
+    if(sub) await sub.unsubscribe();
+  }catch(e){}
+  localStorage.removeItem(PUSH_ENABLED_KEY);
+  toast("Avisos con la app cerrada desactivados.");
+  updatePushUI();
+}
+var pushResendTimer = null;
+function resendPushSchedule(){
+  if(!pushEnabled()) return;
+  clearTimeout(pushResendTimer);
+  pushResendTimer = setTimeout(async function(){
+    var wurl = getPushWorkerUrl(); if(!wurl) return;
+    var sub = await getPushSubscription(); if(!sub) return;
+    try{ await fetch(wurl + "/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(pushSchedulePayload(sub.toJSON())) }); }catch(e){}
+  }, 1200);
+}
+function initPush(){
+  var url = $("push-worker-url"); if(url){ url.value = getPushWorkerUrl(); url.addEventListener("change", function(){ localStorage.setItem(PUSH_WORKER_URL_KEY, url.value.trim()); updatePushUI(); }); }
+  var t = $("push-toggle"); if(t) t.addEventListener("change", function(){ if(t.checked) enablePush(); else disablePush(); });
+  var link = $("link-push-config"); if(link) link.addEventListener("click", function(ev){ ev.preventDefault(); goto("config"); setTimeout(function(){ var c = $("card-push"); if(c){ c.scrollIntoView({ behavior: "smooth", block: "start" }); c.classList.add("panel-flash"); setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000); } }, 100); });
+  updatePushUI();
+}
+
+/* ---------- Inicio ---------- */
+(function init(){
+  applyTheme();
+  buildDrawer();
+  fillPautaForm();
+  initVoz();
+  initBarcode();
+  initPush();
+  $("w-fecha").value = hoyISO();
+  $("t-fecha").value = ahoraLocal();
+  $("d-fecha").value = ahoraLocal();
+  if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(function(){}); }
+  handleOAuthCallback().then(function(){ renderAll(); if(isConnected()) loadFromDrive(); });
+  renderAll();
+  /* Abrir en una vista concreta si la URL trae #vista (por ejemplo, al tocar un aviso push). */
+  var hv = (location.hash || "").replace("#", "");
+  if(hv && VIEWS.some(function(v){ return v[0] === hv; })) goto(hv);
+})();
+</script>
+</body>
+</html>
