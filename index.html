@@ -355,6 +355,19 @@ footer a{color:var(--muted)}
 /* v1.37: rodillos de «Tu día empieza a las» (Configuración). */
 .rueda-hora-min{display:flex;gap:12px}
 .rueda-hora-min>div{flex:1;min-width:0}
+/* ---------- Asistente «Por dónde empezar» (v1.45) ---------- */
+.btn[hidden]{display:none}
+/* La línea verde «✓ Todo configurado» también abre el asistente (en el resumen): si no, una vez terminado no habría forma de volver a ver la configuración. */
+#asistente-hecho{background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit;display:block;width:100%}
+#asistente-hecho[hidden]{display:none}
+.asistente-nav .fila-nav{display:flex;gap:10px}
+.asistente-nav .fila-nav .btn{flex:1;min-width:0}
+.asistente-resumen button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0;cursor:pointer;font:inherit;color:var(--ink);min-height:48px}
+.asistente-resumen button .txt{flex:1;min-width:0}
+.asistente-resumen .est{flex:none;font-weight:800;white-space:nowrap}
+.asistente-resumen .est.ok{color:var(--green)}
+.asistente-resumen .est.pend{color:var(--amber)}
+.asistente-resumen .est.salt{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -370,7 +383,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.44 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.45 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -621,6 +634,11 @@ footer a{color:var(--muted)}
 <!-- ============ CONFIGURACIÓN ============ -->
 <section class="view" id="view-config">
   <div class="view-head c-config"><span class="ic">⚙️</span><div><h1>Configuración</h1><p>Tu cuenta de Google, tu clave de Gemini, tu pauta médica y tus datos.</p></div></div>
+  <div class="card" id="card-asistente"><h2>🧭 Configuración paso a paso</h2>
+    <p>Te guiamos paso a paso: tu cuenta de Google, tu clave de Gemini, los avisos, tus pastillas, tu pauta de andar y tus widgets. Se acuerda de lo que ya tienes hecho, para no volver a preguntártelo.</p>
+    <button class="btn" id="btn-asistente">Por dónde empezar</button>
+    <button type="button" id="asistente-hecho" hidden><span class="pill">✓ Todo configurado</span><br><span class="muted">Ya has configurado todos tus datos.</span></button>
+  </div>
   <div class="card" id="card-aspecto"><h2>Aspecto</h2>
     <p>Elige cómo se ve la app. Se guarda con tus datos, así que te sigue en todos tus dispositivos.</p>
     <div class="skin-list" role="radiogroup" aria-label="Aspecto de la app">
@@ -769,9 +787,10 @@ footer a{color:var(--muted)}
   <div class="card"><h2>Mis datos</h2>
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
     <button class="btn" id="btn-exportar">Descargar copia (JSON)</button>
+    <button class="btn secondary" id="btn-importar">Importar copia (JSON)</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.44 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
-    <p class="muted"><b>Qué cambia en la v1.44:</b><br>· En Alimentación ya no se pueden meter los datos a mano: comprobar un producto es solo con la foto del cuadro nutricional o con el código de barras.</p>
+    <p class="muted">Versión v1.45 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+    <p class="muted"><b>Qué cambia en la v1.45:</b><br>· <b>Configurar la app, paso a paso.</b> Hemos añadido el botón «Por dónde empezar» en Configuración: te guía paso a paso — tu cuenta de Google, la clave de Gemini, los avisos, tus pastillas, tu pauta de andar y tus widgets — y se acuerda de lo que ya tienes hecho, para no volver a preguntártelo. Cuando termines, verás «✓ Todo configurado».</p>
   </div>
   <div class="card"><h2>Privacidad</h2>
     <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
@@ -780,10 +799,16 @@ footer a{color:var(--muted)}
   </div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
+
+<!-- ============ ASISTENTE «POR DÓNDE EMPEZAR» ============ -->
+<section class="view" id="view-asistente">
+  <div class="view-head c-config"><span class="ic">🧭</span><div><h1>Configuración paso a paso</h1><p id="asistente-progreso">Paso 1 de 7</p></div><button type="button" class="fila-quitar" id="btn-asistente-cerrar" aria-label="Cerrar el asistente" style="margin-left:auto">×</button></div>
+  <div class="card" id="asistente-paso"></div>
+</section>
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.44 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.45 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -792,15 +817,14 @@ footer a{color:var(--muted)}
 <div id="consent-modal" role="dialog" aria-modal="true" aria-labelledby="consent-titulo" hidden><div class="consent-caja">
   <h2 id="consent-titulo">Antes de entrar en Alimentación</h2>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
-  <p>La información de Alimentación — el semáforo, tus límites y la guía de qué comer — es <b>meramente orientativa</b>. No sustituye el consejo de tu médico ni el de tu unidad de rehabilitación.</p>
   <label class="consent-check"><input type="checkbox" id="consent-check"> <span>He leído y entiendo que esta información es meramente orientativa.</span></label>
   <button class="btn" id="btn-consent-aceptar" disabled>Aceptar</button>
   <p class="muted"><small>Al aceptar, la app guarda en este dispositivo la fecha y un código anónimo, y envía solo esos dos datos para dejar constancia de la aceptación. Sin nombre, sin correo y sin datos de salud. Puedes ver tu código en Configuración.</small></p>
 </div></div>
 <script>
 "use strict";
-/* Corazón Fuerte — v1.39. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.44";
+/* Corazón Fuerte — v1.45. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
+var APP_VERSION = "v1.45";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -823,9 +847,9 @@ var DATA_FILE = "corazon-fuerte-datos.json";
 /* Clave pública VAPID (es pública por diseño): identifica el Worker de avisos al suscribirse a las notificaciones push. La clave PRIVADA nunca va en la app. */
 var VAPID_PUBLIC_KEY = "BNjfEtgLy_NFYbdhm2TB_YxfEz3IcueQFY49FkC6SuAoFcFklrD3uGtOGB1Z5EEPQehC7PUtMsmcCWEOVSomSvg";
 var PUSH_WORKER_URL_KEY = "corazon-fuerte-push-worker-url";
-/* Dirección del Worker de avisos de Pedro, ya puesta por defecto (es una URL pública, no un secreto). El usuario puede cambiarla si hace falta; si no ha puesto otra, se usa esta. */
+/* Dirección del Worker de avisos, ya puesta por defecto (es una URL pública, no un secreto). El usuario puede cambiarla si hace falta; si no ha puesto otra, se usa esta. */
 var PUSH_WORKER_URL_DEFAULT = "https://corazon-fuerte-push.fpsupra76.workers.dev";
-/* Dirección del Worker de entrada con Google de Pedro (corazon-fuerte-auth): guarda el client_secret y cambia el código de autorización por los tokens, porque Google exige el secreto para clientes web y la app no puede guardarlo. Es una URL pública, no un secreto. */
+/* Dirección del Worker de entrada con Google (corazon-fuerte-auth): guarda el client_secret y cambia el código de autorización por los tokens, porque Google exige el secreto para clientes web y la app no puede guardarlo. Es una URL pública, no un secreto. */
 var AUTH_WORKER_URL_DEFAULT = "https://corazon-fuerte-auth.fpsupra76.workers.dev";
 var PUSH_ENABLED_KEY = "corazon-fuerte-push-enabled";
 /* Aceptación del aviso de Alimentación (v1.34): la app envía SOLO la fecha y un código anónimo a este Worker, para dejar constancia de que se aceptaron las condiciones. Sin nombre, sin correo y sin datos de salud. Es una URL pública, no un secreto. */
@@ -843,8 +867,35 @@ function diaInicio(){ var v = (typeof data !== "undefined" && data && data.diaIn
 function hoyISO(){ var d = new Date(); var ini = diaInicio(); if(d.getHours() < ini.h || (d.getHours() === ini.h && d.getMinutes() < ini.m)){ d.setDate(d.getDate() - 1); } return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 /* v1.37: día de la app al que pertenece una fecha-hora (una tensión de las 00:30 pertenece al día anterior si el día empieza a las 05:00). */
 function diaDeFecha(v){ var d = new Date(v); if(isNaN(d)) return (v||"").slice(0,10); var ini = diaInicio(); if(d.getHours() < ini.h || (d.getHours() === ini.h && d.getMinutes() < ini.m)){ d.setDate(d.getDate() - 1); } return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+/* v1.45 (E1): normalizar las horas de las pastillas («8:00»→«08:00»,
+   «8h»→«08:00», «22»→«22:00»). Sin normalizar, «8:00» no coincide con el
+   aviso (que compara con «08:00») y cae en la cena por comparar texto. */
+function normalizarHora(h){
+  if(h == null) return null;
+  var s = String(h).trim().replace(/[hH]\s*$/, "").trim();
+  var m = s.match(/^(\d{1,2})(?::(\d{1,2}))?$/);
+  if(!m) return null;
+  var hh = parseInt(m[1], 10), mm = m[2] == null ? 0 : parseInt(m[2], 10);
+  if(hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
+  return String(hh).padStart(2, "0") + ":" + String(mm).padStart(2, "0");
+}
+/* v1.45 (E1): minutos desde medianoche, o null si la hora no se entiende.
+   Las comidas se comparan en minutos, no en texto: una hora rara ya no
+   cae en silencio en la cena. */
+function horaAMinutos(h){ var n = normalizarHora(h); if(!n) return null; var p = n.split(":"); return parseInt(p[0], 10) * 60 + parseInt(p[1], 10); }
+function ventanaComida(tipo){ return tipo === "medicacion-desayuno" ? [0, 720] : tipo === "medicacion-comida" ? [720, 1080] : [1080, 1440]; }
+function horaEnVentana(h, win){ var m = horaAMinutos(h); return m != null && m >= win[0] && m < win[1]; }
 function fmtLocalInput(d){ function p(n){ return String(n).padStart(2,"0"); } return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes()); }
 function ahoraLocal(){ return fmtLocalInput(new Date()); }
+/* v1.45 (E5): la fecha/hora de los formularios se sellaba una sola vez al
+   abrir la app y se guardaba esa hora aunque se apuntara horas después.
+   Se guarda el último valor sellado; al guardar, si el campo sigue igual
+   que el sellado, se usa la hora del momento de guardar. Si el usuario
+   (o la foto) cambió el campo, se respeta su valor. */
+var tFechaAuto = "", wFechaAuto = "", dFechaAuto = "";
+function sellarFechaTension(){ var el = $("t-fecha"); if(!el) return; el.value = ahoraLocal(); tFechaAuto = el.value; }
+function sellarFechaMarcha(){ var el = $("w-fecha"); if(!el) return; el.value = hoyISO(); wFechaAuto = el.value; }
+function sellarFechaEpisodio(){ var el = $("d-fecha"); if(!el) return; el.value = ahoraLocal(); dFechaAuto = el.value; }
 function fmtFecha(iso){ if(!iso) return "—"; var p = iso.split("-"); return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso; }
 function fmtFechaHora(v){ if(!v) return "—"; var d = new Date(v); if(isNaN(d)) return esc(v); function p(n){ return String(n).padStart(2,"0"); } return p(d.getDate())+"/"+p(d.getMonth()+1)+"/"+d.getFullYear()+" "+p(d.getHours())+":"+p(d.getMinutes()); }
 function num(v){ var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? null : n; }
@@ -852,7 +903,7 @@ var toastTimer = null;
 function toast(msg){ var t = $("toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.style.display = "none"; }, 3200); }
 
 /* ---------- Datos ---------- */
-function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString() }; }
+function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
 /* v1.36: un estado solo tiene contenido real si hay pastillas, marchas,
    tensiones o algún campo de la pauta rellenado. Un objeto pauta vacío {}
    es truthy en JS, así que no basta con comprobar que exista: eso aceptaba
@@ -864,7 +915,11 @@ function datosConContenido(d){ if(!d || typeof d !== "object") return false;
       || (Array.isArray(d.walks) && d.walks.length > 0)
       || (Array.isArray(d.tensions) && d.tensions.length > 0)
       || pautaConContenido(d.pauta); }
-function loadData(){ try{ var d = JSON.parse(localStorage.getItem(DATA_KEY) || "null"); if(d && typeof d === "object"){ if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; if(!d.pauta) d.pauta = datosVacios().pauta; ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
+function sanearDatos(d){
+  /* v1.45: la migración de datos viejos vive aquí para usarla también al
+     cargar de Drive y al importar una copia, no solo al cargar en local. */
+  if(!d || typeof d !== "object") return datosVacios();
+ if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; if(!d.pauta) d.pauta = datosVacios().pauta; ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
     if(d.semaforo.limiteSaturadas == null) d.semaforo.limiteSaturadas = "";
     if(d.semaforo.limiteAzucares == null) d.semaforo.limiteAzucares = "5"; /* límite nuevo en v1.21: azúcares 5 g por 100 g */
     delete d.semaforo.objetivoLdl; delete d.semaforo.objetivoTrig; /* v1.17: los objetivos de LDL y triglicéridos ya no existen */
@@ -873,10 +928,25 @@ function loadData(){ try{ var d = JSON.parse(localStorage.getItem(DATA_KEY) || "
     if(!Array.isArray(d.semaforo.historial)) d.semaforo.historial = [];
     if(!d.consentAlimentacion || typeof d.consentAlimentacion !== "object" || !d.consentAlimentacion.aceptado) d.consentAlimentacion = null; /* v1.34: aceptación del aviso de Alimentación (fecha), null si aún no se aceptó */
     if(!/^\d{1,2}:\d{2}$/.test(d.diaInicio || "")) d.diaInicio = "05:00"; /* v1.37: hora a la que empieza «Tu día», por defecto 05:00 */
-    d.semaforo.historial.forEach(function(h){ if(!h.valores){ h.valores = { "sal": h.sal != null ? h.sal : null, "grasas saturadas": h.saturadas != null && h.saturadas !== "" ? h.saturadas : null, "azucares": h.azucares != null && h.azucares !== "" ? h.azucares : null }; } if(h.ingredientes == null) h.ingredientes = ""; }); return d; } }catch(e){} return datosVacios(); }
+    d.semaforo.historial.forEach(function(h){ if(!h.valores){ h.valores = { "sal": h.sal != null ? h.sal : null, "grasas saturadas": h.saturadas != null && h.saturadas !== "" ? h.saturadas : null, "azucares": h.azucares != null && h.azucares !== "" ? h.azucares : null }; } if(h.ingredientes == null) h.ingredientes = ""; });
+  /* v1.45 (E1): normalizar las horas de las pastillas ya guardadas
+     («8:00»→«08:00», «8h»→«08:00», «22»→«22:00») y reescribir las tomas
+     marcadas con las horas normalizadas; las horas imposibles se quitan. */
+  if(Array.isArray(d.pills)) d.pills.forEach(function(m){
+    if(!Array.isArray(m.horas)) m.horas = [];
+    var mapa = {};
+    m.horas = m.horas.map(function(h){ var n = normalizarHora(h); if(n) mapa[String(h).trim()] = n; return n; }).filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
+    if(m.tomadas && typeof m.tomadas === "object") Object.keys(m.tomadas).forEach(function(dia){
+      m.tomadas[dia] = (m.tomadas[dia] || []).map(function(h){ return mapa[String(h).trim()] || null; }).filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
+    });
+  });
+  return d;
+}
+function loadData(){ try{ var d = JSON.parse(localStorage.getItem(DATA_KEY) || "null"); if(d && typeof d === "object") return sanearDatos(d); }catch(e){} return datosVacios(); }
 var data = loadData();
+saveLocal(true); /* v1.45 (E1): guardar la migración al cargar (horas normalizadas, etc.) para que lo guardado también quede limpio; sin tocar el sello de E4 */
 var driveSaveTimer = null;
-function saveLocal(){ try{ localStorage.setItem(DATA_KEY, JSON.stringify(data)); }catch(e){ toast("No se pudo guardar en este dispositivo."); } }
+function saveLocal(mantenerSello){ if(!mantenerSello) data.actualizado = new Date().toISOString(); /* v1.45 (E4): sello de última modificación, para que gane lo más nuevo entre este dispositivo y Drive */ try{ localStorage.setItem(DATA_KEY, JSON.stringify(data)); }catch(e){ toast("No se pudo guardar en este dispositivo."); } }
 function saveAll(syncDrive){ saveLocal(); if(syncDrive !== false){ clearTimeout(driveSaveTimer); driveSaveTimer = setTimeout(function(){ saveToDrive(true); }, 1500); } }
 
 /* ---------- Navegación ---------- */
@@ -891,6 +961,10 @@ function buildDrawer(){ $("drawer-nav").innerHTML = VIEWS.map(function(v){ retur
 var expandirAlEntrar = null;
 function pedirExpandir(v){ expandirAlEntrar = v; }
 function goto(view){ currentView = view; document.querySelectorAll(".view").forEach(function(s){ s.classList.toggle("active", s.id === "view-" + view); }); buildDrawer(); window.scrollTo({top:0}); renderAll();
+  /* v1.45 (E5): al entrar en una vista de apuntar, la fecha/hora es la de ahora. */
+  if(view === "dolor") sellarFechaEpisodio();
+  if(view === "tension" && tensionApuntarAbierto) sellarFechaTension();
+  if(view === "andar" && andarApuntarAbierto) sellarFechaMarcha();
   /* v1.37: al entrar en Configuración, los rodillos de «Tu día empieza a las» se colocan en el valor guardado (al cargar, la vista está oculta y el scroll no se puede fijar). */
   if(view === "config") sincronizarRuedaDiaInicio();
   /* v1.34: al entrar en Alimentación se muestra el aviso hasta aceptar; al salir por el menú sin aceptar se esconde y reaparece la próxima vez. */
@@ -932,6 +1006,8 @@ $("scrim").addEventListener("click", closeDrawer);
     goto(VIEWS[j][0]);
   }
   document.addEventListener("touchstart", function(ev){
+    /* v1.45 (asistente): dentro del asistente ningún gesto de deslizar hace nada; para salir están «Atrás», «×» y el menú ☰. */
+    if(currentView === "asistente") return;
     if(!isTouch() || !ev.touches || ev.touches.length !== 1) return;
     var t = ev.touches[0];
     startX = t.clientX; startY = t.clientY; tracking = true;
@@ -995,6 +1071,8 @@ document.addEventListener("click", function(ev){
   if(infoPopup && !infoPopup.hidden){
     if(ev.target && ev.target.closest && ev.target.closest(".info-popup-close")){ closeInfoPopup(); return; }
     if(ev.target && ev.target.closest && ev.target.closest("#info-popup")) return;
+    /* v1.45 (asistente): el botón que abrió el recuadro no lo cierra al mismo clic (el botón «Activar avisos» del asistente abre el recuadro de pasos en su propio clic; sin esto, el recuadro se abría y se cerraba a la vez). Volver a tocarlo lo cierra por el interruptor de mostrarPasosNotificaciones/openInfoPopup. */
+    if(infoPopupBtn && ev.target && ev.target.closest && infoPopupBtn.contains(ev.target)) return;
     closeInfoPopup();
   }
 });
@@ -1127,7 +1205,7 @@ function walkAlerta(w){ var p = data.pauta; var motivos = [];
   if(/dolor/i.test(w.comentarios || "")) motivos.push("apuntaste dolor");
   return motivos; }
 /* Semáforo BORG: verde dentro de TU rango, ámbar a 1 punto, rojo a 2 o más.
-   El rango lo rellena cada usuario en Mi pauta; nunca se usa el 10-13 de Pedro
+   El rango lo rellena cada usuario en Mi pauta; nunca se usa el 10-13 de ejemplo
    ni el 13-14 de la hoja del hospital como objetivo (solo texto de ayuda). */
 function borgLuz(w){ var p = data.pauta; var borg = num(w.borg);
   if(borg == null) return null;
@@ -1142,7 +1220,7 @@ function borgSemaforoHTML(w){ var luz = borgLuz(w);
   if(!luz) return '<div class="semaforo-mini"><span class="muted">—</span></div>';
   return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG: luz ' + luz + ' encendida"><div class="luz roja' + (luz === "rojo" ? " encendida" : "") + '"></div><div class="luz ambar' + (luz === "ambar" ? " encendida" : "") + '"></div><div class="luz verde' + (luz === "verde" ? " encendida" : "") + '"></div><div class="num">' + esc(String(num(w.borg))) + ' · ' + borgLuzTexto(luz) + '</div></div>'; }
 $("btn-guardar-marcha").addEventListener("click", function(){
-  var w = { id: uid(), fecha: $("w-fecha").value || hoyISO(), reposo: $("w-reposo").value.trim(), medio: $("w-medio").value.trim(), maximo: $("w-maximo").value.trim(), borg: $("w-borg").value.trim(), minutos: $("w-minutos").value.trim(), km: $("w-km").value.trim(), comentarios: $("w-coment").value.trim() };
+  var w = { id: uid(), fecha: (wFechaAuto && $("w-fecha").value === wFechaAuto) ? hoyISO() : ($("w-fecha").value || hoyISO()), reposo: $("w-reposo").value.trim(), medio: $("w-medio").value.trim(), maximo: $("w-maximo").value.trim(), borg: $("w-borg").value.trim(), minutos: $("w-minutos").value.trim(), km: $("w-km").value.trim(), comentarios: $("w-coment").value.trim() };
   if(!w.fecha){ toast("Pon la fecha de la marcha."); return; }
   data.walks.push(w); data.walks.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
   ["w-reposo","w-medio","w-maximo","w-borg","w-minutos","w-km","w-coment"].forEach(function(id){ $(id).value = ""; });
@@ -1185,6 +1263,8 @@ function renderWalks(){ var el = $("lista-marchas");
 var chartRange = { tension: "semana", andar: "semana" };
 /* v1.27: franja personalizada de tensión (desde/hasta) y bloques plegables de Tensión y Andar. */
 var tensionRangoPersonalizado = { desde: "", hasta: "" };
+/* v1.45 (E6): la lista ya no depende de la franja de la gráfica. */
+var mostrarTodasTensiones = false;
 var tensionApuntarAbierto = false;
 var andarPautaAbierta = false, andarApuntarAbierto = false, andarEstadisticasAbiertas = false;
 function tensionFiltradas(){
@@ -1213,6 +1293,7 @@ function actualizarTensionEstadisticas(){ var el = $("tension-estadisticas"); if
 function actualizarTensionVista(){ renderCharts(); renderTensions(); actualizarTensionEstadisticas(); }
 function desplegarTension(abrir){
   tensionApuntarAbierto = (abrir == null) ? !tensionApuntarAbierto : !!abrir;
+  if(tensionApuntarAbierto) sellarFechaTension(); /* v1.45 (E5): al abrir, la hora es la de ahora */
   var b = $("tension-apuntar-bloque"), btn = $("btn-tension-apuntar");
   if(!b || !btn) return;
   b.hidden = !tensionApuntarAbierto;
@@ -1229,6 +1310,7 @@ function desplegarAndarPauta(abrir){
 }
 function desplegarAndar(abrir){
   andarApuntarAbierto = (abrir == null) ? !andarApuntarAbierto : !!abrir;
+  if(andarApuntarAbierto) sellarFechaMarcha(); /* v1.45 (E5): al abrir, la fecha es la de hoy */
   var b = $("andar-apuntar-bloque"), btn = $("btn-andar-apuntar");
   if(!b || !btn) return;
   b.hidden = !andarApuntarAbierto;
@@ -1391,7 +1473,7 @@ document.addEventListener("click", function(ev){
 }); });
 
 /* ---------- Tensión y pulso ---------- */
-function addTension(sis, dia, pulso, obs, origen){ var t = { id: uid(), fecha: $("t-fecha").value || ahoraLocal(), sistolica: String(sis||"").trim(), diastolica: String(dia||"").trim(), pulso: String(pulso||"").trim(), observaciones: String(obs||"").trim(), origen: origen || "manual" };
+function addTension(sis, dia, pulso, obs, origen){ var t = { id: uid(), fecha: (tFechaAuto && $("t-fecha").value === tFechaAuto) ? ahoraLocal() : ($("t-fecha").value || ahoraLocal()), sistolica: String(sis||"").trim(), diastolica: String(dia||"").trim(), pulso: String(pulso||"").trim(), observaciones: String(obs||"").trim(), origen: origen || "manual" };
   if(!t.sistolica && !t.diastolica && !t.pulso){ toast("Pon al menos la tensión o el pulso."); return false; }
   data.tensions.push(t); data.tensions.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); }); saveAll(); scheduleSheetSync(); /* v1.39: la tensión también va a Sheets (pestaña Tensión) */ renderAll(); return true; }
 $("btn-guardar-tension").addEventListener("click", function(){ if(addTension($("t-sis").value, $("t-dia").value, $("t-pulso").value, $("t-obs").value, "manual")){ ["t-sis","t-dia","t-pulso","t-obs"].forEach(function(id){ $(id).value = ""; }); if(document.activeElement) document.activeElement.blur(); /* v1.22: ir a Hoy al guardar, para que el usuario vea el widget en verde y el aviso sin el teclado encima */ goto("hoy"); toast("Tensión guardada."); } });
@@ -1440,10 +1522,14 @@ function initVoz(){
 }
 function renderTensions(){ var el = $("lista-tensiones");
   if(!data.tensions.length){ el.innerHTML = '<p class="muted">Todavía no hay registros. Apunta la tensión las veces que quieras.</p>'; return; }
-  var filas = tensionFiltradas().slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); });
-  if(!filas.length){ el.innerHTML = '<p class="muted">Sin registros de tensión en esta franja. Cambia la franja para ver otros días.</p>'; return; }
+  var todas = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); });
+  var LIMITE_TENSIONES = 30;
+  var filas = mostrarTodasTensiones ? todas : todas.slice(0, LIMITE_TENSIONES);
+
   el.innerHTML = filas.map(function(t){ return '<div class="fila"><div class="fila-txt"><b>'+esc(t.sistolica||"—")+' / '+esc(t.diastolica||"—")+'</b> · pulso '+esc(t.pulso||"—")+' l.p.m.<br><span class="muted">'+fmtFechaHora(t.fecha)+(t.origen==="foto"?" · 📷 foto al tensiómetro":"")+'</span>'+(t.observaciones?'<br><span class="muted">'+esc(t.observaciones)+'</span>':"")+'</div><button type="button" class="fila-quitar" aria-label="Borrar este registro" data-del-tension="'+t.id+'">×</button></div>'; }).join("");
-  Array.prototype.forEach.call(el.querySelectorAll("[data-del-tension]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este registro?")) return; data.tensions = data.tensions.filter(function(t){ return t.id !== b.getAttribute("data-del-tension"); }); saveAll(); scheduleSheetSync(); /* v1.39 */ toast("Registro borrado."); renderAll(); }); }); }
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-tension]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este registro?")) return; data.tensions = data.tensions.filter(function(t){ return t.id !== b.getAttribute("data-del-tension"); }); saveAll(); scheduleSheetSync(); /* v1.39 */ toast("Registro borrado."); renderAll(); }); });
+  if(todas.length > LIMITE_TENSIONES && !mostrarTodasTensiones){ var pb = document.createElement("p"); pb.innerHTML = '<button class="btn secondary" id="btn-ver-todas-tensiones">Ver todos (' + todas.length + ')</button>'; el.appendChild(pb); var bv = $("btn-ver-todas-tensiones"); if(bv) bv.addEventListener("click", function(){ mostrarTodasTensiones = true; renderTensions(); }); }
+}
 
 /* ---------- Pastillero ---------- */
 /* ---------- Editar medicina (v1.27) ---------- */
@@ -1473,12 +1559,26 @@ function empezarEditarMedicina(id){
   var c = $("btn-cancelar-medicina"); if(c) c.hidden = false;
   $("card-anadir-medicina").scrollIntoView({ behavior: "smooth", block: "start" });
 }
+/* v1.45 (asistente): añadir una medicina con las mismas reglas que el Pastillero (horas normalizadas E1, aviso de pastillas reenviado). Devuelve la medicina o null si algo no es válido. */
+function anadirMedicina(nombre, dosis, horasCrudas, notas){
+  var horas = horasCrudas.map(normalizarHora);
+  var mala = horasCrudas.find(function(h, i){ return horas[i] == null; });
+  if(mala){ toast("La hora «" + mala + "» no es válida. Ponla como 08:00."); return null; }
+  horas = horas.filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
+  if(!nombre){ toast("Pon el nombre del medicamento."); return null; }
+  if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return null; }
+  var m = { id: uid(), nombre: nombre, dosis: dosis, horas: horas, notas: notas, tomadas: {} };
+  data.pills.push(m);
+  saveAll(); resendPushSchedule();
+  return m;
+}
 $("btn-guardar-medicina").addEventListener("click", function(){
-  var nombre = $("m-nombre").value.trim(); var horas = $("m-horas").value.split(",").map(function(h){ return h.trim(); }).filter(Boolean);
-  if(!nombre){ toast("Pon el nombre del medicamento."); return; }
-  if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return; }
+  var nombre = $("m-nombre").value.trim(); var horasCrudas = $("m-horas").value.split(",").map(function(h){ return h.trim(); }).filter(Boolean);
   var editado = false;
   if(editandoMedicina){
+    var horas = horasCrudas.map(normalizarHora); var mala = horasCrudas.find(function(h, i){ return horas[i] == null; }); if(mala){ toast("La hora «" + mala + "» no es válida. Ponla como 08:00."); return; } horas = horas.filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
+    if(!nombre){ toast("Pon el nombre del medicamento."); return; }
+    if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return; }
     var ex = data.pills.find(function(x){ return x.id === editandoMedicina; });
     if(ex){
       ex.nombre = nombre; ex.dosis = $("m-dosis").value.trim(); ex.horas = horas; ex.notas = $("m-notas").value.trim();
@@ -1488,13 +1588,17 @@ $("btn-guardar-medicina").addEventListener("click", function(){
     }
     salirModoEditar();
   }
-  if(!editado) data.pills.push({ id: uid(), nombre: nombre, dosis: $("m-dosis").value.trim(), horas: horas, notas: $("m-notas").value.trim(), tomadas: {} });
+  if(!editado){
+    var m = anadirMedicina(nombre, $("m-dosis").value.trim(), horasCrudas, $("m-notas").value.trim());
+    if(!m) return;
+  }
   ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
   /* v1.25: al guardar, la foto vuelve a su estado de origen: sin vista
      previa ni resultado, y el input reseteado para la siguiente foto. */
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
   var fr = $("foto-receta"); if(fr) fr.value = "";
-  saveAll(); resendPushSchedule(); toast(editado ? "Medicina actualizada." : "Medicina añadida al pastillero."); renderAll(); });
+  if(editado){ saveAll(); resendPushSchedule(); }
+  toast(editado ? "Medicina actualizada." : "Medicina añadida al pastillero."); renderAll(); });
 function hoyKey(){ return hoyISO(); }
 function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
   if(!data.pills.length){ el.innerHTML = '<p class="muted">Todavía no hay medicinas. Añade la primera arriba.</p>'; return; }
@@ -1535,7 +1639,7 @@ setInterval(checkReminders, 60000);
 
 /* ---------- Episodios (dolor) ---------- */
 $("btn-guardar-episodio").addEventListener("click", function(){ var q = $("d-que").value.trim(); if(!q){ toast("Describe qué te ha pasado."); return; }
-  data.episodios.push({ id: uid(), fecha: $("d-fecha").value || ahoraLocal(), texto: q }); data.episodios.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
+  data.episodios.push({ id: uid(), fecha: (dFechaAuto && $("d-fecha").value === dFechaAuto) ? ahoraLocal() : ($("d-fecha").value || ahoraLocal()), texto: q }); data.episodios.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
   $("d-que").value = ""; saveAll(); if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Episodio guardado."); });
 function renderEpisodios(){ var el = $("lista-episodios"); if(!el) return;
   if(!data.episodios.length){ el.innerHTML = '<p class="muted">Sin episodios apuntados.</p>'; return; }
@@ -1665,10 +1769,11 @@ function widgetsElegidos(){
   return data.widgets.map(function(id){ return MIGRAR_WIDGET[id] || id; })
     .filter(function(id){ return validos.indexOf(id) >= 0; });
 }
-function medStats(desde, hasta){
+function medStats(desdeMin, hastaMin){
   var hoy = hoyISO(); var total = 0, hechas = 0;
   data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
-    if(h >= desde && h < hasta){ total++; var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) >= 0) hechas++; }
+    var mins = horaAMinutos(h); if(mins == null) return;
+    if(mins >= desdeMin && mins < hastaMin){ total++; var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) >= 0) hechas++; }
   }); });
   return { total: total, hechas: hechas };
 }
@@ -1692,7 +1797,7 @@ function pasosPara(elegidos){
       return { tipo: tipo, vista: "andar", titulo: andarTxt, hecho: andado,
         detalle: andado ? "Marcha de hoy apuntada" : "Tu marcha de hoy" };
     }
-    var win = tipo === "medicacion-desayuno" ? ["00:00", "12:00"] : tipo === "medicacion-comida" ? ["12:00", "18:00"] : ["18:00", "24:00"];
+    var win = ventanaComida(tipo);
     var comida = tipo === "medicacion-desayuno" ? "desayuno" : tipo === "medicacion-comida" ? "comida" : "cena";
     var tituloMed = tipo === "medicacion-desayuno" ? "Medicación · Desayuno" : tipo === "medicacion-comida" ? "Medicación · Comida" : "Medicación · Cena";
     var cuando = tipo === "medicacion-desayuno" ? "la mañana" : tipo === "medicacion-comida" ? "la comida" : "la cena";
@@ -1773,6 +1878,16 @@ function activarArrastreWidget(indice, ev){
   document.addEventListener("pointerup", soltar);
   document.addEventListener("pointercancel", soltar);
 }
+/* v1.45 (asistente): añadir un widget a «Tu día» con las mismas reglas que el selector (los de una sola vez no se repiten; la tensión sí). Devuelve true si se añadió. */
+function anadirWidget(tipo){
+  if(TIPOS_WIDGET.map(function(t){ return t.tipo; }).indexOf(tipo) < 0) return false;
+  var actual = widgetsElegidos();
+  if(TIPOS_UNICOS.indexOf(tipo) >= 0 && actual.indexOf(tipo) >= 0) return false;
+  actual.push(tipo);
+  data.widgets = actual;
+  saveAll();
+  return true;
+}
 function renderSelectorWidgets(){
   var box = $("selector-widgets");
   if(!box) return;
@@ -1795,12 +1910,7 @@ function renderSelectorWidgets(){
     return '<div class="widget-opcion"><span style="flex:1"><b>' + esc(titulos[t.tipo]) + '</b>' + extra + '<br><span class="muted">' + esc(desc[t.tipo]) + '</span></span>' + boton + '</div>';
   }).join("") + '<button class="btn secondary" id="btn-cerrar-widgets" style="margin-top:10px">Cerrar</button>';
   Array.prototype.forEach.call(box.querySelectorAll("[data-anadir]"), function(b){
-    b.addEventListener("click", function(){
-      var actual = widgetsElegidos();
-      actual.push(b.getAttribute("data-anadir"));
-      data.widgets = actual;
-      saveAll(); renderAll();
-    });
+    b.addEventListener("click", function(){ anadirWidget(b.getAttribute("data-anadir")); renderAll(); });
   });
   var cerrar = $("btn-cerrar-widgets");
   if(cerrar) cerrar.addEventListener("click", function(){ box.hidden = true; });
@@ -1814,12 +1924,12 @@ function toggleWidgetMed(i){
   renderAll();
 }
 function listaMedHTML(p){
-  var win = p.tipo === "medicacion-desayuno" ? ["00:00", "12:00"] : p.tipo === "medicacion-comida" ? ["12:00", "18:00"] : ["18:00", "24:00"];
+  var win = ventanaComida(p.tipo);
   var comida = p.tipo === "medicacion-desayuno" ? "desayuno" : p.tipo === "medicacion-comida" ? "comida" : "cena";
   var hoy = hoyISO();
   var filas = [];
   data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
-    if(h >= win[0] && h < win[1]){
+    if(horaEnVentana(h, win)){
       var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
       var done = tomadas.indexOf(h) >= 0;
       filas.push('<label class="check' + (done ? ' done' : '') + '"><input type="checkbox" data-med-check data-pill="' + m.id + '" data-hora="' + esc(h) + '"' + (done ? ' checked' : '') + '><span><span class="nm"><b>' + esc(h) + '</b> — ' + esc(m.nombre) + (m.dosis ? ' <span class="muted">· ' + esc(m.dosis) + '</span>' : '') + '</span></span></label>');
@@ -1864,7 +1974,7 @@ function renderRutina(){
         var pasos = pasosPara(widgetsElegidos());
         var p = pasos[widgetMedExpandido];
         if(p && p.tipo.indexOf("medicacion-") === 0){
-          var win = p.tipo === "medicacion-desayuno" ? ["00:00", "12:00"] : p.tipo === "medicacion-comida" ? ["12:00", "18:00"] : ["18:00", "24:00"];
+          var win = ventanaComida(p.tipo);
           var st = medStats(win[0], win[1]);
           if(st.total > 0 && st.hechas === st.total) widgetMedExpandido = null;
         }
@@ -1913,7 +2023,7 @@ function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
     + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión.</p>')
     + '<h3>Episodios</h3>' + (data.episodios.length ? '<ul class="tight">' + data.episodios.slice(0,10).map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados.</p>')
     + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>' + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'; }
-function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); }
+function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); }
 </script>
 <script>
 "use strict";
@@ -1930,7 +2040,7 @@ function b64url(buf){ var s = btoa(String.fromCharCode.apply(null, new Uint8Arra
 function randomStr(n){ var a = new Uint8Array(n); crypto.getRandomValues(a); return Array.prototype.map.call(a, function(x){ return ("0"+x.toString(16)).slice(-2); }).join(""); }
 async function startGoogleLogin(){
   if(!clientConfigured()){
-    $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Pedro tiene que crear el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google y guardar tus datos en tu Drive. Además, en ese proyecto hay que activar la API de Google Sheets.</div>';
+    $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Falta configurar el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google y guardar tus datos en tu Drive. Además, en ese proyecto hay que activar la API de Google Sheets.</div>';
     toast("Google aún no está activado en esta versión."); return; }
   var verifier = randomStr(48);
   var digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(verifier));
@@ -1992,10 +2102,10 @@ async function ensureDriveFolder(){
   localStorage.setItem(DRIVE_FOLDER_ID_KEY, cj.id); return cj.id; }
 async function findDriveFile(folderId, name){
   var q = encodeURIComponent("name = '" + name + "' and '" + folderId + "' in parents and trashed = false");
-  var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name)&spaces=drive");
+  var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name,modifiedTime)&spaces=drive");
   var j = await r.json(); if(!r.ok) throw new Error((j.error && j.error.message) || ("Drive " + r.status));
   return (j.files && j.files.length) ? j.files[0] : null; }
-async function saveToDrive(manual){
+async function saveToDrive(manual, forzado){
   if(!isConnected()){ updateDriveUI(); return false; }
   try{
     var folderId = await ensureDriveFolder();
@@ -2005,7 +2115,9 @@ async function saveToDrive(manual){
     /* v1.36: nunca se sube un estado local vacío encima de un archivo de
        Drive que tiene datos. Si lo local está vacío y en Drive hay datos,
        se rechaza la subida para no borrarlos. */
-    if(!datosConContenido(data) && fileId){
+    /* v1.45 (E3): el borrado intencionado usa forzado=true y salta este
+       control; es el único camino que sube un estado vacío. */
+    if(!datosConContenido(data) && fileId && !forzado){
       try{
         var remota = await driveFetch("https://www.googleapis.com/drive/v3/files/" + fileId + "?alt=media");
         if(remota.ok){ var datosRemotos = await remota.json();
@@ -2027,7 +2139,7 @@ async function saveToDrive(manual){
     /* Copia con fecha, una al día, como en Ticket a ticket. */
     var dated = "corazon-fuerte-datos-" + hoyISO() + ".json";
     var already = await findDriveFile(folderId, dated);
-    if(!already){
+    if(!already && !forzado){
       var boundary2 = "corazon-fuerte-" + Date.now();
       var meta2 = JSON.stringify({ name: dated, parents:[folderId], mimeType:"application/json" });
       var mp2 = "--" + boundary2 + "\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n" + meta2 + "\r\n--" + boundary2 + "\r\nContent-Type: application/json\r\n\r\n" + body + "\r\n--" + boundary2 + "--";
@@ -2055,7 +2167,23 @@ async function loadFromDrive(){
        comprobación antigua (remote.pauta || remote.walks) aceptaba un
        archivo vacío, porque un objeto pauta vacío {} es truthy, y eso
        borraba los datos locales. */
-    if(remote && typeof remote === "object" && datosConContenido(remote)){ data = remote; if(!/^\d{1,2}:\d{2}$/.test(data.diaInicio || "")) data.diaInicio = "05:00"; /* v1.37: migración al cargar de Drive */ saveLocal(); renderAll(); sincronizarRuedaDiaInicio(); return true; }
+    if(remote && typeof remote === "object" && datosConContenido(remote)){
+      /* v1.45 (E4): gana lo más nuevo. Se compara el sello de lo local
+         con el del archivo de Drive (su campo «actualizado», o la fecha
+         de modificación de Drive si es un archivo viejo sin ese campo).
+         Si lo local es más nuevo Y tiene contenido, se queda lo local y
+         se sube a Drive para que se ponga al día. Si lo local está vacío
+         o no tiene sello, se carga lo de Drive como siempre.
+         Limitación conocida: si dos dispositivos editan a la vez, se
+         pierde el cambio más viejo; no hay fusión por registros. */
+      var selloLocal = (data && data.actualizado) || null;
+      var selloRemoto = remote.actualizado || f.modifiedTime || null;
+      if(selloLocal && selloRemoto && datosConContenido(data)){
+        var tL = Date.parse(selloLocal), tR = Date.parse(selloRemoto);
+        if(!isNaN(tL) && !isNaN(tR) && tL > tR){ await saveToDrive(false); return false; }
+      }
+      data = sanearDatos(remote); saveLocal(true); renderAll(); sincronizarRuedaDiaInicio(); return true;
+    }
     return false;
   }catch(e){ return false; } }
 /* ---------- Google Sheets: «Corazón Fuerte - Control», pestaña Andar ----------
@@ -2177,14 +2305,16 @@ function updateDriveUI(){
   $("btn-drive-ahora").style.display = connected ? "block" : "none";
   var last = localStorage.getItem(DRIVE_LAST_KEY);
   $("drive-sync").textContent = connected ? ("Última sincronización con Drive: " + (last || "todavía no se ha guardado")) : "";
-  if(!clientConfigured()){ $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Pedro tiene que crear el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google. Además, en ese proyecto hay que activar la API de Google Sheets.</div>'; }
+  if(!clientConfigured()){ $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Falta configurar el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google. Además, en ese proyecto hay que activar la API de Google Sheets.</div>'; }
   else { $("google-pendiente").innerHTML = ""; }
   actualizarPuntoConectado(); }
 
 /* ---------- Gemini: leer la foto del tensiómetro (Lite primero, Flash de reserva) ---------- */
 var editandoClave = false;
 function updateKeyUI(){ var k = localStorage.getItem(GEMINI_KEY); var guardada = !!k && !editandoClave; $("clave-sin-guardar").hidden = guardada; $("clave-guardada").hidden = !guardada; if(k){ $("clave-estado").textContent = "✅ Clave de Gemini guardada en este navegador."; } $("foto-ayuda").textContent = k ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración."; updateRecetaUI(); actualizarPuntoConectado(); }
-$("btn-guardar-clave").addEventListener("click", function(){ var k = $("gemini-key").value.trim(); if(!k){ toast("Pega tu clave de Gemini."); return; } localStorage.setItem(GEMINI_KEY, k); $("gemini-key").value = ""; editandoClave = false; updateKeyUI(); toast("Clave guardada solo en este navegador."); });
+/* v1.45 (asistente): guardar la clave de Gemini, también desde el asistente. La clave queda solo en este navegador, nunca en Drive ni en la copia exportada. */
+function guardarClaveGemini(k){ k = String(k == null ? "" : k).trim(); if(!k){ toast("Pega tu clave de Gemini."); return false; } localStorage.setItem(GEMINI_KEY, k); editandoClave = false; updateKeyUI(); toast("Clave guardada solo en este navegador."); return true; }
+$("btn-guardar-clave").addEventListener("click", function(){ if(guardarClaveGemini($("gemini-key").value)) $("gemini-key").value = ""; });
 $("btn-cambiar-clave").addEventListener("click", function(){ editandoClave = true; updateKeyUI(); var inp = $("gemini-key"); if(inp) inp.focus(); });
 $("btn-borrar-clave").addEventListener("click", function(){ localStorage.removeItem(GEMINI_KEY); editandoClave = false; updateKeyUI(); toast("Clave borrada."); });
 function compressImage(file){ return new Promise(function(resolve, reject){ var img = new Image(); var url = URL.createObjectURL(file);
@@ -2269,7 +2399,7 @@ $("foto-tensiometro").addEventListener("change", async function(ev){
 
 
 /* ---------- Semáforo de la sal (y de todo lo que tú marques) ---------- */
-/* Regla PROVISIONAL (Pedro: si su médico le da otros márgenes, se cambian). Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente evitado, si aparece, es rojo. La luz final es la peor de todos tus criterios. */
+/* Regla PROVISIONAL (si el médico da otros márgenes, se cambian). Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente evitado, si aparece, es rojo. La luz final es la peor de todos tus criterios. */
 function fmtG(n){ var v = Math.round(Number(n)*100)/100; return String(v).replace(".", ","); }
 function normKey(s){ return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); }
 function normValores(obj){ var out = {}; if(!obj) return out; Object.keys(obj).forEach(function(k){ var v = num(obj[k]); out[normKey(k)] = v; }); return out; }
@@ -2306,7 +2436,7 @@ function evaluarSemaforo(valores, ingredientesTexto){
       criterios.push({ nombre: c.nombre, valor: null, limite: null, luz: "rojo", motivo: "Contiene «" + c.nombre + "», un ingrediente que marcaste evitar", tipo: "ingrediente" });
     }
   });
-  /* Regla de la dieta (Pedro, v1.21): más de 6 ingredientes = ultraprocesado, luz roja. Solo si hay lista de ingredientes. */
+  /* Regla de la dieta (v1.21): más de 6 ingredientes = ultraprocesado, luz roja. Solo si hay lista de ingredientes. */
   var textoIng = String(ingredientesTexto || "");
   if(textoIng.trim()){
     var nIng = textoIng.split(/[,\n;]+/).map(function(s){ return s.trim(); }).filter(function(s){ return s.length > 0; }).length;
@@ -2314,7 +2444,7 @@ function evaluarSemaforo(valores, ingredientesTexto){
       criterios.push({ nombre: "Ingredientes", valor: null, limite: null, luz: "rojo", motivo: "Más de 6 ingredientes (" + nIng + "): ultraprocesado", tipo: "regla", texto: "Más de 6 ingredientes (" + nIng + "): ultraprocesado" });
     }
   }
-  /* Reglas fijas de la pauta (Pedro): aceites y azúcares. No se pueden cambiar ni borrar. */
+  /* Reglas fijas de la pauta: aceites y azúcares. No se pueden cambiar ni borrar. */
   var ACEITES = [
     ["aceite de girasol", "aceite de girasol"], ["aceite de palma", "aceite de palma"],
     ["aceite de soja", "aceite de soja"], ["aceite de maiz", "aceite de maíz"],
@@ -2533,7 +2663,7 @@ async function geminiReadNutrition(base64){
   throw new Error("No se pudo leer el cuadro nutricional en la foto"); }
 function parseMedicinaJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
   try{ var j = JSON.parse(m[0]); if(!j.nombre) return null;
-    var horas = Array.isArray(j.horas) ? j.horas.map(function(h){ return String(h).trim(); }).filter(Boolean) : [];
+    var horas = Array.isArray(j.horas) ? j.horas.map(function(h){ return normalizarHora(h); }).filter(Boolean) : [];
     return { nombre: j.nombre, dosis: j.dosis || "", horas: horas, notas: j.notas || "" }; }catch(e){ return null; } }
 async function geminiReadMedicina(base64){
   var prompt = "Lee esta receta médica o la caja de este medicamento. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"nombre\": \"nombre del medicamento\", \"dosis\": \"dosis, por ejemplo 1 comprimido de 5 mg\", \"horas\": [\"08:00\", \"20:00\"], \"notas\": \"con la comida, antes de dormir, o vacío si no se ve\"}. Las horas en formato 24 h (HH:MM). Si algún dato no se ve, pon cadena vacía o lista vacía. No inventes ningún dato que no se vea en la foto.";
@@ -2542,28 +2672,36 @@ async function geminiReadMedicina(base64){
   if(parsed) return parsed;
   throw new Error("No se pudo leer la receta o la caja en la foto"); }
 function updateRecetaUI(){ var k = localStorage.getItem(GEMINI_KEY); var el = $("receta-ayuda"); if(el) el.textContent = k ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración."; }
+/* v1.45 (asistente): leer la foto de una receta o caja y rellenar el formulario que se le indique (Pastillero o asistente). Devuelve true si la leyó. */
+async function leerFotoMedicina(file, ids, etiquetaBoton){
+  if(!file) return false;
+  etiquetaBoton = etiquetaBoton || "Añadir medicina";
+  $(ids.resultado).innerHTML = '<p>⏳ Leyendo la receta o la caja…</p>';
+  try{
+    var base64 = await compressImage(file);
+    $(ids.preview).innerHTML = '<img class="thumb" alt="Foto de la receta o caja" src="data:image/jpeg;base64,' + base64 + '">';
+    var vals = await geminiReadMedicina(base64);
+    /* v1.25: sin paso de confirmación. Los datos van directos al formulario
+       y se baja hasta él para que se vea rellenado. La única confirmación
+       es pulsar «Añadir medicina». */
+    $(ids.nombre).value = vals.nombre || "";
+    $(ids.dosis).value = vals.dosis || "";
+    $(ids.horas).value = (vals.horas || []).join(", ");
+    $(ids.notas).value = vals.notas || "";
+    $(ids.resultado).innerHTML = (vals.horas && vals.horas.length)
+      ? '<p><span class="pill">✅ Foto leída: revisa los datos y pulsa «' + esc(etiquetaBoton) + '».</span></p>'
+      : '<p><span class="pill warn">⏳ La foto no traía las horas: ponlas a mano y pulsa «' + esc(etiquetaBoton) + '».</span></p>';
+    $(ids.nombre).scrollIntoView({ behavior: "smooth", block: "center" });
+    return true;
+  }catch(e){ $(ids.resultado).innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Añade la medicina a mano.</div>'; return false; }
+}
 $("foto-receta").addEventListener("change", async function(ev){
   var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
   if(!file) return;
   var key = localStorage.getItem(GEMINI_KEY);
   if(!key){ $("receta-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto de la receta necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes añadir la medicina a mano.</div>'; goto("config"); return; }
-  $("receta-resultado").innerHTML = '<p>⏳ Leyendo la receta o la caja…</p>';
-  try{
-    var base64 = await compressImage(file);
-    $("receta-preview").innerHTML = '<img class="thumb" alt="Foto de la receta o caja" src="data:image/jpeg;base64,' + base64 + '">';
-    var vals = await geminiReadMedicina(base64);
-    /* v1.25: sin paso de confirmación. Los datos van directos al formulario
-       y se baja hasta él para que se vea rellenado. La única confirmación
-       es pulsar «Añadir medicina». */
-    $("m-nombre").value = vals.nombre || "";
-    $("m-dosis").value = vals.dosis || "";
-    $("m-horas").value = (vals.horas || []).join(", ");
-    $("m-notas").value = vals.notas || "";
-    $("receta-resultado").innerHTML = (vals.horas && vals.horas.length)
-      ? '<p><span class="pill">✅ Foto leída: revisa los datos y pulsa «Añadir medicina».</span></p>'
-      : '<p><span class="pill warn">⏳ La foto no traía las horas: ponlas a mano y pulsa «Añadir medicina».</span></p>';
-    $("m-nombre").scrollIntoView({ behavior: "smooth", block: "center" });
-  }catch(e){ $("receta-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Añade la medicina a mano.</div>'; } });
+  leerFotoMedicina(file, { nombre: "m-nombre", dosis: "m-dosis", horas: "m-horas", notas: "m-notas", preview: "receta-preview", resultado: "receta-resultado" });
+});
 $("foto-nutricion").addEventListener("change", async function(ev){
   var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
   if(!file) return;
@@ -2669,11 +2807,43 @@ $("btn-exportar").addEventListener("click", function(){
   var blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
   var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "corazon-fuerte-datos.json"; a.click();
   setTimeout(function(){ URL.revokeObjectURL(a.href); }, 5000); toast("Copia descargada. No incluye tu clave de Gemini."); });
-$("btn-borrar-todo").addEventListener("click", function(){
-  if(!confirm("¿Borrar TODOS tus datos de esta app (pauta, marchas, tensiones, pastillero y semáforo)? No se puede deshacer.")) return;
-  data = datosVacios(); saveLocal(); fillPautaForm(); pautaDesplegada = false; actualizarPautaPlegada(); renderAll(); toast("Todos los datos borrados."); });
+/* v1.45 (E7): importar la copia en otro móvil. Se valida que parezca un
+   archivo de Corazón Fuerte, se pide confirmación y se SUSTITUYEN los
+   datos de este dispositivo (no se mezclan: es un traslado). La copia
+   importada queda como lo más nuevo (E4) y se sube a Drive. La clave de
+   Gemini nunca viaja en la copia (vive en otra clave del navegador) y,
+   por si acaso, cualquier campo parecido se quita al importar. */
+$("btn-importar").addEventListener("click", function(){ $("import-file").click(); });
+$("import-file").addEventListener("change", function(ev){
+  var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var obj = null;
+    try{ obj = JSON.parse(reader.result); }catch(e){ obj = null; }
+    if(!obj || typeof obj !== "object" || (!Array.isArray(obj.walks) && !Array.isArray(obj.tensions) && !Array.isArray(obj.pills) && typeof obj.pauta !== "object")){ toast("Esa copia no es de Corazón Fuerte. Elige el archivo JSON descargado desde la app."); return; }
+    if(!confirm("¿Sustituir TODOS los datos de este dispositivo por los de la copia? Lo que hay ahora se pierde. Es la forma de llevar tus datos a otro móvil.")) return;
+    delete obj.geminiKey; delete obj.claveGemini; delete obj.gemini_key;
+    data = sanearDatos(obj);
+    data.actualizado = new Date().toISOString(); /* la copia importada es lo más nuevo */
+    saveLocal(); saveAll(); scheduleSheetSync(); resendPushSchedule(); fillPautaForm(); pautaDesplegada = false; actualizarPautaPlegada(); renderAll();
+    toast("Copia importada. Tus datos ya están en este dispositivo.");
+  };
+  reader.readAsText(file);
+});
+$("btn-borrar-todo").addEventListener("click", async function(){
+  if(!confirm("¿Borrar TODOS tus datos de esta app (pauta, marchas, tensiones, pastillero y semáforo)? Se borran también de tu Drive. Las copias con fecha que hay en Drive se quedan, por si acaso. No se puede deshacer.")) return;
+  data = datosVacios(); saveLocal(); fillPautaForm(); pautaDesplegada = false; actualizarPautaPlegada(); renderAll();
+  resendPushSchedule(); scheduleSheetSync();
+  /* v1.45 (E3): el borrado también sube el estado vacío a Drive (camino
+     forzado, único que salta el control de la v1.36). Sin esto, al
+     recargar, Drive devolvía los datos borrados. */
+  if(isConnected()){
+    var ok = await saveToDrive(false, true);
+    toast(ok ? "Todos los datos borrados, también de Drive. Las copias con fecha siguen en tu Drive." : "Datos borrados de este dispositivo, pero no se pudo borrar la copia de Drive. Inténtalo de nuevo con conexión.");
+  } else toast("Todos los datos borrados de este dispositivo."); });
 
-/* ---------- Avisos push aunque la app esté cerrada (Worker de Pedro) ---------- */
+/* ---------- Avisos push aunque la app esté cerrada ---------- */
 function getPushWorkerUrl(){ return (localStorage.getItem(PUSH_WORKER_URL_KEY) || PUSH_WORKER_URL_DEFAULT).trim().replace(/\/$/, ""); }
 function pushEnabled(){ return localStorage.getItem(PUSH_ENABLED_KEY) === "1"; }
 function pushDeviceValue(){
@@ -2719,11 +2889,12 @@ function sistemaAvisos(){
   if(/Android/i.test(ua)) return standalone ? "instalada" : "android";
   return "pc";
 }
-function mostrarPasosNotificaciones(){
+/* v1.45 (asistente): el ancla es opcional; desde el asistente se pasa su propio botón para que el recuadro se coloque junto a él y no junto al interruptor de Configuración, que está oculto. */
+function mostrarPasosNotificaciones(ancla){
   var claves = { android: "push-denegado-android", instalada: "push-denegado-instalada", iphone: "push-denegado-iphone", pc: "push-denegado-pc" };
   var src = document.querySelector('[data-info-for="' + (claves[sistemaAvisos()] || claves.pc) + '"]');
   if(!src) return;
-  var ancla = $("push-toggle") || $("card-push");
+  ancla = ancla || $("push-toggle") || $("card-push");
   if(infoPopupBtn === ancla && !infoPopup.hidden){ closeInfoPopup(); return; }
   infoPopupBody.innerHTML = src.innerHTML;
   infoPopup.hidden = false;
@@ -2731,11 +2902,11 @@ function mostrarPasosNotificaciones(){
   Array.prototype.forEach.call(document.querySelectorAll(".info-btn[data-info-toggle]"), function(b){ b.setAttribute("aria-expanded", "false"); });
   positionInfoPopup(ancla);
 }
-async function enablePush(){
+async function enablePush(ancla){
   var wurl = getPushWorkerUrl();
   if(!wurl){ toast("Aún no has puesto la dirección del Worker de avisos."); updatePushUI(); return; }
   if(!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)){ toast("Este navegador no admite avisos con la app cerrada."); updatePushUI(); return; }
-  if(Notification.permission === "denied"){ mostrarPasosNotificaciones(); updatePushUI(); return; }
+  if(Notification.permission === "denied"){ mostrarPasosNotificaciones(ancla); updatePushUI(); return; }
   var perm = await Notification.requestPermission();
   if(perm !== "granted"){ toast("Sin permiso, no puedo avisarte con la app cerrada."); updatePushUI(); return; }
   try{
@@ -2761,7 +2932,7 @@ async function disablePush(){
 }
 /* v1.43: «Probar aviso» — envía un aviso de prueba AHORA y enseña el
    resultado dentro de la app (antes solo se veía en los registros del
-   Worker, que Pedro no puede abrir). Si el Worker es viejo (sin /test),
+   Worker, que no se pueden abrir desde la app). Si el Worker es viejo (sin /test),
    responde 404 «Ruta no encontrada»: eso mismo dice que hay que pegar
    la versión nueva del Worker (v6). */
 var probandoAviso = false;
@@ -2841,6 +3012,344 @@ function initPush(){
   repararSuscripcionPush(); /* v1.43: si el interruptor está en «sí» pero la suscripción se perdió, se rehace sola en silencio */
 }
 
+/* ============================================================
+   ASISTENTE «POR DÓNDE EMPEZAR» (v1.45)
+   Guía paso a paso para configurar la app la primera vez.
+   Un solo botón en Configuración, con nombre según lo hecho.
+   NO sale solo al abrir la app: solo se abre con el botón.
+   El progreso (paso actual + pasos saltados) vive en su propia
+   clave de localStorage, fuera de los datos: nunca toca el
+   guardado ni la marca de tiempo E4. Todos los guardados pasan
+   por las funciones que ya existen (guardarClaveGemini,
+   anadirMedicina, anadirWidget, saveAll, resendPushSchedule).
+   El asistente es una vista propia: no está en VIEWS (el
+   deslizamiento de la v1.42 no la recorre) ni en el menú.
+   ============================================================ */
+var ASISTENTE_KEY = "corazon-fuerte-asistente-v1";
+var ASISTENTE_PASOS = ["Entrar con Google", "Clave de Gemini", "Avisos", "Pastillas", "Pauta de andar", "Datos de salud", "Widgets de «Tu día»"];
+var asistenteEstado = { abierto: false, paso: 1, saltos: [] };
+var asistenteCambiandoClave = false;
+var asistenteAvisosReal = null; /* null = aún sin comprobar la suscripción de verdad */
+function cargarAsistente(){
+  try{
+    var raw = localStorage.getItem(ASISTENTE_KEY);
+    if(!raw) return;
+    var s = JSON.parse(raw);
+    if(s && typeof s === "object"){
+      asistenteEstado.abierto = !!s.abierto;
+      asistenteEstado.paso = (typeof s.paso === "number" && s.paso >= 1 && s.paso <= 8) ? s.paso : 1;
+      asistenteEstado.saltos = Array.isArray(s.saltos) ? s.saltos.filter(function(n){ return n >= 1 && n <= 7; }) : [];
+    }
+  }catch(e){ /* clave rota: se empieza de cero */ }
+}
+function guardarAsistente(){
+  try{ localStorage.setItem(ASISTENTE_KEY, JSON.stringify(asistenteEstado)); }catch(e){}
+}
+/* ¿Está hecho el paso? (proxy síncrono; el paso 3 se afina con la suscripción de verdad en updateAsistenteUI y en abrirAsistente). */
+function asistenteHecho(i){
+  switch(i){
+    case 1: return isConnected();
+    case 2: return !!localStorage.getItem(GEMINI_KEY);
+    case 3:
+      if(asistenteAvisosReal === false) return false;
+      return ("Notification" in window) && Notification.permission === "granted" && pushEnabled();
+    case 4: return data.pills.length > 0;
+    case 5: return !!(data.pauta.duracion && data.pauta.dias && data.pauta.pulso && data.pauta.borgMin && data.pauta.borgMax);
+    case 6: return !!(data.pauta.diagnostico || data.pauta.dispositivo || data.pauta.revision || data.pauta.medico);
+    case 7: return widgetsElegidos().length > 0;
+  }
+  return false;
+}
+async function asistenteHechoReal(i){
+  if(i === 3){
+    if(!("Notification" in window) || Notification.permission !== "granted") return false;
+    if(!pushEnabled()) return false;
+    try{ var s = await getPushSubscription(); return !!s; }catch(e){ return pushEnabled(); }
+  }
+  return asistenteHecho(i);
+}
+/* El botón de Configuración cambia de nombre según lo que ya está hecho; cuando todo está hecho o saltado, se convierte en la línea verde «✓ Todo configurado». */
+function updateAsistenteUI(){
+  var btn = $("btn-asistente"), hecho = $("asistente-hecho");
+  if(!btn || !hecho) return;
+  var hechos = 0;
+  for(var i = 1; i <= 7; i++){ if(asistenteHecho(i) || asistenteEstado.saltos.indexOf(i) >= 0) hechos++; }
+  if(hechos === 7){ btn.hidden = true; hecho.hidden = false; }
+  else{
+    btn.hidden = false; hecho.hidden = true;
+    btn.textContent = hechos === 0 ? "Por dónde empezar" : "Continuar con la configuración";
+  }
+  /* La suscripción de verdad solo se comprueba una vez por carga: si el interruptor está en «sí» y el permiso concedido, pero no hay suscripción, el paso 3 no cuenta como hecho. */
+  if(asistenteAvisosReal === null && ("Notification" in window) && Notification.permission === "granted" && pushEnabled()){
+    asistenteAvisosReal = "comprobando";
+    getPushSubscription().then(function(s){ asistenteAvisosReal = !!s; if(!s) updateAsistenteUI(); }).catch(function(){ asistenteAvisosReal = null; });
+  }
+}
+function irPasoAsistente(n){
+  if(n < 1) n = 1; if(n > 8) n = 8;
+  asistenteEstado.paso = n;
+  guardarAsistente();
+  renderAsistente();
+}
+/* Al entrar, se salta directo al primer paso que falta (los hechos y los saltados no se vuelven a preguntar). Si no falta ninguno, se abre el resumen. */
+async function abrirAsistente(){
+  var n = 1;
+  while(n <= 7){
+    if(asistenteEstado.saltos.indexOf(n) >= 0){ n++; continue; }
+    var hecho = n === 3 ? await asistenteHechoReal(3) : asistenteHecho(n);
+    if(hecho){ n++; continue; }
+    break;
+  }
+  asistenteEstado.paso = n > 7 ? 8 : n;
+  asistenteEstado.abierto = true;
+  guardarAsistente();
+  goto("asistente");
+  renderAsistente();
+}
+function cerrarAsistente(destino){
+  asistenteEstado.abierto = false;
+  guardarAsistente();
+  goto(destino || "config");
+}
+/* Si la app se cerró (o se fue a Google) con el asistente abierto, al volver se retoma donde se quedó. Si la URL trae #vista (por ejemplo, un aviso push), manda la URL y el asistente no se reabre. */
+function reabrirAsistenteSiToca(){
+  if(!asistenteEstado.abierto) return;
+  var hv = (location.hash || "").replace("#", "");
+  if(hv && VIEWS.some(function(v){ return v[0] === hv; })) return;
+  abrirAsistente();
+}
+function asistenteNavHTML(paso, saltarTxt){
+  var h = '<div class="asistente-nav">';
+  h += '<button class="btn" id="asistente-siguiente">Siguiente</button>';
+  h += '<div class="fila-nav"><button class="btn secondary" id="asistente-atras">Atrás</button>';
+  h += '<button class="btn secondary" id="asistente-saltar">' + esc(saltarTxt || "Saltar este paso") + '</button></div></div>';
+  return h;
+}
+function asistenteCablearNav(paso){
+  $("asistente-siguiente").addEventListener("click", function(){ irPasoAsistente(paso >= 7 ? 8 : paso + 1); });
+  $("asistente-atras").addEventListener("click", function(){
+    if(paso <= 1){ cerrarAsistente(); return; }
+    irPasoAsistente(paso - 1);
+  });
+  $("asistente-saltar").addEventListener("click", function(){
+    if(asistenteEstado.saltos.indexOf(paso) < 0) asistenteEstado.saltos.push(paso);
+    guardarAsistente();
+    irPasoAsistente(paso >= 7 ? 8 : paso + 1);
+  });
+}
+function asistenteHTMLPaso(paso){
+  var h = "", p = data.pauta;
+  if(paso === 1){
+    h += '<h2>1 · Entra con Google</h2>';
+    h += '<p>Entra con tu correo de Google para que todos tus valores se guarden también en tu Google Drive, en una carpeta llamada «Corazón Fuerte».</p>';
+    if(isConnected()) h += '<p><span class="pill">✓ Ya estás conectado con Google.</span></p>';
+    else h += '<button class="btn" id="asistente-btn-google">Entrar con Google</button>';
+    h += '<p class="muted">Si no te conectas, los datos se quedan solo en este dispositivo. Puedes saltar este paso y conectarte más tarde desde Configuración.</p>';
+  }
+  if(paso === 2){
+    h += '<h2>2 · Activa la clave de Gemini</h2>';
+    h += '<p>La clave es para que la app pueda leer las fotos: el tensiómetro, la caja de las medicinas y el cuadro nutricional. Es gratis y se guarda solo en este navegador.</p>';
+    h += '<ol class="tight"><li>Pulsa el enlace «Conseguir mi clave de Gemini».</li><li>Acepta las condiciones de Google.</li><li>Pulsa «Crear clave».</li><li>Copia la clave.</li><li>Pégala aquí mismo, sin salir del asistente.</li></ol>';
+    h += '<p><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Conseguir mi clave de Gemini</a></p>';
+    if(localStorage.getItem(GEMINI_KEY) && !asistenteCambiandoClave){
+      h += '<p><span class="pill">✓ Clave de Gemini guardada en este navegador.</span></p>';
+      h += '<button class="btn secondary" id="asistente-btn-cambiar-clave">Cambiar clave</button>';
+    }else{
+      h += '<label for="asistente-clave">Tu clave de Gemini</label>';
+      h += '<input id="asistente-clave" type="password" placeholder="Pega aquí tu clave" autocomplete="off">';
+      h += '<button class="btn" id="asistente-btn-clave">Guardar clave</button>';
+    }
+  }
+  if(paso === 3){
+    var perm = ("Notification" in window) ? Notification.permission : "denied";
+    h += '<h2>3 · Activa los avisos</h2>';
+    h += '<p>¿Quieres que te avise cuando te toque una pastilla? Los avisos llegan aunque la app esté cerrada.</p>';
+    if(perm === "granted" && pushEnabled()) h += '<p><span class="pill">✓ Avisos activados.</span></p>';
+    else{
+      if(perm === "denied") h += '<p><span class="pill warn">Los avisos están bloqueados en este navegador. Puedes permitirlos a mano: pulsa «Activar avisos» y te enseñamos los pasos.</span></p>';
+      h += '<button class="btn" id="asistente-btn-avisos">Activar avisos</button>';
+    }
+    h += '<p class="muted">Si tu móvil no deja activarlas, te enseñamos los pasos para permitirlas a mano. Puedes saltar este paso y activarlos más tarde desde Configuración.</p>';
+  }
+  if(paso === 4){
+    h += '<h2>4 · Tus pastillas</h2>';
+    h += '<p>Añade las medicinas que tomas, una a una: nombre, dosis y a qué hora.</p>';
+    if(localStorage.getItem(GEMINI_KEY)){
+      h += '<button class="btn" id="asistente-btn-foto">📷 Foto a la caja</button>';
+      h += '<input id="asistente-foto-receta" type="file" accept="image/*" capture="environment" style="display:none">';
+      h += '<div id="asistente-receta-preview"></div><div id="asistente-receta-resultado"></div>';
+    }
+    h += '<label for="asistente-m-nombre">Medicamento</label><input id="asistente-m-nombre" type="text" placeholder="Por ejemplo: Omeprazol">';
+    h += '<label for="asistente-m-dosis">Dosis</label><input id="asistente-m-dosis" type="text" placeholder="Por ejemplo: 1 cápsula de 20 mg">';
+    h += '<label for="asistente-m-horas">Horas (separadas por comas)</label><input id="asistente-m-horas" type="text" placeholder="Por ejemplo: 08:00, 20:00">';
+    h += '<label for="asistente-m-notas">Notas (opcional)</label><input id="asistente-m-notas" type="text" placeholder="Por ejemplo: con la comida">';
+    h += '<button class="btn" id="asistente-btn-medicina">' + (data.pills.length ? "Añadir otra" : "Añadir medicina") + '</button>';
+    if(data.pills.length){
+      h += '<h3>Tus pastillas</h3><ul class="tight">';
+      data.pills.forEach(function(m){ h += '<li><b>' + esc(m.nombre) + '</b> — ' + esc(m.dosis || "") + ' · ' + esc((m.horas || []).join(", ")) + '</li>'; });
+      h += '</ul>';
+    }
+  }
+  if(paso === 5){
+    h += '<h2>5 · Tu pauta de andar</h2>';
+    h += '<p>Estos son los valores que te ha pautado tu médico o tu unidad de rehabilitación. Si no los sabes, sáltalo y pregúntalos en tu próxima revisión.</p>';
+    h += '<label for="asistente-p-duracion">Duración (minutos)</label><input id="asistente-p-duracion" type="number" min="1" max="300" inputmode="numeric" value="' + esc(p.duracion || "") + '">';
+    h += '<label for="asistente-p-dias">Días por semana</label><input id="asistente-p-dias" type="number" min="1" max="7" inputmode="numeric" value="' + esc(p.dias || "") + '">';
+    h += '<label for="asistente-p-pulso">Pulso objetivo (latidos por minuto)</label><input id="asistente-p-pulso" type="number" min="40" max="200" inputmode="numeric" value="' + esc(p.pulso || "") + '">';
+    h += '<div class="frow"><div><label for="asistente-p-borgmin">BORG mínimo</label><input id="asistente-p-borgmin" type="number" min="6" max="20" inputmode="numeric" value="' + esc(p.borgMin || "") + '"></div><div><label for="asistente-p-borgmax">BORG máximo</label><input id="asistente-p-borgmax" type="number" min="6" max="20" inputmode="numeric" value="' + esc(p.borgMax || "") + '"></div></div>';
+    h += '<button class="btn" id="asistente-btn-pauta">Guardar mi pauta de andar</button>';
+  }
+  if(paso === 6){
+    h += '<h2>6 · Tus datos de salud</h2>';
+    h += '<p>Si quieres, deja aquí tus datos de salud. Puedes saltar este paso y rellenarlo más tarde en Configuración.</p>';
+    h += '<label for="asistente-p-diag">Diagnóstico</label><select id="asistente-p-diag">' + asistenteOpciones(["", "Infarto", "Infarto Agudo de Miocardio", "Insuficiencia cardiaca", "Infarto e insuficiencia cardiaca", "Otra dolencia del corazón"], p.diagnostico) + '</select>';
+    h += '<label for="asistente-p-disp">Implante</label><select id="asistente-p-disp">' + asistenteOpciones(["", "Ninguno", "Marcapasos", "Desfibrilador", "Marcapasos y desfibrilador", "Stent"], p.dispositivo) + '</select>';
+    h += '<label for="asistente-p-revision">Fecha de la próxima revisión del implante</label><input id="asistente-p-revision" type="date" value="' + esc(p.revision || "") + '">';
+    h += '<label for="asistente-p-medico">Médico de contacto</label><input id="asistente-p-medico" type="text" value="' + esc(p.medico || "") + '">';
+    h += '<button class="btn" id="asistente-btn-medicos">Guardar mis datos de salud</button>';
+  }
+  if(paso === 7){
+    h += '<h2>7 · Tu día</h2>';
+    h += '<p>Elige qué quieres ver cada día en «Tu día». Se añade en cuanto lo confirmes.</p>';
+    var elegidos = widgetsElegidos();
+    TIPOS_WIDGET.forEach(function(t){
+      var ya = TIPOS_UNICOS.indexOf(t.tipo) >= 0 && elegidos.indexOf(t.tipo) >= 0;
+      var titulo = t.tipo === "andar" ? ("Andar " + (data.pauta.duracion || 60) + " minutos") : t.titulo;
+      h += '<div class="widget-opcion"><div class="txt"><b>' + esc(titulo) + '</b><span>' + esc(t.desc) + '</span></div>';
+      if(ya) h += '<span class="pill">✓ Ya está en Tu día</span>';
+      else h += '<button class="btn small" data-asistente-widget="' + t.tipo + '">Añadir</button>';
+      h += '</div>';
+    });
+    h += '<p class="muted">La tensión se puede añadir varias veces, una por cada toma. Cada widget se marca en verde cuando está hecho y en rojo cuando falta.</p>';
+  }
+  h += asistenteNavHTML(paso, paso === 4 ? "No tomo pastillas" : null);
+  return h;
+}
+function asistenteOpciones(lista, actual){
+  return lista.map(function(v){
+    return '<option value="' + esc(v) + '"' + (v === (actual || "") ? ' selected' : '') + '>' + (v === "" ? "— Elige —" : esc(v)) + '</option>';
+  }).join("");
+}
+function asistenteNum(v, min, max){
+  if(v === "" || v == null) return "";
+  var n = Number(v);
+  if(!isFinite(n) || n < min || n > max) return null;
+  return String(Math.round(n));
+}
+function asistenteCablearPaso(paso){
+  asistenteCablearNav(paso);
+  if(paso === 1){
+    var bg = $("asistente-btn-google");
+    if(bg) bg.addEventListener("click", function(){ startGoogleLogin(); });
+  }
+  if(paso === 2){
+    var bc = $("asistente-btn-clave");
+    if(bc) bc.addEventListener("click", function(){
+      if(guardarClaveGemini($("asistente-clave").value)){ asistenteCambiandoClave = false; renderAsistente(); renderAll(); }
+    });
+    var bcc = $("asistente-btn-cambiar-clave");
+    if(bcc) bcc.addEventListener("click", function(){ asistenteCambiandoClave = true; renderAsistente(); });
+  }
+  if(paso === 3){
+    var ba = $("asistente-btn-avisos");
+    if(ba) ba.addEventListener("click", async function(){
+      await enablePush($("asistente-btn-avisos"));
+      renderAsistente(); renderAll();
+    });
+  }
+  if(paso === 4){
+    var bf = $("asistente-btn-foto");
+    if(bf) bf.addEventListener("click", function(){ $("asistente-foto-receta").click(); });
+    var fr = $("asistente-foto-receta");
+    if(fr) fr.addEventListener("change", async function(ev){
+      var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
+      if(!file) return;
+      await leerFotoMedicina(file, { nombre: "asistente-m-nombre", dosis: "asistente-m-dosis", horas: "asistente-m-horas", notas: "asistente-m-notas", preview: "asistente-receta-preview", resultado: "asistente-receta-resultado" }, data.pills.length ? "Añadir otra" : "Añadir medicina");
+    });
+    var bm = $("asistente-btn-medicina");
+    if(bm) bm.addEventListener("click", function(){
+      var m = anadirMedicina($("asistente-m-nombre").value.trim(), $("asistente-m-dosis").value.trim(), $("asistente-m-horas").value.split(",").map(function(h){ return h.trim(); }).filter(Boolean), $("asistente-m-notas").value.trim());
+      if(m){ renderAsistente(); renderAll(); }
+    });
+  }
+  if(paso === 5){
+    var bp = $("asistente-btn-pauta");
+    if(bp) bp.addEventListener("click", function(){
+      var dur = asistenteNum($("asistente-p-duracion").value.trim(), 1, 300);
+      var dias = asistenteNum($("asistente-p-dias").value.trim(), 1, 7);
+      var pul = asistenteNum($("asistente-p-pulso").value.trim(), 40, 200);
+      var bmin = asistenteNum($("asistente-p-borgmin").value.trim(), 6, 20);
+      var bmax = asistenteNum($("asistente-p-borgmax").value.trim(), 6, 20);
+      if(dur === null || dias === null || pul === null || bmin === null || bmax === null){ toast("Revisa los valores: la duración va de 1 a 300 minutos, los días de 1 a 7, el pulso de 40 a 200 y el BORG de 6 a 20."); return; }
+      if(bmin !== "" && bmax !== "" && Number(bmin) > Number(bmax)){ toast("El BORG mínimo no puede ser mayor que el máximo."); return; }
+      if(dur === "" && dias === "" && pul === "" && bmin === "" && bmax === ""){ toast("Pon los valores de tu pauta o salta el paso."); return; }
+      if(dur !== "") data.pauta.duracion = dur;
+      if(dias !== "") data.pauta.dias = dias;
+      if(pul !== "") data.pauta.pulso = pul;
+      if(bmin !== "") data.pauta.borgMin = bmin;
+      if(bmax !== "") data.pauta.borgMax = bmax;
+      saveAll(); fillPautaForm(); actualizarPautaPlegada();
+      toast("Pauta de andar guardada.");
+      renderAsistente(); renderAll();
+    });
+  }
+  if(paso === 6){
+    var bd = $("asistente-btn-medicos");
+    if(bd) bd.addEventListener("click", function(){
+      data.pauta.diagnostico = $("asistente-p-diag").value;
+      data.pauta.dispositivo = $("asistente-p-disp").value;
+      data.pauta.revision = $("asistente-p-revision").value;
+      data.pauta.medico = $("asistente-p-medico").value.trim();
+      saveAll(); resendPushSchedule(); fillPautaForm(); actualizarPautaPlegada();
+      toast("Datos de salud guardados.");
+      renderAsistente(); renderAll();
+    });
+  }
+  if(paso === 7){
+    Array.prototype.forEach.call(document.querySelectorAll("[data-asistente-widget]"), function(b){
+      b.addEventListener("click", function(){
+        if(anadirWidget(b.getAttribute("data-asistente-widget"))){ toast("Widget añadido a «Tu día»."); renderAsistente(); renderAll(); }
+      });
+    });
+  }
+}
+function asistenteHTMLResumen(){
+  var h = '<h2>Resumen</h2><p>Así queda tu configuración. Toca un paso para volver a él.</p><div class="asistente-resumen">';
+  for(var i = 1; i <= 7; i++){
+    var saltado = asistenteEstado.saltos.indexOf(i) >= 0;
+    var hecho = asistenteHecho(i);
+    var est = saltado ? '<span class="est salt">— Saltado</span>' : (hecho ? '<span class="est ok">✓ Hecho</span>' : '<span class="est pend">○ Pendiente</span>');
+    h += '<button type="button" data-asistente-ir="' + i + '"><span class="txt"><b>' + i + ' · ' + esc(ASISTENTE_PASOS[i-1]) + '</b></span>' + est + '</button>';
+  }
+  h += '</div><button class="btn" id="asistente-terminar">Terminar</button>';
+  return h;
+}
+function renderAsistente(){
+  var prog = $("asistente-progreso");
+  if(prog) prog.textContent = asistenteEstado.paso === 8 ? "Resumen" : ("Paso " + asistenteEstado.paso + " de 7");
+  var box = $("asistente-paso");
+  if(!box) return;
+  if(asistenteEstado.paso === 8){
+    box.innerHTML = asistenteHTMLResumen();
+    Array.prototype.forEach.call(box.querySelectorAll("[data-asistente-ir]"), function(b){
+      b.addEventListener("click", function(){ irPasoAsistente(Number(b.getAttribute("data-asistente-ir"))); });
+    });
+    $("asistente-terminar").addEventListener("click", function(){ cerrarAsistente("hoy"); });
+    return;
+  }
+  box.innerHTML = asistenteHTMLPaso(asistenteEstado.paso);
+  asistenteCablearPaso(asistenteEstado.paso);
+}
+function initAsistente(){
+  var b = $("btn-asistente");
+  if(b) b.addEventListener("click", function(){ abrirAsistente(); });
+  /* La línea verde también abre el asistente (en el resumen): si no, una vez terminado no habría forma de volver a ver la configuración. */
+  var h = $("asistente-hecho");
+  if(h) h.addEventListener("click", function(){ abrirAsistente(); });
+  var x = $("btn-asistente-cerrar");
+  if(x) x.addEventListener("click", function(){ cerrarAsistente(); });
+}
+
 /* ---------- Inicio ---------- */
 (function init(){
   applyTheme();
@@ -2850,17 +3359,18 @@ function initPush(){
   initVoz();
   initBarcode();
   initPush();
+  cargarAsistente(); /* v1.45 (asistente): el progreso vive aparte, antes del primer renderAll */
+  initAsistente();
   initDiaInicio();
-  $("w-fecha").value = hoyISO();
-  $("t-fecha").value = ahoraLocal();
-  $("d-fecha").value = ahoraLocal();
+  sellarFechaMarcha(); sellarFechaTension(); sellarFechaEpisodio(); /* v1.45 (E5): primer sellado al abrir */
   if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js").catch(function(){}); }
-  handleOAuthCallback().then(function(){ renderAll(); if(isConnected()) loadFromDrive(); });
+  handleOAuthCallback().then(function(){ renderAll(); if(isConnected()) loadFromDrive().then(function(){ if(currentView === "asistente") renderAsistente(); }); reabrirAsistenteSiToca(); });
   renderAll();
   reintentarConsentimiento(); /* v1.34: si la aceptación quedó pendiente por falta de red, se reenvía en silencio */
   /* Abrir en una vista concreta si la URL trae #vista (por ejemplo, al tocar un aviso push). */
   var hv = (location.hash || "").replace("#", "");
   if(hv && VIEWS.some(function(v){ return v[0] === hv; })) goto(hv);
+  reabrirAsistenteSiToca(); /* v1.45 (asistente): si se cerró con el asistente abierto, se retoma (salvo que la URL pida otra vista) */
 })();
 </script>
 </body>
