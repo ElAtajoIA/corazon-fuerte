@@ -399,7 +399,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.46 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.47 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -760,7 +760,8 @@ footer a{color:var(--muted)}
     <button class="btn" id="btn-asistente">Por dónde empezar</button>
     <button type="button" id="asistente-hecho" hidden><span class="pill">✓ Todo configurado</span></button>
   </div>
-  <div class="card" id="card-aspecto"><h2>Aspecto</h2>
+  <div class="card" id="card-aspecto"><button type="button" class="plegable-cab" id="btn-aspecto" aria-expanded="false"><span class="plegable-titulo">Aspecto</span><span class="flecha" aria-hidden="true">▾</span></button>
+  <div id="aspecto-cuerpo" hidden>
     <p>Elige cómo se ve la app. Se guarda con tus datos, así que te sigue en todos tus dispositivos.</p>
     <div class="skin-list" role="radiogroup" aria-label="Aspecto de la app">
       <button type="button" class="skin-opcion" data-skin="actual" role="radio" aria-checked="true"><span class="skin-muestras"><i style="background:#FFF5F0"></i><i style="background:#FFFFFF"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Actual</b><span>El de siempre, melocotón cálido</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
@@ -769,6 +770,7 @@ footer a{color:var(--muted)}
       <button type="button" class="skin-opcion" data-skin="oscuro" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#121826"></i><i style="background:#1E2637"></i><i style="background:#FF6B7A"></i></span><span class="skin-nombre"><b>Oscuro elegante</b><span>Fondo oscuro, de noche</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
       <button type="button" class="skin-opcion" data-skin="pastel" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFF8F0"></i><i style="background:#FFFFFF"></i><i style="background:#C2410C"></i></span><span class="skin-nombre"><b>Pastel cálido</b><span>Crema y tonos suaves</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
     </div>
+  </div>
   </div>
   <div class="card" id="card-dia-inicio"><h2>🌅 Tu día empieza a las</h2>
     <p>La app cambia de día a esta hora, no a medianoche. Así, si te acuestas tarde, lo de la noche sigue contando como el día de antes y «Tu día» no se pone en rojo a las 00:00.</p>
@@ -779,7 +781,8 @@ footer a{color:var(--muted)}
     </div>
     <p class="muted" id="dia-inicio-guardado"></p>
   </div>
-  <div class="card"><h2>Entrar con Google</h2>
+  <div class="card" id="card-google"><button type="button" class="plegable-cab" id="btn-google-plegable" aria-expanded="false"><span class="plegable-titulo"><span id="google-plegable-linea">Entrar con Google</span></span><span class="flecha" aria-hidden="true">▾</span></button>
+  <div id="google-cuerpo" hidden>
     <p>Entra con tu correo de Google para que todos tus valores se guarden también en tu Google Drive, en una carpeta llamada exactamente «Corazón Fuerte», y en una hoja de Google Sheets llamada «Corazón Fuerte - Control», con tu tabla de marchas y su semáforo BORG, y una pestaña «Tensión» con todas tus tensiones. La conexión pide Drive y Sheets juntos, una sola vez. Si no te conectas, los datos se quedan solo en este dispositivo.</p>
     <div id="google-estado"></div>
     <button class="btn" id="btn-google">Entrar con Google</button>
@@ -787,6 +790,7 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-drive-ahora" style="display:none">Guardar ahora en Drive</button>
     <p class="muted" id="drive-sync"></p>
     <div id="google-pendiente"></div>
+  </div>
   </div>
   <div class="card"><h2>Clave de Gemini</h2>
     <div id="clave-sin-guardar">
@@ -819,17 +823,17 @@ footer a{color:var(--muted)}
   <div class="card" id="card-consent">
     <div id="consent-estado"></div>
   </div>
-  <div class="card" id="card-compra-acceso">
-    <button class="btn" id="btn-ir-compra">🛒 Lista de la compra</button>
-  </div>
-  <div class="card"><h2>Mis datos</h2>
+  <div class="card" id="card-mis-datos"><button type="button" class="plegable-cab" id="btn-mis-datos" aria-expanded="false"><span class="plegable-titulo">Mis datos</span><span class="flecha" aria-hidden="true">▾</span></button>
+  <div id="mis-datos-cuerpo" hidden>
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
     <button class="btn" id="btn-exportar">Descargar copia</button>
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.46</p>
+    <p class="muted">Versión v1.47</p>
+    <p class="muted"><b>Qué cambia en la v1.47:</b><br>· <b>Configuración recogida.</b> «Mis datos», «Aspecto» y Google ahora están en desplegables cerrados: de primeras solo se ve su línea y se abren al pulsarlas.<br>· <b>Lista de la compra.</b> Se quitó el botón de Configuración: la lista sigue en Alimentación, que es su sitio.</p>
     <p class="muted"><b>Qué cambia en la v1.46:</b><br>· <b>Nueva sección «Pautas».</b> Tus pautas de andar, tensión y alimentación están ahora juntas en el menú, en «Pautas». La de tensión es nueva: puedes marcar tu tensión máxima y mínima.<br>· <b>Lista de la compra.</b> Ahora se abre con un botón en Configuración.<br>· <b>BORG.</b> Al apuntar una marcha verás tu rango junto al campo, y te avisará si te sales de él.<br>· <b>Tensión.</b> Si una tensión pasa de tus límites, la app te avisará de que consultes con tu médico.<br>· <b>Configuración más limpia:</b> las tarjetas del asistente y del aviso de alimentación ahora ocupan menos.<br>· <b>Arreglado:</b> la hoja de Sheets ya guarda también la pestaña de Tensión.</p>
+  </div>
   </div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
@@ -842,7 +846,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.46 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.47 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -857,8 +861,8 @@ footer a{color:var(--muted)}
 </div></div>
 <script>
 "use strict";
-/* Corazón Fuerte — v1.46. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.46";
+/* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
+var APP_VERSION = "v1.47";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -1400,6 +1404,35 @@ function desplegarAndarEstadisticas(abrir){
   btn.classList.toggle("abierto", andarEstadisticasAbiertas);
   btn.setAttribute("aria-expanded", andarEstadisticasAbiertas ? "true" : "false");
 }
+/* v1.47: «Mis datos», «Aspecto» y Google recogidos en Configuración (plegables cerrados por defecto, mismo patrón que Tensión y Andar). */
+var misDatosAbierto = false, aspectoAbierto = false, googleAbierto = false;
+function desplegarMisDatos(abrir){
+  misDatosAbierto = (abrir == null) ? !misDatosAbierto : !!abrir;
+  var b = $("mis-datos-cuerpo"), btn = $("btn-mis-datos");
+  if(!b || !btn) return;
+  b.hidden = !misDatosAbierto;
+  btn.classList.toggle("abierto", misDatosAbierto);
+  btn.setAttribute("aria-expanded", misDatosAbierto ? "true" : "false");
+}
+function desplegarAspecto(abrir){
+  aspectoAbierto = (abrir == null) ? !aspectoAbierto : !!abrir;
+  var b = $("aspecto-cuerpo"), btn = $("btn-aspecto");
+  if(!b || !btn) return;
+  b.hidden = !aspectoAbierto;
+  btn.classList.toggle("abierto", aspectoAbierto);
+  btn.setAttribute("aria-expanded", aspectoAbierto ? "true" : "false");
+}
+function desplegarGoogle(abrir){
+  googleAbierto = (abrir == null) ? !googleAbierto : !!abrir;
+  var b = $("google-cuerpo"), btn = $("btn-google-plegable");
+  if(!b || !btn) return;
+  b.hidden = !googleAbierto;
+  btn.classList.toggle("abierto", googleAbierto);
+  btn.setAttribute("aria-expanded", googleAbierto ? "true" : "false");
+}
+$("btn-mis-datos").addEventListener("click", function(){ desplegarMisDatos(); });
+$("btn-aspecto").addEventListener("click", function(){ desplegarAspecto(); });
+$("btn-google-plegable").addEventListener("click", function(){ desplegarGoogle(); });
 $("btn-tension-apuntar").addEventListener("click", function(){ desplegarTension(); });
 $("btn-andar-pauta").addEventListener("click", function(){ desplegarAndarPauta(); });
 $("btn-andar-apuntar").addEventListener("click", function(){ desplegarAndar(); });
@@ -2396,9 +2429,12 @@ function actualizarPuntoConectado(){
 }
 function updateDriveUI(){
   var connected = isConnected();
+  /* v1.47: la pastilla verde vive en la línea plegable de la tarjeta (la línea que se ve recogida); aquí dentro queda solo el texto. */
   $("google-estado").innerHTML = connected
-    ? '<p><span class="pill">● Conectado con Google</span></p><p class="muted">Tus datos se guardan en tu Drive, en la carpeta «Corazón Fuerte».</p>'
-    : '<p><span class="pill warn">○ Sin conectar</span></p><p class="muted">Sin conectar, los datos se guardan solo en este dispositivo.</p>';
+    ? '<p class="muted">Tus datos se guardan en tu Drive, en la carpeta «Corazón Fuerte».</p>'
+    : '<p class="muted">Sin conectar, los datos se guardan solo en este dispositivo.</p>';
+  var lineaGoogle = $("google-plegable-linea");
+  if(lineaGoogle) lineaGoogle.innerHTML = connected ? '<span class="pill">● Conectado con Google</span>' : "Entrar con Google";
   $("btn-google").style.display = connected ? "none" : "block";
   $("btn-google-salir").style.display = connected ? "block" : "none";
   $("btn-drive-ahora").style.display = connected ? "block" : "none";
@@ -2689,16 +2725,6 @@ $("btn-ir-limites").addEventListener("click", function(){
   setTimeout(function(){
     var d = $("det-limites"); if(d) d.open = true;
     var c = $("card-limites-alimentacion");
-    if(!c) return;
-    c.scrollIntoView({ behavior: "smooth", block: "start" });
-    c.classList.add("panel-flash");
-    setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000);
-  }, 100); });
-/* v1.46: el acceso a la lista de la compra vive en Configuración; al pulsar lleva a Alimentación y baja hasta la lista. */
-$("btn-ir-compra").addEventListener("click", function(){
-  goto("alimentacion");
-  setTimeout(function(){
-    var c = $("card-compra");
     if(!c) return;
     c.scrollIntoView({ behavior: "smooth", block: "start" });
     c.classList.add("panel-flash");
