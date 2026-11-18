@@ -121,7 +121,7 @@ header.top .brand span a{color:var(--header-ink);text-decoration:underline;text-
 .iconbtn.sos{background:var(--sos-bg);color:var(--sos-ink);font-weight:800;font-size:17px;padding:2px 10px;text-decoration:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15}
 .iconbtn.sos .sos-tel{font-size:14px;line-height:1}
 .punto-conectado{width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);flex:none;align-self:center}
-main{max-width:720px;margin:0 auto;padding:14px 12px 90px}
+main{max-width:720px;margin:0 auto;padding:14px 12px 16px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin:0 0 16px;box-shadow:var(--shadow)}
 .view{display:none}
 .view.active{display:block}
@@ -410,7 +410,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.50 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.51 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -855,7 +855,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.50</p>
+    <p class="muted">Versión v1.51</p>
+    <p class="muted"><b>Qué cambia en la v1.51:</b><br>· Ya no queda hueco al final de Hoy: el pie sigue a la tarjeta del dolor.</p>
     <p class="muted"><b>Qué cambia en la v1.50:</b><br>· En la pantalla de Hoy ya no sale el aviso de datos orientativos.</p>
     <p class="muted"><b>Qué cambia en la v1.49:</b><br>· <b>Lista de la compra.</b> Ahora puedes tachar cada producto como comprado, tocándolo, y vaciar toda la lista de una vez con «Vaciar lista».<br>· <b>Rueda de tensión.</b> En Hoy solo se ven las últimas 30 lecturas, para que no sea una lista sin fin.<br>· <b>Avisos que no se pierden.</b> Si la app estaba dormida cuando tocaba una pastilla, el aviso llega igual si han pasado menos de 15 minutos.<br>· <b>Botón Atrás.</b> Ahora Atrás te lleva a la pantalla anterior, y en la pantalla principal pregunta antes de salir de la app.<br>· <b>Guardado en Drive.</b> Los datos se guardan en el móvil al momento y se envían a Drive cuando sales de la app, no con cada movimiento. Y el orden de «Tu día» ya no se mueve sin querer: hay que mantener pulsado el asa y se puede deshacer.</p>
     <p class="muted"><b>Qué cambia en la v1.48:</b><br>· <b>Medicinas incompletas.</b> En el Pastillero, la app avisa en la tarjeta de cada medicina si le falta la dosis o las horas.<br>· <b>Stock opcional.</b> Si quieres, puedes llevar el stock de cada medicina: cada toma que marques lo baja, y con «Renovar stock» sumas una caja entera.<br>· <b>Informe por WhatsApp.</b> En «Para el médico» puedes compartir el informe por WhatsApp, como texto.<br>· <b>Periodo del informe.</b> En «Para el médico» eliges si el informe cubre el último mes, los últimos 3 meses o todo.</p>
@@ -874,7 +875,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.50 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.51 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -896,7 +897,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.50";
+var APP_VERSION = "v1.51";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
