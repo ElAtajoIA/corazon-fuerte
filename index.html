@@ -224,6 +224,9 @@ textarea{min-height:76px;resize:vertical}
 .alert{background:var(--danger-bg);border:2px solid var(--red);border-radius:18px;padding:16px;box-shadow:0 6px 16px rgba(200,30,58,.14)}
 .okbox{background:var(--ok-bg);border:1px solid var(--green);border-radius:18px;padding:16px}
 .warnbox{background:var(--warn-bg);border:1px solid var(--amber);border-radius:18px;padding:16px}
+/* v1.48: aviso en la tarjeta de la medicina (M5) y línea de stock */
+.aviso-med{margin:8px 0 0}
+.stock-linea{margin:8px 0 0}
 .infobox{background:var(--card);border:1px dashed var(--muted);border-radius:18px;padding:16px}
 .info-btn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;flex:none;border:1.5px solid var(--link);color:var(--link);background:var(--card);font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:.95rem;vertical-align:4px;margin-left:8px;padding:0;line-height:1;cursor:pointer}
 .info-btn[aria-expanded="true"]{background:var(--link);color:var(--card)}
@@ -399,7 +402,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.47 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.48 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -517,7 +520,7 @@ footer a{color:var(--muted)}
     </div>
   </div>
   <div class="card" id="card-anadir-medicina"><h2>Añadir una medicina <label class="btn green small" for="foto-receta" style="vertical-align:middle">📷 Foto</label> <button type="button" class="info-btn" data-info-toggle="foto-medicina" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
-    <p data-info-for="foto-medicina" hidden class="info-text">Haz una foto a la caja del medicamento, la app leerá el nombre y cumplimentará el formulario.</p>
+    <p data-info-for="foto-medicina" hidden class="info-text">Haz una foto a la caja del medicamento, la app leerá el nombre, la dosis y cuántos comprimidos trae la caja, y cumplimentará el formulario.</p>
     <input id="foto-receta" type="file" accept="image/*" capture="environment" style="display:none">
     <div id="receta-preview"></div>
     <div id="receta-resultado"></div>
@@ -526,6 +529,12 @@ footer a{color:var(--muted)}
     <label for="m-dosis">Dosis</label><input id="m-dosis" type="text" placeholder="Por ejemplo: 1 comprimido de 5 mg" autocomplete="off">
     <label for="m-horas">Horas (separadas por comas)</label><input id="m-horas" type="text" placeholder="Por ejemplo: 08:00, 20:00" autocomplete="off">
     <label for="m-notas">Notas (opcional)</label><input id="m-notas" type="text" placeholder="Con la comida, antes de dormir…" autocomplete="off">
+    <label class="check" style="margin-top:10px"><input type="checkbox" id="m-stock-lleva"> <span>Llevar el stock de esta medicina</span></label>
+    <div id="m-stock-campos" hidden>
+      <label for="m-stock-caja">Comprimidos por caja</label><input id="m-stock-caja" type="number" min="1" max="1000" inputmode="numeric" placeholder="Por ejemplo: 50" autocomplete="off">
+      <label for="m-stock-quedan">Comprimidos que quedan</label><input id="m-stock-quedan" type="number" min="0" max="10000" inputmode="numeric" placeholder="Los que quedan en la caja" autocomplete="off">
+      <p class="muted">Cada toma que marques baja el stock. Cuando queden 5 o menos, la app te avisará.</p>
+    </div>
     <button class="btn" id="btn-guardar-medicina">Añadir medicina</button> <button class="btn secondary" id="btn-cancelar-medicina" hidden>Cancelar</button>
   </div>
 </section>
@@ -644,8 +653,17 @@ footer a{color:var(--muted)}
 <!-- ============ PARA EL MÉDICO ============ -->
 <section class="view" id="view-medico">
   <div class="view-head c-medico"><span class="ic">👨‍⚕️</span><div><h1>Para el médico</h1><p>Un resumen para llevar a la consulta o imprimir.</p></div></div>
+  <div class="card no-print" id="card-periodo-medico">
+    <label>Periodo del informe</label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px" role="group" aria-label="Periodo del informe">
+      <button type="button" class="btn" data-periodo="mes">Último mes</button>
+      <button type="button" class="btn secondary" data-periodo="3m">Últimos 3 meses</button>
+      <button type="button" class="btn secondary" data-periodo="todo">Todo</button>
+    </div>
+  </div>
   <div class="card" id="resumen-medico"></div>
   <button class="btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
+  <button class="btn green no-print" id="btn-compartir-whatsapp">💬 Compartir por WhatsApp</button>
 </section>
 
 <!-- ============ PAUTAS ============ -->
@@ -830,7 +848,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.47</p>
+    <p class="muted">Versión v1.48</p>
+    <p class="muted"><b>Qué cambia en la v1.48:</b><br>· <b>Medicinas incompletas.</b> En el Pastillero, la app avisa en la tarjeta de cada medicina si le falta la dosis o las horas.<br>· <b>Stock opcional.</b> Si quieres, puedes llevar el stock de cada medicina: cada toma que marques lo baja, y con «Renovar stock» sumas una caja entera.<br>· <b>Informe por WhatsApp.</b> En «Para el médico» puedes compartir el informe por WhatsApp, como texto.<br>· <b>Periodo del informe.</b> En «Para el médico» eliges si el informe cubre el último mes, los últimos 3 meses o todo.</p>
     <p class="muted"><b>Qué cambia en la v1.47:</b><br>· <b>Configuración recogida.</b> «Mis datos», «Aspecto» y Google ahora están en desplegables cerrados: de primeras solo se ve su línea y se abren al pulsarlas.<br>· <b>Lista de la compra.</b> Se quitó el botón de Configuración: la lista sigue en Alimentación, que es su sitio.</p>
     <p class="muted"><b>Qué cambia en la v1.46:</b><br>· <b>Nueva sección «Pautas».</b> Tus pautas de andar, tensión y alimentación están ahora juntas en el menú, en «Pautas». La de tensión es nueva: puedes marcar tu tensión máxima y mínima.<br>· <b>Lista de la compra.</b> Ahora se abre con un botón en Configuración.<br>· <b>BORG.</b> Al apuntar una marcha verás tu rango junto al campo, y te avisará si te sales de él.<br>· <b>Tensión.</b> Si una tensión pasa de tus límites, la app te avisará de que consultes con tu médico.<br>· <b>Configuración más limpia:</b> las tarjetas del asistente y del aviso de alimentación ahora ocupan menos.<br>· <b>Arreglado:</b> la hoja de Sheets ya guarda también la pestaña de Tensión.</p>
   </div>
@@ -846,7 +865,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.47 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.48 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -862,7 +881,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.47";
+var APP_VERSION = "v1.48";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -972,6 +991,9 @@ function sanearDatos(d){
      marcadas con las horas normalizadas; las horas imposibles se quitan. */
   if(Array.isArray(d.pills)) d.pills.forEach(function(m){
     if(!Array.isArray(m.horas)) m.horas = [];
+    /* v1.48: stock opcional por medicina (null = no se lleva). */
+    var _st = num(m.stock); m.stock = (_st == null || _st < 0) ? null : _st;
+    var _cj = num(m.stockCaja); m.stockCaja = (_cj == null || _cj <= 0) ? null : Math.round(_cj);
     var mapa = {};
     m.horas = m.horas.map(function(h){ var n = normalizarHora(h); if(n) mapa[String(h).trim()] = n; return n; }).filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
     if(m.tomadas && typeof m.tomadas === "object") Object.keys(m.tomadas).forEach(function(dia){
@@ -1671,6 +1693,7 @@ function salirModoEditar(){
 }
 function cancelarEditarMedicina(){
   ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
+  limpiarStockFormulario();
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
   var fr = $("foto-receta"); if(fr) fr.value = "";
   salirModoEditar();
@@ -1684,26 +1707,102 @@ function empezarEditarMedicina(id){
   $("m-dosis").value = m.dosis || "";
   $("m-horas").value = (m.horas || []).join(", ");
   $("m-notas").value = m.notas || "";
+  rellenarStockFormulario(m);
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
   var b = $("btn-guardar-medicina"); if(b) b.textContent = "Guardar cambios";
   var c = $("btn-cancelar-medicina"); if(c) c.hidden = false;
   $("card-anadir-medicina").scrollIntoView({ behavior: "smooth", block: "start" });
 }
+/* ---------- Stock de medicinas (v1.48, opcional) ---------- */
+/* Cantidad de comprimidos de una toma, sacada del texto de la dosis:
+   «1 cápsula de 20 mg» → 1, «2 comprimidos» → 2, «1/2 comprimido» → 0,5.
+   Un número que es la fuerza («50 mg», «90 mg») NO es cantidad: sin
+   palabra de unidad de pastilla, la cantidad es 1. */
+function cantidadDosis(dosis){
+  var d = String(dosis || "").trim();
+  if(!d) return 1;
+  var m = d.match(/^\s*(\d+)\s*\/\s*(\d+)\s*(comprimidos?|c[aá]psulas?|pastillas?|tabletas?|grageas?|sobres?|gotas?|p[íi]ldoras?)\b/i);
+  if(m){ var f = parseInt(m[1], 10) / parseInt(m[2], 10); return (f > 0 && isFinite(f)) ? f : 1; }
+  m = d.match(/^\s*(\d+(?:[.,]\d+)?)\s*(comprimidos?|c[aá]psulas?|pastillas?|tabletas?|grageas?|sobres?|gotas?|p[íi]ldoras?|unidades?)\b/i);
+  if(m){ var n = parseFloat(m[1].replace(",", ".")); return (n > 0 && isFinite(n)) ? n : 1; }
+  m = d.match(/^\s*(\d+(?:[.,]\d+)?)\s*(?!(mg|g|mcg|µg|ml|%|ui|u)\b)/i);
+  if(m){ var n2 = parseFloat(m[1].replace(",", ".")); return (n2 > 0 && isFinite(n2)) ? n2 : 1; }
+  return 1;
+}
+function fmtStock(n){ var v = Math.round(n * 10) / 10; return (v % 1 === 0) ? String(v) : String(v).replace(".", ","); }
+/* El stock baja una vez por toma marcada y sube si se desmarca.
+   Solo toca medicinas con el stock activado (stock != null). */
+function ajustarStockToma(m, tomada){
+  if(!m || m.stock == null) return;
+  var c = cantidadDosis(m.dosis);
+  m.stock = Math.max(0, (num(m.stock) || 0) + (tomada ? -c : c));
+}
+/* Marca o desmarca una toma y, si la medicina lleva stock, lo ajusta
+   en la misma cantidad. Se usa en el Pastillero y en el widget de Hoy. */
+function marcarToma(m, h, hoy, marcada){
+  if(!m) return;
+  if(!m.tomadas) m.tomadas = {};
+  if(!m.tomadas[hoy]) m.tomadas[hoy] = [];
+  var estaba = m.tomadas[hoy].indexOf(h) >= 0;
+  if(marcada && !estaba){ m.tomadas[hoy].push(h); ajustarStockToma(m, true); }
+  if(!marcada && estaba){ m.tomadas[hoy] = m.tomadas[hoy].filter(function(x){ return x !== h; }); ajustarStockToma(m, false); }
+}
+/* «Renovar stock» suma UNA caja entera (la de esa medicina, nunca un
+   número fijo). Si no se sabe cuántos trae la caja, se pregunta antes. */
+function renovarStock(id){
+  var m = data.pills.find(function(x){ return x.id === id; });
+  if(!m || m.stock == null) return;
+  var caja = num(m.stockCaja);
+  if(caja == null || caja <= 0){
+    var r = prompt("¿Cuántos comprimidos trae la caja de " + m.nombre + "?");
+    if(r == null) return;
+    caja = parseInt(String(r).replace(/[^\d]/g, ""), 10);
+    if(!caja || caja <= 0){ toast("Pon un número válido de comprimidos por caja."); return; }
+    m.stockCaja = caja;
+  }
+  m.stock = (num(m.stock) || 0) + caja;
+  saveAll(); renderAll();
+  toast("Stock renovado: +" + caja + " comprimidos.");
+}
+/* Lee el stock del formulario. Devuelve {stock, stockCaja}, nulls si el
+   interruptor está apagado, o "vacio" si está encendido sin ningún número. */
+function leerStockFormulario(){
+  if(!$("m-stock-lleva").checked) return { stock: null, stockCaja: null };
+  var caja = parseInt($("m-stock-caja").value, 10); if(!caja || caja <= 0) caja = null;
+  var quedan = parseInt($("m-stock-quedan").value, 10); if(isNaN(quedan) || quedan < 0) quedan = null;
+  if(caja == null && quedan == null) return "vacio";
+  return { stock: quedan != null ? quedan : caja, stockCaja: caja };
+}
+function rellenarStockFormulario(m){
+  $("m-stock-lleva").checked = (m.stock != null);
+  $("m-stock-campos").hidden = (m.stock == null);
+  $("m-stock-caja").value = m.stockCaja != null ? m.stockCaja : "";
+  $("m-stock-quedan").value = m.stock != null ? fmtStock(m.stock) : "";
+}
+function limpiarStockFormulario(){
+  $("m-stock-lleva").checked = false;
+  $("m-stock-campos").hidden = true;
+  $("m-stock-caja").value = ""; $("m-stock-quedan").value = "";
+}
 /* v1.45 (asistente): añadir una medicina con las mismas reglas que el Pastillero (horas normalizadas E1, aviso de pastillas reenviado). Devuelve la medicina o null si algo no es válido. */
-function anadirMedicina(nombre, dosis, horasCrudas, notas){
+function anadirMedicina(nombre, dosis, horasCrudas, notas, stock){
   var horas = horasCrudas.map(normalizarHora);
   var mala = horasCrudas.find(function(h, i){ return horas[i] == null; });
   if(mala){ toast("La hora «" + mala + "» no es válida. Ponla como 08:00."); return null; }
   horas = horas.filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
   if(!nombre){ toast("Pon el nombre del medicamento."); return null; }
   if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return null; }
-  var m = { id: uid(), nombre: nombre, dosis: dosis, horas: horas, notas: notas, tomadas: {} };
+  var m = { id: uid(), nombre: nombre, dosis: dosis, horas: horas, notas: notas, tomadas: {}, stock: (stock && stock.stock != null) ? stock.stock : null, stockCaja: (stock && stock.stockCaja != null) ? stock.stockCaja : null };
   data.pills.push(m);
   saveAll(); resendPushSchedule();
   return m;
 }
+/* v1.48: el interruptor de stock enseña o esconde los campos de la caja. */
+$("m-stock-lleva").addEventListener("change", function(){ $("m-stock-campos").hidden = !$("m-stock-lleva").checked; });
 $("btn-guardar-medicina").addEventListener("click", function(){
   var nombre = $("m-nombre").value.trim(); var horasCrudas = $("m-horas").value.split(",").map(function(h){ return h.trim(); }).filter(Boolean);
+  var st = leerStockFormulario();
+  if(st === "vacio"){ toast("Si llevas el stock, pon cuántos comprimidos trae la caja o cuántos quedan."); return; }
   var editado = false;
   if(editandoMedicina){
     var horas = horasCrudas.map(normalizarHora); var mala = horasCrudas.find(function(h, i){ return horas[i] == null; }); if(mala){ toast("La hora «" + mala + "» no es válida. Ponla como 08:00."); return; } horas = horas.filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
@@ -1712,6 +1811,7 @@ $("btn-guardar-medicina").addEventListener("click", function(){
     var ex = data.pills.find(function(x){ return x.id === editandoMedicina; });
     if(ex){
       ex.nombre = nombre; ex.dosis = $("m-dosis").value.trim(); ex.horas = horas; ex.notas = $("m-notas").value.trim();
+      ex.stock = st.stock; ex.stockCaja = st.stockCaja;
       /* Se conservan las tomas marcadas de las horas que siguen existiendo. */
       if(ex.tomadas) Object.keys(ex.tomadas).forEach(function(d){ ex.tomadas[d] = ex.tomadas[d].filter(function(h){ return horas.indexOf(h) >= 0; }); });
       editado = true;
@@ -1719,10 +1819,11 @@ $("btn-guardar-medicina").addEventListener("click", function(){
     salirModoEditar();
   }
   if(!editado){
-    var m = anadirMedicina(nombre, $("m-dosis").value.trim(), horasCrudas, $("m-notas").value.trim());
+    var m = anadirMedicina(nombre, $("m-dosis").value.trim(), horasCrudas, $("m-notas").value.trim(), st);
     if(!m) return;
   }
   ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
+  limpiarStockFormulario();
   /* v1.25: al guardar, la foto vuelve a su estado de origen: sin vista
      previa ni resultado, y el input reseteado para la siguiente foto. */
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
@@ -1735,12 +1836,27 @@ function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
   el.innerHTML = data.pills.map(function(m){ var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
     var checks = m.horas.map(function(h){ var done = tomadas.indexOf(h) >= 0;
       return '<label class="check'+(done?" done":"")+'"><input type="checkbox" data-pill="'+m.id+'" data-hora="'+esc(h)+'"'+(done?" checked":"")+'><span><span class="nm"><b>'+esc(h)+'</b> — '+esc(m.nombre)+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+'</span></span></label>'; }).join("");
-    return '<div style="margin-bottom:14px"><div style="display:flex;gap:8px;align-items:center"><div style="flex:1;min-width:0"><b>'+esc(m.nombre)+'</b>'+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+(m.notas?'<br><span class="muted">'+esc(m.notas)+'</span>':"")+'</div><button type="button" class="fila-quitar" aria-label="Editar esta medicina" data-edit-pill="'+m.id+'">✏️</button><button type="button" class="fila-quitar" aria-label="Quitar esta medicina" data-del-pill="'+m.id+'">×</button></div>'+checks+'</div>'; }).join("");
-  Array.prototype.forEach.call(el.querySelectorAll("[data-pill]"), function(cb){ cb.addEventListener("change", function(){ var m = data.pills.find(function(x){ return x.id === cb.getAttribute("data-pill"); }); if(!m) return; if(!m.tomadas) m.tomadas = {}; if(!m.tomadas[hoy]) m.tomadas[hoy] = []; var h = cb.getAttribute("data-hora");
-    if(cb.checked && m.tomadas[hoy].indexOf(h) < 0) m.tomadas[hoy].push(h);
-    if(!cb.checked) m.tomadas[hoy] = m.tomadas[hoy].filter(function(x){ return x !== h; });
+    /* v1.48 (M5): aviso si a la medicina le falta la dosis o las horas.
+       Sin dosis ni horas, el Worker no puede avisar de esa medicina. */
+    var avisoM5 = "";
+    var sinDosis = !m.dosis, sinHoras = !(m.horas || []).length;
+    if(sinDosis && sinHoras) avisoM5 = '<p class="aviso-med"><span class="pill warn">⚠️ Faltan la dosis y las horas</span><br><span class="muted">Sin dosis ni horas, la app no puede avisarte de esta medicina.</span></p>';
+    else if(sinDosis) avisoM5 = '<p class="aviso-med"><span class="pill warn">⚠️ Falta la dosis</span><br><span class="muted">Sin dosis, la app no puede avisarte de esta medicina.</span></p>';
+    else if(sinHoras) avisoM5 = '<p class="aviso-med"><span class="pill warn">⚠️ Faltan las horas</span><br><span class="muted">Sin horas, la app no puede avisarte de esta medicina.</span></p>';
+    /* v1.48: stock opcional. Solo se enseña si la medicina lo lleva. */
+    var stockHTML = "";
+    if(m.stock != null){
+      var quedan = num(m.stock) || 0;
+      stockHTML = '<p class="stock-linea">📦 Stock: <b>' + fmtStock(quedan) + ' comprimido' + (quedan === 1 ? '' : 's') + '</b>' + (m.stockCaja ? ' <span class="muted">(caja de ' + m.stockCaja + ')</span>' : '') + '</p>'
+        + (quedan <= 5 ? '<p class="aviso-med"><span class="pill warn">⚠️ Quedan ' + fmtStock(quedan) + ' comprimidos</span></p>' : '')
+        + '<button type="button" class="btn secondary" data-renovar-stock="' + m.id + '" style="margin-top:8px">🔄 Renovar stock</button>';
+    }
+    return '<div style="margin-bottom:14px"><div style="display:flex;gap:8px;align-items:center"><div style="flex:1;min-width:0"><b>'+esc(m.nombre)+'</b>'+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+(m.notas?'<br><span class="muted">'+esc(m.notas)+'</span>':"")+'</div><button type="button" class="fila-quitar" aria-label="Editar esta medicina" data-edit-pill="'+m.id+'">✏️</button><button type="button" class="fila-quitar" aria-label="Quitar esta medicina" data-del-pill="'+m.id+'">×</button></div>'+avisoM5+checks+stockHTML+'</div>'; }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("[data-pill]"), function(cb){ cb.addEventListener("change", function(){ var m = data.pills.find(function(x){ return x.id === cb.getAttribute("data-pill"); }); if(!m) return; var h = cb.getAttribute("data-hora");
+    marcarToma(m, h, hoy, cb.checked);
     saveAll(); renderAll(); }); });
   Array.prototype.forEach.call(el.querySelectorAll("[data-del-pill]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Quitar esta medicina del pastillero?")) return; if(b.getAttribute("data-del-pill") === editandoMedicina) cancelarEditarMedicina(); data.pills = data.pills.filter(function(m){ return m.id !== b.getAttribute("data-del-pill"); }); saveAll(); toast("Medicina quitada."); renderAll(); }); });
+  Array.prototype.forEach.call(el.querySelectorAll("[data-renovar-stock]"), function(b){ b.addEventListener("click", function(){ renovarStock(b.getAttribute("data-renovar-stock")); }); });
   Array.prototype.forEach.call(el.querySelectorAll("[data-edit-pill]"), function(b){ b.addEventListener("click", function(){ empezarEditarMedicina(b.getAttribute("data-edit-pill")); }); }); }
 /* ---------- Avisos en el Pastillero (v1.29): una línea según el permiso ---------- */
 function pedirPermisoAvisos(){
@@ -2094,11 +2210,8 @@ function renderRutina(){
         var m = data.pills.find(function(x){ return x.id === cb.getAttribute("data-pill"); });
         if(!m) return;
         var hoy = hoyISO();
-        if(!m.tomadas) m.tomadas = {};
-        if(!m.tomadas[hoy]) m.tomadas[hoy] = [];
         var h = cb.getAttribute("data-hora");
-        if(cb.checked && m.tomadas[hoy].indexOf(h) < 0) m.tomadas[hoy].push(h);
-        if(!cb.checked) m.tomadas[hoy] = m.tomadas[hoy].filter(function(x){ return x !== h; });
+        marcarToma(m, h, hoy, cb.checked);
         saveAll();
         /* Si con esta marca se completó la comida, el desplegable se recoge solo. */
         var pasos = pasosPara(widgetsElegidos());
@@ -2138,10 +2251,83 @@ function renderHoy(){ var hoy = hoyISO();
   $("hoy-pauta-vacia").innerHTML = pautaCompleta() ? "" : '<div class="warnbox"><b>👋 Empieza por tu pauta.</b><br>Rellena una sola vez tus valores (ejercicio, pulso, BORG…) y queda guardada. <button class="btn small" onclick="irAPautaMedica()" style="margin-top:10px">Rellenar mi pauta</button></div>';
   $("andar-pauta").innerHTML = '<h2>Tu pauta</h2>' + pautaResumenHTML() + (pautaCompleta() ? "" : '<p><button class="btn secondary" onclick="irAPautaMedica()">Rellenar mi pauta</button></p>');
 }
+/* ---------- Informe para el médico (v1.48: periodo + WhatsApp) ---------- */
+/* Periodo del informe. Por defecto «Último mes», que es lo que el informe
+   enseñaba hasta ahora (últimas 10 filas y gráficas de 30 días). */
+var periodoMedico = "mes"; // "mes" | "3m" | "todo"
+var PERIODOS_MEDICO = {
+  mes: { dias: 30, etiqueta: "Último mes", etiquetaInforme: "último mes" },
+  "3m": { dias: 90, etiqueta: "Últimos 3 meses", etiquetaInforme: "últimos 3 meses" },
+  todo: { dias: 3650, etiqueta: "Todo", etiquetaInforme: "todo el historial" }
+};
+function datosInformeMedico(){
+  var cfg = PERIODOS_MEDICO[periodoMedico] || PERIODOS_MEDICO.mes;
+  var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - (cfg.dias - 1)); cutoff.setHours(0,0,0,0);
+  function dentro(v){ var d = new Date(v); return !isNaN(d) && d >= cutoff; }
+  return {
+    cfg: cfg,
+    walks: data.walks.filter(function(w){ return w.fecha && dentro(w.fecha + "T12:00:00"); }).slice(0, 10),
+    tens: data.tensions.filter(function(t){ return dentro(t.fecha); }).slice(0, 10),
+    episodios: data.episodios.filter(function(e){ return dentro(e.fecha); }).slice(0, 10)
+  };
+}
+function actualizarPeriodoMedico(){
+  Array.prototype.forEach.call(document.querySelectorAll("[data-periodo]"), function(b){
+    var activo = b.getAttribute("data-periodo") === periodoMedico;
+    b.className = activo ? "btn" : "btn secondary";
+  });
+  renderMedico();
+}
+Array.prototype.forEach.call(document.querySelectorAll("[data-periodo]"), function(b){
+  b.addEventListener("click", function(){ periodoMedico = b.getAttribute("data-periodo"); actualizarPeriodoMedico(); });
+});
+/* Texto plano del informe, con los mismos datos que el informe impreso
+   (mismo periodo). Se abre en WhatsApp con wa.me; nada se envía solo:
+   WhatsApp pide elegir el contacto y confirmar el envío. */
+function informeMedicoTexto(){
+  var p = data.pauta; var inf = datosInformeMedico();
+  var L = [];
+  L.push("Informe de Corazón Fuerte — " + inf.cfg.etiqueta);
+  L.push("Generado el " + fmtFecha(hoyISO()));
+  L.push("");
+  L.push("PAUTA DE ANDAR");
+  L.push("Ejercicio: " + (p.tipo || "—") + " · Duración: " + (p.duracion ? p.duracion + " min" : "—") + " · Días/semana: " + (p.dias || "—") + " · Pulso objetivo: " + (p.pulso ? p.pulso + " l.p.m." : "—") + " · BORG: " + ((p.borgMin || p.borgMax) ? (p.borgMin || "—") + "–" + (p.borgMax || "—") : "—"));
+  var s = data.semaforo;
+  var lims = [];
+  if(s.limiteSal) lims.push("sal " + s.limiteSal + " g/100 g");
+  if(s.limiteSaturadas) lims.push("grasas saturadas " + s.limiteSaturadas + " g/100 g");
+  if(s.limiteAzucares) lims.push("azúcares " + s.limiteAzucares + " g/100 g");
+  L.push("PAUTA DE ALIMENTACIÓN: " + (lims.length ? lims.join(", ") : "sin pauta guardada"));
+  L.push("SALUD: Diagnóstico: " + (p.diagnostico || "—") + " · Implante: " + (p.dispositivo || "—") + (p.modelo ? " (" + p.modelo + ")" : "") + " · Próxima revisión: " + (p.revision ? fmtFecha(p.revision) : "—") + " · Médico: " + (p.medico || "—") + (p.telMedico ? " (" + p.telMedico + ")" : ""));
+  L.push("");
+  L.push("ÚLTIMAS TENSIONES (" + inf.cfg.etiquetaInforme + ")");
+  if(inf.tens.length) inf.tens.forEach(function(t){ L.push(fmtFechaHora(t.fecha) + " — " + (t.sistolica || "—") + "/" + (t.diastolica || "—") + ", pulso " + (t.pulso || "—") + (t.observaciones ? " (" + t.observaciones + ")" : "")); });
+  else L.push("Sin registros en este periodo.");
+  L.push("");
+  L.push("ÚLTIMAS MARCHAS (" + inf.cfg.etiquetaInforme + ")");
+  if(inf.walks.length) inf.walks.forEach(function(w){ L.push(fmtFecha(w.fecha) + " — " + (w.minutos || "—") + " min, " + (w.km || "—") + " km, BORG " + (w.borg || "—") + ", pulso " + (w.reposo || "—") + "/" + (w.medio || "—") + "/" + (w.maximo || "—") + (w.comentarios ? " (" + w.comentarios + ")" : "")); });
+  else L.push("Sin marchas en este periodo.");
+  L.push("");
+  L.push("EPISODIOS (" + inf.cfg.etiquetaInforme + ")");
+  if(inf.episodios.length) inf.episodios.forEach(function(e){ L.push(fmtFechaHora(e.fecha) + " — " + e.texto); });
+  else L.push("Sin episodios en este periodo.");
+  L.push("");
+  L.push("PASTILLERO");
+  if(data.pills.length) data.pills.forEach(function(m){ L.push(m.nombre + " " + (m.dosis || "") + " — " + (m.horas || []).join(", ")); });
+  else L.push("Sin medicinas en el pastillero.");
+  L.push("");
+  L.push("Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.");
+  return L.join("\n");
+}
+$("btn-compartir-whatsapp").addEventListener("click", function(){
+  var texto = informeMedicoTexto();
+  window.open("https://wa.me/?text=" + encodeURIComponent(texto), "_blank", "noopener");
+});
 function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
-  var walks = data.walks.slice(0, 10).map(function(w){ return '<tr><td>'+fmtFecha(w.fecha)+'</td><td>'+esc(w.reposo||"—")+'</td><td>'+esc(w.medio||"—")+'</td><td>'+esc(w.maximo||"—")+'</td><td>'+esc(w.borg||"—")+'</td><td>'+esc(w.minutos||"—")+'</td><td>'+esc(w.km||"—")+'</td><td>'+esc(w.comentarios||"—")+'</td></tr>'; }).join("");
-  var tens = data.tensions.slice(0, 10).map(function(t){ return '<tr><td>'+fmtFechaHora(t.fecha)+'</td><td>'+esc(t.sistolica||"—")+' / '+esc(t.diastolica||"—")+'</td><td>'+esc(t.pulso||"—")+'</td><td>'+esc(t.observaciones||"—")+'</td></tr>'; }).join("");
-  el.innerHTML = '<h2>Resumen para el médico</h2><p class="muted">Generado el ' + fmtFecha(hoyISO()) + ' · Corazón Fuerte ' + APP_VERSION + '</p>'
+  var inf = datosInformeMedico();
+  var walks = inf.walks.map(function(w){ return '<tr><td>'+fmtFecha(w.fecha)+'</td><td>'+esc(w.reposo||"—")+'</td><td>'+esc(w.medio||"—")+'</td><td>'+esc(w.maximo||"—")+'</td><td>'+esc(w.borg||"—")+'</td><td>'+esc(w.minutos||"—")+'</td><td>'+esc(w.km||"—")+'</td><td>'+esc(w.comentarios||"—")+'</td></tr>'; }).join("");
+  var tens = inf.tens.map(function(t){ return '<tr><td>'+fmtFechaHora(t.fecha)+'</td><td>'+esc(t.sistolica||"—")+' / '+esc(t.diastolica||"—")+'</td><td>'+esc(t.pulso||"—")+'</td><td>'+esc(t.observaciones||"—")+'</td></tr>'; }).join("");
+  el.innerHTML = '<h2>Resumen para el médico</h2><p class="muted">Generado el ' + fmtFecha(hoyISO()) + ' · Periodo: ' + esc(inf.cfg.etiqueta.toLowerCase()) + ' · Corazón Fuerte ' + APP_VERSION + '</p>'
     + '<h3>Mi pauta</h3>' + pautaResumenHTML()
     + '<h3>Pauta alimenticia</h3>' + (function(){ var s = data.semaforo; var partes = [];
       if(s.limiteSal) partes.push("Límite de sal: <b>" + esc(s.limiteSal) + " g por 100 g</b>");
@@ -2149,11 +2335,11 @@ function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
       if(s.limiteAzucares) partes.push("Límite de azúcares: <b>" + esc(s.limiteAzucares) + " g por 100 g</b>");
       return partes.length ? '<p>' + partes.join(" · ") + '</p>' : '<p class="muted">Sin pauta alimenticia guardada.</p>'; })()
     + '<h3>Salud</h3><dl class="kv"><dt>Diagnóstico</dt><dd>'+esc(p.diagnostico||"—")+'</dd><dt>Implante</dt><dd>'+esc(p.dispositivo||"—")+(p.modelo?" ("+esc(p.modelo)+")":"")+'</dd><dt>Próxima revisión</dt><dd>'+(p.revision?fmtFecha(p.revision):"—")+'</dd><dt>Médico</dt><dd>'+esc(p.medico||"—")+(p.telMedico?" · "+esc(p.telMedico):"")+'</dd></dl>'
-    + '<h3>Evolución — tensión y pulso (últimos 30 días)</h3><div class="chart-box">' + chartTensionSVG(30) + '</div>'
-    + '<h3>Evolución — andar (últimos 30 días)</h3><div class="chart-box">' + chartWalkSVG(30) + '</div>'
-    + '<h3>Últimas marchas</h3>' + (walks ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Reposo</th><th>Medio</th><th>Máximo</th><th>BORG</th><th>Min</th><th>Km</th><th>Comentarios</th></tr>'+walks+'</table></div>' : '<p class="muted">Sin marchas apuntadas.</p>')
-    + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión.</p>')
-    + '<h3>Episodios</h3>' + (data.episodios.length ? '<ul class="tight">' + data.episodios.slice(0,10).map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados.</p>')
+    + '<h3>Evolución — tensión y pulso (' + esc(inf.cfg.etiquetaInforme) + ')</h3><div class="chart-box">' + chartTensionSVG(inf.cfg.dias) + '</div>'
+    + '<h3>Evolución — andar (' + esc(inf.cfg.etiquetaInforme) + ')</h3><div class="chart-box">' + chartWalkSVG(inf.cfg.dias) + '</div>'
+    + '<h3>Últimas marchas</h3>' + (walks ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Reposo</th><th>Medio</th><th>Máximo</th><th>BORG</th><th>Min</th><th>Km</th><th>Comentarios</th></tr>'+walks+'</table></div>' : '<p class="muted">Sin marchas apuntadas en este periodo.</p>')
+    + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión en este periodo.</p>')
+    + '<h3>Episodios</h3>' + (inf.episodios.length ? '<ul class="tight">' + inf.episodios.map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados en este periodo.</p>')
     + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>' + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'; }
 function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); actualizarResumenPautaTension(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); }
 </script>
@@ -2801,9 +2987,10 @@ async function geminiReadNutrition(base64){
 function parseMedicinaJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
   try{ var j = JSON.parse(m[0]); if(!j.nombre) return null;
     var horas = Array.isArray(j.horas) ? j.horas.map(function(h){ return normalizarHora(h); }).filter(Boolean) : [];
-    return { nombre: j.nombre, dosis: j.dosis || "", horas: horas, notas: j.notas || "" }; }catch(e){ return null; } }
+    var comp = (j.comprimidos != null) ? parseInt(j.comprimidos, 10) : null; if(!comp || comp <= 0) comp = null;
+    return { nombre: j.nombre, dosis: j.dosis || "", horas: horas, notas: j.notas || "", comprimidos: comp }; }catch(e){ return null; } }
 async function geminiReadMedicina(base64){
-  var prompt = "Lee esta receta médica o la caja de este medicamento. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"nombre\": \"nombre del medicamento\", \"dosis\": \"dosis, por ejemplo 1 comprimido de 5 mg\", \"horas\": [\"08:00\", \"20:00\"], \"notas\": \"con la comida, antes de dormir, o vacío si no se ve\"}. Las horas en formato 24 h (HH:MM). Si algún dato no se ve, pon cadena vacía o lista vacía. No inventes ningún dato que no se vea en la foto.";
+  var prompt = "Lee esta receta médica o la caja de este medicamento. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"nombre\": \"nombre del medicamento\", \"dosis\": \"dosis, por ejemplo 1 comprimido de 5 mg\", \"horas\": [\"08:00\", \"20:00\"], \"notas\": \"con la comida, antes de dormir, o vacío si no se ve\", \"comprimidos\": número de comprimidos o tabletas que trae la caja (por ejemplo 50), o null si no se ve en la foto}. Las horas en formato 24 h (HH:MM). Si algún dato no se ve, pon cadena vacía o lista vacía. No inventes ningún dato que no se vea en la foto.";
   var text = await geminiCallImage(base64, prompt);
   var parsed = parseMedicinaJson(text);
   if(parsed) return parsed;
@@ -2825,9 +3012,18 @@ async function leerFotoMedicina(file, ids, etiquetaBoton){
     $(ids.dosis).value = vals.dosis || "";
     $(ids.horas).value = (vals.horas || []).join(", ");
     $(ids.notas).value = vals.notas || "";
+    /* v1.48: si la foto dice cuántos comprimidos trae la caja, se rellena
+       el stock (interruptor encendido, para que se vea y se revise). */
+    if(ids.caja && vals.comprimidos){
+      $(ids.caja).value = vals.comprimidos;
+      var sw = $("m-stock-lleva"); if(sw) sw.checked = true;
+      var cf = $("m-stock-campos"); if(cf) cf.hidden = false;
+      if(ids.quedan && !$(ids.quedan).value) $(ids.quedan).value = vals.comprimidos;
+    }
+    var cajaTxt = (ids.caja && vals.comprimidos) ? ' Caja de ' + vals.comprimidos + ' comprimidos: revisa cuántos quedan.' : '';
     $(ids.resultado).innerHTML = (vals.horas && vals.horas.length)
-      ? '<p><span class="pill">✅ Foto leída: revisa los datos y pulsa «' + esc(etiquetaBoton) + '».</span></p>'
-      : '<p><span class="pill warn">⏳ La foto no traía las horas: ponlas a mano y pulsa «' + esc(etiquetaBoton) + '».</span></p>';
+      ? '<p><span class="pill">✅ Foto leída: revisa los datos y pulsa «' + esc(etiquetaBoton) + '».</span>' + (cajaTxt ? '<br><span class="muted">' + esc(cajaTxt) + '</span>' : '') + '</p>'
+      : '<p><span class="pill warn">⏳ La foto no traía las horas: ponlas a mano y pulsa «' + esc(etiquetaBoton) + '».</span>' + (cajaTxt ? '<br><span class="muted">' + esc(cajaTxt) + '</span>' : '') + '</p>';
     $(ids.nombre).scrollIntoView({ behavior: "smooth", block: "center" });
     return true;
   }catch(e){ $(ids.resultado).innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Añade la medicina a mano.</div>'; return false; }
@@ -2837,7 +3033,7 @@ $("foto-receta").addEventListener("change", async function(ev){
   if(!file) return;
   var key = localStorage.getItem(GEMINI_KEY);
   if(!key){ $("receta-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto de la receta necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes añadir la medicina a mano.</div>'; goto("config"); return; }
-  leerFotoMedicina(file, { nombre: "m-nombre", dosis: "m-dosis", horas: "m-horas", notas: "m-notas", preview: "receta-preview", resultado: "receta-resultado" });
+  leerFotoMedicina(file, { nombre: "m-nombre", dosis: "m-dosis", horas: "m-horas", notas: "m-notas", preview: "receta-preview", resultado: "receta-resultado", caja: "m-stock-caja", quedan: "m-stock-quedan" });
 });
 $("foto-nutricion").addEventListener("change", async function(ev){
   var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
