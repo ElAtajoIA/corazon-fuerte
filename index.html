@@ -290,6 +290,14 @@ footer a{color:var(--muted)}
 .check .nm{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* Filas compactas de listas (v1.23): una línea por elemento, × pequeña en línea. */
 .fila{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:var(--card)}
+/* v1.49 (M9): producto comprado: tachado y apagado, pero sigue en su sitio hasta vaciar la lista. */
+.fila.comprado .fila-txt{text-decoration:line-through;opacity:.55}
+.compra-check{flex:none;width:48px;height:48px;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:26px;line-height:1;cursor:pointer}
+.compra-check[aria-checked="true"]{background:var(--green);border-color:var(--green);color:#fff}
+#toast button{margin-left:12px;padding:8px 14px;border-radius:10px;border:none;background:var(--bg);color:var(--ink);font-size:16px;font-weight:800;cursor:pointer}
+/* v1.49: pregunta al salir de la app (mismo patrón que el aviso de Alimentación). */
+#salir-modal{position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+#salir-modal[hidden]{display:none}
 .fila .fila-txt{flex:1;min-width:0}
 .fila .fila-txt .muted{font-size:14px}
 .fila-quitar{flex:none;width:28px;height:28px;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);color:var(--muted);font-size:17px;line-height:1;cursor:pointer;margin-top:1px}
@@ -402,7 +410,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.48 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.49 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -848,7 +856,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.48</p>
+    <p class="muted">Versión v1.49</p>
+    <p class="muted"><b>Qué cambia en la v1.49:</b><br>· <b>Lista de la compra.</b> Ahora puedes tachar cada producto como comprado, tocándolo, y vaciar toda la lista de una vez con «Vaciar lista».<br>· <b>Rueda de tensión.</b> En Hoy solo se ven las últimas 30 lecturas, para que no sea una lista sin fin.<br>· <b>Avisos que no se pierden.</b> Si la app estaba dormida cuando tocaba una pastilla, el aviso llega igual si han pasado menos de 15 minutos.<br>· <b>Botón Atrás.</b> Ahora Atrás te lleva a la pantalla anterior, y en la pantalla principal pregunta antes de salir de la app.<br>· <b>Guardado en Drive.</b> Los datos se guardan en el móvil al momento y se envían a Drive cuando sales de la app, no con cada movimiento. Y el orden de «Tu día» ya no se mueve sin querer: hay que mantener pulsado el asa y se puede deshacer.</p>
     <p class="muted"><b>Qué cambia en la v1.48:</b><br>· <b>Medicinas incompletas.</b> En el Pastillero, la app avisa en la tarjeta de cada medicina si le falta la dosis o las horas.<br>· <b>Stock opcional.</b> Si quieres, puedes llevar el stock de cada medicina: cada toma que marques lo baja, y con «Renovar stock» sumas una caja entera.<br>· <b>Informe por WhatsApp.</b> En «Para el médico» puedes compartir el informe por WhatsApp, como texto.<br>· <b>Periodo del informe.</b> En «Para el médico» eliges si el informe cubre el último mes, los últimos 3 meses o todo.</p>
     <p class="muted"><b>Qué cambia en la v1.47:</b><br>· <b>Configuración recogida.</b> «Mis datos», «Aspecto» y Google ahora están en desplegables cerrados: de primeras solo se ve su línea y se abren al pulsarlas.<br>· <b>Lista de la compra.</b> Se quitó el botón de Configuración: la lista sigue en Alimentación, que es su sitio.</p>
     <p class="muted"><b>Qué cambia en la v1.46:</b><br>· <b>Nueva sección «Pautas».</b> Tus pautas de andar, tensión y alimentación están ahora juntas en el menú, en «Pautas». La de tensión es nueva: puedes marcar tu tensión máxima y mínima.<br>· <b>Lista de la compra.</b> Ahora se abre con un botón en Configuración.<br>· <b>BORG.</b> Al apuntar una marcha verás tu rango junto al campo, y te avisará si te sales de él.<br>· <b>Tensión.</b> Si una tensión pasa de tus límites, la app te avisará de que consultes con tu médico.<br>· <b>Configuración más limpia:</b> las tarjetas del asistente y del aviso de alimentación ahora ocupan menos.<br>· <b>Arreglado:</b> la hoja de Sheets ya guarda también la pestaña de Tensión.</p>
@@ -865,7 +874,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.48 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.49 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -878,10 +887,16 @@ footer a{color:var(--muted)}
   <button class="btn" id="btn-consent-aceptar" disabled>Aceptar</button>
   <p class="muted"><small>Al aceptar, la app guarda en este dispositivo la fecha y un código anónimo, y envía solo esos dos datos para dejar constancia de la aceptación. Sin nombre, sin correo y sin datos de salud.</small></p>
 </div></div>
+<!-- v1.49: pregunta al pulsar Atrás en la pantalla principal (Hoy). -->
+<div id="salir-modal" role="dialog" aria-modal="true" aria-labelledby="salir-titulo" hidden><div class="consent-caja">
+  <h2 id="salir-titulo">¿Quieres salir de la app?</h2>
+  <p>Estás en la pantalla principal. Si sales, tendrás que volver a abrir la app.</p>
+  <p><button class="btn" id="btn-abandonar">Salir</button> <button class="btn secondary" id="btn-quedarme">Quedarme</button></p>
+</div></div>
 <script>
 "use strict";
 /* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.48";
+var APP_VERSION = "v1.49";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -958,6 +973,19 @@ function fmtFechaHora(v){ if(!v) return "—"; var d = new Date(v); if(isNaN(d))
 function num(v){ var n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? null : n; }
 var toastTimer = null;
 function toast(msg){ var t = $("toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.style.display = "none"; }, 3200); }
+/* v1.49: aviso con un botón de acción (p. ej. «Deshacer» tras reordenar los widgets). Se queda 6 segundos para que dé tiempo a pulsarlo. */
+function toastAccion(msg, etiqueta, fn){
+  var t = $("toast");
+  t.innerHTML = "";
+  t.appendChild(document.createTextNode(msg));
+  var b = document.createElement("button");
+  b.type = "button"; b.textContent = etiqueta;
+  b.addEventListener("click", function(){ t.style.display = "none"; clearTimeout(toastTimer); if(fn) fn(); });
+  t.appendChild(b);
+  t.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.style.display = "none"; }, 6000);
+}
 
 /* ---------- Datos ---------- */
 function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
@@ -1006,8 +1034,23 @@ function loadData(){ try{ var d = JSON.parse(localStorage.getItem(DATA_KEY) || "
 var data = loadData();
 saveLocal(true); /* v1.45 (E1): guardar la migración al cargar (horas normalizadas, etc.) para que lo guardado también quede limpio; sin tocar el sello de E4 */
 var driveSaveTimer = null;
+var drivePendiente = false; /* v1.49: hay cambios sin enviar a Drive todavía */
+var DRIVE_DEBOUNCE_MS = 30000; /* v1.49: 30 s desde el último cambio */
 function saveLocal(mantenerSello){ if(!mantenerSello) data.actualizado = new Date().toISOString(); /* v1.45 (E4): sello de última modificación, para que gane lo más nuevo entre este dispositivo y Drive */ try{ localStorage.setItem(DATA_KEY, JSON.stringify(data)); }catch(e){ toast("No se pudo guardar en este dispositivo."); } }
-function saveAll(syncDrive){ saveLocal(); if(syncDrive !== false){ clearTimeout(driveSaveTimer); driveSaveTimer = setTimeout(function(){ saveToDrive(true); }, 1500); } }
+/* v1.49: en el móvil se guarda al momento (nunca se pierde nada); a Drive
+   se envía con retardo (30 s desde el último cambio) y al salir de la app,
+   para que un movimiento sin querer no quede guardado en la nube al instante.
+   Los controles de la v1.36 y la lógica de lo más nuevo (E4) siguen dentro
+   de saveToDrive, que es quien sube; aquí solo cambia CUÁNDO se le llama. */
+function saveAll(syncDrive){ saveLocal(); if(syncDrive !== false){ drivePendiente = true; updateDriveUI(); clearTimeout(driveSaveTimer); driveSaveTimer = setTimeout(function(){ drivePendiente = false; updateDriveUI(); saveToDrive(false); }, DRIVE_DEBOUNCE_MS); } }
+/* v1.49: al salir de la app (cambiar de app, bloquear el móvil o cerrar la
+   pestaña) se intenta enviar a Drive lo que esté pendiente, sin esperar al
+   retardo. Es lo mejor que se puede hacer en una web: si el sistema mata la
+   app de golpe, los datos ya están guardados en el móvil y se enviarán al
+   volver a abrirla. */
+function flushDriveAlSalir(){ if(!drivePendiente) return; clearTimeout(driveSaveTimer); drivePendiente = false; updateDriveUI(); saveToDrive(false); }
+document.addEventListener("visibilitychange", function(){ if(document.visibilityState === "hidden"){ flushDriveAlSalir(); flushSheetsAlSalir(); } });
+window.addEventListener("pagehide", function(){ flushDriveAlSalir(); flushSheetsAlSalir(); });
 
 /* ---------- Navegación ---------- */
 var VIEWS = [
@@ -1020,7 +1063,24 @@ function buildDrawer(){ $("drawer-nav").innerHTML = VIEWS.map(function(v){ retur
   Array.prototype.forEach.call(document.querySelectorAll("#drawer-nav button"), function(b){ b.addEventListener("click", function(){ goto(b.getAttribute("data-view")); closeDrawer(); }); }); }
 var expandirAlEntrar = null;
 function pedirExpandir(v){ expandirAlEntrar = v; }
-function goto(view){ currentView = view; document.querySelectorAll(".view").forEach(function(s){ s.classList.toggle("active", s.id === "view-" + view); }); buildDrawer(); window.scrollTo({top:0}); renderAll();
+/* v1.49: botón Atrás del móvil. La app es de una sola página: sin historial,
+   el botón Atrás salía de la app desde cualquier pantalla. Ahora cada cambio
+   de vista guarda su entrada en el historial, y Atrás vuelve a la vista
+   anterior. En Hoy, Atrás pregunta antes de salir (ver mostrarPreguntaSalir).
+   «Guardia»: una entrada extra encima de Hoy para que Atrás en Hoy dispare
+   el aviso en vez de salir directamente. */
+var saliendoApp = false; /* «Salir» pulsado: no volver a preguntar */
+var guardiaArmada = false;
+function historialPush(view){ try{ history.pushState({ view: view }, ""); }catch(e){} }
+function historialReplace(view){ try{ history.replaceState({ view: view }, ""); }catch(e){} }
+function armarGuardiaSalida(){ if(currentView !== "hoy" || guardiaArmada) return; try{ history.pushState({ view: "hoy", guardia: true }, ""); guardiaArmada = true; }catch(e){} }
+function goto(view, opts){ opts = opts || {};
+  var misma = (view === currentView);
+  var navegacionNueva = !opts.desdeHistorial && !opts.reemplazar && !misma;
+  if(opts.reemplazar){ historialReplace(view); }
+  else if(navegacionNueva){ historialPush(view); }
+  if(!opts.desdeHistorial) saliendoApp = false;
+  currentView = view; document.querySelectorAll(".view").forEach(function(s){ s.classList.toggle("active", s.id === "view-" + view); }); buildDrawer(); window.scrollTo({top:0}); renderAll();
   /* v1.45 (E5): al entrar en una vista de apuntar, la fecha/hora es la de ahora. */
   if(view === "dolor") sellarFechaEpisodio();
   if(view === "tension" && tensionApuntarAbierto) sellarFechaTension();
@@ -1030,7 +1090,48 @@ function goto(view){ currentView = view; document.querySelectorAll(".view").forE
   /* v1.34: al entrar en Alimentación se muestra el aviso hasta aceptar; al salir por el menú sin aceptar se esconde y reaparece la próxima vez. */
   if(view === "alimentacion") mostrarAvisoAlimentacionSiToca(); else ocultarAvisoAlimentacion();
   /* v1.27: al entrar a Tensión o Andar desde Hoy para apuntar, el bloque plegado se abre solo. */
-  if(expandirAlEntrar === view){ expandirAlEntrar = null; if(view === "tension"){ desplegarTension(true); setTimeout(function(){ var b = $("tension-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } else if(view === "andar"){ desplegarAndar(true); setTimeout(function(){ var b = $("andar-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } } }
+  if(expandirAlEntrar === view){ expandirAlEntrar = null; if(view === "tension"){ desplegarTension(true); setTimeout(function(){ var b = $("tension-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } else if(view === "andar"){ desplegarAndar(true); setTimeout(function(){ var b = $("andar-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } }
+  if(view === "hoy" && !opts.desdeHistorial) armarGuardiaSalida();
+}
+/* v1.49: lo que hace el botón Atrás del móvil (popstate). Prioridad: primero
+   se cierra lo que esté encima (ventana (i), menú), sin cambiar de vista;
+   luego se vuelve a la vista anterior; en Hoy se pregunta antes de salir. */
+function mostrarPreguntaSalir(){ var m = $("salir-modal"); if(m) m.hidden = false; }
+function ocultarPreguntaSalir(){ var m = $("salir-modal"); if(m) m.hidden = true; }
+function quedarseEnApp(){ ocultarPreguntaSalir(); saliendoApp = false; armarGuardiaSalida(); }
+function salirDeApp(){
+  ocultarPreguntaSalir();
+  saliendoApp = true; guardiaArmada = false;
+  /* Salir es volver al principio del historial de esta pestaña: si se entró
+     desde otra página, se vuelve a ella; si la app se abrió sola (instalada),
+     se queda en la primera entrada y el siguiente Atrás del sistema la cierra. */
+  try{ history.go(1 - history.length); }catch(e){}
+  setTimeout(function(){ if(!document.hidden) toast("Pulsa atrás otra vez para salir de la app."); }, 400);
+}
+$("btn-abandonar").addEventListener("click", salirDeApp);
+$("btn-quedarme").addEventListener("click", quedarseEnApp);
+document.addEventListener("keydown", function(ev){ if(ev.key === "Escape" && $("salir-modal") && !$("salir-modal").hidden) quedarseEnApp(); });
+window.addEventListener("popstate", function(ev){
+  var st = (ev.state && typeof ev.state === "object") ? ev.state : {};
+  /* Si la pregunta de salir está abierta, Atrás es «Quedarme». */
+  if($("salir-modal") && !$("salir-modal").hidden){ quedarseEnApp(); return; }
+  if(saliendoApp) return; /* se está saliendo: no preguntar ni rearmar nada */
+  /* La ventana (i) se cierra primero, sin cambiar de vista; se devuelve la entrada consumida. */
+  if(infoPopup && !infoPopup.hidden){ closeInfoPopup(); historialPush(currentView); return; }
+  /* El menú se cierra primero, sin cambiar de vista. */
+  if($("drawer").classList.contains("open")){ closeDrawer(); historialPush(currentView); return; }
+  /* Desde el asistente, Atrás vuelve a Configuración, que es de donde se entró. */
+  if(currentView === "asistente"){ goto("config", { desdeHistorial: true }); return; }
+  /* La guardia de Hoy: si se estaba en otra vista, se vuelve a Hoy; si ya se estaba en Hoy, se pregunta. */
+  if(st.guardia){
+    guardiaArmada = false;
+    if(currentView === "hoy"){ mostrarPreguntaSalir(); return; }
+    goto("hoy", { desdeHistorial: true }); armarGuardiaSalida(); return;
+  }
+  if(st.view && st.view !== currentView){ goto(st.view, { desdeHistorial: true }); if(st.view === "hoy"){ guardiaArmada = false; armarGuardiaSalida(); } return; }
+  if(st.view === currentView && currentView === "hoy"){ guardiaArmada = false; mostrarPreguntaSalir(); return; }
+  /* Sin estado (fuera del historial de la app): no hacer nada. */
+});
 /* v1.27: «Mi pauta» ya no es una vista; la pauta médica vive en «Pautas» (v1.46: antes en Configuración). */
 function irAPautaMedica(){
   goto("pautas");
@@ -1879,8 +1980,39 @@ function renderAvisosHoy(){
   el.innerHTML = '<p><button class="btn secondary" id="btn-avisos">🔔 Activar recordatorios</button> <button type="button" class="info-btn" data-info-toggle="avisos-hoy" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>';
   var b = $("btn-avisos"); if(b) b.addEventListener("click", pedirPermisoAvisos);
 }
-function checkReminders(){ if(!("Notification" in window) || Notification.permission !== "granted") return; var now = new Date(); var hh = String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0"); var hoy = hoyKey();
-  data.pills.forEach(function(m){ m.horas.forEach(function(h){ if(h === hh){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0){ try{ new Notification("💊 " + m.nombre, { body: "Es la hora: " + h + (m.dosis ? " — " + m.dosis : "") }); }catch(e){} } } }); }); }
+/* v1.49 (M12): el aviso con la app abierta ya no se pierde si la pestaña se
+   duerme. Antes comparaba el minuto exacto cada 60 s: si el navegador
+   retrasaba el temporizador, el minuto pasaba y no avisaba nunca. Ahora
+   avisa también de las tomas sin marcar de los últimos 15 minutos (la
+   misma ventana que usa el Worker de avisos con la app cerrada). Cada
+   toma avisa UNA vez al día: el aviso dado se guarda aparte (no en los
+   datos) con la fecha y la hora, así no se repite cada minuto dentro de
+   la ventana ni al recargar. Las tomas marcadas nunca avisan. */
+var AVISOS_DADOS_KEY = "corazon-fuerte-avisos-dados-v1";
+function avisosDadosHoy(){
+  try{ var g = JSON.parse(localStorage.getItem(AVISOS_DADOS_KEY) || "null"); if(g && g.fecha === hoyKey() && Array.isArray(g.claves)) return g.claves; }catch(e){}
+  return [];
+}
+function marcarAvisoDado(clave){
+  var claves = avisosDadosHoy();
+  if(claves.indexOf(clave) < 0){ claves.push(clave); try{ localStorage.setItem(AVISOS_DADOS_KEY, JSON.stringify({ fecha: hoyKey(), claves: claves })); }catch(e){} }
+}
+function checkReminders(){ if(!("Notification" in window) || Notification.permission !== "granted") return; var now = new Date(); var hoy = hoyKey();
+  var ahoraMin = now.getHours() * 60 + now.getMinutes();
+  var dados = avisosDadosHoy();
+  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
+    var partes = String(h).split(":");
+    var minHora = parseInt(partes[0], 10) * 60 + parseInt(partes[1], 10);
+    if(isNaN(minHora)) return;
+    var dif = ahoraMin - minHora; if(dif < 0) dif += 1440; /* la toma de las 23:55 avisa hasta las 00:10 */
+    if(dif < 0 || dif > 15) return;
+    var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
+    if(tomadas.indexOf(h) >= 0) return;
+    var clave = hoy + "|" + m.id + "|" + h;
+    if(dados.indexOf(clave) >= 0) return;
+    marcarAvisoDado(clave);
+    try{ new Notification("💊 " + m.nombre, { body: "Es la hora: " + h + (m.dosis ? " — " + m.dosis : "") }); }catch(e){}
+  }); }); }
 setInterval(checkReminders, 60000);
 
 /* ---------- Episodios (dolor) ---------- */
@@ -2060,7 +2192,11 @@ function quitarWidget(i){
 /* Arrastre de widgets (v1.24): el asa (⠿) al principio de la fila se mantiene
    pulsada y se arrastra arriba o abajo para reordenar. Con eventos de puntero,
    así vale en táctil y con ratón (el drag-and-drop HTML5 no va en táctil).
-   Un toque corto en la fila sigue yendo a su vista. */
+   Un toque corto en la fila sigue yendo a su vista.
+   v1.49: el arrastre solo empieza tras mantener pulsado el asa 500 ms (con la
+   fila levantada para que se vea que se está arrastrando), para que no se
+   mueva el orden sin querer; y al reordenar sale «Deshacer». */
+var ARRASTRE_MS = 500;
 function activarArrastreWidget(indice, ev){
   if(ev.button != null && ev.button !== 0) return;
   ev.preventDefault();
@@ -2072,6 +2208,9 @@ function activarArrastreWidget(indice, ev){
   var startY = ev.clientY;
   var rects = items.map(function(it){ var r = it.getBoundingClientRect(); return { medio: (r.top + r.bottom) / 2 }; });
   var arrastrando = false;
+  var listo = false;
+  /* La fila se levanta al cumplir los 500 ms: señal de que ya se puede arrastrar. */
+  var temporizador = setTimeout(function(){ listo = true; li.classList.add("arrastrando"); }, ARRASTRE_MS);
   var actual = indice;
   function destino(y){
     var obj = rects.length - 1;
@@ -2079,11 +2218,11 @@ function activarArrastreWidget(indice, ev){
     return obj;
   }
   function mover(e){
+    if(!listo) return;
     var dy = e.clientY - startY;
     if(!arrastrando){
       if(Math.abs(dy) < 8) return;
       arrastrando = true;
-      li.classList.add("arrastrando");
     }
     li.style.transform = "translateY(" + dy + "px)";
     var obj = destino(e.clientY);
@@ -2095,6 +2234,7 @@ function activarArrastreWidget(indice, ev){
     if(e.cancelable) e.preventDefault();
   }
   function soltar(){
+    clearTimeout(temporizador);
     document.removeEventListener("pointermove", mover);
     document.removeEventListener("pointerup", soltar);
     document.removeEventListener("pointercancel", soltar);
@@ -2110,6 +2250,7 @@ function activarArrastreWidget(indice, ev){
     }
     if(arrastrando && actual !== indice){
       var elegidos = widgetsElegidos();
+      var ordenAnterior = elegidos.slice();
       var movido = elegidos.splice(indice, 1)[0];
       elegidos.splice(actual, 0, movido);
       data.widgets = elegidos;
@@ -2117,6 +2258,8 @@ function activarArrastreWidget(indice, ev){
       /* Al reordenar, el desplegable de medicación se cierra: su índice ya
          no corresponde al mismo widget tras moverlo. */
       widgetMedExpandido = null;
+      var ordenGuardado = ordenAnterior;
+      toastAccion("Orden cambiado.", "Deshacer", function(){ data.widgets = ordenGuardado; saveAll(); renderAll(); toast("Orden deshecho."); });
     }
     renderAll();
   }
@@ -2236,8 +2379,9 @@ function renderHoy(){ var hoy = hoyISO();
   $("hoy-andar").innerHTML = andado ? '<p><span class="pill">✅ Marcha de hoy apuntada</span></p>' : '<div class="card"><h2>🚶 ¿Has andado hoy?</h2><p><span class="pill warn">⏳ Hoy todavía no has apuntado la marcha</span></p><button class="btn" onclick="pedirExpandir(\'andar\');goto(\'andar\')">Apuntar la marcha de hoy</button></div>';
   var ult = data.tensions[0];
   /* v1.31: la última tensión va DENTRO de la rueda (primera fila, centro al cargar); arriba no hay lectura en grande. */
-  $("hoy-tension").innerHTML = ult ? '' : '<p class="muted">Todavía no hay ningún registro de tensión.</p>';
-  var filasTension = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); });
+  /* v1.49 (M11): la rueda solo muestra las últimas 30 lecturas: con un año de registros serían cientos de filas. */
+  $("hoy-tension").innerHTML = ult ? (data.tensions.length > 30 ? '<p class="muted" style="text-align:center">Últimas 30 lecturas</p>' : '') : '<p class="muted">Todavía no hay ningún registro de tensión.</p>';
+  var filasTension = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); }).slice(0, 30);
   crearRueda($("hoy-tension-rueda"), filasTension.map(function(t){ return '<span class="rueda-fecha">' + esc(fmtFechaHoraCorta(t.fecha)) + '</span><span class="rueda-val">' + esc((t.sistolica||"—") + " / " + (t.diastolica||"—")) + '</span><span class="rueda-pulso">' + esc(t.pulso||"—") + ' l.p.m.</span>'; }), "tension");
   var avH = $("hoy-tension-aviso");
   if(avH){ var wH = filasTension.length ? avisoTension(filasTension[0]) : null; avH.innerHTML = wH ? '<div class="warnbox">' + esc(wH.texto) + '</div>' : ""; }
@@ -2374,9 +2518,9 @@ async function startGoogleLogin(){
 async function handleOAuthCallback(){
   var params = new URLSearchParams(location.search);
   var code = params.get("code"), err = params.get("error"), state = params.get("state");
-  if(err){ history.replaceState(null, "", folderUrl()); toast("No se pudo entrar con Google: " + err); return; }
+  if(err){ history.replaceState({ view: currentView }, "", folderUrl()); toast("No se pudo entrar con Google: " + err); return; }
   if(!code) return;
-  if(state !== sessionStorage.getItem("corazon-fuerte-oauth-state")){ history.replaceState(null, "", folderUrl()); toast("La entrada con Google no se pudo verificar. Inténtalo de nuevo."); return; }
+  if(state !== sessionStorage.getItem("corazon-fuerte-oauth-state")){ history.replaceState({ view: currentView }, "", folderUrl()); toast("La entrada con Google no se pudo verificar. Inténtalo de nuevo."); return; }
   var verifier = sessionStorage.getItem("corazon-fuerte-pkce-verifier");
   try{
     var r = await fetch(AUTH_WORKER_URL_DEFAULT + "/exchange", { method:"POST", headers:{ "Content-Type":"application/json" },
@@ -2384,7 +2528,7 @@ async function handleOAuthCallback(){
     var j = await r.json();
     if(!r.ok || !j.access_token) throw new Error(j.error_description || j.error || ("HTTP " + r.status));
     setTokens({ access_token: j.access_token, refresh_token: j.refresh_token || (getTokens()||{}).refresh_token, expires_at: Date.now() + (j.expires_in||3600)*1000 });
-    history.replaceState(null, "", folderUrl());
+    history.replaceState({ view: currentView }, "", folderUrl());
     toast("Has entrado con Google. Tus datos se guardan también en Drive.");
     /* v1.36: al entrar, primero se carga lo que hay en Drive. Solo si en
        Drive no hay ningún archivo con datos se sube lo local (usuario
@@ -2393,7 +2537,7 @@ async function handleOAuthCallback(){
        el 2026-11-17. Si lo local también está vacío no hay nada que subir. */
     var cargadoDrive = await loadFromDrive();
     if(!cargadoDrive && datosConContenido(data)) await saveToDrive(true);
-  }catch(e){ history.replaceState(null, "", folderUrl()); toast("No se pudo entrar con Google: " + e.message); }
+  }catch(e){ history.replaceState({ view: currentView }, "", folderUrl()); toast("No se pudo entrar con Google: " + e.message); }
   sessionStorage.removeItem("corazon-fuerte-pkce-verifier"); sessionStorage.removeItem("corazon-fuerte-oauth-state"); }
 async function getAccessToken(){
   var t = getTokens(); if(!t) return null;
@@ -2424,6 +2568,8 @@ async function findDriveFile(folderId, name){
   var j = await r.json(); if(!r.ok) throw new Error((j.error && j.error.message) || ("Drive " + r.status));
   return (j.files && j.files.length) ? j.files[0] : null; }
 async function saveToDrive(manual, forzado){
+  /* v1.49: un guardado directo (botón «Guardar ahora», entrada con Google, borrado) deja sin efecto el envío con retardo que estuviera esperando. */
+  clearTimeout(driveSaveTimer); drivePendiente = false;
   if(!isConnected()){ updateDriveUI(); return false; }
   try{
     var folderId = await ensureDriveFolder();
@@ -2510,7 +2656,11 @@ async function loadFromDrive(){
    vez. Si el token es solo de Drive, Sheets da 403 y se avisa para reconectar
    una vez con el mismo botón, sin romper el guardado en Drive/JSON. */
 var sheetSaveTimer = null;
-function scheduleSheetSync(){ clearTimeout(sheetSaveTimer); sheetSaveTimer = setTimeout(function(){ saveToSheets(false); }, 2000); }
+var sheetPendiente = false; /* v1.49: hay cambios sin enviar a Sheets todavía */
+var SHEET_DEBOUNCE_MS = 30000; /* v1.49: igual que Drive: 30 s desde el último cambio */
+function scheduleSheetSync(){ sheetPendiente = true; updateSheetsUI(); clearTimeout(sheetSaveTimer); sheetSaveTimer = setTimeout(function(){ sheetPendiente = false; updateSheetsUI(); saveToSheets(false); }, SHEET_DEBOUNCE_MS); }
+/* v1.49: al salir de la app se intenta enviar a Sheets lo que esté pendiente, igual que a Drive. */
+function flushSheetsAlSalir(){ if(!sheetPendiente) return; clearTimeout(sheetSaveTimer); sheetPendiente = false; updateSheetsUI(); saveToSheets(false); }
 function andarSheetValues(){ var rows = [["Fecha","Pulso en Reposo","Pulso Medio","Pulso Máximo","BORG","Tiempo (min)","Distancia (km)","Comentarios / Incidencias","Semáforo BORG"]];
   data.walks.forEach(function(w){ rows.push([fmtFecha(w.fecha), w.reposo||"", w.medio||"", w.maximo||"", w.borg||"", w.minutos||"", w.km||"", w.comentarios||"", borgLuzTexto(borgLuz(w))]); });
   return rows; }
@@ -2548,6 +2698,8 @@ async function putSheetValues(sheetId, range, values){ var wr = await sheetsFetc
   if(!wr.ok){ var wj = await wr.json().catch(function(){ return {}; }); var err = new Error((wj.error && wj.error.message) || ("Sheets " + wr.status)); if(wr.status === 403) err.sheets403 = true; throw err; }
   return wr; }
 async function saveToSheets(manual){
+  /* v1.49: un guardado directo deja sin efecto el envío con retardo que estuviera esperando. */
+  clearTimeout(sheetSaveTimer); sheetPendiente = false;
   if(!isConnected()){ updateSheetsUI(); return false; }
   try{
     var sheet = await ensureSheet();
@@ -2593,7 +2745,7 @@ function updateSheetsUI(){ var link = $("link-hoja-sheets"); if(!link) return;
   link.style.display = (connected && url) ? "inline-block" : "none";
   if(url) link.href = url;
   var dl = $("link-hoja-descargar"); if(dl){ dl.style.display = (connected && id) ? "inline-block" : "none"; if(id) dl.href = "https://docs.google.com/spreadsheets/d/" + id + "/export?format=xlsx"; }
-  var st = $("sheets-estado"); if(st) st.textContent = !connected ? "" : (fallo ? "No se pudo guardar la hoja automáticamente. Pulsa «Actualizar hoja en Sheets» para intentarlo de nuevo." : (last ? "Guardada en Sheets ✓ " + last : "Hoja en Sheets: todavía no se ha actualizado"));
+  var st = $("sheets-estado"); if(st) st.textContent = !connected ? "" : (sheetPendiente ? "Pendiente de guardar en Sheets…" : (fallo ? "No se pudo guardar la hoja automáticamente. Pulsa «Actualizar hoja en Sheets» para intentarlo de nuevo." : (last ? "Guardada en Sheets ✓ " + last : "Hoja en Sheets: todavía no se ha actualizado")));
   var av = $("sheets-aviso"); if(av){ av.innerHTML = localStorage.getItem(SHEET_403_KEY)
     ? '<div class="warnbox"><b>⚠️ Sheets necesita un permiso nuevo.</b><br>Tu sesión de Google es solo de Drive. Vuelve a conectar con Google una sola vez con el mismo botón de Configuración para añadir Sheets. Tus datos en Drive y en este dispositivo siguen guardándose.</div>'
     : ""; } }
@@ -2625,7 +2777,7 @@ function updateDriveUI(){
   $("btn-google-salir").style.display = connected ? "block" : "none";
   $("btn-drive-ahora").style.display = connected ? "block" : "none";
   var last = localStorage.getItem(DRIVE_LAST_KEY);
-  $("drive-sync").textContent = connected ? ("Última sincronización con Drive: " + (last || "todavía no se ha guardado")) : "";
+  $("drive-sync").textContent = connected ? (drivePendiente ? "Pendiente de guardar en Drive…" : ("Última sincronización con Drive: " + (last || "todavía no se ha guardado"))) : "";
   if(!clientConfigured()){ $("google-pendiente").innerHTML = '<div class="warnbox"><b>⏳ La entrada con Google todavía no está activada.</b><br>Falta configurar el proyecto de Google Cloud para «Corazón Fuerte» y poner su Client ID en la app. Cuando esté, este botón te dejará entrar con tu correo de Google. Además, en ese proyecto hay que activar la API de Google Sheets.</div>'; }
   else { $("google-pendiente").innerHTML = ""; }
   actualizarPuntoConectado(); }
@@ -2844,18 +2996,24 @@ function addACompra(nombre, luz){
   if(!Array.isArray(data.compra)) data.compra = [];
   var ya = data.compra.some(function(c){ return c.nombre.toLowerCase() === nombre.toLowerCase(); });
   if(ya){ toast("«" + nombre + "» ya está en la lista de la compra."); return; }
-  data.compra.unshift({ id: uid(), nombre: nombre, luz: luz || null });
+  data.compra.unshift({ id: uid(), nombre: nombre, luz: luz || null, comprado: false });
   saveAll(); renderAll(); toast("«" + nombre + "» añadido a la lista de la compra."); }
 function renderCompra(){
   var el = $("lista-compra");
   if(!el) return;
   if(!Array.isArray(data.compra)) data.compra = [];
   if(!data.compra.length){ el.innerHTML = '<p class="muted">Tu lista está vacía. Añade productos desde una comprobación o escribe uno a mano.</p>'; return; }
+  /* v1.49 (M9): cada producto se puede tachar como comprado (tocando el cuadrado; se puede destachar igual) y «Vaciar lista» borra toda la lista, preguntando antes. */
   el.innerHTML = data.compra.map(function(c){
     var luzTxt = c.luz === "rojo" ? "🔴 LUZ ROJA" : c.luz === "ambar" ? "🟡 LUZ ÁMBAR" : c.luz === "verde" ? "🟢 LUZ VERDE" : "sin luz";
-    return '<div class="fila"><div class="fila-txt"><b>' + esc(c.nombre) + '</b> · ' + luzTxt
-      + '</div><button type="button" class="fila-quitar" aria-label="Quitar de la lista" data-del-compra="' + c.id + '">×</button></div>'; }).join("");
-  Array.prototype.forEach.call(el.querySelectorAll("[data-del-compra]"), function(b){ b.addEventListener("click", function(){ data.compra = data.compra.filter(function(c){ return c.id !== b.getAttribute("data-del-compra"); }); saveAll(); renderAll(); }); }); }
+    var comprado = !!c.comprado;
+    return '<div class="fila' + (comprado ? ' comprado' : '') + '"><button type="button" class="compra-check" aria-checked="' + comprado + '" aria-label="Marcar como comprado: ' + esc(c.nombre) + '" data-comprado="' + c.id + '">' + (comprado ? '✓' : '') + '</button><div class="fila-txt"><b>' + esc(c.nombre) + '</b> · ' + luzTxt
+      + '</div><button type="button" class="fila-quitar" aria-label="Quitar de la lista" data-del-compra="' + c.id + '">×</button></div>'; }).join("")
+    + '<button class="btn secondary" id="btn-vaciar-lista" style="margin-top:6px">Vaciar lista</button>';
+  Array.prototype.forEach.call(el.querySelectorAll("[data-comprado]"), function(b){ b.addEventListener("click", function(){ var it = data.compra.find(function(c){ return c.id === b.getAttribute("data-comprado"); }); if(!it) return; it.comprado = !it.comprado; saveAll(); renderAll(); }); });
+  Array.prototype.forEach.call(el.querySelectorAll("[data-del-compra]"), function(b){ b.addEventListener("click", function(){ data.compra = data.compra.filter(function(c){ return c.id !== b.getAttribute("data-del-compra"); }); saveAll(); renderAll(); }); });
+  var vb = $("btn-vaciar-lista");
+  if(vb) vb.addEventListener("click", function(){ var n = data.compra.length; if(!confirm("¿Vaciar la lista de la compra? Se borrarán " + n + (n === 1 ? " producto." : " productos."))) return; data.compra = []; saveAll(); renderAll(); toast("Lista vaciada."); }); }
 $("btn-compra-anadir").addEventListener("click", function(){
   var nombre = $("compra-nuevo").value.trim();
   if(!nombre){ toast("Escribe el nombre del producto."); return; }
@@ -3442,7 +3600,9 @@ async function abrirAsistente(){
 function cerrarAsistente(destino){
   asistenteEstado.abierto = false;
   guardarAsistente();
-  goto(destino || "config");
+  /* v1.49: al cerrar el asistente se SUSTITUYE su entrada del historial por
+     la de destino: Atrás después de cerrar no debe reabrir el asistente. */
+  goto(destino || "config", { reemplazar: true });
 }
 /* Si la app se cerró (o se fue a Google) con el asistente abierto, al volver se retoma donde se quedó. Si la URL trae #vista (por ejemplo, un aviso push), manda la URL y el asistente no se reabre. */
 function reabrirAsistenteSiToca(){
@@ -3700,6 +3860,9 @@ function initAsistente(){
   handleOAuthCallback().then(function(){ renderAll(); if(isConnected()) loadFromDrive().then(function(){ if(currentView === "asistente") renderAsistente(); }); reabrirAsistenteSiToca(); });
   renderAll();
   reintentarConsentimiento(); /* v1.34: si la aceptación quedó pendiente por falta de red, se reenvía en silencio */
+  /* v1.49: primera entrada del historial (Hoy) + guardia para que Atrás en Hoy pregunte antes de salir. */
+  try{ history.replaceState({ view: "hoy" }, ""); }catch(e){}
+  armarGuardiaSalida();
   /* Abrir en una vista concreta si la URL trae #vista (por ejemplo, al tocar un aviso push). */
   var hv = (location.hash || "").replace("#", "");
   if(hv && VIEWS.some(function(v){ return v[0] === hv; })) goto(hv);
