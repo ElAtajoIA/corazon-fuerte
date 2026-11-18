@@ -370,7 +370,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.42 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.43 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -742,6 +742,7 @@ footer a{color:var(--muted)}
     <label for="push-worker-url">Dirección del Worker de avisos</label>
     <input id="push-worker-url" type="url" placeholder="https://corazon-fuerte-push.tu-cuenta.workers.dev" autocomplete="off">
     <label class="push-row"><input type="checkbox" id="push-toggle"><span><b>Avisos aunque la app esté cerrada</b><br><span class="muted" id="push-estado">Avisos con la app cerrada: desactivados.</span></span></label>
+    <p><button class="btn secondary" id="btn-probar-aviso">🔔 Probar aviso</button></p>
     <p data-info-for="push-iphone" hidden class="info-text">En el iPhone, los avisos con la app cerrada solo funcionan si instalas la app en la pantalla de inicio (iOS 16.4 o posterior). Los recordatorios pueden llegar con unos minutos de retraso.</p>
     <p data-info-for="push-denegado-android" hidden class="info-text"><b>Las notificaciones están bloqueadas en este navegador</b>, así que no puedo volver a pedirte permiso: hay que permitirlas a mano.<br><br>1. Toca los tres puntos ⋮ de arriba a la derecha.<br>2. Toca «Ajustes».<br>3. Toca «Configuración de sitios» (si no se ve, está dentro de «Privacidad y seguridad»).<br>4. Toca «Notificaciones».<br>5. Busca «corazon-fuerte.pages.dev» en la lista de bloqueadas, tócala y elige «Permitir».<br>6. Vuelve a la app y pulsa otra vez el interruptor de «Avisos aunque la app esté cerrada».</p>
     <p data-info-for="push-denegado-instalada" hidden class="info-text"><b>Las notificaciones están bloqueadas</b>, así que no puedo volver a pedirte permiso: hay que permitirlas a mano.<br><br>1. Mantén pulsado el icono de la app en la pantalla de inicio.<br>2. Toca «Información de la app».<br>3. Toca «Notificaciones».<br>4. Activa las notificaciones.<br>5. Vuelve a la app y pulsa otra vez el interruptor de «Avisos aunque la app esté cerrada».</p>
@@ -786,8 +787,8 @@ footer a{color:var(--muted)}
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
     <button class="btn" id="btn-exportar">Descargar copia (JSON)</button>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.42 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
-    <p class="muted"><b>Qué cambia en la v1.42:</b><br>· Ahora puedes pasar de una pantalla a otra deslizando el dedo.</p>
+    <p class="muted">Versión v1.43 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+    <p class="muted"><b>Qué cambia en la v1.43:</b><br>· Botón «Probar aviso» en Configuración para comprobar las notificaciones cuando quieras.</p>
   </div>
   <div class="card"><h2>Privacidad</h2>
     <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
@@ -799,7 +800,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.42 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.43 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -816,7 +817,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.39. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.42";
+var APP_VERSION = "v1.43";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -2815,6 +2816,63 @@ async function disablePush(){
   toast("Avisos con la app cerrada desactivados.");
   updatePushUI();
 }
+/* v1.43: «Probar aviso» — envía un aviso de prueba AHORA y enseña el
+   resultado dentro de la app (antes solo se veía en los registros del
+   Worker, que Pedro no puede abrir). Si el Worker es viejo (sin /test),
+   responde 404 «Ruta no encontrada»: eso mismo dice que hay que pegar
+   la versión nueva del Worker (v6). */
+var probandoAviso = false;
+async function probarAviso(){
+  var btn = $("btn-probar-aviso"), st = $("push-estado");
+  if(probandoAviso) return;
+  if(!pushEnabled()){ toast("Activa primero los avisos con el interruptor."); return; }
+  var wurl = getPushWorkerUrl();
+  if(!wurl){ toast("Aún no has puesto la dirección del Worker de avisos."); return; }
+  var sub = await getPushSubscription();
+  if(!sub){ if(st) st.textContent = "Avisos con la app cerrada: activados, pero la suscripción no está en este navegador. Desactívalos y vuelve a activarlos."; toast("No hay suscripción en este navegador. Desactiva los avisos y vuelve a activarlos."); return; }
+  probandoAviso = true; if(btn) btn.disabled = true;
+  try{
+    var r = await fetch(wurl + "/test", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint }) });
+    var j = null; try{ j = await r.json(); }catch(e){}
+    if(j && j.ok){
+      var msg = "Prueba enviada. Google dice " + j.status + ": el aviso debería llegar en unos segundos.";
+      if(st) st.textContent = msg; toast(msg);
+    }else{
+      var stt = (j && j.status) ? j.status : r.status;
+      var err = (j && j.error) ? j.error : "error desconocido";
+      var msg2 = (err === "Ruta no encontrada")
+        ? "No se pudo enviar la prueba (404: el Worker aún no tiene el botón de prueba — pega la versión v6 en Cloudflare)."
+        : "No se pudo enviar la prueba (" + stt + ": " + err + ").";
+      if(st) st.textContent = msg2; toast(msg2);
+    }
+  }catch(e){
+    var msg3 = "No se pudo contactar con el Worker de avisos: " + e.message;
+    if(st) st.textContent = msg3; toast(msg3);
+  }
+  probandoAviso = false; if(btn) btn.disabled = false;
+}
+/* v1.43: reparación automática al arrancar — si los avisos están activados
+   y el permiso está concedido pero la suscripción se perdió (por ejemplo,
+   al desinstalar y reinstalar la app, el interruptor queda en «sí» pero el
+   navegador ya no tiene suscripción), se vuelve a suscribir en silencio,
+   sin pedir nada ni avisar. Si falla, no pasa nada: el estado ya avisa de
+   que la suscripción no está. Con el permiso denegado o sin pedir, no se
+   toca nada: ahí siguen los pasos manuales. */
+async function repararSuscripcionPush(){
+  if(!pushEnabled()) return;
+  if(!("Notification" in window) || Notification.permission !== "granted") return;
+  if(!("serviceWorker" in navigator) || !("PushManager" in window)) return;
+  try{
+    var sub = await getPushSubscription();
+    if(sub) return; // la suscripción está: nada que reparar
+    var wurl = getPushWorkerUrl(); if(!wurl) return;
+    var reg = await navigator.serviceWorker.ready;
+    var nuevo = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY) });
+    var r = await fetch(wurl + "/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(pushSchedulePayload(nuevo.toJSON())) });
+    if(!r.ok) return;
+    updatePushUI();
+  }catch(e){ /* en silencio: el estado ya avisa de que la suscripción no está */ }
+}
 var pushResendTimer = null;
 function resendPushSchedule(){
   if(!pushEnabled()) return;
@@ -2834,8 +2892,10 @@ document.addEventListener("click", function(ev){
 function initPush(){
   var url = $("push-worker-url"); if(url){ url.value = getPushWorkerUrl(); url.addEventListener("change", function(){ localStorage.setItem(PUSH_WORKER_URL_KEY, url.value.trim()); updatePushUI(); }); }
   var t = $("push-toggle"); if(t) t.addEventListener("change", function(){ if(t.checked) enablePush(); else disablePush(); });
+  var b = $("btn-probar-aviso"); if(b) b.addEventListener("click", function(){ probarAviso(); });
   var link = $("link-push-config"); if(link) link.addEventListener("click", function(ev){ ev.preventDefault(); irAConfigPush(); });
   updatePushUI();
+  repararSuscripcionPush(); /* v1.43: si el interruptor está en «sí» pero la suscripción se perdió, se rehace sola en silencio */
 }
 
 /* ---------- Inicio ---------- */
