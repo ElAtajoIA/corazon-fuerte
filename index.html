@@ -130,8 +130,8 @@ main{max-width:720px;margin:0 auto;padding:14px 12px 90px}
 .view-head h1{font-size:23px}
 .view-head p{margin:4px 0 0;opacity:.95;font-size:15px}
 /* v1.38: botones de Alimentación dentro del recuadro (sin los textos largos). */
-.alim-botones{display:grid;gap:10px;margin-top:12px}
-.alim-botones .btn{margin:0}
+.alim-botones{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:12px}
+.alim-botones .btn{margin:0;width:min(100%,320px)}
 .view-head .muted{color:inherit}
 .c-hoy{background:linear-gradient(135deg,#C81E3A,#E11D48)}
 .c-pauta{background:linear-gradient(135deg,#2563EB,#1E40AF)}
@@ -370,7 +370,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.43 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.44 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -515,24 +515,7 @@ footer a{color:var(--muted)}
     <div id="barcode-camera"></div>
   </div></div>
   <div class="card">
-    <label for="barcode-codigo">Código de barras (a mano)</label>
-    <input id="barcode-codigo" type="text" inputmode="numeric" placeholder="Por ejemplo: 8410000000000" autocomplete="off">
-    <button class="btn" id="btn-barcode-buscar">Buscar por código</button>
     <div id="barcode-resultado"></div>
-  </div>
-  <div class="card"><h2>Comprobar a mano</h2>
-    <p>Sin foto, escribe lo que pone en la etiqueta y te sale el semáforo.</p>
-    <label for="n-producto">Producto (opcional)</label><input id="n-producto" type="text" placeholder="Nombre del producto" autocomplete="off">
-    <div class="frow">
-      <div><label for="n-sal">Sal (g por 100 g)</label><input id="n-sal" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g"></div>
-      <div><label for="n-sat">Grasas saturadas (g por 100 g)</label><input id="n-sat" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g"></div>
-      <div><label for="n-az">Azúcares (g por 100 g)</label><input id="n-az" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g"></div>
-    </div>
-    <div id="campos-manuales"></div>
-    <label for="n-ingredientes">Ingredientes (opcional, pega la lista)</label>
-    <textarea id="n-ingredientes" placeholder="Por ejemplo: harina, aceite de palma, azúcar, sal…"></textarea>
-    <button class="btn" id="btn-comprobar-sal">Comprobar semáforo</button>
-    <div id="semaforo-manual"></div>
   </div>
   <div class="card"><h2>Qué comer: verde, ámbar y rojo</h2>
     <p class="muted">Guía de la pauta base. Si tu médico te pauta otra cosa, manda la suya.</p>
@@ -787,8 +770,8 @@ footer a{color:var(--muted)}
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
     <button class="btn" id="btn-exportar">Descargar copia (JSON)</button>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.43 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
-    <p class="muted"><b>Qué cambia en la v1.43:</b><br>· Botón «Probar aviso» en Configuración para comprobar las notificaciones cuando quieras.</p>
+    <p class="muted">Versión v1.44 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+    <p class="muted"><b>Qué cambia en la v1.44:</b><br>· En Alimentación ya no se pueden meter los datos a mano: comprobar un producto es solo con la foto del cuadro nutricional o con el código de barras.</p>
   </div>
   <div class="card"><h2>Privacidad</h2>
     <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
@@ -800,7 +783,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.43 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.44 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -817,7 +800,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.39. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.43";
+var APP_VERSION = "v1.44";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -2497,20 +2480,6 @@ $("btn-anadir-campo").addEventListener("click", function(){
   }
   $("nc-nombre").value = ""; $("nc-limite").value = "";
   saveAll(); toast("Campo guardado. Gemini lo revisará en cada foto."); renderAll(); });
-$("btn-comprobar-sal").addEventListener("click", function(){
-  var valores = { "sal": $("n-sal").value.trim(), "grasas saturadas": $("n-sat").value.trim(), "azucares": $("n-az").value.trim() };
-  Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){
-    var f = data.semaforo.campos.find(function(c){ return c.id === inp.getAttribute("data-campo"); });
-    if(f) valores[normKey(f.nombre)] = inp.value.trim();
-  });
-  var ingredientes = $("n-ingredientes").value.trim();
-  var ev = evaluarSemaforo(valores, ingredientes);
-  if(!ev.luz){ $("semaforo-manual").innerHTML = semaforoHTML(ev, valores); return; }
-  addSemaforo($("n-producto").value, valores, ingredientes, ev);
-  $("semaforo-manual").innerHTML = semaforoHTML(ev, valores) + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>';
-  ["n-producto","n-sal","n-sat","n-az","n-ingredientes"].forEach(function(id){ $(id).value = ""; });
-  Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){ inp.value = ""; });
-  if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Producto comprobado."); });
 function renderSemaforo(){
   $("sal-limite").value = data.semaforo.limiteSal || "";
   $("sat-limite").value = data.semaforo.limiteSaturadas || "";
@@ -2537,10 +2506,6 @@ function renderSemaforo(){
       $("nc-limite").value = f.limite || ""; $("btn-anadir-campo").textContent = "Guardar cambios del campo";
       $("nc-nombre").focus(); }); });
   }
-  var cm = $("campos-manuales");
-  var nuts = data.semaforo.campos.filter(function(c){ return c.tipo === "nutriente" && ["sal","grasas saturadas","azucares"].indexOf(normKey(c.nombre)) < 0; });
-  cm.innerHTML = nuts.map(function(c){
-    return '<label>' + esc(c.nombre) + ' (g por 100 g, opcional)</label><input type="number" min="0" max="100" step="0.01" inputmode="decimal" data-campo="' + c.id + '" placeholder="g por 100 g">'; }).join("");
   var el = $("lista-semaforo");
   if(!data.semaforo.historial.length){ el.innerHTML = '<p class="muted">Todavía no has comprobado ningún producto.</p>'; return; }
   el.innerHTML = data.semaforo.historial.map(function(h){
@@ -2603,7 +2568,7 @@ $("foto-nutricion").addEventListener("change", async function(ev){
   var file = ev.target.files && ev.target.files[0]; ev.target.value = "";
   if(!file) return;
   var key = localStorage.getItem(GEMINI_KEY);
-  if(!key){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto del cuadro nutricional necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes comprobar la sal a mano.</div>'; goto("config"); return; }
+  if(!key){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>Te falta la clave de Gemini.</b><br>La foto del cuadro nutricional necesita tu clave. Ponla en Configuración y vuelve aquí. Mientras, puedes comprobar el producto con el código de barras.</div>'; goto("config"); return; }
   $("nutri-resultado").innerHTML = '<p>⏳ Leyendo el cuadro nutricional y los ingredientes…</p>';
   try{
     var base64 = await compressImage(file);
@@ -2617,7 +2582,6 @@ $("foto-nutricion").addEventListener("change", async function(ev){
       + (vals.ingredientes ? '<br><span class="muted">Ingredientes: ' + esc(String(vals.ingredientes).slice(0, 200)) + '</span>' : "") + '</p>'
       + semaforoHTML(ev, vals.nutrientes)
       + '<button class="btn green" id="btn-confirmar-nutri">✅ Sí, guardar</button>'
-      + '<button class="btn secondary" id="btn-cancelar-nutri">No, lo apunto a mano</button>'
       + '<button class="btn secondary" id="btn-nutri-lista">🛒 Añadir a la lista</button></div>';
     $("nutri-resultado").scrollIntoView({ behavior: "smooth", block: "start" }); /* v1.33: bajar hasta los datos leidos */
     $("btn-nutri-lista").addEventListener("click", function(){ addACompra(vals.producto || "Producto sin nombre", ev.luz); });
@@ -2625,18 +2589,7 @@ $("foto-nutricion").addEventListener("change", async function(ev){
       if(!ev.luz){ toast("Sin criterios con límite guardado: no se puede valorar el producto."); return; }
       addSemaforo(vals.producto, vals.nutrientes, vals.ingredientes, ev);
       $("nutri-resultado").innerHTML = ""; $("nutri-preview").innerHTML = ""; if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Producto guardado."); });
-    $("btn-cancelar-nutri").addEventListener("click", function(){
-      if(vals.producto) $("n-producto").value = vals.producto;
-      if(vals.nutrientes["sal"] != null) $("n-sal").value = vals.nutrientes["sal"];
-      if(vals.nutrientes["grasas saturadas"] != null) $("n-sat").value = vals.nutrientes["grasas saturadas"];
-      if(vals.nutrientes["azucares"] != null) $("n-az").value = vals.nutrientes["azucares"];
-      if(vals.ingredientes) $("n-ingredientes").value = vals.ingredientes;
-      Array.prototype.forEach.call(document.querySelectorAll("#campos-manuales [data-campo]"), function(inp){
-        var f = data.semaforo.campos.find(function(c){ return c.id === inp.getAttribute("data-campo"); });
-        if(f && vals.nutrientes[normKey(f.nombre)] != null) inp.value = vals.nutrientes[normKey(f.nombre)];
-      });
-      $("nutri-resultado").innerHTML = ""; toast("Corrige los valores a mano y pulsa Comprobar semáforo."); });
-  }catch(e){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Apunta los valores a mano.</div>'; } });
+  }catch(e){ $("nutri-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Inténtalo otra vez o comprueba el producto con el código de barras.</div>'; } });
 
 /* ---------- Código de barras (Open Food Facts, necesita internet) ---------- */
 function barcodeCamSupported(){ return typeof window !== "undefined" && "BarcodeDetector" in window; }
@@ -2644,13 +2597,13 @@ async function buscarPorCodigo(codigo){
   codigo = String(codigo || "").replace(/\D/g, "");
   var box = $("barcode-resultado");
   if(!codigo){ box.innerHTML = '<div class="warnbox">Escribe el código de barras o escánalo con la cámara.</div>'; return; }
-  if(!navigator.onLine){ box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>La búsqueda por código de barras necesita internet. Sin conexión, comprueba el producto a mano.</div>'; return; }
+  if(!navigator.onLine){ box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>La búsqueda por código de barras necesita internet. Sin conexión no se puede comprobar el producto.</div>'; return; }
   box.innerHTML = '<p>⏳ Buscando el código ' + esc(codigo) + ' en Open Food Facts…</p>';
   try{
     var r = await fetch("https://world.openfoodfacts.org/api/v0/product/" + encodeURIComponent(codigo) + ".json");
     if(!r.ok) throw new Error("sin respuesta");
     var j = await r.json();
-    if(!j || j.status !== 1 || !j.product){ box.innerHTML = '<div class="warnbox"><b>Producto no encontrado.</b><br>No hay ningún producto con ese código en Open Food Facts. Compruébalo a mano.<br><button class="btn green" id="btn-barcode-foto" style="margin-top:8px">📷 Comprobar con la foto del cuadro</button></div>'; $("btn-barcode-foto").addEventListener("click", function(){ box.innerHTML = ""; var inp = $("foto-nutricion"); if(inp){ var cont = inp.closest(".card") || inp.closest(".view-head"); /* v1.38: la foto ya no está dentro de una .card, está en el recuadro de Alimentación */ if(cont) cont.scrollIntoView(); inp.click(); } }); return; }
+    if(!j || j.status !== 1 || !j.product){ box.innerHTML = '<div class="warnbox"><b>Producto no encontrado.</b><br>No hay ningún producto con ese código en Open Food Facts. Compruébalo con la foto del cuadro nutricional.<br><button class="btn green" id="btn-barcode-foto" style="margin-top:8px">📷 Comprobar con la foto del cuadro</button></div>'; $("btn-barcode-foto").addEventListener("click", function(){ box.innerHTML = ""; var inp = $("foto-nutricion"); if(inp){ var cont = inp.closest(".card") || inp.closest(".view-head"); /* v1.38: la foto ya no está dentro de una .card, está en el recuadro de Alimentación */ if(cont) cont.scrollIntoView(); inp.click(); } }); return; }
     var p = j.product, n = p.nutriments || {};
     var valores = { "sal": n["salt_100g"], "grasas saturadas": n["saturated-fat_100g"], "azucares": n["sugars_100g"] };
     var ingredientes = p.ingredients_text_es || p.ingredients_text || "";
@@ -2662,26 +2615,16 @@ async function buscarPorCodigo(codigo){
       + (ingredientes ? '<p class="muted">Ingredientes: ' + esc(String(ingredientes).slice(0, 200)) + '</p>' : '')
       + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'
       + '<button class="btn green" id="btn-confirmar-barcode">✅ Sí, guardar</button>'
-      + '<button class="btn secondary" id="btn-cancelar-barcode">No, lo apunto a mano</button>'
       + '<button class="btn secondary" id="btn-barcode-lista">🛒 Añadir a la lista</button></div>';
     $("btn-barcode-lista").addEventListener("click", function(){ addACompra(nombre, ev.luz); });
     $("btn-confirmar-barcode").addEventListener("click", function(){
       if(!ev.luz){ toast("Sin criterios con límite guardado: no se puede valorar el producto."); return; }
       addSemaforo(nombre, valores, ingredientes, ev);
-      box.innerHTML = ""; $("barcode-codigo").value = ""; if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Producto guardado."); });
-    $("btn-cancelar-barcode").addEventListener("click", function(){
-      $("n-producto").value = nombre;
-      if(n["salt_100g"] != null) $("n-sal").value = n["salt_100g"];
-      if(n["saturated-fat_100g"] != null) $("n-sat").value = n["saturated-fat_100g"];
-      if(n["sugars_100g"] != null) $("n-az").value = n["sugars_100g"];
-      if(ingredientes) $("n-ingredientes").value = ingredientes;
-      box.innerHTML = ""; toast("Corrige los valores a mano y pulsa Comprobar semáforo."); });
+      box.innerHTML = ""; if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Producto guardado."); });
   }catch(e){
-    box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>No se pudo conectar con Open Food Facts. Comprueba el producto a mano.</div>';
+    box.innerHTML = '<div class="warnbox"><b>Necesitas internet para buscar el código.</b><br>No se pudo conectar con Open Food Facts. Inténtalo más tarde o comprueba el producto con la foto del cuadro nutricional.</div>';
   }
 }
-$("btn-barcode-buscar").addEventListener("click", function(){ buscarPorCodigo($("barcode-codigo").value); });
-$("barcode-codigo").addEventListener("keydown", function(ev){ if(ev.key === "Enter"){ ev.preventDefault(); buscarPorCodigo($("barcode-codigo").value); } });
 var barcodeStream = null;
 function stopBarcodeCam(){ if(barcodeStream){ barcodeStream.getTracks().forEach(function(t){ t.stop(); }); barcodeStream = null; } var c = $("barcode-camera"); if(c) c.innerHTML = ""; }
 $("btn-barcode-cam").addEventListener("click", async function(){
@@ -2700,7 +2643,7 @@ $("btn-barcode-cam").addEventListener("click", async function(){
         try{
           var codes = await detector.detect($("barcode-video"));
           errores = 0;
-          if(codes && codes.length){ var v = codes[0].rawValue; scanning = false; stopBarcodeCam(); $("barcode-codigo").value = v; buscarPorCodigo(v); return; }
+          if(codes && codes.length){ var v = codes[0].rawValue; scanning = false; stopBarcodeCam(); buscarPorCodigo(v); return; }
         }catch(e){
           errores++;
           if(errores >= 3 && !avisoError){
