@@ -357,7 +357,7 @@ footer a{color:var(--muted)}
 .rueda-hora-min>div{flex:1;min-width:0}
 /* ---------- Asistente «Por dónde empezar» (v1.45) ---------- */
 .btn[hidden]{display:none}
-/* La línea verde «✓ Todo configurado» también abre el asistente (en el resumen): si no, una vez terminado no habría forma de volver a ver la configuración. */
+/* La línea verde «✓ Todo configurado» abre un recuadro con el detalle (v1.46): la tarjeta ya no enseña el texto, solo la línea. */
 #asistente-hecho{background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit;display:block;width:100%}
 #asistente-hecho[hidden]{display:none}
 .asistente-nav .fila-nav{display:flex;gap:10px}
@@ -368,6 +368,22 @@ footer a{color:var(--muted)}
 .asistente-resumen .est.ok{color:var(--green)}
 .asistente-resumen .est.pend{color:var(--amber)}
 .asistente-resumen .est.salt{color:var(--muted)}
+/* v1.46: tarjeta del asistente compacta — título pequeño en verde, una línea; la línea verde abre un recuadro con el detalle. */
+#card-asistente h2{font-size:17px;color:var(--green);margin-bottom:10px}
+/* v1.46: línea pequeña del aviso de alimentación (verde, con el check); al pulsar abre un recuadro con el aviso. */
+#card-consent{padding:12px 16px}
+.consent-linea{background:none;border:0;padding:2px 0;text-align:left;cursor:pointer;font:inherit;font-size:15px;color:var(--green);display:block;width:100%}
+.consent-linea-texto{font-size:15px;color:var(--muted);margin:2px 0}
+/* v1.46: color de la cabecera de la vista «Pautas». */
+.c-pautas{background:linear-gradient(135deg,#2563EB,#1E40AF)}
+/* v1.46: bloques plegables de cada pauta (tensión y alimentación). */
+.pauta-det summary{cursor:pointer;font-size:19px;font-weight:800;list-style:none}
+.pauta-det summary::-webkit-details-marker{display:none}
+.pauta-det summary::after{content:" ▾";font-weight:400}
+.pauta-det[open] summary::after{content:" ▴"}
+/* v1.46 (M3): rango BORG junto al campo y aviso en vivo si te sales. */
+.borg-rango{font-size:14px}
+.borg-aviso{color:var(--amber);font-weight:700;margin:8px 0 0}
 </style>
 </head>
 <body>
@@ -383,7 +399,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.45 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.46 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -396,7 +412,7 @@ footer a{color:var(--muted)}
   <div id="hoy-revision"></div>
   <div id="hoy-pauta-vacia"></div>
   <div id="hoy-andar"></div>
-  <div class="card"><h2>🩺 Última tensión y pulso</h2><div id="hoy-tension"></div><div id="hoy-tension-rueda"></div>
+  <div class="card"><h2>🩺 Última tensión y pulso</h2><div id="hoy-tension"></div><div id="hoy-tension-rueda"></div><div id="hoy-tension-aviso"></div>
     <button class="btn secondary" onclick="pedirExpandir('tension');goto('tension')">Apuntar tensión y pulso</button></div>
   <div class="card"><h2>💊 Próxima pastilla</h2><div id="hoy-pastilla"></div><div id="hoy-pastilla-rueda"></div>
     <button class="btn secondary" onclick="goto('pastillero')">Ver el pastillero</button></div>
@@ -420,8 +436,9 @@ footer a{color:var(--muted)}
     </div>
     <div class="frow">
       <div><label for="w-maximo">Pulso máximo</label><input id="w-maximo" type="number" min="30" max="230" inputmode="numeric" placeholder="l.p.m."></div>
-      <div><label for="w-borg">BORG</label><input id="w-borg" type="number" min="6" max="20" inputmode="numeric" placeholder="6 a 20"></div>
+      <div><label for="w-borg">BORG</label><input id="w-borg" type="number" min="6" max="20" inputmode="numeric" placeholder="6 a 20"><br><span class="muted borg-rango" id="w-borg-rango"></span></div>
     </div>
+    <p class="borg-aviso" id="w-borg-aviso" hidden></p>
     <div class="frow">
       <div><label for="w-minutos">Tiempo de duración (min)</label><input id="w-minutos" type="number" min="1" max="600" inputmode="numeric" placeholder="Minutos"></div>
       <div><label for="w-km">Distancia recorrida (km)</label><input id="w-km" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="Km"></div>
@@ -459,7 +476,7 @@ footer a{color:var(--muted)}
     <div class="chart-box" id="grafico-tension"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
     <h3 style="margin-top:14px">Gráficos redondos</h3>
     <div id="tension-donuts"></div></div>
-  <div class="card"><h2>Mis registros</h2><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
+  <div class="card"><h2>Mis registros</h2><div id="tension-aviso"></div><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-tension-apuntar" aria-expanded="false"><span class="plegable-titulo">🩺 Apuntar tensión y pulso</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="tension-apuntar-bloque" hidden>
     <h3>Apuntar a mano <button type="button" class="info-btn" data-info-toggle="tension-manual" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h3>
@@ -540,7 +557,7 @@ footer a{color:var(--muted)}
     <p>🎉 <b>Excepciones sociales:</b> solo puntuales y en porción mínima.</p>
   </div>
   <div class="card"><h2>Productos comprobados</h2><div id="lista-semaforo"></div></div>
-  <div class="card"><h2>Lista de la compra</h2>
+  <div class="card" id="card-compra"><h2>Lista de la compra</h2>
 <div id="lista-compra"></div>
 <div class="compra-add"><input id="compra-nuevo" type="text" placeholder="Producto (por ejemplo: tomates)" autocomplete="off"><button class="btn" id="btn-compra-anadir">Añadir</button></div>
 </div>
@@ -631,34 +648,10 @@ footer a{color:var(--muted)}
   <button class="btn no-print" onclick="window.print()">🖨️ Guardar como PDF</button>
 </section>
 
-<!-- ============ CONFIGURACIÓN ============ -->
-<section class="view" id="view-config">
-  <div class="view-head c-config"><span class="ic">⚙️</span><div><h1>Configuración</h1><p>Tu cuenta de Google, tu clave de Gemini, tu pauta médica y tus datos.</p></div></div>
-  <div class="card" id="card-asistente"><h2>🧭 Configuración paso a paso</h2>
-    <p>Te guiamos paso a paso: tu cuenta de Google, tu clave de Gemini, los avisos, tus pastillas, tu pauta de andar y tus widgets. Se acuerda de lo que ya tienes hecho, para no volver a preguntártelo.</p>
-    <button class="btn" id="btn-asistente">Por dónde empezar</button>
-    <button type="button" id="asistente-hecho" hidden><span class="pill">✓ Todo configurado</span><br><span class="muted">Ya has configurado todos tus datos.</span></button>
-  </div>
-  <div class="card" id="card-aspecto"><h2>Aspecto</h2>
-    <p>Elige cómo se ve la app. Se guarda con tus datos, así que te sigue en todos tus dispositivos.</p>
-    <div class="skin-list" role="radiogroup" aria-label="Aspecto de la app">
-      <button type="button" class="skin-opcion" data-skin="actual" role="radio" aria-checked="true"><span class="skin-muestras"><i style="background:#FFF5F0"></i><i style="background:#FFFFFF"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Actual</b><span>El de siempre, melocotón cálido</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-      <button type="button" class="skin-opcion" data-skin="minimalista" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFFFFF"></i><i style="background:#F3F4F6"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Minimalista</b><span>Blanco, limpio, sin adornos</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-      <button type="button" class="skin-opcion" data-skin="azul" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#F2F7FB"></i><i style="background:#FFFFFF"></i><i style="background:#0E7490"></i></span><span class="skin-nombre"><b>Azul sereno</b><span>Azul pálido, tranquilo</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-      <button type="button" class="skin-opcion" data-skin="oscuro" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#121826"></i><i style="background:#1E2637"></i><i style="background:#FF6B7A"></i></span><span class="skin-nombre"><b>Oscuro elegante</b><span>Fondo oscuro, de noche</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-      <button type="button" class="skin-opcion" data-skin="pastel" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFF8F0"></i><i style="background:#FFFFFF"></i><i style="background:#C2410C"></i></span><span class="skin-nombre"><b>Pastel cálido</b><span>Crema y tonos suaves</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-    </div>
-  </div>
-  <div class="card" id="card-dia-inicio"><h2>🌅 Tu día empieza a las</h2>
-    <p>La app cambia de día a esta hora, no a medianoche. Así, si te acuestas tarde, lo de la noche sigue contando como el día de antes y «Tu día» no se pone en rojo a las 00:00.</p>
-    <p class="muted">Desliza cada rodillo para elegir la hora. Se guarda solo.</p>
-    <div class="rueda-hora-min">
-      <div><p class="muted" style="text-align:center;margin:0">Hora</p><div id="rueda-dia-hora"></div></div>
-      <div><p class="muted" style="text-align:center;margin:0">Minutos</p><div id="rueda-dia-min"></div></div>
-    </div>
-    <p class="muted" id="dia-inicio-guardado"></p>
-  </div>
-  <div class="card" id="card-pauta-medica"><h2>📋 Pauta médica</h2>
+<!-- ============ PAUTAS ============ -->
+<section class="view" id="view-pautas">
+  <div class="view-head c-pautas"><span class="ic">📋</span><div><h1>Pautas</h1><p>Tus pautas: andar, tensión y alimentación. Toca cada una para verla y cambiarla.</p></div></div>
+  <div class="card" id="card-pauta-medica"><h2>📋 Pauta de andar</h2>
     <p class="muted">Tu pauta es la tuya, no la de nadie más. Se rellena una sola vez y queda guardada. Aquí va todo lo que te han pautado tus médicos: tu ejercicio y tus datos de salud.</p>
     <div id="pauta-resumen" hidden><button type="button" class="pauta-resumen-btn" id="btn-pauta-ver"><span class="punto-pauta" id="pauta-luz" aria-hidden="true"></span><span class="pauta-resumen-txt"><b id="pauta-resumen-frase"></b></span><span class="pauta-ver">Ver/Modificar</span></button></div>
     <div id="pauta-bloque" hidden>
@@ -713,6 +706,79 @@ footer a{color:var(--muted)}
     <button class="btn" id="btn-guardar-datos">Guardar mis datos de salud</button>
     </div>
   </div>
+  <div class="card" id="card-pauta-tension"><details class="pauta-det" id="det-pauta-tension">
+    <summary><b>Pauta de tensión</b> <span class="muted" id="pauta-tension-resumen" style="font-weight:400;font-size:14px"></span></summary>
+    <p class="muted">Los valores que te ha pautado tu médico para tu tensión. La app los usa para avisarte si una tensión se sale de tu pauta.</p>
+    <div class="frow">
+      <div><label for="p-tsismax">Sistólica máxima (la alta)</label><input id="p-tsismax" type="number" min="50" max="260" inputmode="numeric" placeholder="Ej.: 140"></div>
+      <div><label for="p-tsismin">Sistólica mínima (la alta)</label><input id="p-tsismin" type="number" min="50" max="260" inputmode="numeric" placeholder="Ej.: 90"></div>
+    </div>
+    <div class="frow">
+      <div><label for="p-tdiamax">Diastólica máxima (la baja)</label><input id="p-tdiamax" type="number" min="30" max="180" inputmode="numeric" placeholder="Ej.: 90"></div>
+      <div><label for="p-tdiamin">Diastólica mínima (la baja)</label><input id="p-tdiamin" type="number" min="30" max="180" inputmode="numeric" placeholder="Ej.: 60"></div>
+    </div>
+    <button class="btn" id="btn-guardar-pauta-tension">Guardar mi pauta de tensión</button>
+    <p class="muted" id="pauta-tension-guardada"></p>
+  </details></div>
+  <div class="card" id="card-limites-alimentacion"><details class="pauta-det" id="det-limites"><summary><b>Pauta de alimentación</b> <span class="muted" id="pauta-alim-resumen" style="font-weight:400;font-size:14px"></span></summary>
+    <p><b>Pauta base orientativa: sal por debajo de 1 g por 100 g.</b> Si tu médico te pauta otra cosa, cámbiala aquí con él: se guarda, y puedes volver a la base cuando quieras.</p>
+    <p><b>Añade tus propias pautas</b> <button type="button" class="info-btn" data-info-toggle="pautas-propias" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>
+    <p data-info-for="pautas-propias" hidden class="info-text">Añade lo que quieras que Gemini revise en cada foto: otro nutriente con su límite, o un ingrediente o palabra a evitar. Se guardan, se pueden cambiar y se pueden borrar.</p>
+    <div id="lista-campos"></div>
+    <label for="nc-nombre">Nombre del campo</label>
+    <input id="nc-nombre" type="text" placeholder="Por ejemplo: azúcares, o aceite de palma" autocomplete="off">
+    <label for="nc-tipo">Tipo de campo</label>
+    <select id="nc-tipo">
+      <option value="nutriente">Límite de nutriente por 100 g</option>
+      <option value="ingrediente">Ingrediente o palabra a evitar</option>
+    </select>
+    <div id="nc-limite-wrap">
+      <label for="nc-limite">Límite máximo (gramos por cada 100 g)</label>
+      <input id="nc-limite" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    </div>
+    <button class="btn secondary" id="btn-anadir-campo">＋ Añadir campo</button>
+    <p><b>Reglas fijas (no se cambian):</b><br>🔴 <b>Aceites:</b> luz roja, excepto el aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo).<br>🔴 <b>Azúcares añadidos:</b> luz roja; los azúcares totales se valoran con tu límite (5 g por 100 g).<br>🔴 <b>Más de 6 ingredientes:</b> luz roja (ultraprocesado).</p>
+    <label for="sal-limite">Sal — mi límite (gramos por cada 100 g)</label>
+    <input id="sal-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    <label for="sat-limite">Grasas saturadas — mi límite (gramos por cada 100 g)</label>
+    <input id="sat-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    <label for="az-limite">Azúcares — mi límite (gramos por cada 100 g)</label>
+    <input id="az-limite" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g">
+    <button class="btn" id="btn-guardar-limites">Guardar mis límites</button>
+    <button class="btn secondary" id="btn-reset-alimentacion">↩ Restablecer pauta base</button>
+    <p><b>Cómo se enciende el semáforo</b> <button type="button" class="info-btn" data-info-toggle="como-semaforo" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>
+    <p data-info-for="como-semaforo" hidden class="info-text">Es el peor de todos tus criterios. Cualquier criterio en rojo = luz roja; si no, ámbar si algún criterio está en ámbar; si no, verde. Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente que marcaste evitar, si aparece en la lista, es luz roja. Además, hay tres reglas fijas: todos los aceites son luz roja salvo el aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo), los azúcares añadidos son luz roja, y un alimento con más de 6 ingredientes es luz roja (ultraprocesado).</p>
+</details>
+  </div>
+  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
+</section>
+
+<!-- ============ CONFIGURACIÓN ============ -->
+<section class="view" id="view-config">
+  <div class="view-head c-config"><span class="ic">⚙️</span><div><h1>Configuración</h1><p>Tu cuenta de Google, tu clave de Gemini y tus datos.</p></div></div>
+  <div class="card" id="card-asistente"><h2>🧭 Configuración paso a paso</h2>
+    <button class="btn" id="btn-asistente">Por dónde empezar</button>
+    <button type="button" id="asistente-hecho" hidden><span class="pill">✓ Todo configurado</span></button>
+  </div>
+  <div class="card" id="card-aspecto"><h2>Aspecto</h2>
+    <p>Elige cómo se ve la app. Se guarda con tus datos, así que te sigue en todos tus dispositivos.</p>
+    <div class="skin-list" role="radiogroup" aria-label="Aspecto de la app">
+      <button type="button" class="skin-opcion" data-skin="actual" role="radio" aria-checked="true"><span class="skin-muestras"><i style="background:#FFF5F0"></i><i style="background:#FFFFFF"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Actual</b><span>El de siempre, melocotón cálido</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="minimalista" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFFFFF"></i><i style="background:#F3F4F6"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Minimalista</b><span>Blanco, limpio, sin adornos</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="azul" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#F2F7FB"></i><i style="background:#FFFFFF"></i><i style="background:#0E7490"></i></span><span class="skin-nombre"><b>Azul sereno</b><span>Azul pálido, tranquilo</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="oscuro" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#121826"></i><i style="background:#1E2637"></i><i style="background:#FF6B7A"></i></span><span class="skin-nombre"><b>Oscuro elegante</b><span>Fondo oscuro, de noche</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="pastel" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFF8F0"></i><i style="background:#FFFFFF"></i><i style="background:#C2410C"></i></span><span class="skin-nombre"><b>Pastel cálido</b><span>Crema y tonos suaves</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+    </div>
+  </div>
+  <div class="card" id="card-dia-inicio"><h2>🌅 Tu día empieza a las</h2>
+    <p>La app cambia de día a esta hora, no a medianoche. Así, si te acuestas tarde, lo de la noche sigue contando como el día de antes y «Tu día» no se pone en rojo a las 00:00.</p>
+    <p class="muted">Desliza cada rodillo para elegir la hora. Se guarda solo.</p>
+    <div class="rueda-hora-min">
+      <div><p class="muted" style="text-align:center;margin:0">Hora</p><div id="rueda-dia-hora"></div></div>
+      <div><p class="muted" style="text-align:center;margin:0">Minutos</p><div id="rueda-dia-min"></div></div>
+    </div>
+    <p class="muted" id="dia-inicio-guardado"></p>
+  </div>
   <div class="card"><h2>Entrar con Google</h2>
     <p>Entra con tu correo de Google para que todos tus valores se guarden también en tu Google Drive, en una carpeta llamada exactamente «Corazón Fuerte», y en una hoja de Google Sheets llamada «Corazón Fuerte - Control», con tu tabla de marchas y su semáforo BORG, y una pestaña «Tensión» con todas tus tensiones. La conexión pide Drive y Sheets juntos, una sola vez. Si no te conectas, los datos se quedan solo en este dispositivo.</p>
     <div id="google-estado"></div>
@@ -750,52 +816,20 @@ footer a{color:var(--muted)}
     <p data-info-for="push-denegado-iphone" hidden class="info-text"><b>Las notificaciones están bloqueadas</b>, así que no puedo volver a pedirte permiso: hay que permitirlas a mano.<br><br>1. Abre «Ajustes» del iPhone.<br>2. Toca «Notificaciones».<br>3. Busca «Corazón Fuerte» en la lista.<br>4. Activa «Permitir notificaciones».<br>5. Vuelve a la app y pulsa otra vez el interruptor de «Avisos aunque la app esté cerrada».<br><br>En el iPhone, los avisos con la app cerrada solo funcionan si la app está instalada en la pantalla de inicio (iOS 16.4 o posterior).</p>
     <p data-info-for="push-denegado-pc" hidden class="info-text"><b>Las notificaciones están bloqueadas en este navegador</b>, así que no puedo volver a pedirte permiso: hay que permitirlas a mano.<br><br>1. Haz clic en el icono del candado a la izquierda de la dirección.<br>2. Toca «Configuración del sitio».<br>3. Toca «Notificaciones».<br>4. Elige «Permitir».<br>5. Vuelve a la app y pulsa otra vez el interruptor de «Avisos aunque la app esté cerrada».</p>
   </div>
-  <div class="card" id="card-limites-alimentacion"><h2>Alimentación — mis límites</h2>
-    <p><b>Pauta base orientativa: sal por debajo de 1 g por 100 g.</b> Si tu médico te pauta otra cosa, cámbiala aquí con él: se guarda, y puedes volver a la base cuando quieras.</p>
-    <p><b>Añade tus propias pautas</b> <button type="button" class="info-btn" data-info-toggle="pautas-propias" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>
-    <p data-info-for="pautas-propias" hidden class="info-text">Añade lo que quieras que Gemini revise en cada foto: otro nutriente con su límite, o un ingrediente o palabra a evitar. Se guardan, se pueden cambiar y se pueden borrar.</p>
-    <div id="lista-campos"></div>
-    <label for="nc-nombre">Nombre del campo</label>
-    <input id="nc-nombre" type="text" placeholder="Por ejemplo: azúcares, o aceite de palma" autocomplete="off">
-    <label for="nc-tipo">Tipo de campo</label>
-    <select id="nc-tipo">
-      <option value="nutriente">Límite de nutriente por 100 g</option>
-      <option value="ingrediente">Ingrediente o palabra a evitar</option>
-    </select>
-    <div id="nc-limite-wrap">
-      <label for="nc-limite">Límite máximo (gramos por cada 100 g)</label>
-      <input id="nc-limite" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g">
-    </div>
-    <button class="btn secondary" id="btn-anadir-campo">＋ Añadir campo</button>
-    <p><b>Reglas fijas (no se cambian):</b><br>🔴 <b>Aceites:</b> luz roja, excepto el aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo).<br>🔴 <b>Azúcares añadidos:</b> luz roja; los azúcares totales se valoran con tu límite (5 g por 100 g).<br>🔴 <b>Más de 6 ingredientes:</b> luz roja (ultraprocesado).</p>
-    <label for="sal-limite">Sal — mi límite (gramos por cada 100 g)</label>
-    <input id="sal-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
-    <label for="sat-limite">Grasas saturadas — mi límite (gramos por cada 100 g)</label>
-    <input id="sat-limite" type="number" min="0" max="20" step="0.01" inputmode="decimal" placeholder="g por 100 g">
-    <label for="az-limite">Azúcares — mi límite (gramos por cada 100 g)</label>
-    <input id="az-limite" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="g por 100 g">
-    <button class="btn" id="btn-guardar-limites">Guardar mis límites</button>
-    <button class="btn secondary" id="btn-reset-alimentacion">↩ Restablecer pauta base</button>
-    <p><b>Cómo se enciende el semáforo</b> <button type="button" class="info-btn" data-info-toggle="como-semaforo" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></p>
-    <p data-info-for="como-semaforo" hidden class="info-text">Es el peor de todos tus criterios. Cualquier criterio en rojo = luz roja; si no, ámbar si algún criterio está en ámbar; si no, verde. Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente que marcaste evitar, si aparece en la lista, es luz roja. Además, hay tres reglas fijas: todos los aceites son luz roja salvo el aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo), los azúcares añadidos son luz roja, y un alimento con más de 6 ingredientes es luz roja (ultraprocesado).</p>
-  </div>
-  <div class="card" id="card-consent"><h2>Aviso de alimentación</h2>
+  <div class="card" id="card-consent">
     <div id="consent-estado"></div>
-    <button class="btn secondary" id="btn-consent-reset">Volver a mostrar el aviso</button>
-    <p class="muted">Al pulsar, el aviso volverá a aparecer la próxima vez que entres en Alimentación. El registro del servidor queda como historial: esto solo vuelve a mostrar el aviso en este dispositivo.</p>
+  </div>
+  <div class="card" id="card-compra-acceso">
+    <button class="btn" id="btn-ir-compra">🛒 Lista de la compra</button>
   </div>
   <div class="card"><h2>Mis datos</h2>
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
-    <button class="btn" id="btn-exportar">Descargar copia (JSON)</button>
-    <button class="btn secondary" id="btn-importar">Importar copia (JSON)</button><input type="file" id="import-file" accept="application/json,.json" hidden>
+    <button class="btn" id="btn-exportar">Descargar copia</button>
+    <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
+    <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.45 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
-    <p class="muted"><b>Qué cambia en la v1.45:</b><br>· <b>Configurar la app, paso a paso.</b> Hemos añadido el botón «Por dónde empezar» en Configuración: te guía paso a paso — tu cuenta de Google, la clave de Gemini, los avisos, tus pastillas, tu pauta de andar y tus widgets — y se acuerda de lo que ya tienes hecho, para no volver a preguntártelo. Cuando termines, verás «✓ Todo configurado».</p>
-  </div>
-  <div class="card"><h2>Privacidad</h2>
-    <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
-    <p>Esta app no sustituye el consejo de tu médico. Ante un dolor en el pecho, sigue tu protocolo pautado y llama al 112.</p>
-    <p>Tus datos de salud son tuyos: se guardan en tu dispositivo y, solo si te conectas, en tu propio Google Drive. No se venden ni se comparten. La app no tiene servidor propio para tus datos de salud: solo el registro anónimo de aceptación del aviso de alimentación (fecha + código anónimo, sin datos personales ni de salud) se guarda en un servidor, para dejar constancia de que aceptaste las condiciones.</p>
+    <p class="muted">Versión v1.46</p>
+    <p class="muted"><b>Qué cambia en la v1.46:</b><br>· <b>Nueva sección «Pautas».</b> Tus pautas de andar, tensión y alimentación están ahora juntas en el menú, en «Pautas». La de tensión es nueva: puedes marcar tu tensión máxima y mínima.<br>· <b>Lista de la compra.</b> Ahora se abre con un botón en Configuración.<br>· <b>BORG.</b> Al apuntar una marcha verás tu rango junto al campo, y te avisará si te sales de él.<br>· <b>Tensión.</b> Si una tensión pasa de tus límites, la app te avisará de que consultes con tu médico.<br>· <b>Configuración más limpia:</b> las tarjetas del asistente y del aviso de alimentación ahora ocupan menos.<br>· <b>Arreglado:</b> la hoja de Sheets ya guarda también la pestaña de Tensión.</p>
   </div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
@@ -808,7 +842,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.45 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.46 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -819,12 +853,12 @@ footer a{color:var(--muted)}
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
   <label class="consent-check"><input type="checkbox" id="consent-check"> <span>He leído y entiendo que esta información es meramente orientativa.</span></label>
   <button class="btn" id="btn-consent-aceptar" disabled>Aceptar</button>
-  <p class="muted"><small>Al aceptar, la app guarda en este dispositivo la fecha y un código anónimo, y envía solo esos dos datos para dejar constancia de la aceptación. Sin nombre, sin correo y sin datos de salud. Puedes ver tu código en Configuración.</small></p>
+  <p class="muted"><small>Al aceptar, la app guarda en este dispositivo la fecha y un código anónimo, y envía solo esos dos datos para dejar constancia de la aceptación. Sin nombre, sin correo y sin datos de salud.</small></p>
 </div></div>
 <script>
 "use strict";
-/* Corazón Fuerte — v1.45. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.45";
+/* Corazón Fuerte — v1.46. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
+var APP_VERSION = "v1.46";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -903,7 +937,7 @@ var toastTimer = null;
 function toast(msg){ var t = $("toast"); t.textContent = msg; t.style.display = "block"; clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.style.display = "none"; }, 3200); }
 
 /* ---------- Datos ---------- */
-function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
+function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
 /* v1.36: un estado solo tiene contenido real si hay pastillas, marchas,
    tensiones o algún campo de la pauta rellenado. Un objeto pauta vacío {}
    es truthy en JS, así que no basta con comprobar que exista: eso aceptaba
@@ -919,7 +953,7 @@ function sanearDatos(d){
   /* v1.45: la migración de datos viejos vive aquí para usarla también al
      cargar de Drive y al importar una copia, no solo al cargar en local. */
   if(!d || typeof d !== "object") return datosVacios();
- if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; if(!d.pauta) d.pauta = datosVacios().pauta; ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
+ if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; if(!d.pauta) d.pauta = datosVacios().pauta; /* v1.46: rellenar las claves de pauta que falten en datos viejos (pauta de tensión nueva) con su valor vacío, sin tocar lo guardado */ var _pv = datosVacios().pauta; Object.keys(_pv).forEach(function(k){ if(d.pauta[k] == null) d.pauta[k] = _pv[k]; }); ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
     if(d.semaforo.limiteSaturadas == null) d.semaforo.limiteSaturadas = "";
     if(d.semaforo.limiteAzucares == null) d.semaforo.limiteAzucares = "5"; /* límite nuevo en v1.21: azúcares 5 g por 100 g */
     delete d.semaforo.objetivoLdl; delete d.semaforo.objetivoTrig; /* v1.17: los objetivos de LDL y triglicéridos ya no existen */
@@ -953,7 +987,7 @@ function saveAll(syncDrive){ saveLocal(); if(syncDrive !== false){ clearTimeout(
 var VIEWS = [
   ["hoy","❤️","Hoy"],["andar","🚶","Andar"],["tension","🩺","Tensión y pulso"],
   ["pastillero","💊","Pastillero"],["alimentacion","🥗","Alimentación"],["dolor","🚨","Dolor en el pecho"],["programa","📖","Mi programa"],
-  ["medico","👨‍⚕️","Para el médico"],["config","⚙️","Configuración"]
+  ["medico","👨‍⚕️","Para el médico"],["pautas","📋","Pautas"],["config","⚙️","Configuración"]
 ];
 var currentView = "hoy";
 function buildDrawer(){ $("drawer-nav").innerHTML = VIEWS.map(function(v){ return '<button data-view="'+v[0]+'" class="'+(v[0]===currentView?"active":"")+'"><span class="ic">'+v[1]+'</span><span>'+v[2]+'</span></button>'; }).join("");
@@ -971,9 +1005,9 @@ function goto(view){ currentView = view; document.querySelectorAll(".view").forE
   if(view === "alimentacion") mostrarAvisoAlimentacionSiToca(); else ocultarAvisoAlimentacion();
   /* v1.27: al entrar a Tensión o Andar desde Hoy para apuntar, el bloque plegado se abre solo. */
   if(expandirAlEntrar === view){ expandirAlEntrar = null; if(view === "tension"){ desplegarTension(true); setTimeout(function(){ var b = $("tension-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } else if(view === "andar"){ desplegarAndar(true); setTimeout(function(){ var b = $("andar-apuntar-bloque"); if(b) b.scrollIntoView({ behavior: "smooth", block: "start" }); }, 80); } } }
-/* v1.27: «Mi pauta» ya no es una vista; la pauta médica vive en Configuración. */
+/* v1.27: «Mi pauta» ya no es una vista; la pauta médica vive en «Pautas» (v1.46: antes en Configuración). */
 function irAPautaMedica(){
-  goto("config");
+  goto("pautas");
   pautaDesplegada = true; actualizarPautaPlegada();
   setTimeout(function(){ var c = $("card-pauta-medica"); if(c){ c.scrollIntoView({ behavior: "smooth", block: "start" }); c.classList.add("panel-flash"); setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000); } }, 100);
 }
@@ -1065,6 +1099,20 @@ function openInfoPopup(btn){
   Array.prototype.forEach.call(document.querySelectorAll(".info-btn[data-info-toggle]"), function(b){ b.setAttribute("aria-expanded", String(b === btn)); });
   positionInfoPopup(btn);
 }
+/* v1.46: abrir el mismo recuadro de información (i) con un texto dado, desde un botón cualquiera (línea verde del asistente, línea del aviso de alimentación). Se cierra con la ×, tocando fuera, pulsando el mismo botón o con Escape, como los demás. */
+function abrirPopupTexto(html, btn){
+  if(btn && infoPopupBtn === btn && !infoPopup.hidden){ closeInfoPopup(); return; }
+  infoPopupBody.innerHTML = html;
+  Array.prototype.forEach.call(infoPopupBody.querySelectorAll("[id]"), function(el){ el.removeAttribute("id"); });
+  infoPopup.hidden = false;
+  infoPopupBtn = btn || null;
+  Array.prototype.forEach.call(document.querySelectorAll(".info-btn[data-info-toggle]"), function(b){ b.setAttribute("aria-expanded", String(b === btn)); });
+  if(btn) positionInfoPopup(btn);
+}
+/* v1.46: el aviso de Alimentación tal cual, para revisarlo desde Configuración (el mismo texto de la ventana de aceptación). */
+function consentAvisoHTML(){
+  return '<b>Antes de entrar en Alimentación</b><p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p><p>He leído y entiendo que esta información es meramente orientativa.</p>';
+}
 document.addEventListener("click", function(ev){
   var btn = ev.target && ev.target.closest ? ev.target.closest(".info-btn[data-info-toggle]") : null;
   if(btn){ openInfoPopup(btn); return; }
@@ -1135,35 +1183,32 @@ function aceptarAvisoAlimentacion(){
   enviarConsentimiento();
   toast("Aviso aceptado. Gracias.");
 }
+/* v1.46: la tarjeta del aviso queda en una sola línea pequeña, verde y con el check; al pulsar se abre un recuadro con el aviso tal cual para revisarlo. El código anónimo ya no se enseña (el registro del servidor sigue igual). */
 function updateConsentUI(){
   var el = $("consent-estado"); if(!el) return;
-  var code = getConsentId();
   if(consentAceptado()){
-    el.innerHTML = "<p><b>Aviso de alimentación: aceptado el " + esc(fmtFechaHora(data.consentAlimentacion.fecha)) + " ✓</b></p><p class=\"muted\">Tu código anónimo: <b>" + esc(code) + "</b> — con este código se puede comprobar la aceptación.</p>";
+    el.innerHTML = '<button type="button" class="consent-linea" id="btn-consent-revisar">Aviso de alimentación: aceptado el ' + esc(fmtFechaHora(data.consentAlimentacion.fecha)) + ' ✓</button>';
+    var b = $("btn-consent-revisar");
+    if(b) b.addEventListener("click", function(){ abrirPopupTexto(consentAvisoHTML(), b); });
   } else {
-    el.innerHTML = "<p><b>Aviso de alimentación: todavía no aceptado.</b></p><p class=\"muted\">Tu código anónimo: <b>" + esc(code) + "</b><br>El aviso se mostrará la primera vez que entres en Alimentación.</p>";
+    el.innerHTML = '<p class="consent-linea-texto">Aviso de alimentación: todavía no aceptado.</p>';
   }
 }
 $("consent-check").addEventListener("change", function(){ $("btn-consent-aceptar").disabled = !$("consent-check").checked; });
 $("btn-consent-aceptar").addEventListener("click", aceptarAvisoAlimentacion);
-$("btn-consent-reset").addEventListener("click", function(){
-  data.consentAlimentacion = null;
-  try{ localStorage.removeItem(CONSENT_PENDING_KEY); }catch(e){}
-  saveAll();
-  updateConsentUI();
-  toast("El aviso de alimentación volverá a aparecer al entrar en Alimentación.");
-});
 
 /* ---------- Pauta ---------- */
 function pautaCompleta(){ var p = data.pauta; return !!(p.tipo || p.duracion || p.pulso); }
 function pautaResumenHTML(){ var p = data.pauta; if(!pautaCompleta()) return '<p>No has rellenado tu pauta todavía. <b>Rellénala una vez y queda guardada.</b></p>';
   return '<dl class="kv"><dt>Ejercicio</dt><dd>'+esc(p.tipo||"—")+'</dd><dt>Duración</dt><dd>'+(p.duracion?esc(p.duracion)+" min":"—")+'</dd><dt>Días / semana</dt><dd>'+esc(p.dias||"—")+'</dd><dt>Pulso objetivo</dt><dd>'+(p.pulso?esc(p.pulso)+" l.p.m.":"—")+'</dd><dt>BORG</dt><dd>'+(p.borgMin||p.borgMax?esc(p.borgMin||"—")+" – "+esc(p.borgMax||"—"):"—")+'</dd><dt>FC máxima</dt><dd>'+(p.fcMaxima?esc(p.fcMaxima)+" l.p.m.":"—")+'</dd></dl>'; }
-function fillPautaForm(){ var p = data.pauta; $("p-tipo").value = p.tipo||""; $("p-duracion").value = p.duracion||""; $("p-dias").value = p.dias||""; $("p-pulso").value = p.pulso||""; $("p-borgmin").value = p.borgMin||""; $("p-borgmax").value = p.borgMax||""; $("p-diag").value = p.diagnostico||""; $("p-disp").value = p.dispositivo||""; $("p-modelo").value = p.modelo||""; $("p-revision").value = p.revision||""; $("p-medico").value = p.medico||""; $("p-telmedico").value = p.telMedico||""; }
+function fillPautaForm(){ var p = data.pauta; $("p-tipo").value = p.tipo||""; $("p-duracion").value = p.duracion||""; $("p-dias").value = p.dias||""; $("p-pulso").value = p.pulso||""; $("p-borgmin").value = p.borgMin||""; $("p-borgmax").value = p.borgMax||""; $("p-tsismax").value = p.tensionSisMax||""; $("p-tsismin").value = p.tensionSisMin||""; $("p-tdiamax").value = p.tensionDiaMax||""; $("p-tdiamin").value = p.tensionDiaMin||""; $("p-diag").value = p.diagnostico||""; $("p-disp").value = p.dispositivo||""; $("p-modelo").value = p.modelo||""; $("p-revision").value = p.revision||""; $("p-medico").value = p.medico||""; $("p-telmedico").value = p.telMedico||""; }
 /* La pauta plegada es UN solo formulario: cualquiera de los dos botones guarda todo el formulario. */
 function guardarPautaCompleta(){
   var p = data.pauta;
   p.tipo = $("p-tipo").value.trim(); p.duracion = $("p-duracion").value.trim(); p.dias = $("p-dias").value.trim();
   p.pulso = $("p-pulso").value.trim(); p.borgMin = $("p-borgmin").value.trim(); p.borgMax = $("p-borgmax").value.trim();
+  p.tensionSisMax = $("p-tsismax").value.trim(); p.tensionSisMin = $("p-tsismin").value.trim();
+  p.tensionDiaMax = $("p-tdiamax").value.trim(); p.tensionDiaMin = $("p-tdiamin").value.trim();
   p.diagnostico = $("p-diag").value; p.dispositivo = $("p-disp").value; p.modelo = $("p-modelo").value.trim();
   p.revision = $("p-revision").value; p.medico = $("p-medico").value.trim(); p.telMedico = $("p-telmedico").value.trim();
   saveAll(); }
@@ -1171,6 +1216,21 @@ $("btn-guardar-pauta").addEventListener("click", function(){
   guardarPautaCompleta(); resendPushSchedule(); $("pauta-guardada").textContent = "Tu pauta queda guardada. Si tu médico te la cambia, la cambias aquí."; toast("Pauta guardada."); pautaDesplegada = false; actualizarPautaPlegada(); renderAll(); });
 $("btn-guardar-datos").addEventListener("click", function(){
   guardarPautaCompleta(); resendPushSchedule(); toast("Datos de salud guardados."); pautaDesplegada = false; actualizarPautaPlegada(); renderAll(); });
+/* v1.46 (pauta de tensión): el formulario guarda los cuatro límites (máx/mín de sistólica y diastólica), en blanco por defecto; el botón guarda toda la pauta, como los de andar. */
+function actualizarResumenPautaTension(){
+  var el = $("pauta-tension-resumen"); if(!el) return;
+  var p = data.pauta;
+  var sMax = p.tensionSisMax || "", sMin = p.tensionSisMin || "", dMax = p.tensionDiaMax || "", dMin = p.tensionDiaMin || "";
+  if(!sMax && !sMin && !dMax && !dMin){ el.textContent = "Sin rellenar"; return; }
+  el.textContent = "Máx " + (sMax || "—") + "/" + (dMax || "—") + " · Mín " + (sMin || "—") + "/" + (dMin || "—");
+}
+$("btn-guardar-pauta-tension").addEventListener("click", function(){
+  var sMax = num($("p-tsismax").value.trim()), sMin = num($("p-tsismin").value.trim());
+  var dMax = num($("p-tdiamax").value.trim()), dMin = num($("p-tdiamin").value.trim());
+  if((sMax != null && sMin != null && sMin > sMax) || (dMax != null && dMin != null && dMin > dMax)){ toast("La tensión mínima no puede ser mayor que la máxima."); return; }
+  guardarPautaCompleta();
+  $("pauta-tension-guardada").textContent = "Tu pauta de tensión queda guardada. Si tu médico te la cambia, la cambias aquí.";
+  toast("Pauta de tensión guardada."); actualizarResumenPautaTension(); renderAll(); });
 /* ---------- Mi pauta plegada (v1.24): un solo bloque con luz de estado ---------- */
 var pautaDesplegada = false;
 function campoLleno(v){ return String(v == null ? "" : v).trim() !== ""; }
@@ -1216,7 +1276,7 @@ function borgLuz(w){ var p = data.pauta; var borg = num(w.borg);
   return "verde"; }
 function borgLuzTexto(luz){ return luz === "verde" ? "Verde" : luz === "ambar" ? "Ámbar" : luz === "rojo" ? "Rojo" : ""; }
 function borgSemaforoHTML(w){ var luz = borgLuz(w);
-  if(luz === "sin-rango") return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG sin rango"><div class="luz"></div><div class="luz"></div><div class="luz"></div><div class="sin-rango">Pon tu rango BORG en tu pauta médica</div></div>';
+  if(luz === "sin-rango") return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG sin rango"><div class="luz"></div><div class="luz"></div><div class="luz"></div><div class="sin-rango">Pon tu rango BORG en Pautas</div></div>';
   if(!luz) return '<div class="semaforo-mini"><span class="muted">—</span></div>';
   return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG: luz ' + luz + ' encendida"><div class="luz roja' + (luz === "rojo" ? " encendida" : "") + '"></div><div class="luz ambar' + (luz === "ambar" ? " encendida" : "") + '"></div><div class="luz verde' + (luz === "verde" ? " encendida" : "") + '"></div><div class="num">' + esc(String(num(w.borg))) + ' · ' + borgLuzTexto(luz) + '</div></div>'; }
 $("btn-guardar-marcha").addEventListener("click", function(){
@@ -1225,6 +1285,20 @@ $("btn-guardar-marcha").addEventListener("click", function(){
   data.walks.push(w); data.walks.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); });
   ["w-reposo","w-medio","w-maximo","w-borg","w-minutos","w-km","w-coment"].forEach(function(id){ $(id).value = ""; });
   saveAll(); scheduleSheetSync(); if(document.activeElement) document.activeElement.blur(); goto("hoy"); toast("Marcha guardada."); });
+/* v1.46 (M3): «Tu rango: X–Y» junto al campo BORG (el rango propio de la pauta; si no hay rango, no se enseña nada) y aviso en vivo si el valor se sale. */
+function actualizarBorgCampo(){
+  var el = $("w-borg-rango"), av = $("w-borg-aviso"), inp = $("w-borg");
+  if(!el || !inp) return;
+  var p = data.pauta, mn = num(p.borgMin), mx = num(p.borgMax);
+  if(mn == null && mx == null){ el.textContent = ""; if(av) av.hidden = true; return; }
+  var rango = (mn != null ? mn : "—") + "–" + (mx != null ? mx : "—");
+  el.textContent = "Tu rango: " + rango;
+  var v = num(inp.value.trim());
+  if(v == null){ if(av) av.hidden = true; return; }
+  var fuera = (mn != null && v < mn) || (mx != null && v > mx);
+  if(av){ av.hidden = !fuera; if(fuera) av.textContent = "⚠️ Tu BORG (" + v + ") está fuera de tu rango (" + rango + ")."; }
+}
+$("w-borg").addEventListener("input", actualizarBorgCampo);
 /* ---------- Estadísticas cruzadas de Andar (v1.27): pulsaciones y BORG con la tensión ---------- */
 function andarEstadisticasCruzadasHTML(){
   var walks = data.walks, tens = data.tensions;
@@ -1250,6 +1324,7 @@ function andarEstadisticasCruzadasHTML(){
     + '<p class="muted">La tensión del mismo día de la marcha cuenta como «día con marcha»: la marcha no guarda la hora, así que la relación es por el día.</p>';
 }
 function renderWalks(){ var el = $("lista-marchas");
+  actualizarBorgCampo(); /* v1.46 (M3): el rango BORG junto al campo se actualiza con la pauta */
   var cx = $("andar-estadisticas-cruzadas"); if(cx) cx.innerHTML = andarEstadisticasCruzadasHTML();
   if(!data.walks.length){ el.innerHTML = '<p class="muted">Todavía no hay marchas apuntadas. La primera, cuando andes hoy.</p>'; return; }
   var rows = data.walks.map(function(w){ var al = walkAlerta(w);
@@ -1406,7 +1481,7 @@ function andarDonutsHTML(){
   var ws = data.walks.filter(function(w){ if(!w.fecha) return false; var d = new Date(w.fecha + "T12:00:00"); return !isNaN(d) && d >= cutoff; });
   var v = 0, a = 0, r = 0, sinRango = 0;
   ws.forEach(function(w){ var luz = borgLuz(w); if(luz === "verde") v++; else if(luz === "ambar") a++; else if(luz === "rojo") r++; else if(luz === "sin-rango") sinRango++; });
-  var borgExtra = (!v && !a && !r && sinRango) ? "Pon tu rango BORG en tu pauta médica para ver este gráfico." : "";
+  var borgExtra = (!v && !a && !r && sinRango) ? "Pon tu rango BORG en Pautas para ver este gráfico." : "";
   var diasCon = {}; ws.forEach(function(w){ diasCon[w.fecha] = true; });
   var nCon = Object.keys(diasCon).length, nSin = Math.max(0, days - nCon);
   var d1 = 0, d2 = 0, d3 = 0;
@@ -1473,6 +1548,26 @@ document.addEventListener("click", function(ev){
 }); });
 
 /* ---------- Tensión y pulso ---------- */
+/* v1.46: aviso si una tensión pasa de los límites. Manda la pauta de tensión del usuario (máx/mín) si la tiene puesta; si no, los valores de referencia de la guía europea ESC 2024 (140/90 o más: consultar con el médico; 180/120 o más: urgente, valoración el mismo día). Nunca diagnostica: solo orienta. */
+function avisoTension(t){
+  var sis = num(t.sistolica), dia = num(t.diastolica);
+  if(sis == null && dia == null) return null;
+  var p = data.pauta;
+  var sisMax = num(p.tensionSisMax), sisMin = num(p.tensionSisMin), diaMax = num(p.tensionDiaMax), diaMin = num(p.tensionDiaMin);
+  var valor = (t.sistolica || "—") + "/" + (t.diastolica || "—");
+  if(sisMax != null || sisMin != null || diaMax != null || diaMin != null){
+    var partes = [];
+    if(sisMax != null && sis != null && sis > sisMax) partes.push("la alta está por encima de tu máximo (" + sisMax + ")");
+    if(diaMax != null && dia != null && dia > diaMax) partes.push("la baja está por encima de tu máximo (" + diaMax + ")");
+    if(sisMin != null && sis != null && sis < sisMin) partes.push("la alta está por debajo de tu mínimo (" + sisMin + ")");
+    if(diaMin != null && dia != null && dia < diaMin) partes.push("la baja está por debajo de tu mínimo (" + diaMin + ")");
+    if(!partes.length) return null;
+    return { nivel: "aviso", texto: "⚠️ Esta tensión (" + valor + ") está fuera de tu pauta: " + partes.join("; ") + ". Es solo orientativo: consulta con tu médico." };
+  }
+  if((sis != null && sis >= 180) || (dia != null && dia >= 120)) return { nivel: "urgente", texto: "⚠️ Tensión muy alta (" + valor + "). Valóralo con tu médico hoy mismo. Si tienes dolor en el pecho, sigue tu protocolo y llama al 112." };
+  if((sis != null && sis >= 140) || (dia != null && dia >= 90)) return { nivel: "aviso", texto: "⚠️ Esta tensión (" + valor + ") está por encima de los valores de referencia (140/90). Es solo orientativo: consulta con tu médico." };
+  return null;
+}
 function addTension(sis, dia, pulso, obs, origen){ var t = { id: uid(), fecha: (tFechaAuto && $("t-fecha").value === tFechaAuto) ? ahoraLocal() : ($("t-fecha").value || ahoraLocal()), sistolica: String(sis||"").trim(), diastolica: String(dia||"").trim(), pulso: String(pulso||"").trim(), observaciones: String(obs||"").trim(), origen: origen || "manual" };
   if(!t.sistolica && !t.diastolica && !t.pulso){ toast("Pon al menos la tensión o el pulso."); return false; }
   data.tensions.push(t); data.tensions.sort(function(a,b){ return (a.fecha<b.fecha?1:-1); }); saveAll(); scheduleSheetSync(); /* v1.39: la tensión también va a Sheets (pestaña Tensión) */ renderAll(); return true; }
@@ -1521,6 +1616,8 @@ function initVoz(){
   });
 }
 function renderTensions(){ var el = $("lista-tensiones");
+  var avT = $("tension-aviso");
+  if(avT){ var t0 = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); })[0]; var wT = t0 ? avisoTension(t0) : null; avT.innerHTML = wT ? '<div class="warnbox">' + esc(wT.texto) + '</div>' : ""; }
   if(!data.tensions.length){ el.innerHTML = '<p class="muted">Todavía no hay registros. Apunta la tensión las veces que quieras.</p>'; return; }
   var todas = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); });
   var LIMITE_TENSIONES = 30;
@@ -1996,6 +2093,8 @@ function renderHoy(){ var hoy = hoyISO();
   $("hoy-tension").innerHTML = ult ? '' : '<p class="muted">Todavía no hay ningún registro de tensión.</p>';
   var filasTension = data.tensions.slice().sort(function(a,b){ return new Date(b.fecha) - new Date(a.fecha); });
   crearRueda($("hoy-tension-rueda"), filasTension.map(function(t){ return '<span class="rueda-fecha">' + esc(fmtFechaHoraCorta(t.fecha)) + '</span><span class="rueda-val">' + esc((t.sistolica||"—") + " / " + (t.diastolica||"—")) + '</span><span class="rueda-pulso">' + esc(t.pulso||"—") + ' l.p.m.</span>'; }), "tension");
+  var avH = $("hoy-tension-aviso");
+  if(avH){ var wH = filasTension.length ? avisoTension(filasTension[0]) : null; avH.innerHTML = wH ? '<div class="warnbox">' + esc(wH.texto) + '</div>' : ""; }
   var dosisRestantes = [];
   data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
   dosisRestantes.sort(function(a,b){ return a.hora < b.hora ? -1 : 1; });
@@ -2023,7 +2122,7 @@ function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
     + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión.</p>')
     + '<h3>Episodios</h3>' + (data.episodios.length ? '<ul class="tight">' + data.episodios.slice(0,10).map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados.</p>')
     + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>' + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'; }
-function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); }
+function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); actualizarResumenPautaTension(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); }
 </script>
 <script>
 "use strict";
@@ -2234,9 +2333,9 @@ async function saveToSheets(manual){
   try{
     var sheet = await ensureSheet();
     var values = andarSheetValues();
-    await putSheetValues(sheet.id, SHEET_TAB + "!A1:I" + values.length, values);
+    await putSheetValues(sheet.id, "'" + SHEET_TAB + "'!A1:I" + values.length, values);
     var tValues = tensionSheetValues(); /* v1.39: la pestaña Tensión se reescribe entera, así la primera sincronización importa lo ya grabado */
-    await putSheetValues(sheet.id, SHEET_TAB_TENSION + "!A1:F" + tValues.length, tValues);
+    await putSheetValues(sheet.id, "'" + SHEET_TAB_TENSION + "'!A1:F" + tValues.length, tValues);
     try{
       var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + "?fields=sheets.properties");
       var gj = await g.json();
@@ -2586,9 +2685,20 @@ $("btn-reset-alimentacion").addEventListener("click", function(){
   data.semaforo.limiteAzucares = "5";
   saveAll(); toast("Pauta base de alimentación restablecida: sal 1 g, azúcares 5 g."); renderAll(); });
 $("btn-ir-limites").addEventListener("click", function(){
-  goto("config");
+  goto("pautas");
   setTimeout(function(){
+    var d = $("det-limites"); if(d) d.open = true;
     var c = $("card-limites-alimentacion");
+    if(!c) return;
+    c.scrollIntoView({ behavior: "smooth", block: "start" });
+    c.classList.add("panel-flash");
+    setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000);
+  }, 100); });
+/* v1.46: el acceso a la lista de la compra vive en Configuración; al pulsar lleva a Alimentación y baja hasta la lista. */
+$("btn-ir-compra").addEventListener("click", function(){
+  goto("alimentacion");
+  setTimeout(function(){
+    var c = $("card-compra");
     if(!c) return;
     c.scrollIntoView({ behavior: "smooth", block: "start" });
     c.classList.add("panel-flash");
@@ -2600,7 +2710,7 @@ $("btn-anadir-campo").addEventListener("click", function(){
   var limite = $("nc-limite").value.trim();
   if(!nombre){ toast("Pon el nombre del campo."); return; }
   if(tipo === "nutriente" && (limite === "" || num(limite) == null || num(limite) <= 0)){ toast("Pon el límite máximo en gramos por 100 g."); return; }
-  if(tipo === "nutriente" && ["sal","grasas saturadas","azucares"].indexOf(normKey(nombre)) >= 0){ toast("«" + nombre + "» ya tiene su propio campo: pon su límite en Configuración."); return; }
+  if(tipo === "nutriente" && ["sal","grasas saturadas","azucares"].indexOf(normKey(nombre)) >= 0){ toast("«" + nombre + "» ya tiene su propio campo: pon su límite en Pautas."); return; }
   if(editCampoId){
     var f = data.semaforo.campos.find(function(c){ return c.id === editCampoId; });
     if(f){ f.nombre = nombre; f.tipo = tipo; f.limite = tipo === "nutriente" ? String(num(limite)) : ""; }
@@ -2620,7 +2730,8 @@ function renderSemaforo(){
   if(data.semaforo.limiteAzucares) resumen.push("azúcares " + fmtG(num(data.semaforo.limiteAzucares)) + " g por 100 g");
   $("limites-resumen").textContent = resumen.length
     ? ("Tus límites: " + resumen.join(" · ") + ".")
-    : "Todavía no has puesto tus límites. Ponlos en Configuración.";
+    : "Todavía no has puesto tus límites. Ponlos en Pautas.";
+  var pr = $("pauta-alim-resumen"); if(pr) pr.textContent = resumen.length ? ("Tus límites: " + resumen.join(" · ") + ".") : "Sin rellenar";
   $("nutri-ayuda").textContent = localStorage.getItem(GEMINI_KEY) ? "" : "Para usar la foto necesitas tu clave de Gemini. Ponla en Configuración.";
   var lc = $("lista-campos");
   if(!data.semaforo.campos.length){ lc.innerHTML = '<p class="muted">Todavía no has añadido ninguna pauta propia. Añade la primera aquí.</p>'; }
@@ -2821,7 +2932,7 @@ $("import-file").addEventListener("change", function(ev){
   reader.onload = function(){
     var obj = null;
     try{ obj = JSON.parse(reader.result); }catch(e){ obj = null; }
-    if(!obj || typeof obj !== "object" || (!Array.isArray(obj.walks) && !Array.isArray(obj.tensions) && !Array.isArray(obj.pills) && typeof obj.pauta !== "object")){ toast("Esa copia no es de Corazón Fuerte. Elige el archivo JSON descargado desde la app."); return; }
+    if(!obj || typeof obj !== "object" || (!Array.isArray(obj.walks) && !Array.isArray(obj.tensions) && !Array.isArray(obj.pills) && typeof obj.pauta !== "object")){ toast("Esa copia no es de Corazón Fuerte. Elige el archivo descargado desde la app."); return; }
     if(!confirm("¿Sustituir TODOS los datos de este dispositivo por los de la copia? Lo que hay ahora se pierde. Es la forma de llevar tus datos a otro móvil.")) return;
     delete obj.geminiKey; delete obj.claveGemini; delete obj.gemini_key;
     data = sanearDatos(obj);
@@ -3201,7 +3312,7 @@ function asistenteHTMLPaso(paso){
   }
   if(paso === 6){
     h += '<h2>6 · Tus datos de salud</h2>';
-    h += '<p>Si quieres, deja aquí tus datos de salud. Puedes saltar este paso y rellenarlo más tarde en Configuración.</p>';
+    h += '<p>Si quieres, deja aquí tus datos de salud. Puedes saltar este paso y rellenarlo más tarde en Pautas.</p>';
     h += '<label for="asistente-p-diag">Diagnóstico</label><select id="asistente-p-diag">' + asistenteOpciones(["", "Infarto", "Infarto Agudo de Miocardio", "Insuficiencia cardiaca", "Infarto e insuficiencia cardiaca", "Otra dolencia del corazón"], p.diagnostico) + '</select>';
     h += '<label for="asistente-p-disp">Implante</label><select id="asistente-p-disp">' + asistenteOpciones(["", "Ninguno", "Marcapasos", "Desfibrilador", "Marcapasos y desfibrilador", "Stent"], p.dispositivo) + '</select>';
     h += '<label for="asistente-p-revision">Fecha de la próxima revisión del implante</label><input id="asistente-p-revision" type="date" value="' + esc(p.revision || "") + '">';
@@ -3343,9 +3454,9 @@ function renderAsistente(){
 function initAsistente(){
   var b = $("btn-asistente");
   if(b) b.addEventListener("click", function(){ abrirAsistente(); });
-  /* La línea verde también abre el asistente (en el resumen): si no, una vez terminado no habría forma de volver a ver la configuración. */
+  /* v1.46: la línea verde abre un recuadro con el detalle (ya no enseña el texto en la tarjeta). */
   var h = $("asistente-hecho");
-  if(h) h.addEventListener("click", function(){ abrirAsistente(); });
+  if(h) h.addEventListener("click", function(){ abrirPopupTexto("Ya has configurado todos tus datos: tu cuenta de Google, tu clave de Gemini, los avisos, tus pastillas, tus pautas y tus widgets.", h); });
   var x = $("btn-asistente-cerrar");
   if(x) x.addEventListener("click", function(){ cerrarAsistente(); });
 }
