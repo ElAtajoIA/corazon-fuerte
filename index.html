@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
 <title>Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón</title>
-<meta name="description" content="Corazón Fuerte: registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada, tus datos en tu Google Drive." />
+<meta name="description" content="Corazón Fuerte: registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, tus datos en tu Google Drive." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://corazon-fuerte.pages.dev/" />
 <meta name="theme-color" content="#C81E3A" />
@@ -15,13 +15,13 @@
 <meta property="og:locale" content="es_ES" />
 <meta property="og:url" content="https://corazon-fuerte.pages.dev/" />
 <meta property="og:title" content="Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón" />
-<meta property="og:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada." />
+<meta property="og:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis." />
 <meta property="og:image" content="https://corazon-fuerte.pages.dev/logo.webp" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Corazón Fuerte — Andar, tensión y pastillero para cuidar tu corazón" />
-<meta name="twitter:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada." />
+<meta name="twitter:description" content="Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis." />
 <meta name="twitter:image" content="https://corazon-fuerte.pages.dev/logo.webp" />
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Corazón Fuerte","applicationCategory":"HealthApplication","operatingSystem":"Web","inLanguage":"es","description":"Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis, sin instalar nada.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Corazón Fuerte","applicationCategory":"HealthApplication","operatingSystem":"Web","inLanguage":"es","description":"Registra tu pauta de andar, tu tensión y tu pulso, tu pastillero, el semáforo de la sal y qué hacer ante un dolor en el pecho. Gratis.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.webmanifest" />
@@ -300,6 +300,14 @@ footer a{color:var(--muted)}
 .chart-toggle button{flex:1;min-height:44px;border-radius:999px;border:2px solid var(--link);background:var(--card);color:var(--link);font-weight:800;font-size:15px;cursor:pointer}
 .chart-toggle button.on{background:var(--link);color:#fff}
 .chart-empty{color:var(--muted);padding:14px 4px}
+/* v1.41: gráficos redondos (roscas SVG) en Estadísticas de Andar y en Evolución de Tensión. */
+.donut-bloque{margin:14px 0 4px}
+.donut-bloque h4{margin:0 0 6px;font-size:16px}
+.donut-fila{display:flex;gap:12px;align-items:center}
+.donut-fila svg{width:110px;height:110px;flex:0 0 110px}
+.donut-leyenda{list-style:none;margin:0;padding:0;font-size:14px}
+.donut-leyenda li{margin:4px 0}
+.donut-punto{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}
 .mic-btn{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:10px 16px;border-radius:999px;border:2px solid var(--link);background:var(--card);color:var(--link);font-weight:800;font-size:16px;cursor:pointer;margin:8px 0 0}
 .push-row{display:flex;gap:10px;align-items:flex-start}
 .push-row input[type=checkbox]{width:28px;height:28px;flex:none;margin-top:2px;accent-color:var(--green)}
@@ -362,13 +370,13 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.39 · Gratis, sin instalar nada.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.42 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
 <!-- ============ HOY ============ -->
 <section class="view active" id="view-hoy">
-  <p class="free-badge" id="free-badge">Gratis · Sin instalar · Sin cuenta · Tus datos en tu navegador y tu Google Drive</p>
+  <p class="free-badge" id="free-badge">Gratis</p>
   <div class="card"><h2>☀️ Tu día <button type="button" class="info-btn" data-info-toggle="tu-dia-colores" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2><p data-info-for="tu-dia-colores" hidden class="info-text"><span style="color:var(--green)">✓ Verde:</span> registrado hoy.<br><span style="color:var(--red)">✗ Rojo:</span> aún sin registrar.<br><span style="color:var(--muted)">— Gris:</span> no hay nada que registrar.</p><ol class="rutina" id="hoy-rutina"></ol>
 <button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px">➕ Añadir Widget</button>
 <div id="selector-widgets" hidden style="margin-top:10px"></div></div>
@@ -421,6 +429,8 @@ footer a{color:var(--muted)}
     <div class="chart-box" id="grafico-andar"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
     <h3 style="margin-top:14px">Pulsaciones y BORG con la tensión</h3>
     <div id="andar-estadisticas-cruzadas"></div>
+    <h3 style="margin-top:14px">Gráficos redondos</h3>
+    <div id="andar-donuts"></div>
     <p style="margin-top:12px"><a class="btn secondary" id="link-hoja-descargar" href="#" target="_blank" rel="noopener" style="display:none">Descargar la hoja (Excel)</a></p>
     </div></div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
@@ -433,7 +443,9 @@ footer a{color:var(--muted)}
     <div class="chart-toggle" id="toggle-tension"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button><button type="button" data-range="personalizado">Personalizado</button></div>
     <div id="tension-rango-personalizado" hidden style="margin:8px 0 10px"><label for="tension-desde">Desde</label> <input id="tension-desde" type="date" style="width:auto;display:inline-block"> <label for="tension-hasta" style="margin-left:8px">Hasta</label> <input id="tension-hasta" type="date" style="width:auto;display:inline-block"></div>
     <div id="tension-estadisticas"></div>
-    <div class="chart-box" id="grafico-tension"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p></div>
+    <div class="chart-box" id="grafico-tension"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
+    <h3 style="margin-top:14px">Gráficos redondos</h3>
+    <div id="tension-donuts"></div></div>
   <div class="card"><h2>Mis registros</h2><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-tension-apuntar" aria-expanded="false"><span class="plegable-titulo">🩺 Apuntar tensión y pulso</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="tension-apuntar-bloque" hidden>
@@ -486,7 +498,6 @@ footer a{color:var(--muted)}
     <label for="m-notas">Notas (opcional)</label><input id="m-notas" type="text" placeholder="Con la comida, antes de dormir…" autocomplete="off">
     <button class="btn" id="btn-guardar-medicina">Añadir medicina</button> <button class="btn secondary" id="btn-cancelar-medicina" hidden>Cancelar</button>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 
@@ -775,8 +786,8 @@ footer a{color:var(--muted)}
     <p>Descarga una copia de todos tus datos para llevarlos a otro móvil o como respaldo. La copia <b>no incluye tu clave de Gemini</b>.</p>
     <button class="btn" id="btn-exportar">Descargar copia (JSON)</button>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.39 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
-    <p class="muted"><b>Qué cambia en la v1.39:</b><br>· Las tensiones también se guardan en Google Sheets, en una pestaña «Tensión» de la hoja «Corazón Fuerte - Control», con todas las que ya tenías grabadas.<br>· Al leer la foto del tensiómetro, la hora se puede corregir antes de guardar.</p>
+    <p class="muted">Versión v1.42 · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
+    <p class="muted"><b>Qué cambia en la v1.42:</b><br>· Ahora puedes pasar de una pantalla a otra deslizando el dedo.</p>
   </div>
   <div class="card"><h2>Privacidad</h2>
     <p><b>Ni nosotros ni nadie más tenemos acceso a tus datos: quedan solo en tu navegador y en tu Google Drive.</b></p>
@@ -788,7 +799,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.39 · Gratis, sin instalar nada</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.42 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -805,7 +816,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.39. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.39";
+var APP_VERSION = "v1.42";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -916,16 +927,32 @@ $("scrim").addEventListener("click", closeDrawer);
 
 /* ---------- Menú lateral por deslizamiento (móvil) ---------- */
 /* En el móvil, el menú también se abre deslizando el dedo de izquierda a derecha desde el borde izquierdo, y se cierra deslizando a la izquierda. Solo táctil; nunca se cancela el gesto, así que no interfiere con el desplazamiento vertical ni con los toques normales. */
+/* v1.42: el mismo gesto cambia de pantalla: deslizar de derecha a izquierda pasa a la siguiente vista del menú, y de izquierda a derecha a la anterior. No se dispara desde el borde izquierdo (ahí sigue abriendo el menú), ni sobre botones, campos, ruedas, asas de arrastre o ventanas abiertas, ni con el menú abierto. En Hoy y en Configuración no hay más pantallas: no hace nada. */
 (function(){
-  var startX = null, startY = null, tracking = false, edgeSwipe = false;
-  var EDGE = 25, MIN_DX = 50;
+  var startX = null, startY = null, tracking = false, edgeSwipe = false, navSwipe = false;
+  var EDGE = 25, MIN_DX = 50, MIN_NAV = 60;
   function isTouch(){ return ("ontouchstart" in window) || (window.matchMedia && window.matchMedia("(pointer: coarse)").matches); }
   function drawerOpen(){ return $("drawer").classList.contains("open"); }
+  /* v1.42: ¿empieza el toque sobre algo interactivo o arrastrable? Si es así, el deslizamiento de cambio de pantalla no se dispara (las ruedas, las asas, los campos y los botones siguen funcionando como siempre). */
+  function toqueEnInteractivo(el){
+    if(!el || !el.closest) return false;
+    return !!el.closest("input, textarea, select, button, a, label, summary, .rueda, .paso-asa, #info-popup, #consent-modal, #foto-resultado, #nutri-resultado, #barcode-resultado, #receta-resultado, #foto-preview, #nutri-preview, .drawer");
+  }
+  /* v1.42: vista anterior o siguiente en el orden del menú. En los extremos no hace nada. */
+  function vistaVecina(dir){
+    var i = -1;
+    for(var k = 0; k < VIEWS.length; k++){ if(VIEWS[k][0] === currentView){ i = k; break; } }
+    if(i < 0) return;
+    var j = i + dir;
+    if(j < 0 || j >= VIEWS.length) return;
+    goto(VIEWS[j][0]);
+  }
   document.addEventListener("touchstart", function(ev){
     if(!isTouch() || !ev.touches || ev.touches.length !== 1) return;
     var t = ev.touches[0];
     startX = t.clientX; startY = t.clientY; tracking = true;
     edgeSwipe = !drawerOpen() && startX <= EDGE;
+    navSwipe = !drawerOpen() && !edgeSwipe && !toqueEnInteractivo(ev.target);
   }, {passive:true});
   document.addEventListener("touchend", function(ev){
     if(!tracking || startX === null){ tracking = false; return; }
@@ -933,9 +960,12 @@ $("scrim").addEventListener("click", closeDrawer);
     var t = ev.changedTouches && ev.changedTouches[0];
     if(!t) return;
     var dx = t.clientX - startX, dy = t.clientY - startY;
-    if(Math.abs(dx) < MIN_DX || Math.abs(dx) <= Math.abs(dy)) return; /* gesto corto o más vertical que horizontal: no es abrir/cerrar el menú */
-    if(edgeSwipe && dx > 0) openDrawer();
-    else if(drawerOpen() && dx < 0) closeDrawer();
+    if(Math.abs(dx) < MIN_DX || Math.abs(dx) <= Math.abs(dy)) return; /* gesto corto o más vertical que horizontal: no es abrir/cerrar el menú ni cambiar de pantalla */
+    if(edgeSwipe && dx > 0){ openDrawer(); return; }
+    if(drawerOpen() && dx < 0){ closeDrawer(); return; }
+    if(!navSwipe || drawerOpen()) return;
+    if(Math.abs(dx) < MIN_NAV || Math.abs(dx) <= Math.abs(dy) * 1.5) return; /* v1.42: el cambio de pantalla exige un deslizamiento claro, bastante más horizontal que vertical */
+    if(dx < 0) vistaVecina(1); else vistaVecina(-1);
   }, {passive:true});
 })();
 
@@ -1277,9 +1307,75 @@ function chartWalkSVG(days){
   return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de minutos andados y BORG por día">' + bars + '</svg>'
     + '<p class="muted" style="margin:8px 0 0">🟩 Minutos andados por día · BORG encima de cada barra.</p>';
 }
+/* ---------- Gráficos redondos (roscas SVG, sin librerías) ---------- */
+/* v1.41: donuts en Estadísticas de Andar y en Evolución de Tensión. Solo recuentos
+   (días, franja horaria, semáforo BORG, duración); nunca bandas por valores de
+   tensión, porque la app no tiene umbrales médicos fijos. */
+function donutSVG(partes, totalLabel){
+  var total = partes.reduce(function(a,p){ return a + (p.valor||0); }, 0);
+  if(!total) return chartEmpty("Sin datos en esta franja.");
+  var R = 45, C = 2 * Math.PI * R, off = 0;
+  var segs = partes.map(function(p){
+    if(!p.valor) return "";
+    var len = p.valor / total * C;
+    var s = '<circle cx="60" cy="60" r="' + R + '" fill="none" style="stroke:' + p.color + '" stroke-width="18" stroke-dasharray="' + len.toFixed(1) + ' ' + C.toFixed(1) + '" stroke-dashoffset="' + (-off).toFixed(1) + '" transform="rotate(-90 60 60)"/>';
+    off += len; return s;
+  }).join("");
+  return '<svg viewBox="0 0 120 120" role="img" aria-label="Gráfico redondo">' + segs
+    + '<text x="60" y="57" text-anchor="middle" font-size="20" font-weight="800" style="fill:var(--ink)">' + total + '</text>'
+    + '<text x="60" y="74" text-anchor="middle" font-size="10" style="fill:var(--muted)">' + esc(totalLabel) + '</text></svg>';
+}
+function donutBloqueHTML(titulo, partes, totalLabel, extra){
+  var total = partes.reduce(function(a,p){ return a + (p.valor||0); }, 0);
+  var leyenda = partes.map(function(p){
+    return '<li><span class="donut-punto" style="background:' + p.color + '"></span>' + esc(p.etiqueta) + ': <b>' + p.valor + '</b></li>';
+  }).join("");
+  return '<div class="donut-bloque"><h4>' + esc(titulo) + '</h4><div class="donut-fila">' + donutSVG(partes, totalLabel)
+    + '<ul class="donut-leyenda">' + leyenda + '</ul></div>'
+    + ((!total && extra) ? '<p class="muted" style="margin:4px 0 0">' + esc(extra) + '</p>' : '') + '</div>';
+}
+function andarDonutsHTML(){
+  var days = chartDays(chartRange.andar);
+  var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - (days - 1)); cutoff.setHours(0,0,0,0);
+  var ws = data.walks.filter(function(w){ if(!w.fecha) return false; var d = new Date(w.fecha + "T12:00:00"); return !isNaN(d) && d >= cutoff; });
+  var v = 0, a = 0, r = 0, sinRango = 0;
+  ws.forEach(function(w){ var luz = borgLuz(w); if(luz === "verde") v++; else if(luz === "ambar") a++; else if(luz === "rojo") r++; else if(luz === "sin-rango") sinRango++; });
+  var borgExtra = (!v && !a && !r && sinRango) ? "Pon tu rango BORG en tu pauta médica para ver este gráfico." : "";
+  var diasCon = {}; ws.forEach(function(w){ diasCon[w.fecha] = true; });
+  var nCon = Object.keys(diasCon).length, nSin = Math.max(0, days - nCon);
+  var d1 = 0, d2 = 0, d3 = 0;
+  ws.forEach(function(w){ var m = num(w.minutos); if(m == null) return; if(m < 30) d1++; else if(m < 60) d2++; else d3++; });
+  var periodo = days === 30 ? "Últimos 30 días" : "Últimos 7 días";
+  return '<p class="muted">' + periodo + '.</p>'
+    + donutBloqueHTML("Marchas por semáforo BORG", [{color:"#2FBF71",valor:v,etiqueta:"Verdes (en rango)"},{color:"#F5A623",valor:a,etiqueta:"Ámbar (1 punto fuera)"},{color:"#E5484D",valor:r,etiqueta:"Rojas (2 o más fuera)"}], "marchas", borgExtra)
+    + donutBloqueHTML("Días con marcha y días sin marcha", [{color:"#15803D",valor:nCon,etiqueta:"Días con marcha"},{color:"var(--line)",valor:nSin,etiqueta:"Días sin marcha"}], "días")
+    + donutBloqueHTML("Marchas por duración", [{color:"#2563EB",valor:d1,etiqueta:"Menos de 30 min"},{color:"#15803D",valor:d2,etiqueta:"De 30 a 59 min"},{color:"#B45309",valor:d3,etiqueta:"60 min o más"}], "marchas");
+}
+function tensionRangoDias(){
+  var r = chartRange.tension;
+  if(r === "mes") return 30;
+  if(r === "semana") return 7;
+  var d = tensionRangoPersonalizado.desde, h = tensionRangoPersonalizado.hasta;
+  if(d && h) return Math.round((new Date(h + "T12:00:00") - new Date(d + "T12:00:00")) / 86400000) + 1;
+  return 30;
+}
+function tensionDonutsHTML(){
+  var rows = tensionFiltradas();
+  var dias = tensionRangoDias();
+  var diasCon = {}; rows.forEach(function(t){ var f = (t.fecha||"").slice(0,10); if(f) diasCon[f] = true; });
+  var nCon = Object.keys(diasCon).length, nSin = Math.max(0, dias - nCon);
+  var man = 0, tar = 0, noc = 0;
+  rows.forEach(function(t){ var dt = new Date(t.fecha); if(isNaN(dt)) return; var hh = dt.getHours(); if(hh < 12) man++; else if(hh < 18) tar++; else noc++; });
+  var rangoTxt = chartRange.tension === "mes" ? "Últimos 30 días" : chartRange.tension === "semana" ? "Últimos 7 días" : "Franja elegida";
+  return '<p class="muted">' + rangoTxt + '.</p>'
+    + donutBloqueHTML("Días con tensión y días sin tensión", [{color:"#15803D",valor:nCon,etiqueta:"Días con tensión"},{color:"var(--line)",valor:nSin,etiqueta:"Días sin tensión"}], "días")
+    + donutBloqueHTML("Lecturas por franja horaria", [{color:"#2563EB",valor:man,etiqueta:"Mañana (antes de las 12:00)"},{color:"#15803D",valor:tar,etiqueta:"Tarde (12:00–18:00)"},{color:"#B45309",valor:noc,etiqueta:"Noche (desde las 18:00)"}], "lecturas");
+}
 function renderCharts(){
   var gt = $("grafico-tension"); if(gt) gt.innerHTML = chartTensionSVGfilas(tensionFiltradas());
   var ga = $("grafico-andar"); if(ga) ga.innerHTML = chartWalkSVG(chartDays(chartRange.andar));
+  var ad = $("andar-donuts"); if(ad) ad.innerHTML = andarDonutsHTML();
+  var td = $("tension-donuts"); if(td) td.innerHTML = tensionDonutsHTML();
 }
 document.addEventListener("click", function(ev){
   var b = ev.target && ev.target.closest ? ev.target.closest(".chart-toggle button") : null; if(!b) return;
