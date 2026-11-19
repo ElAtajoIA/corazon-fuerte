@@ -221,8 +221,16 @@ textarea{min-height:76px;resize:vertical}
 .compra-add{display:flex;gap:8px;margin-top:10px;align-items:center}
 .compra-add input{flex:1;min-width:0}
 .compra-add .btn{flex:none;width:auto;margin:0;min-height:48px}
-/* v1.53: botón «Poner alarma» dentro de su fila (el .btn base es width:100%: sin esto aplasta la etiqueta). */
-#lista-alarmas .btn{flex:none;width:auto;margin:0;min-height:48px}
+/* v1.54: filas de alarma compactas en una sola línea y botón «Poner todas» proporcionado (el .btn base es width:100%). */
+#lista-alarmas .alarma-fila{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+#lista-alarmas .alarma-etiqueta{flex:1;min-width:0;display:flex;align-items:baseline;gap:6px;font-size:15px}
+#lista-alarmas .alarma-nombre{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lista-alarmas .alarma-hora{flex:none;white-space:nowrap}
+#lista-alarmas .btn{flex:none;width:auto;margin:0;min-height:48px;padding:10px 12px;font-size:15px}
+#card-alarmas #btn-poner-todas{width:auto;display:inline-block;white-space:nowrap}
+#card-alarmas #alarmas-progreso{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#card-alarmas #alarmas-progreso[hidden]{display:none}
+#card-alarmas #alarmas-progreso .btn{flex:none;width:auto;margin:0;min-height:40px}
 .alert{background:var(--danger-bg);border:2px solid var(--red);border-radius:18px;padding:16px;box-shadow:0 6px 16px rgba(200,30,58,.14)}
 .okbox{background:var(--ok-bg);border:1px solid var(--green);border-radius:18px;padding:16px}
 .warnbox{background:var(--warn-bg);border:1px solid var(--amber);border-radius:18px;padding:16px}
@@ -296,7 +304,7 @@ footer a{color:var(--muted)}
 .fila.comprado .fila-txt{text-decoration:line-through;opacity:.55}
 .compra-check{flex:none;width:48px;height:48px;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-size:26px;line-height:1;cursor:pointer}
 .compra-check[aria-checked="true"]{background:var(--green);border-color:var(--green);color:#fff}
-#toast button{margin-left:12px;padding:8px 14px;border-radius:10px;border:none;background:var(--bg);color:var(--ink);font-size:16px;font-weight:800;cursor:pointer}
+#toast button,#toast a{margin-left:12px;padding:8px 14px;border-radius:10px;border:none;background:var(--bg);color:var(--ink);font-size:16px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}
 /* v1.49: pregunta al salir de la app (mismo patrón que el aviso de Alimentación). */
 #salir-modal{position:fixed;inset:0;z-index:35;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px}
 #salir-modal[hidden]{display:none}
@@ -412,7 +420,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.53 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.54 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -528,11 +536,12 @@ footer a{color:var(--muted)}
     <div id="lista-pastillero"></div>
     </div>
   </div>
-  <div class="card" id="card-alarmas" hidden><h2>⏰ Alarmas del móvil</h2>
-    <p class="muted">La alarma del móvil suena siempre, aunque la app esté cerrada. Tú decides: nada se pone sin que pulses el botón, y puedes borrar las alarmas cuando quieras en el Reloj. Al pulsar, se abre el Reloj con la alarma ya rellena. Allí marca Repetir todos los días y pulsa Guardar. Con «Poner todas» se abren una detrás de otra: cada vez que vuelvas a la app, el aviso te ofrece abrir la siguiente. Si ya pusiste esta alarma, no la vuelvas a poner o sonará dos veces.</p>
+  <div class="card" id="card-alarmas" hidden><h2>⏰ Alarmas del móvil <button type="button" class="info-btn" data-info-toggle="alarmas-info" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
+    <p class="muted">La alarma del móvil suena siempre, aunque la app esté cerrada.</p>
+    <p data-info-for="alarmas-info" hidden class="info-text">Tú decides: nada se pone sin que pulses el botón, y puedes borrar las alarmas cuando quieras en el Reloj. Al pulsar, se abre el Reloj con la alarma ya rellena. Allí marca Repetir todos los días y pulsa Guardar. Con «Poner todas» se abren una detrás de otra: cada vez que vuelvas a la app, el aviso te ofrece abrir la siguiente. Si ya pusiste esta alarma, no la vuelvas a poner o sonará dos veces.</p>
     <p id="alarmas-progreso" hidden></p>
     <div id="lista-alarmas"></div>
-    <p><button type="button" class="btn" id="btn-poner-todas" hidden>⏰ Poner todas las alarmas</button></p>
+    <p><a class="btn" id="btn-poner-todas" href="#" hidden>⏰ Poner todas las alarmas</a></p>
     <p><button type="button" class="btn secondary" id="btn-anadir-alarma">➕ Añadir otra alarma</button></p>
     <div id="form-alarma" hidden>
       <label for="alarma-etiqueta">Nombre de la alarma</label><input id="alarma-etiqueta" type="text" placeholder="Por ejemplo: Pastillas de media mañana" autocomplete="off">
@@ -869,7 +878,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.53</p>
+    <p class="muted">Versión v1.54</p>
+    <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
     <p class="muted"><b>Qué cambia en la v1.53:</b><br>· Nuevo: alarmas del móvil por comida desde el Pastillero, con botón para ponerlas todas y alarmas propias.</p>
     <p class="muted"><b>Qué cambia en la v1.52:</b><br>· En Alimentación el aviso de datos orientativos ahora está arriba, junto a la foto y el código de barras.</p>
     <p class="muted"><b>Qué cambia en la v1.51:</b><br>· Ya no queda hueco al final de Hoy: el pie sigue a la tarjeta del dolor.</p>
@@ -891,7 +901,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.53 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.54 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -913,7 +923,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.53";
+var APP_VERSION = "v1.54";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -999,6 +1009,20 @@ function toastAccion(msg, etiqueta, fn){
   b.type = "button"; b.textContent = etiqueta;
   b.addEventListener("click", function(){ t.style.display = "none"; clearTimeout(toastTimer); if(fn) fn(); });
   t.appendChild(b);
+  t.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.style.display = "none"; }, 6000);
+}
+/* v1.54: aviso con un ENLACE de acción (el botón «Abrir la siguiente» de la cadena de alarmas): el toque ES la navegación al Reloj, sin paso por JavaScript. Se queda 6 segundos. fn recibe el evento y puede frenar la navegación (preventDefault) si ya no hay nada que abrir. */
+function toastAccionEnlace(msg, etiqueta, href, fn, alarma){
+  var t = $("toast");
+  t.innerHTML = "";
+  t.appendChild(document.createTextNode(msg));
+  var a = document.createElement("a");
+  a.href = href; a.textContent = etiqueta;
+  if(alarma){ a.setAttribute("data-alarma-etiqueta", alarma.etiqueta); a.setAttribute("data-alarma-hora", alarma.hora); a.setAttribute("data-alarma-min", alarma.min); }
+  a.addEventListener("click", function(ev){ t.style.display = "none"; clearTimeout(toastTimer); if(fn) fn(ev); });
+  t.appendChild(a);
   t.style.display = "block";
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ t.style.display = "none"; }, 6000);
@@ -1979,23 +2003,25 @@ function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
   Array.prototype.forEach.call(el.querySelectorAll("[data-del-pill]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Quitar esta medicina del pastillero?")) return; if(b.getAttribute("data-del-pill") === editandoMedicina) cancelarEditarMedicina(); data.pills = data.pills.filter(function(m){ return m.id !== b.getAttribute("data-del-pill"); }); saveAll(); toast("Medicina quitada."); renderAll(); }); });
   Array.prototype.forEach.call(el.querySelectorAll("[data-renovar-stock]"), function(b){ b.addEventListener("click", function(){ renovarStock(b.getAttribute("data-renovar-stock")); }); });
   Array.prototype.forEach.call(el.querySelectorAll("[data-edit-pill]"), function(b){ b.addEventListener("click", function(){ empezarEditarMedicina(b.getAttribute("data-edit-pill")); }); }); }
-/* ---------- Alarmas del Reloj por comida y propias (v1.53, solo Android) ----------
+/* ---------- Alarmas del Reloj por comida y propias (v1.53, salto directo v1.54, solo Android) ----------
    Una alarma por comida (desayuno, comida, cena), a la hora más temprana de
-   esa comida, más las alarmas propias que añade el usuario. Al pulsar se
-   abre el Reloj con la alarma ya rellena (hora y nombre); el usuario marca
-   Repetir todos los días y pulsa Guardar. Sin EXTRA_DAYS: una lista no se
-   puede codificar de forma fiable en una URL intent:. «Poner todas» abre
-   las alarmas una detrás de otra: al volver a la app, el aviso (el toast
-   que ya tiene la app, uno solo) dice cuántas van («Alarma del desayuno
-   lista · 1 de 3») y ofrece abrir la siguiente con un toque. La siguiente
-   NO se abre sola: Chrome no abre el Reloj sin un gesto del usuario (un
-   temporizador no vale: «a user gesture is required»), así que el botón
-   del aviso ES el gesto que abre la siguiente. La cola vive en memoria y
-   en localStorage (corazon-fuerte-alarmas-pendientes-v1) para sobrevivir a
-   que la app pase a segundo plano. No se guarda estado de «puesta»: la app
-   no puede saber si se pulsó Guardar en el Reloj, así que nunca se muestra
-   una alarma como puesta. En iPhone y escritorio la tarjeta queda oculta:
-   desde la web no hay forma equivalente de poner una alarma del sistema. */
+   esa comida, más las alarmas propias que añade el usuario. El salto al
+   Reloj es SIEMPRE un enlace real (<a href="intent:...">) que pulsa el
+   usuario: el toque ES la navegación. En la v1.53 el salto era
+   window.location.href en el manejador y Chrome lo bloqueaba en el móvil
+   (salía «Se abrió el Reloj» pero el Reloj no se abría): aquí no
+   hay ningún location.href con intent:. Sin EXTRA_DAYS: una lista no se
+   puede codificar de forma fiable en una URL intent:. El aviso «Se abrió
+   el Reloj…» solo sale AL VOLVER a la app, nunca al pulsar: antes de
+   saberlo era una mentira. «Poner todas» es un enlace a la primera alarma
+   pendiente; al volver, el aviso (el toast que ya tiene la app, uno solo)
+   dice cuántas van y su «Abrir la siguiente» es otro enlace, a la
+   siguiente alarma. La siguiente NO se abre sola: Chrome no abre el Reloj
+   sin un gesto del usuario. La cola vive en memoria y en localStorage
+   (corazon-fuerte-alarmas-pendientes-v1) para sobrevivir a que la app pase
+   a segundo plano. No se guarda estado de «puesta»: la app no puede saber
+   si se pulsó Guardar en el Reloj. En iPhone y escritorio la tarjeta queda
+   oculta: desde la web no hay forma equivalente de poner una alarma. */
 var COMIDAS_ALARMA = [
   { id: "desayuno", etiqueta: "Pastillas del desayuno", min: 0, max: 720 },
   { id: "comida", etiqueta: "Pastillas de la comida", min: 720, max: 1080 },
@@ -2016,43 +2042,66 @@ colaAlarmas = leerColaAlarmas();
 function etiquetaParaAlarma(et){ var y = String(et).replace(/^Pastillas /i, ""); if(!/^del? /i.test(y)) y = "de " + y; return y; }
 function actualizarProgresoAlarmas(){
   var p = $("alarmas-progreso"); if(!p) return;
-  if(!colaAlarmas.lista.length){ p.hidden = true; p.innerHTML = ""; return; }
-  var n = colaAlarmas.total - colaAlarmas.lista.length + 1;
-  var sig = colaAlarmas.lista[0];
-  p.hidden = false;
-  p.innerHTML = '<span class="pill">Falta la alarma ' + esc(etiquetaParaAlarma(sig.etiqueta)) + ' · ' + n + ' de ' + colaAlarmas.total + '</span> <button type="button" class="btn secondary" id="btn-cancelar-cola">Cancelar</button>';
-  var b = $("btn-cancelar-cola"); if(b) b.addEventListener("click", function(){ colaAlarmas = { total: 0, lista: [] }; ultimaAlarmaCadena = null; guardarColaAlarmas(); actualizarProgresoAlarmas(); toast("Cadena de alarmas cancelada."); });
+  if(!colaAlarmas.lista.length){ p.hidden = true; p.innerHTML = ""; }
+  else {
+    var n = colaAlarmas.total - colaAlarmas.lista.length + 1;
+    var sig = colaAlarmas.lista[0];
+    p.hidden = false;
+    p.innerHTML = '<span class="pill">Falta la alarma ' + esc(etiquetaParaAlarma(sig.etiqueta)) + ' · ' + n + ' de ' + colaAlarmas.total + '</span> <a class="btn small" id="btn-siguiente-alarma" href="' + esc(urlAlarma(sig)) + '" data-alarma-hora="' + sig.hora + '" data-alarma-min="' + sig.min + '" data-alarma-etiqueta="' + esc(sig.etiqueta) + '">Abrir la siguiente</a> <button type="button" class="btn small secondary" id="btn-cancelar-cola">Cancelar</button>';
+    var s = $("btn-siguiente-alarma"); if(s) s.addEventListener("click", alPulsarAbrirSiguiente);
+    var b = $("btn-cancelar-cola"); if(b) b.addEventListener("click", function(){ colaAlarmas = { total: 0, lista: [] }; ultimaAlarmaCadena = null; guardarColaAlarmas(); actualizarProgresoAlarmas(); toast("Cadena de alarmas cancelada."); });
+  }
+  var btnTodas = $("btn-poner-todas");
+  if(btnTodas){
+    var todas = listarAlarmas();
+    if(todas.length >= 2 && !colaAlarmas.lista.length){ btnTodas.hidden = false; btnTodas.setAttribute("href", urlAlarma(todas[0])); }
+    else btnTodas.hidden = true;
+  }
 }
-function dispararAlarma(a){
-  var url = "intent:#Intent;action=android.intent.action.SET_ALARM;S.android.intent.extra.alarm.MESSAGE=" + encodeURIComponent(a.etiqueta) + ";i.android.intent.extra.alarm.HOUR=" + a.hora + ";i.android.intent.extra.alarm.MINUTES=" + a.min + ";end";
-  toast("Se abrió el Reloj. Marca Repetir todos los días y pulsa Guardar.");
-  window.location.href = url;
+function urlAlarma(a){
+  return "intent:#Intent;action=android.intent.action.SET_ALARM;S.android.intent.extra.alarm.MESSAGE=" + encodeURIComponent(a.etiqueta) + ";i.android.intent.extra.alarm.HOUR=" + a.hora + ";i.android.intent.extra.alarm.MINUTES=" + a.min + ";end";
 }
-function dispararSiguienteAlarma(){
-  if(!colaAlarmas.lista.length){ actualizarProgresoAlarmas(); return; }
-  var a = colaAlarmas.lista.shift();
+/* La vuelta del Reloj: al pulsar un enlace de alarma se guarda cuál se abrió;
+   al volver a la app sale el aviso «Se abrió el Reloj…». Solo se marca, nunca
+   se afirma nada antes de volver: si el Reloj no se abrió, la página no se
+   oculta y no sale ningún aviso. Vive en sessionStorage: si la app se cierra
+   del todo, la marca se pierde y no sale un aviso falso. */
+var VUELTA_ALARMA_KEY = "corazon-fuerte-alarma-vuelta-v1";
+function marcarVueltaAlarma(a){ try{ sessionStorage.setItem(VUELTA_ALARMA_KEY, JSON.stringify({ etiqueta: a.etiqueta, ts: Date.now() })); }catch(e){} }
+function leerVueltaAlarma(){ try{ var v = JSON.parse(sessionStorage.getItem(VUELTA_ALARMA_KEY) || "null"); sessionStorage.removeItem(VUELTA_ALARMA_KEY); return v && v.etiqueta ? v : null; }catch(e){ return null; } }
+/* La siguiente alarma de la cadena solo se abre con un toque del usuario:
+   el enlace del aviso o de la línea de progreso ES la navegación. Este
+   manejador solo hace la contabilidad (sacar de la cola) ANTES de que el
+   enlace navegue; si no queda nada en la cola, o el enlace ya no es el
+   siguiente, frena la navegación. */
+function alPulsarAbrirSiguiente(ev){
+  if(!colaAlarmas.lista.length){ ev.preventDefault(); return; }
+  var a = colaAlarmas.lista[0];
+  var enlace = ev.currentTarget;
+  if(enlace && enlace.getAttribute("data-alarma-etiqueta") && enlace.getAttribute("data-alarma-etiqueta") !== a.etiqueta){ ev.preventDefault(); return; }
+  colaAlarmas.lista.shift();
   ultimaAlarmaCadena = a;
   guardarColaAlarmas();
+  marcarVueltaAlarma(a);
   actualizarProgresoAlarmas();
-  dispararAlarma(a);
 }
-/* Al volver a la app con la cadena a medias: UN SOLO aviso (el toast que
-   ya tiene la app), que se actualiza con el progreso y ofrece abrir la
-   siguiente alarma con un toque. La siguiente no se dispara sola: Chrome
-   no abre el Reloj sin un gesto del usuario (un temporizador no vale:
-   «a user gesture is required»), así que el botón del aviso ES el gesto
-   que abre la siguiente. Si la cadena terminó, el aviso dice que está
-   completa. Cada aviso nuevo sustituye al anterior: nunca hay dos. */
+/* Al volver a la app: UN SOLO aviso (el toast que ya tiene la app). Si la
+   cadena sigue, dice cuántas van y su «Abrir la siguiente» es un ENLACE a
+   la siguiente alarma (el toque ES el gesto que abre el Reloj). Si la
+   cadena terminó, dice que está completa. Si se pulsó una alarma suelta,
+   sale el aviso de instrucciones del Reloj — solo ahora, al volver, nunca
+   al pulsar: antes de saberlo era una mentira. Cada aviso nuevo sustituye
+   al anterior: nunca hay dos. */
 function alVolverAlaApp(){
-  if(!colaAlarmas.total && !ultimaAlarmaCadena) return;
+  var vuelta = leerVueltaAlarma();
   if(colaAlarmas.lista.length){
+    var sig = colaAlarmas.lista[0];
     if(ultimaAlarmaCadena){
       var hechos = colaAlarmas.total - colaAlarmas.lista.length;
-      toastAccion("Alarma " + etiquetaParaAlarma(ultimaAlarmaCadena.etiqueta) + " lista · " + hechos + " de " + colaAlarmas.total, "Abrir la siguiente", function(){ dispararSiguienteAlarma(); });
+      toastAccionEnlace("Alarma " + etiquetaParaAlarma(ultimaAlarmaCadena.etiqueta) + " lista · " + hechos + " de " + colaAlarmas.total, "Abrir la siguiente", urlAlarma(sig), alPulsarAbrirSiguiente, sig);
     } else {
-      var sig = colaAlarmas.lista[0];
       var n = colaAlarmas.total - colaAlarmas.lista.length + 1;
-      toastAccion("Falta la alarma " + etiquetaParaAlarma(sig.etiqueta) + " · " + n + " de " + colaAlarmas.total, "Abrir la siguiente", function(){ dispararSiguienteAlarma(); });
+      toastAccionEnlace("Falta la alarma " + etiquetaParaAlarma(sig.etiqueta) + " · " + n + " de " + colaAlarmas.total, "Abrir la siguiente", urlAlarma(sig), alPulsarAbrirSiguiente, sig);
     }
     return;
   }
@@ -2062,6 +2111,10 @@ function alVolverAlaApp(){
     colaAlarmas = { total: 0, lista: [] };
     guardarColaAlarmas();
     actualizarProgresoAlarmas();
+    return;
+  }
+  if(vuelta){
+    toast("Se abrió el Reloj. Marca Repetir todos los días y pulsa Guardar.");
   }
 }
 document.addEventListener("visibilitychange", function(){
@@ -2101,13 +2154,12 @@ function renderAlarmas(){
   $("lista-alarmas").innerHTML = todas.map(function(a){
     var horaTxt = (a.hora < 10 ? "0" : "") + a.hora + ":" + (a.min < 10 ? "0" : "") + a.min;
     var quitar = a.propia ? ' <button type="button" class="fila-quitar" aria-label="Borrar esta alarma" data-del-alarma="' + esc(a.id) + '">×</button>' : "";
-    return '<div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><div style="flex:1;min-width:0"><b>' + esc(a.etiqueta) + '</b> <span class="muted">· ' + horaTxt + '</span></div><button type="button" class="btn" data-alarma-hora="' + a.hora + '" data-alarma-min="' + a.min + '" data-alarma-etiqueta="' + esc(a.etiqueta) + '">⏰ Poner alarma</button>' + quitar + '</div>';
+    return '<div class="alarma-fila"><span class="alarma-etiqueta"><b class="alarma-nombre">' + esc(a.etiqueta) + '</b><span class="muted alarma-hora">· ' + horaTxt + '</span></span><a class="btn small" href="' + esc(urlAlarma(a)) + '" data-alarma-hora="' + a.hora + '" data-alarma-min="' + a.min + '" data-alarma-etiqueta="' + esc(a.etiqueta) + '">⏰ Alarma</a>' + quitar + '</div>';
   }).join("");
-  var btnTodas = $("btn-poner-todas"); if(btnTodas) btnTodas.hidden = todas.length < 2;
   actualizarProgresoAlarmas();
-  Array.prototype.forEach.call(card.querySelectorAll("[data-alarma-hora]"), function(b){
+  Array.prototype.forEach.call(card.querySelectorAll("#lista-alarmas a[data-alarma-hora]"), function(b){
     b.addEventListener("click", function(){
-      dispararAlarma({ etiqueta: b.getAttribute("data-alarma-etiqueta"), hora: +b.getAttribute("data-alarma-hora"), min: +b.getAttribute("data-alarma-min") });
+      marcarVueltaAlarma({ etiqueta: b.getAttribute("data-alarma-etiqueta") });
     });
   });
   Array.prototype.forEach.call(card.querySelectorAll("[data-del-alarma]"), function(b){
@@ -2121,12 +2173,16 @@ function renderAlarmas(){
     });
   });
 }
-$("btn-poner-todas").addEventListener("click", function(){
+/* «Poner todas» es un ENLACE a la primera alarma: el toque ES la navegación.
+   El manejador solo prepara la cola (sin la primera, que abre esta misma
+   pulsación) antes de que el enlace navegue; si no hay dos o más, frena. */
+$("btn-poner-todas").addEventListener("click", function(ev){
   var todas = listarAlarmas();
-  if(todas.length < 2) return;
+  if(todas.length < 2){ ev.preventDefault(); return; }
   colaAlarmas = { total: todas.length, lista: todas.map(function(a){ return { etiqueta: a.etiqueta, hora: a.hora, min: a.min }; }) };
+  ultimaAlarmaCadena = colaAlarmas.lista.shift(); /* esta pulsación abre la primera */
   guardarColaAlarmas();
-  dispararSiguienteAlarma();
+  actualizarProgresoAlarmas();
 });
 $("btn-anadir-alarma").addEventListener("click", function(){ $("form-alarma").hidden = false; $("alarma-etiqueta").focus(); });
 $("btn-cancelar-alarma").addEventListener("click", function(){ $("form-alarma").hidden = true; $("alarma-etiqueta").value = ""; });
