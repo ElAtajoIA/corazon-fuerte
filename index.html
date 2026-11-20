@@ -437,7 +437,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.57 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.59 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -561,7 +561,6 @@ footer a{color:var(--muted)}
 <section class="view" id="view-misdatos">
   <div class="view-head c-misdatos"><span class="ic">📊</span><div><h1>Mis datos</h1><p>Todo lo que apuntas de tu salud, en un solo sitio.</p></div></div>
   <div class="card"><h2>¿Qué quieres apuntar?</h2>
-    <p><button class="btn" id="btn-hub-grabar">🚶 Grabar caminata</button></p>
     <p><button class="btn secondary" id="btn-hub-tension">🩺 Tomar la tensión</button></p>
     <p><button class="btn secondary" id="btn-hub-importar">📥 Importar datos de salud</button></p>
     <p><button class="btn secondary" id="btn-hub-peso">⚖️ Mi peso</button></p>
@@ -571,15 +570,7 @@ footer a{color:var(--muted)}
     <p><button class="btn secondary" id="btn-hub-estadisticas">📊 Mis estadísticas</button></p>
     <p><button class="btn secondary" id="btn-hub-medico">👨‍⚕️ Para el médico</button></p>
   </div>
-  <div class="card" id="card-grabar-caminata" hidden><h2>🚶 Grabar caminata</h2>
-    <p class="muted">El móvil mide la distancia mientras andas. Al parar, completa el BORG y el pulso y guarda la marcha.</p>
-    <p class="muted">En esta versión web, si se apaga la pantalla la grabación puede tener huecos. En la app de Google Play graba aunque el móvil esté en el bolsillo.</p>
-    <p style="font-size:22px;font-weight:800"><span id="grab-tiempo">00:00</span> · <span id="grab-km">0,00 km</span></p>
-    <p><button class="btn green" id="btn-grabar-empezar">▶ Empezar a grabar</button></p>
-    <p><button class="btn" id="btn-grabar-parar" hidden>⏹ Parar y guardar la marcha</button></p>
-    <p class="muted" id="grab-estado"></p>
-  </div>
-  <div class="card" id="card-peso"><h2>⚖️ Mi peso</h2>
+<h2>⚖️ Mi peso</h2>
     <p class="muted">Pésate siempre a la misma hora, por ejemplo por la mañana. Solo se guarda el número: nada de consejos.</p>
     <div class="frow"><div><label for="peso-fecha">Fecha</label><input id="peso-fecha" type="date"></div>
     <div><label for="peso-kg">Peso (kg)</label><input id="peso-kg" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="Ej.: 78,5"></div></div>
@@ -778,11 +769,10 @@ footer a{color:var(--muted)}
 <!-- ============ PAUTAS ============ -->
 <section class="view" id="view-pautas">
   <div class="view-head c-pautas"><span class="ic">📋</span><div><h1>Pautas</h1><p>Tus pautas: andar, tensión y alimentación. Toca cada una para verla y cambiarla.</p></div></div>
-  <div class="card" id="card-pauta-medica"><h2>📋 Pauta de andar</h2>
-    <p class="muted">Tu pauta es la tuya, no la de nadie más. Se rellena una sola vez y queda guardada. Aquí va todo lo que te han pautado tus médicos: tu ejercicio y tus datos de salud.</p>
+  <div class="card" id="card-pauta-medica"><h2>📋 Pauta de andar <button type="button" class="info-btn" data-info-toggle="pauta-andar" aria-expanded="false" aria-label="Explicación de la pauta de andar" title="Explicación">i</button></h2>
+    <p data-info-for="pauta-andar" hidden class="info-text">Tu pauta es la tuya, no la de nadie más. Se rellena una sola vez y queda guardada. Aquí va todo lo que te han pautado tus médicos: tu ejercicio y tus datos de salud.<br><br>Estos son los valores que te ha pautado tu médico o tu unidad de rehabilitación. La app los usa para comparar tus registros y avisarte. Si tu médico te los cambia, los cambias aquí y queda guardada la pauta nueva.</p>
     <div id="pauta-resumen" hidden><button type="button" class="pauta-resumen-btn" id="btn-pauta-ver"><span class="punto-pauta" id="pauta-luz" aria-hidden="true"></span><span class="pauta-resumen-txt"><b id="pauta-resumen-frase"></b></span><span class="pauta-ver">Ver/Modificar</span></button></div>
     <div id="pauta-bloque" hidden>
-    <p class="muted">Estos son los valores que te ha pautado tu médico o tu unidad de rehabilitación. La app los usa para comparar tus registros y avisarte. Si tu médico te los cambia, los cambias aquí y queda guardada la pauta nueva.</p>
     <label for="p-tipo">Tipo de ejercicio</label>
     <input id="p-tipo" type="text" placeholder="Por ejemplo: caminar" autocomplete="off">
     <div class="frow">
@@ -802,7 +792,7 @@ footer a{color:var(--muted)}
       <p>La escala BORG mide, del 6 al 20, cómo de duro notas el esfuerzo: 6 extraordinariamente ligero, 7 muy ligero, 9 ligero, 11 ligero, 13 algo duro, 15 duro, 17 muy duro, 19 extraordinariamente duro.</p>
       <p>Como información general de tu hospital: en la fase II de rehabilitación cardiaca, lo adecuado es entre 13 y 14 («algo duro»), y a partir de 17 se está en el límite del trabajo aeróbico indicado. Tu objetivo personal es el que pongas arriba, en tu pauta.</p>
     </details>
-    <h3 style="margin-top:18px">Mis datos de salud</h3>
+    <details class="pauta-det" id="det-datos-salud" style="margin-top:18px"><summary><b>Mis datos de salud</b></summary>
     <label for="p-diag">Diagnóstico</label>
     <select id="p-diag">
       <option value="">— Elige —</option>
@@ -831,6 +821,7 @@ footer a{color:var(--muted)}
     <label for="p-telmedico">Teléfono del médico o de la unidad</label>
     <input id="p-telmedico" type="tel" placeholder="Teléfono" autocomplete="off">
     <button class="btn" id="btn-guardar-datos">Guardar mis datos de salud</button>
+    </details>
     </div>
   </div>
   <div class="card" id="card-pauta-tension"><details class="pauta-det" id="det-pauta-tension">
@@ -965,8 +956,10 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.57</p>
-    <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto, y grabar la caminata con el móvil.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
+    <p class="muted">Versión v1.59</p>
+    <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
+    <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
+    <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
     <p class="muted"><b>Qué cambia en la v1.56:</b><br>· Arreglo: al mover una tabla hacia los lados ya no cambia de pantalla.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
@@ -991,7 +984,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.57 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.59 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -1013,7 +1006,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.57";
+var APP_VERSION = "v1.59";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -1207,6 +1200,8 @@ function goto(view, opts){ opts = opts || {};
   if(view === "andar" && andarApuntarAbierto) sellarFechaMarcha();
   /* v1.37: al entrar en Configuración, los rodillos de «Tu día empieza a las» se colocan en el valor guardado (al cargar, la vista está oculta y el scroll no se puede fijar). */
   if(view === "config") sincronizarRuedaDiaInicio();
+  /* v1.59: al entrar en Pautas, el formulario muestra los valores ya guardados (antes quedaba en blanco aunque la pauta existiera) y sale plegado, con solo el resumen. */
+  if(view === "pautas"){ fillPautaForm(); pautaDesplegada = false; actualizarPautaPlegada(); }
   /* v1.34: al entrar en Alimentación se muestra el aviso hasta aceptar; al salir por el menú sin aceptar se esconde y reaparece la próxima vez. */
   if(view === "alimentacion") mostrarAvisoAlimentacionSiToca(); else ocultarAvisoAlimentacion();
   /* v1.27: al entrar a Tensión o Andar desde Hoy para apuntar, el bloque plegado se abre solo. */
@@ -1256,6 +1251,7 @@ window.addEventListener("popstate", function(ev){
 function irAPautaMedica(){
   goto("pautas");
   pautaDesplegada = true; actualizarPautaPlegada();
+  var detSalud = $("det-datos-salud"); if(detSalud) detSalud.open = true;
   setTimeout(function(){ var c = $("card-pauta-medica"); if(c){ c.scrollIntoView({ behavior: "smooth", block: "start" }); c.classList.add("panel-flash"); setTimeout(function(){ c.classList.remove("panel-flash"); }, 2000); } }, 100);
 }
 function openDrawer(){ $("drawer").classList.add("open"); $("scrim").classList.add("show"); }
@@ -3178,65 +3174,12 @@ $("btn-hub-peso").addEventListener("click", function(){ irACardMisDatos("card-pe
 $("btn-hub-sueno").addEventListener("click", function(){ irACardMisDatos("card-sueno", "sueno-horas"); });
 $("btn-hub-spo2").addEventListener("click", function(){ irACardMisDatos("card-spo2", "spo2-valor"); });
 $("btn-hub-pasos").addEventListener("click", function(){ irACardMisDatos("card-pasos", "pasos-num"); });
-$("btn-hub-grabar").addEventListener("click", function(){ var c = $("card-grabar-caminata"); if(c){ c.hidden = false; c.scrollIntoView({ behavior: "smooth", block: "start" }); } });
 $("btn-hub-importar").addEventListener("click", function(){
   var nativa = (typeof isNative === "function" && isNative());
   abrirPopupTexto(nativa
     ? "<b>Importar datos de salud</b><br><br>La importación desde tu app de salud todavía no está disponible en esta versión. Llegará pronto."
     : "<b>Importar datos de salud</b><br><br>La importación solo funciona en la app de Google Play. En esta versión web no se puede importar: el navegador no deja leer los datos de salud del móvil.<br><br>Cuando tengas la app de Play instalada, aquí mismo podrás traer los datos de tu caminata de hoy.", this);
 });
-/* Grabar caminata por GPS (v1.57, solo web: en la app nativa graba en el bolsillo). */
-var grabando = false, grabWatchId = null, grabPuntos = [], grabInicio = null, grabTimer = null, grabWakeLock = null, grabDistancia = 0;
-function distanciaKm(lat1, lon1, lat2, lon2){
-  var R = 6371, dLa = (lat2 - lat1) * Math.PI / 180, dLo = (lon2 - lon1) * Math.PI / 180;
-  var a = Math.sin(dLa / 2) * Math.sin(dLa / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLo / 2) * Math.sin(dLo / 2);
-  return 2 * R * Math.asin(Math.sqrt(a));
-}
-function actualizarGrabacionUI(){
-  if(!grabInicio) return;
-  var s = Math.floor((Date.now() - grabInicio) / 1000);
-  $("grab-tiempo").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
-  $("grab-km").textContent = grabDistancia.toFixed(2).replace(".", ",") + " km";
-}
-function empezarGrabacion(){
-  if(!("geolocation" in navigator)){ toast("Este móvil no permite grabar la caminata."); return; }
-  grabPuntos = []; grabDistancia = 0; grabInicio = Date.now();
-  grabWatchId = navigator.geolocation.watchPosition(function(pos){
-    var p = { lat: pos.coords.latitude, lon: pos.coords.longitude, t: Date.now(), acc: pos.coords.accuracy };
-    if(p.acc != null && p.acc > 50) return;
-    var ant = grabPuntos[grabPuntos.length - 1];
-    if(ant){
-      var d = distanciaKm(ant.lat, ant.lon, p.lat, p.lon);
-      var dt = (p.t - ant.t) / 1000;
-      if(dt > 0 && d / dt * 3600 > 20) return;
-      grabDistancia += d;
-    }
-    grabPuntos.push(p);
-    actualizarGrabacionUI();
-  }, function(err){ toast("No se pudo grabar: " + (err.message || "sin permiso de ubicación.")); pararGrabacion(false); }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
-  grabando = true;
-  $("btn-grabar-empezar").hidden = true; $("btn-grabar-parar").hidden = false;
-  $("grab-estado").textContent = "Grabando… anda como siempre. La distancia se va sumando aquí.";
-  grabTimer = setInterval(actualizarGrabacionUI, 1000);
-  if("wakeLock" in navigator){ try{ navigator.wakeLock.request("screen").then(function(w){ grabWakeLock = w; }).catch(function(){}); }catch(e){} }
-}
-function pararGrabacion(guardar){
-  if(grabWatchId != null){ try{ navigator.geolocation.clearWatch(grabWatchId); }catch(e){} grabWatchId = null; }
-  if(grabTimer){ clearInterval(grabTimer); grabTimer = null; }
-  if(grabWakeLock){ try{ grabWakeLock.release(); }catch(e){} grabWakeLock = null; }
-  grabando = false;
-  $("btn-grabar-empezar").hidden = false; $("btn-grabar-parar").hidden = true;
-  if(!guardar){ $("grab-estado").textContent = ""; grabInicio = null; return; }
-  var minutos = Math.max(1, Math.round((Date.now() - grabInicio) / 60000));
-  var km = Math.round(grabDistancia * 100) / 100;
-  grabInicio = null;
-  $("grab-estado").textContent = "";
-  goto("andar"); desplegarAndar(true);
-  $("w-minutos").value = minutos; $("w-km").value = String(km);
-  toast("Marcha grabada: " + minutos + " min, " + String(km).replace(".", ",") + " km. Completa el BORG y el pulso y pulsa Guardar.");
-}
-$("btn-grabar-empezar").addEventListener("click", empezarGrabacion);
-$("btn-grabar-parar").addEventListener("click", function(){ pararGrabacion(true); });
 async function geminiReadTensiometer(base64){
   var prompt = "Lee la pantalla de este tensiómetro (aparato de medir la tensión arterial). Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"sistolica\": 120, \"diastolica\": 80, \"pulso\": 72}. Sistólica es la tensión alta (SYS), diastólica la baja (DIA) y pulso es PUL o el corazón. Si algún valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
   var text = await geminiCallImage(base64, prompt);
