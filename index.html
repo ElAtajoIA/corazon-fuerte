@@ -410,7 +410,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.55 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.56 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -861,7 +861,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.55</p>
+    <p class="muted">Versión v1.56</p>
+    <p class="muted"><b>Qué cambia en la v1.56:</b><br>· Arreglo: al mover una tabla hacia los lados ya no cambia de pantalla.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
     <p class="muted"><b>Qué cambia en la v1.53:</b><br>· Nuevo: alarmas del móvil por comida desde el Pastillero, con botón para ponerlas todas y alarmas propias.</p>
@@ -885,7 +886,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.55 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.56 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -907,7 +908,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.55";
+var APP_VERSION = "v1.56";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -1165,7 +1166,7 @@ $("scrim").addEventListener("click", closeDrawer);
   /* v1.42: ¿empieza el toque sobre algo interactivo o arrastrable? Si es así, el deslizamiento de cambio de pantalla no se dispara (las ruedas, las asas, los campos y los botones siguen funcionando como siempre). */
   function toqueEnInteractivo(el){
     if(!el || !el.closest) return false;
-    return !!el.closest("input, textarea, select, button, a, label, summary, .rueda, .paso-asa, #info-popup, #consent-modal, #foto-resultado, #nutri-resultado, #barcode-resultado, #receta-resultado, #foto-preview, #nutri-preview, .drawer");
+    return !!el.closest("input, textarea, select, button, a, label, summary, .rueda, .paso-asa, .table-wrap, #info-popup, #consent-modal, #foto-resultado, #nutri-resultado, #barcode-resultado, #receta-resultado, #foto-preview, #nutri-preview, .drawer");
   }
   /* v1.42: vista anterior o siguiente en el orden del menú. En los extremos no hace nada. */
   function vistaVecina(dir){
