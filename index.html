@@ -473,7 +473,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.60 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.61 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -702,6 +702,12 @@ footer a{color:var(--muted)}
     <p>🍽️ <b>Plato Harvard:</b> medio plato de verduras, un cuarto de cereales integrales y un cuarto de proteína.</p>
     <p>🍳 <b>Preparación:</b> freidora de aire o vapor.</p>
     <p>🎉 <b>Excepciones sociales:</b> solo puntuales y en porción mínima.</p>
+  </div>
+  <div class="card" id="card-aditivos"><h2>Sal, aditivos y conservantes</h2>
+    <p>🧂 <b>Sal la justa.</b> Evita la sal oculta en los ultraprocesados.</p>
+    <p>Los aditivos no todos son malos: algunos son inocuos, como los antioxidantes y los conservantes.</p>
+    <p>🔴 <b>Evita:</b> nitratos, nitritos, benzoatos y sulfitos.</p>
+    <p class="muted">E-100 colorantes · E-200 conservantes · E-300 antioxidantes · E-400 estabilizantes · E-500 regulan la acidez · E-600 potenciadores del sabor.</p>
   </div>
   <div class="card"><h2>Productos comprobados</h2><div id="lista-semaforo"></div></div>
   <div class="card" id="card-compra"><h2>Lista de la compra</h2>
@@ -990,7 +996,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.60</p>
+    <p class="muted">Versión v1.61</p>
+    <p class="muted"><b>Qué cambia en la v1.61:</b><br>· <b>Sal, aditivos y conservantes.</b> Nueva lista en Alimentación, y el chequeo se pone en rojo si el producto lleva nitratos, nitritos, benzoatos o sulfitos.</p>
     <p class="muted"><b>Qué cambia en la v1.60:</b><br>· «Pregúntale a tus datos» ahora está arriba, sin tener que bajar.<br>· <b>Estadísticas más legibles.</b> Las medias de Mi Actividad ya no se parten: cada valor va en su propia línea, a todo el ancho.<br>· <b>Mi Actividad, más limpia.</b> El resumen «Mi pauta» ya no está en Mi Actividad: tu pauta completa sigue en Pautas y en «Informe para el Médico».<br>· <b>Semáforo BORG más limpio.</b> En «Mis marchas» ahora se ve un solo punto, el del color que toca.<br>· <b>Tabla completa.</b> En «Mis marchas» hay un botón para ver la tabla a pantalla completa, sin desplazar de lado.<br>· <b>Menú más corto.</b> El menú tiene 6 elementos: «Tensión y pulso» se abre desde Mi Actividad, y «Mis pautas», «Pastillero», «Mi programa» e «Informe para el Médico» desde «Mis datos».<br>· <b>«Mi Actividad».</b> La sección «Andar» ahora se llama «Mi Actividad»; todo lo demás sigue igual.<br>· <b>«Informe para el Médico».</b> La sección «Para el médico» ahora se llama «Informe para el Médico»; todo lo demás sigue igual.<br>· <b>Importar datos de salud.</b> Ahora se indica con qué relojes funciona: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS.<br>· <b>Apuntar tensión, arriba.</b> En «Tensión y pulso» el bloque para apuntar está ahora el primero, antes de la evolución y de tus registros.<br>· <b>Menos avisos.</b> El aviso de datos orientativos ya solo sale en Alimentación (y en el informe ya no sale); en las demás vistas ya no sale.</p>
     <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
     <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
@@ -1024,7 +1031,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.60 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.61 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -1046,7 +1053,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.60";
+var APP_VERSION = "v1.61";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -3314,7 +3321,7 @@ function nutrientLabel(key){
   if(key === "azucares") return "Azúcares";
   var f = data.semaforo.campos.find(function(c){ return c.tipo === "nutriente" && normKey(c.nombre) === key; });
   return f ? f.nombre : key; }
-function evaluarSemaforo(valores, ingredientesTexto){
+function evaluarSemaforo(valores, ingredientesTexto, aditivosOFF){
   valores = normValores(valores);
   var criterios = [];
   function nut(nombre, valor, limite){
@@ -3392,6 +3399,17 @@ function evaluarSemaforo(valores, ingredientesTexto){
       criterios.push({ nombre: "Azúcares", valor: az, limite: null, luz: "rojo", motivo: "Azúcares " + fmtG(az) + " g por 100 g: los azúcares son luz roja", tipo: "regla", texto: "Azúcares " + fmtG(az) + " g por 100 g: los azúcares son luz roja" });
     }
   }
+  /* v1.61: aditivos a evitar (pauta de la unidad de rehabilitación): nitratos, nitritos, benzoatos y sulfitos. Solo estas cuatro familias dan luz roja; otros aditivos (E-100…E-600) no. */
+  var ADITIVOS_E = { "e-249": ["nitritos", "E-249"], "e-250": ["nitritos", "E-250"], "e-251": ["nitratos", "E-251"], "e-252": ["nitratos", "E-252"], "e-210": ["benzoatos", "E-210"], "e-211": ["benzoatos", "E-211"], "e-212": ["benzoatos", "E-212"], "e-213": ["benzoatos", "E-213"], "e-220": ["sulfitos", "E-220"], "e-221": ["sulfitos", "E-221"], "e-222": ["sulfitos", "E-222"], "e-223": ["sulfitos", "E-223"], "e-224": ["sulfitos", "E-224"], "e-225": ["sulfitos", "E-225"], "e-226": ["sulfitos", "E-226"], "e-227": ["sulfitos", "E-227"], "e-228": ["sulfitos", "E-228"] };
+  var ADITIVOS_NOMBRE = [["nitrito", "nitritos"], ["nitrato", "nitratos"], ["benzoato", "benzoatos"], ["acido benzoico", "benzoatos"], ["dioxido de azufre", "sulfitos"], ["metabisulfito", "sulfitos"], ["bisulfito", "sulfitos"], ["sulfito", "sulfitos"]];
+  var aditivosHallados = {};
+  (aditivosOFF || []).forEach(function(t){ var k = String(t || "").toLowerCase().replace(/^en:/, "").replace(/^e(\d+)$/, "e-$1"); if(ADITIVOS_E[k] && !aditivosHallados[ADITIVOS_E[k][0]]) aditivosHallados[ADITIVOS_E[k][0]] = ADITIVOS_E[k][1]; });
+  Object.keys(ADITIVOS_E).forEach(function(cod){ if(ingNorm.indexOf(cod) >= 0 && !aditivosHallados[ADITIVOS_E[cod][0]]) aditivosHallados[ADITIVOS_E[cod][0]] = ADITIVOS_E[cod][1]; });
+  ADITIVOS_NOMBRE.forEach(function(par){ if(ingNorm.indexOf(par[0]) >= 0 && !aditivosHallados[par[1]]) aditivosHallados[par[1]] = ""; });
+  Object.keys(aditivosHallados).forEach(function(fam){
+    var eNum = aditivosHallados[fam];
+    criterios.push({ nombre: "Aditivos a evitar", valor: null, limite: null, luz: "rojo", motivo: "Contiene " + fam + (eNum ? " (" + eNum + ")" : "") + ": aditivos a evitar", tipo: "regla", texto: "Contiene " + fam + (eNum ? " (" + eNum + ")" : "") + ": aditivos a evitar" });
+  });
   var luz = null;
   if(criterios.length){
     luz = "verde";
@@ -3562,7 +3580,7 @@ function renderSemaforo(){
 function promptNutricion(){
   var extras = data.semaforo.campos.filter(function(c){ return c.tipo === "nutriente"; }).map(function(c){ return c.nombre.toLowerCase(); });
   var nombres = ["sal", "grasas saturadas", "azucares"].concat(extras).filter(function(v, i, a){ return a.indexOf(v) === i; });
-  var p = "Lee el cuadro nutricional y la lista de ingredientes de este producto. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"producto\": \"nombre si se ve\", \"nutrientes\": {\"sal\": 1.2, \"grasas saturadas\": 3.4, \"azucares\": 5.6}, \"ingredientes\": \"texto completo de la lista de ingredientes\"}. En \"nutrientes\", incluye todos estos nutrientes que se vean, con sus gramos por 100 g y usando exactamente estos nombres en minúsculas: " + nombres.join(", ") + ". Si la tabla indica sodio en mg, convierte a sal en gramos (sal = sodio x 2,5 / 1000). Si un valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
+  var p = "Lee el cuadro nutricional y la lista de ingredientes de este producto. Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"producto\": \"nombre si se ve\", \"nutrientes\": {\"sal\": 1.2, \"grasas saturadas\": 3.4, \"azucares\": 5.6}, \"ingredientes\": \"texto completo de la lista de ingredientes\"}. En \"nutrientes\", incluye todos estos nutrientes que se vean, con sus gramos por 100 g y usando exactamente estos nombres en minúsculas: " + nombres.join(", ") + ". Si la tabla indica sodio en mg, convierte a sal en gramos (sal = sodio x 2,5 / 1000). Si un valor no se ve, pon null. En \"ingredientes\", copia la lista completa tal cual, sin omitir ningún aditivo: si ves nitratos, nitritos, benzoatos o sulfitos (también como E-249, E-250, E-251, E-252, E-210, E-211, E-212, E-213 o E-220 a E-228), escríbelos en la lista. No inventes ningún valor que no se vea en la foto.";
   return p; }
 function parseNutritionJson(text){ if(!text) return null; var m = text.match(/\{[\s\S]*\}/); if(!m) return null;
   try{ var j = JSON.parse(m[0]); if(!j.nutrientes) return null;
@@ -3668,7 +3686,8 @@ async function buscarPorCodigo(codigo){
     var p = j.product, n = p.nutriments || {};
     var valores = { "sal": n["salt_100g"], "grasas saturadas": n["saturated-fat_100g"], "azucares": n["sugars_100g"] };
     var ingredientes = p.ingredients_text_es || p.ingredients_text || "";
-    var ev = evaluarSemaforo(valores, ingredientes);
+    var aditivosOFF = p.additives_tags || []; /* v1.61: aditivos a evitar (E-249…E-252, E-210…E-213, E-220…E-228) */
+    var ev = evaluarSemaforo(valores, ingredientes, aditivosOFF);
     var nombre = p.product_name_es || p.product_name || ("Código " + codigo);
     box.innerHTML = '<div class="okbox"><h3 style="margin-top:0">' + esc(nombre) + '</h3>'
       + '<p class="muted">Código ' + esc(codigo) + ' · Open Food Facts (por 100 g): sal ' + (n["salt_100g"] != null ? fmtG(n["salt_100g"]) + " g" : "—") + ', grasas saturadas ' + (n["saturated-fat_100g"] != null ? fmtG(n["saturated-fat_100g"]) + " g" : "—") + ', azúcares ' + (n["sugars_100g"] != null ? fmtG(n["sugars_100g"]) + " g" : "—") + '.</p>'
