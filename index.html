@@ -184,9 +184,11 @@ html[data-densidad="compacta"] .luz{width:44px;height:44px}
 .luz.roja.encendida{box-shadow:0 0 22px 6px rgba(229,72,77,.85)}
 .luz.ambar.encendida{box-shadow:0 0 22px 6px rgba(245,166,35,.85)}
 .luz.verde.encendida{box-shadow:0 0 22px 6px rgba(47,191,113,.85)}
-.semaforo-mini{display:flex;flex-direction:column;gap:4px;align-items:center;min-width:40px}
+/* v1.60: el semáforo BORG es un solo punto en horizontal: antes eran tres luces
+   apiladas en vertical y la fila se ensanchaba. Ahora solo queda el punto del color
+   encendido (el número BORG sigue en su columna). */
+.semaforo-mini{display:flex;flex-direction:row;gap:4px;align-items:center;justify-content:center;min-width:40px}
 .semaforo-mini .luz{width:20px;height:20px}
-.semaforo-mini .num{font-weight:800;font-size:14px;white-space:nowrap}
 .semaforo-mini .sin-rango{font-size:12px;color:var(--muted);text-align:center;max-width:120px}
 .semaforo-linea{padding:6px 0;color:var(--muted)}
 .semaforo-linea.activa{font-weight:800;color:var(--ink)}
@@ -289,6 +291,14 @@ tr.alerta td{background:var(--danger-bg)}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:16px}
 .kv dt{font-weight:700;color:var(--muted)}
 .kv dd{margin:0}
+/* v1.60: estadísticas cruzadas de Andar apiladas. Antes la etiqueta (columna
+   «auto» de la rejilla) se comía el ancho y el valor («81.1 l.p.m.», el resumen
+   de tensión) se partía en varias líneas. Ahora cada fila es etiqueta arriba y
+   valor debajo, a todo el ancho; mismo tamaño de texto, mismos datos y textos. */
+#andar-estadisticas-cruzadas .kv{display:block}
+#andar-estadisticas-cruzadas .kv dt{margin-top:12px}
+#andar-estadisticas-cruzadas .kv dt:first-child{margin-top:0}
+#andar-estadisticas-cruzadas .kv dd{margin-top:2px;font-weight:700;overflow-wrap:break-word}
 ul.tight{margin:8px 0;padding-left:22px}
 ul.tight li{margin:7px 0}
 .big-num{font-size:42px;font-weight:800;line-height:1.05}
@@ -329,6 +339,32 @@ footer a{color:var(--muted)}
 .fila-quitar{flex:none;width:28px;height:28px;border:1.5px solid var(--line);border-radius:9px;background:var(--bg);color:var(--muted);font-size:17px;line-height:1;cursor:pointer;margin-top:1px}
 .fila-mini{flex:none;min-height:32px;padding:4px 12px;border-radius:999px;border:1.5px solid var(--link);background:var(--card);color:var(--link);font-weight:700;font-size:14px;cursor:pointer}
 .table-wrap.fit table{min-width:0}
+/* v1.60: tabla de marchas a pantalla completa. Overlay CSS (position:fixed),
+   sin la API Fullscreen (poco fiable en WebView): la MISMA tabla se mueve dentro
+   del overlay, así que son los mismos datos y columnas. Dentro, la tabla usa
+   todo el ancho con columnas fijas: cabe a lo ancho a 390 px sin desplazar de
+   lado; si hay muchas filas, se baja con el dedo (desplazamiento vertical). */
+#overlay-tabla{position:fixed;inset:0;z-index:70;background:var(--bg);color:var(--ink);overflow-y:auto;padding:10px 8px 24px}
+#overlay-tabla[hidden]{display:none}
+.overlay-tabla-barra{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.overlay-tabla-barra h2{margin:0}
+#btn-cerrar-tabla{width:auto;min-height:52px;margin:0;padding:12px 18px;font-size:17px;flex:none}
+#overlay-tabla .table-wrap{overflow-x:visible;margin:0;padding:0}
+#overlay-tabla table{table-layout:fixed;width:100%;min-width:0}
+#overlay-tabla th,#overlay-tabla td{padding:5px 3px;font-size:12px;overflow-wrap:anywhere;vertical-align:middle}
+#overlay-tabla th{font-size:11px}
+#overlay-tabla th:nth-child(1),#overlay-tabla td:nth-child(1){width:20%}
+#overlay-tabla th:nth-child(2),#overlay-tabla td:nth-child(2){width:7%}
+#overlay-tabla th:nth-child(3),#overlay-tabla td:nth-child(3){width:8%}
+#overlay-tabla th:nth-child(4),#overlay-tabla td:nth-child(4){width:8%}
+#overlay-tabla th:nth-child(5),#overlay-tabla td:nth-child(5){width:7%}
+#overlay-tabla th:nth-child(6),#overlay-tabla td:nth-child(6){width:7%}
+#overlay-tabla th:nth-child(7),#overlay-tabla td:nth-child(7){width:8%}
+#overlay-tabla th:nth-child(8),#overlay-tabla td:nth-child(8){width:10%}
+#overlay-tabla th:nth-child(9),#overlay-tabla td:nth-child(9){width:11%}
+#overlay-tabla th:nth-child(10),#overlay-tabla td:nth-child(10){width:14%}
+#overlay-tabla [data-del-walk]{min-height:44px;padding:6px 2px;font-size:11px;white-space:nowrap}
+#overlay-tabla .semaforo-mini{min-width:0}
 .thumb{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
 .titulo-hoy{text-align:center;font-size:24px;margin:2px 0 14px}
 #hoy-revision .alert, #hoy-revision .warnbox{cursor:pointer}
@@ -437,7 +473,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.59 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.60 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -461,9 +497,8 @@ footer a{color:var(--muted)}
 
 <!-- ============ ANDAR ============ -->
 <section class="view" id="view-andar">
-  <div class="view-head c-andar"><span class="ic">🚶</span><div><h1>Andar</h1><p>Tu tabla de marchas, como la de papel, pero en el móvil.</p></div></div>
-  <div class="card"><button type="button" class="plegable-cab" id="btn-andar-pauta" aria-expanded="false"><span class="plegable-titulo">📋 Mi pauta</span><span class="flecha" aria-hidden="true">▾</span></button>
-    <div id="andar-pauta-bloque" hidden><div id="andar-pauta"></div></div></div>
+  <div class="view-head c-andar"><span class="ic">🚶</span><div><h1>Mi Actividad</h1><p>Tu tabla de marchas, como la de papel, pero en el móvil.</p></div></div>
+  <p><button class="btn secondary" id="btn-andar-tension" type="button">🩺 Tensión y pulso</button></p>
   <div class="card"><button type="button" class="plegable-cab" id="btn-andar-apuntar" aria-expanded="false"><span class="plegable-titulo">🚶 Apuntar una marcha</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="andar-apuntar-bloque" hidden>
     <label for="w-fecha">Fecha</label><input id="w-fecha" type="date">
@@ -488,18 +523,11 @@ footer a{color:var(--muted)}
     <div id="sheets-aviso"></div>
     <p><button class="btn secondary" id="btn-guardar-hoja" style="display:none">Actualizar hoja en Sheets</button>
     <a class="btn secondary" id="link-hoja-sheets" href="#" target="_blank" rel="noopener" style="display:none">Abrir hoja en Sheets</a></p>
+    <p><button class="btn secondary" id="btn-tabla-completa" type="button">⛶ Tabla completa</button></p>
     <p class="muted" id="sheets-estado"></p>
     <div id="lista-marchas"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-andar-estadisticas" aria-expanded="false"><span class="plegable-titulo">📊 Estadísticas</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="andar-estadisticas-bloque" hidden>
-    <div class="chart-toggle" id="toggle-andar"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button></div>
-    <div class="chart-box" id="grafico-andar"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
-    <h3 style="margin-top:14px">Pulsaciones y BORG con la tensión</h3>
-    <div id="andar-estadisticas-cruzadas"></div>
-    <h3 style="margin-top:14px">Gráficos redondos</h3>
-    <div id="andar-donuts"></div>
-    <p style="margin-top:12px"><a class="btn secondary" id="link-hoja-descargar" href="#" target="_blank" rel="noopener" style="display:none">Descargar la hoja (Excel)</a></p>
-    </div></div>
   <div class="card" id="card-preguntar-datos"><h2>💬 Pregúntale a tus datos</h2>
     <p class="muted">Pregunta por tus marchas, tu tensión, tus pastillas o tu peso, por ejemplo «dime la tensión media de esta semana». Gemini te contesta solo con lo que has apuntado en la app. Si no hay datos, te lo dirá.</p>
     <div id="pregunta-sin-clave" hidden><div class="warnbox"><b>Para preguntar necesitas tu clave de Gemini.</b><br>Es la misma clave de las fotos. Se guarda solo en este móvil.<br><br><button type="button" class="btn" id="btn-pregunta-ir-config">Ir a Configuración</button></div></div>
@@ -511,20 +539,19 @@ footer a{color:var(--muted)}
     </div>
     <div id="pregunta-respuesta" style="margin-top:12px"></div>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
+    <div class="chart-toggle" id="toggle-andar"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button></div>
+    <div class="chart-box" id="grafico-andar"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
+    <h3 style="margin-top:14px">Pulsaciones y BORG con la tensión</h3>
+    <div id="andar-estadisticas-cruzadas"></div>
+    <h3 style="margin-top:14px">Gráficos redondos</h3>
+    <div id="andar-donuts"></div>
+    <p style="margin-top:12px"><a class="btn secondary" id="link-hoja-descargar" href="#" target="_blank" rel="noopener" style="display:none">Descargar la hoja (Excel)</a></p>
+    </div></div>
 </section>
 
 <!-- ============ TENSIÓN ============ -->
 <section class="view" id="view-tension">
   <div class="view-head c-tension"><span class="ic">🩺</span><div><h1>Tensión y pulso</h1><p>Apúntalos las veces que quieras, a mano o con una foto al tensiómetro.</p></div></div>
-  <div class="card"><h2>Evolución de tensión y pulso</h2>
-    <div class="chart-toggle" id="toggle-tension"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button><button type="button" data-range="personalizado">Personalizado</button></div>
-    <div id="tension-rango-personalizado" hidden style="margin:8px 0 10px"><label for="tension-desde">Desde</label> <input id="tension-desde" type="date" style="width:auto;display:inline-block"> <label for="tension-hasta" style="margin-left:8px">Hasta</label> <input id="tension-hasta" type="date" style="width:auto;display:inline-block"></div>
-    <div id="tension-estadisticas"></div>
-    <div class="chart-box" id="grafico-tension"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
-    <h3 style="margin-top:14px">Gráficos redondos</h3>
-    <div id="tension-donuts"></div></div>
-  <div class="card"><h2>Mis registros</h2><div id="tension-aviso"></div><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-tension-apuntar" aria-expanded="false"><span class="plegable-titulo">🩺 Apuntar tensión y pulso</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="tension-apuntar-bloque" hidden>
     <h3>Foto al tensiómetro <button type="button" class="info-btn" data-info-toggle="tension-foto" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h3>
@@ -554,7 +581,14 @@ footer a{color:var(--muted)}
     </div>
     </div>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
+  <div class="card"><h2>Evolución de tensión y pulso</h2>
+    <div class="chart-toggle" id="toggle-tension"><button type="button" data-range="semana" class="on">Semana</button><button type="button" data-range="mes">Mes</button><button type="button" data-range="personalizado">Personalizado</button></div>
+    <div id="tension-rango-personalizado" hidden style="margin:8px 0 10px"><label for="tension-desde">Desde</label> <input id="tension-desde" type="date" style="width:auto;display:inline-block"> <label for="tension-hasta" style="margin-left:8px">Hasta</label> <input id="tension-hasta" type="date" style="width:auto;display:inline-block"></div>
+    <div id="tension-estadisticas"></div>
+    <div class="chart-box" id="grafico-tension"></div><p class="muted">Esta evolución es solo una guía. Consulta cualquier duda con un profesional sanitario.</p>
+    <h3 style="margin-top:14px">Gráficos redondos</h3>
+    <div id="tension-donuts"></div></div>
+  <div class="card"><h2>Mis registros</h2><div id="tension-aviso"></div><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
 </section>
 
 <!-- ============ MIS DATOS (v1.57) ============ -->
@@ -563,12 +597,16 @@ footer a{color:var(--muted)}
   <div class="card"><h2>¿Qué quieres apuntar?</h2>
     <p><button class="btn secondary" id="btn-hub-tension">🩺 Tomar la tensión</button></p>
     <p><button class="btn secondary" id="btn-hub-importar">📥 Importar datos de salud</button></p>
+    <p class="muted">Solo compatible con: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS. No funciona con Huawei.</p>
     <p><button class="btn secondary" id="btn-hub-peso">⚖️ Mi peso</button></p>
     <p><button class="btn secondary" id="btn-hub-sueno">😴 Mi sueño</button></p>
     <p><button class="btn secondary" id="btn-hub-spo2">🫁 Oxígeno (SpO2)</button></p>
     <p><button class="btn secondary" id="btn-hub-pasos">👣 Mis pasos</button></p>
     <p><button class="btn secondary" id="btn-hub-estadisticas">📊 Mis estadísticas</button></p>
-    <p><button class="btn secondary" id="btn-hub-medico">👨‍⚕️ Para el médico</button></p>
+    <p><button class="btn secondary" id="btn-hub-medico">👨‍⚕️ Informe para el Médico</button></p>
+    <p><button class="btn secondary" id="btn-hub-pautas">📋 Mis pautas</button></p>
+    <p><button class="btn secondary" id="btn-hub-pastillero">💊 Pastillero</button></p>
+    <p><button class="btn secondary" id="btn-hub-programa">📖 Mi programa</button></p>
   </div>
 <h2>⚖️ Mi peso</h2>
     <p class="muted">Pésate siempre a la misma hora, por ejemplo por la mañana. Solo se guarda el número: nada de consejos.</p>
@@ -605,7 +643,6 @@ footer a{color:var(--muted)}
     <div id="pasos-historial"></div>
     <div class="chart-box" id="grafico-pasos" style="margin-top:10px"></div>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 <!-- ============ PASTILLERO ============ -->
@@ -706,7 +743,6 @@ footer a{color:var(--muted)}
     <button class="btn" id="btn-guardar-episodio">Guardar episodio</button>
     <div id="lista-episodios" style="margin-top:14px"></div>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 <!-- ============ MI PROGRAMA ============ -->
@@ -747,12 +783,11 @@ footer a{color:var(--muted)}
     </table></div>
     <p>Como información general: en la fase II de rehabilitación cardiaca, lo adecuado es entre <b>13 y 14 («algo duro»)</b>. A partir de 17 se está en el límite del trabajo aeróbico indicado. Tu objetivo personal es el de tu pauta.</p>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 <!-- ============ PARA EL MÉDICO ============ -->
 <section class="view" id="view-medico">
-  <div class="view-head c-medico"><span class="ic">👨‍⚕️</span><div><h1>Para el médico</h1><p>Un resumen para llevar a la consulta o imprimir.</p></div></div>
+  <div class="view-head c-medico"><span class="ic">👨‍⚕️</span><div><h1>Informe para el Médico</h1><p>Un resumen para llevar a la consulta o imprimir.</p></div></div>
   <div class="card no-print" id="card-periodo-medico">
     <label>Periodo del informe</label>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px" role="group" aria-label="Periodo del informe">
@@ -868,7 +903,6 @@ footer a{color:var(--muted)}
     <p data-info-for="como-semaforo" hidden class="info-text">Es el peor de todos tus criterios. Cualquier criterio en rojo = luz roja; si no, ámbar si algún criterio está en ámbar; si no, verde. Por nutriente: rojo si pasa tu límite, ámbar si pasa la mitad, verde si está en la mitad o por debajo. Un ingrediente que marcaste evitar, si aparece en la lista, es luz roja. Además, hay tres reglas fijas: todos los aceites son luz roja salvo el aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo), los azúcares añadidos son luz roja, y un alimento con más de 6 ingredientes es luz roja (ultraprocesado).</p>
 </details>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 <!-- ============ CONFIGURACIÓN ============ -->
@@ -956,7 +990,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.59</p>
+    <p class="muted">Versión v1.60</p>
+    <p class="muted"><b>Qué cambia en la v1.60:</b><br>· «Pregúntale a tus datos» ahora está arriba, sin tener que bajar.<br>· <b>Estadísticas más legibles.</b> Las medias de Mi Actividad ya no se parten: cada valor va en su propia línea, a todo el ancho.<br>· <b>Mi Actividad, más limpia.</b> El resumen «Mi pauta» ya no está en Mi Actividad: tu pauta completa sigue en Pautas y en «Informe para el Médico».<br>· <b>Semáforo BORG más limpio.</b> En «Mis marchas» ahora se ve un solo punto, el del color que toca.<br>· <b>Tabla completa.</b> En «Mis marchas» hay un botón para ver la tabla a pantalla completa, sin desplazar de lado.<br>· <b>Menú más corto.</b> El menú tiene 6 elementos: «Tensión y pulso» se abre desde Mi Actividad, y «Mis pautas», «Pastillero», «Mi programa» e «Informe para el Médico» desde «Mis datos».<br>· <b>«Mi Actividad».</b> La sección «Andar» ahora se llama «Mi Actividad»; todo lo demás sigue igual.<br>· <b>«Informe para el Médico».</b> La sección «Para el médico» ahora se llama «Informe para el Médico»; todo lo demás sigue igual.<br>· <b>Importar datos de salud.</b> Ahora se indica con qué relojes funciona: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS. No funciona con Huawei.<br>· <b>Apuntar tensión, arriba.</b> En «Tensión y pulso» el bloque para apuntar está ahora el primero, antes de la evolución y de tus registros.<br>· <b>Menos avisos.</b> El aviso de datos orientativos ya solo sale en Alimentación (y en el informe ya no sale); en las demás vistas ya no sale.</p>
     <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
     <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
     <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
@@ -973,7 +1008,6 @@ footer a{color:var(--muted)}
     <p class="muted"><b>Qué cambia en la v1.46:</b><br>· <b>Nueva sección «Pautas».</b> Tus pautas de andar, tensión y alimentación están ahora juntas en el menú, en «Pautas». La de tensión es nueva: puedes marcar tu tensión máxima y mínima.<br>· <b>Lista de la compra.</b> Ahora se abre con un botón en Configuración.<br>· <b>BORG.</b> Al apuntar una marcha verás tu rango junto al campo, y te avisará si te sales de él.<br>· <b>Tensión.</b> Si una tensión pasa de tus límites, la app te avisará de que consultes con tu médico.<br>· <b>Configuración más limpia:</b> las tarjetas del asistente y del aviso de alimentación ahora ocupan menos.<br>· <b>Arreglado:</b> la hoja de Sheets ya guarda también la pestaña de Tensión.</p>
   </div>
   </div>
-  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
 <!-- ============ ASISTENTE «POR DÓNDE EMPEZAR» ============ -->
@@ -983,8 +1017,14 @@ footer a{color:var(--muted)}
 </section>
 </main>
 
+<!-- v1.60: tabla de marchas a pantalla completa (overlay; la tabla real se mueve aquí dentro al abrir). -->
+<div id="overlay-tabla" hidden>
+  <div class="overlay-tabla-barra"><h2>Mis marchas</h2><button type="button" class="btn secondary" id="btn-cerrar-tabla">✕ Cerrar</button></div>
+  <div id="overlay-tabla-cuerpo"></div>
+</div>
+
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.59 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.60 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -1006,7 +1046,7 @@ footer a{color:var(--muted)}
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.59";
+var APP_VERSION = "v1.60";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -1166,11 +1206,20 @@ document.addEventListener("visibilitychange", function(){ if(document.visibility
 window.addEventListener("pagehide", function(){ flushDriveAlSalir(); flushSheetsAlSalir(); });
 
 /* ---------- Navegación ---------- */
+/* v1.60: «Tensión y pulso» se entra desde Mi Actividad; «Pastillero»,
+   «Mi programa», «Pautas» e «Informe para el Médico» se entran desde «Mis datos».
+   Esas vistas siguen existiendo y goto() las abre igual; solo salen del menú
+   (y del swipe, que sigue este mismo orden). */
+/* v1.60 (enmienda): «Para el médico» también sale del menú (ya está en «Mis datos»);
+   el orden final es Hoy, Mi Actividad, Alimentación, Dolor, Mis datos, Configuración. */
 var VIEWS = [
-  ["hoy","❤️","Hoy"],["andar","🚶","Andar"],["tension","🩺","Tensión y pulso"],["misdatos","📊","Mis datos"],
-  ["pastillero","💊","Pastillero"],["alimentacion","🥗","Alimentación"],["dolor","🚨","Dolor en el pecho"],["programa","📖","Mi programa"],
-  ["medico","👨‍⚕️","Para el médico"],["pautas","📋","Pautas"],["config","⚙️","Configuración"]
+  ["hoy","❤️","Hoy"],["andar","🚶","Mi Actividad"],
+  ["alimentacion","🥗","Alimentación"],["dolor","🚨","Dolor en el pecho"],
+  ["misdatos","📊","Mis datos"],["config","⚙️","Configuración"]
 ];
+/* Todas las vistas de la app, dentro o fuera del menú: para los enlaces con
+   #vista (p. ej. al tocar un aviso) y para no reabrir el asistente. */
+var TODAS_VISTAS = ["hoy","andar","tension","misdatos","pastillero","alimentacion","dolor","programa","medico","pautas","config","asistente"];
 var currentView = "hoy";
 function buildDrawer(){ $("drawer-nav").innerHTML = VIEWS.map(function(v){ return '<button data-view="'+v[0]+'" class="'+(v[0]===currentView?"active":"")+'"><span class="ic">'+v[1]+'</span><span>'+v[2]+'</span></button>'; }).join("");
   Array.prototype.forEach.call(document.querySelectorAll("#drawer-nav button"), function(b){ b.addEventListener("click", function(){ goto(b.getAttribute("data-view")); closeDrawer(); }); }); }
@@ -1230,6 +1279,8 @@ window.addEventListener("popstate", function(ev){
   var st = (ev.state && typeof ev.state === "object") ? ev.state : {};
   /* Si la pregunta de salir está abierta, Atrás es «Quedarme». */
   if($("salir-modal") && !$("salir-modal").hidden){ quedarseEnApp(); return; }
+  /* v1.60: la tabla a pantalla completa se cierra primero, como un modal más. */
+  if(typeof overlayTablaAbierta !== "undefined" && overlayTablaAbierta){ cerrarTablaCompleta(); historialPush(currentView); return; }
   if(saliendoApp) return; /* se está saliendo: no preguntar ni rearmar nada */
   /* La ventana (i) se cierra primero, sin cambiar de vista; se devuelve la entrada consumida. */
   if(infoPopup && !infoPopup.hidden){ closeInfoPopup(); historialPush(currentView); return; }
@@ -1271,7 +1322,7 @@ $("scrim").addEventListener("click", closeDrawer);
   /* v1.42: ¿empieza el toque sobre algo interactivo o arrastrable? Si es así, el deslizamiento de cambio de pantalla no se dispara (las ruedas, las asas, los campos y los botones siguen funcionando como siempre). */
   function toqueEnInteractivo(el){
     if(!el || !el.closest) return false;
-    return !!el.closest("input, textarea, select, button, a, label, summary, .rueda, .paso-asa, .table-wrap, #info-popup, #consent-modal, #foto-resultado, #nutri-resultado, #barcode-resultado, #receta-resultado, #foto-preview, #nutri-preview, .drawer");
+    return !!el.closest("input, textarea, select, button, a, label, summary, .rueda, .paso-asa, .table-wrap, #info-popup, #consent-modal, #overlay-tabla, #foto-resultado, #nutri-resultado, #barcode-resultado, #receta-resultado, #foto-preview, #nutri-preview, .drawer");
   }
   /* v1.42: vista anterior o siguiente en el orden del menú. En los extremos no hace nada. */
   function vistaVecina(dir){
@@ -1371,7 +1422,7 @@ document.addEventListener("click", function(ev){
     closeInfoPopup();
   }
 });
-document.addEventListener("keydown", function(ev){ if(ev.key === "Escape") closeInfoPopup(); });
+document.addEventListener("keydown", function(ev){ if(ev.key === "Escape"){ closeInfoPopup(); if(typeof overlayTablaAbierta !== "undefined" && overlayTablaAbierta) cerrarTablaCompleta(); } });
 function repositionInfoPopup(){
   if(!infoPopup || infoPopup.hidden || !infoPopupBtn) return;
   var r = infoPopupBtn.getBoundingClientRect();
@@ -1522,10 +1573,14 @@ function borgLuz(w){ var p = data.pauta; var borg = num(w.borg);
   if(mx != null && borg > mx) return borg <= mx + 1 ? "ambar" : "rojo";
   return "verde"; }
 function borgLuzTexto(luz){ return luz === "verde" ? "Verde" : luz === "ambar" ? "Ámbar" : luz === "rojo" ? "Rojo" : ""; }
+/* v1.60: un solo punto, el del color encendido, en horizontal. Antes eran tres
+   luces apiladas (dos apagadas) más el número repetido; la fila se ensanchaba.
+   La lógica (borgLuz) no cambia y el número BORG sigue en su columna. Sin rango
+   no hay punto: solo el texto que pide poner el rango en Pautas. */
 function borgSemaforoHTML(w){ var luz = borgLuz(w);
-  if(luz === "sin-rango") return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG sin rango"><div class="luz"></div><div class="luz"></div><div class="luz"></div><div class="sin-rango">Pon tu rango BORG en Pautas</div></div>';
+  if(luz === "sin-rango") return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG sin rango"><div class="sin-rango">Pon tu rango BORG en Pautas</div></div>';
   if(!luz) return '<div class="semaforo-mini"><span class="muted">—</span></div>';
-  return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG: luz ' + luz + ' encendida"><div class="luz roja' + (luz === "rojo" ? " encendida" : "") + '"></div><div class="luz ambar' + (luz === "ambar" ? " encendida" : "") + '"></div><div class="luz verde' + (luz === "verde" ? " encendida" : "") + '"></div><div class="num">' + esc(String(num(w.borg))) + ' · ' + borgLuzTexto(luz) + '</div></div>'; }
+  return '<div class="semaforo-mini" role="img" aria-label="Semáforo BORG: luz ' + luz + ' encendida"><div class="luz ' + luz + ' encendida"></div></div>'; }
 $("btn-guardar-marcha").addEventListener("click", function(){
   var w = { id: uid(), fecha: (wFechaAuto && $("w-fecha").value === wFechaAuto) ? hoyISO() : ($("w-fecha").value || hoyISO()), reposo: $("w-reposo").value.trim(), medio: $("w-medio").value.trim(), maximo: $("w-maximo").value.trim(), borg: $("w-borg").value.trim(), minutos: $("w-minutos").value.trim(), km: $("w-km").value.trim(), comentarios: $("w-coment").value.trim() };
   if(!w.fecha){ toast("Pon la fecha de la marcha."); return; }
@@ -1581,6 +1636,26 @@ function renderWalks(){ var el = $("lista-marchas");
   el.innerHTML = '<div class="table-wrap"><table><tr><th>Fecha</th><th>Reposo</th><th>Medio</th><th>Máximo</th><th>BORG</th><th>Min</th><th>Km</th><th>Comentarios</th><th>Semáforo BORG</th><th></th></tr>' + rows + '</table></div>';
   Array.prototype.forEach.call(el.querySelectorAll("[data-del-walk]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar esta marcha?")) return; data.walks = data.walks.filter(function(w){ return w.id !== b.getAttribute("data-del-walk"); }); saveAll(); scheduleSheetSync(); toast("Marcha borrada."); renderAll(); }); }); }
 
+/* ---------- Tabla de marchas a pantalla completa (v1.60) ----------
+   Overlay CSS (position:fixed, z-index 70): nada de la API Fullscreen, que en
+   WebView es poco fiable. La MISMA tabla se mueve dentro del overlay (el nodo
+   #lista-marchas, no una copia): mismos datos, mismas columnas y los botones
+   de borrar siguen funcionando. Al cerrar, el nodo vuelve a su sitio exacto
+   en la tarjeta «Mis marchas». Atrás lo cierra como un modal más (popstate). */
+var overlayTablaAbierta = false, tablaPadre = null, tablaSiguiente = null;
+function abrirTablaCompleta(){
+  var lista = $("lista-marchas"), ov = $("overlay-tabla"), cuerpo = $("overlay-tabla-cuerpo");
+  if(!lista || !ov || !cuerpo || overlayTablaAbierta) return;
+  tablaPadre = lista.parentNode; tablaSiguiente = lista.nextSibling;
+  cuerpo.appendChild(lista);
+  ov.hidden = false; overlayTablaAbierta = true; ov.scrollTop = 0;
+}
+function cerrarTablaCompleta(){
+  var lista = $("lista-marchas"), ov = $("overlay-tabla");
+  if(!ov || !overlayTablaAbierta) return;
+  if(lista && tablaPadre) tablaPadre.insertBefore(lista, tablaSiguiente);
+  ov.hidden = true; overlayTablaAbierta = false; tablaPadre = null; tablaSiguiente = null;
+}
 /* ---------- Gráficos de evolución (SVG propio, sin librerías, funciona sin internet) ---------- */
 var chartRange = { tension: "semana", andar: "semana" };
 /* v1.27: franja personalizada de tensión (desde/hasta) y bloques plegables de Tensión y Andar. */
@@ -1588,7 +1663,7 @@ var tensionRangoPersonalizado = { desde: "", hasta: "" };
 /* v1.45 (E6): la lista ya no depende de la franja de la gráfica. */
 var mostrarTodasTensiones = false;
 var tensionApuntarAbierto = false;
-var andarPautaAbierta = false, andarApuntarAbierto = false, andarEstadisticasAbiertas = false;
+var andarApuntarAbierto = false, andarEstadisticasAbiertas = false;
 function tensionFiltradas(){
   var r = chartRange.tension;
   var todas = data.tensions.slice().sort(function(a,b){ return new Date(a.fecha) - new Date(b.fecha); });
@@ -1632,14 +1707,6 @@ function desplegarTensionManual(abrir){
   btn.classList.toggle("abierto", tensionManualAbierto);
   btn.setAttribute("aria-expanded", tensionManualAbierto ? "true" : "false");
   btn.textContent = tensionManualAbierto ? "✏️ Apuntar a mano ▴" : "✏️ Apuntar a mano";
-}
-function desplegarAndarPauta(abrir){
-  andarPautaAbierta = (abrir == null) ? !andarPautaAbierta : !!abrir;
-  var b = $("andar-pauta-bloque"), btn = $("btn-andar-pauta");
-  if(!b || !btn) return;
-  b.hidden = !andarPautaAbierta;
-  btn.classList.toggle("abierto", andarPautaAbierta);
-  btn.setAttribute("aria-expanded", andarPautaAbierta ? "true" : "false");
 }
 function desplegarAndar(abrir){
   andarApuntarAbierto = (abrir == null) ? !andarApuntarAbierto : !!abrir;
@@ -1691,9 +1758,11 @@ $("btn-tension-apuntar").addEventListener("click", function(){ desplegarTension(
 $("btn-tension-manual").addEventListener("click", function(){ desplegarTensionManual(); });
 /* v1.57: desactivar los avisos locales (solo en la app nativa). */
 $("link-desactivar-avisos").addEventListener("click", function(ev){ ev.preventDefault(); desactivarAvisosLocales(); });
-$("btn-andar-pauta").addEventListener("click", function(){ desplegarAndarPauta(); });
 $("btn-andar-apuntar").addEventListener("click", function(){ desplegarAndar(); });
 $("btn-andar-estadisticas").addEventListener("click", function(){ desplegarAndarEstadisticas(); });
+$("btn-andar-tension").addEventListener("click", function(){ goto("tension"); });
+$("btn-tabla-completa").addEventListener("click", abrirTablaCompleta);
+$("btn-cerrar-tabla").addEventListener("click", cerrarTablaCompleta);
 function chartDays(range){ return range === "mes" ? 30 : 7; }
 function chartEmpty(msg){ return '<p class="chart-empty">📊 ' + esc(msg) + '</p>'; }
 function svgLine(points, color){ return '<polyline points="' + points.map(function(p){ return p[0] + "," + p[1]; }).join(" ") + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'; }
@@ -2557,7 +2626,6 @@ function renderHoy(){ var hoy = hoyISO();
   /* v1.27: rueda de las pastillas que quedan por tomar hoy. */
   crearRueda($("hoy-pastilla-rueda"), dosisRestantes.map(function(d){ return '<span class="rueda-hora">' + esc(d.hora) + '</span><span class="rueda-nombre">' + esc(d.med.nombre) + (d.med.dosis ? ' <span class="rueda-pulso">· ' + esc(d.med.dosis) + '</span>' : '') + '</span>'; }), "pastilla");
   $("hoy-pauta-vacia").innerHTML = pautaCompleta() ? "" : '<div class="warnbox"><b>👋 Empieza por tu pauta.</b><br>Rellena una sola vez tus valores (ejercicio, pulso, BORG…) y queda guardada. <button class="btn small" onclick="irAPautaMedica()" style="margin-top:10px">Rellenar mi pauta</button></div>';
-  $("andar-pauta").innerHTML = '<h2>Tu pauta</h2>' + pautaResumenHTML() + (pautaCompleta() ? "" : '<p><button class="btn secondary" onclick="irAPautaMedica()">Rellenar mi pauta</button></p>');
 }
 /* ---------- Informe para el médico (v1.48: periodo + WhatsApp) ---------- */
 /* Periodo del informe. Por defecto «Último mes», que es lo que el informe
@@ -2624,7 +2692,6 @@ function informeMedicoTexto(){
   if(data.pills.length) data.pills.forEach(function(m){ L.push(m.nombre + " " + (m.dosis || "") + " — " + (m.horas || []).join(", ")); });
   else L.push("Sin medicinas en el pastillero.");
   L.push("");
-  L.push("Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.");
   return L.join("\n");
 }
 $("btn-compartir-whatsapp").addEventListener("click", function(){
@@ -2648,7 +2715,7 @@ function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
     + '<h3>Últimas marchas</h3>' + (walks ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Reposo</th><th>Medio</th><th>Máximo</th><th>BORG</th><th>Min</th><th>Km</th><th>Comentarios</th></tr>'+walks+'</table></div>' : '<p class="muted">Sin marchas apuntadas en este periodo.</p>')
     + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión en este periodo.</p>')
     + '<h3>Episodios</h3>' + (inf.episodios.length ? '<ul class="tight">' + inf.episodios.map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados en este periodo.</p>')
-    + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>' + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'; }
+    + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>'; }
 function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); actualizarResumenPautaTension(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); actualizarLineaAvisosLocales(); renderMisDatos(); updatePreguntaUI(); }
 </script>
 <script>
@@ -3169,6 +3236,9 @@ $("btn-guardar-pasos").addEventListener("click", function(){ if(addPasos($("paso
 $("btn-hub-tension").addEventListener("click", function(){ goto("tension"); desplegarTension(true); });
 $("btn-hub-estadisticas").addEventListener("click", function(){ goto("andar"); desplegarAndarEstadisticas(true); });
 $("btn-hub-medico").addEventListener("click", function(){ goto("medico"); });
+$("btn-hub-pautas").addEventListener("click", function(){ goto("pautas"); });
+$("btn-hub-pastillero").addEventListener("click", function(){ goto("pastillero"); });
+$("btn-hub-programa").addEventListener("click", function(){ goto("programa"); });
 function irACardMisDatos(id, campo){ var c = $(id); if(c){ c.hidden = false; c.scrollIntoView({ behavior: "smooth", block: "start" }); } if(campo){ var f = $(campo); if(f) setTimeout(function(){ f.focus(); }, 400); } }
 $("btn-hub-peso").addEventListener("click", function(){ irACardMisDatos("card-peso", "peso-kg"); });
 $("btn-hub-sueno").addEventListener("click", function(){ irACardMisDatos("card-sueno", "sueno-horas"); });
@@ -4016,7 +4086,7 @@ function cerrarAsistente(destino){
 function reabrirAsistenteSiToca(){
   if(!asistenteEstado.abierto) return;
   var hv = (location.hash || "").replace("#", "");
-  if(hv && VIEWS.some(function(v){ return v[0] === hv; })) return;
+  if(hv && TODAS_VISTAS.indexOf(hv) >= 0) return;
   abrirAsistente();
 }
 function asistenteNavHTML(paso, saltarTxt){
@@ -4273,7 +4343,7 @@ function initAsistente(){
   armarGuardiaSalida();
   /* Abrir en una vista concreta si la URL trae #vista (por ejemplo, al tocar un aviso push). */
   var hv = (location.hash || "").replace("#", "");
-  if(hv && VIEWS.some(function(v){ return v[0] === hv; })) goto(hv);
+  if(hv && TODAS_VISTAS.indexOf(hv) >= 0) goto(hv);
   reabrirAsistenteSiToca(); /* v1.45 (asistente): si se cerró con el asistente abierto, se retoma (salvo que la URL pida otra vista) */
 })();
 </script>
