@@ -28,8 +28,9 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="Corazón Fuerte" />
+<meta name="google-site-verification" content="Tj32COZfoXzLUMCOExFf5HOoU7sXsqkUqvzHGPHWV_M" />
 <script>/* v1.19: aplica el aspecto guardado antes del primer pintado, para no ver un parpadeo. */
-try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");var _s=_d&&_d.skin||"actual";if(["actual","minimalista","azul","oscuro","pastel"].indexOf(_s)<0)_s="actual";var _t=localStorage.getItem("corazon-fuerte-tema");if(!_t)_t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-skin",_t==="dark"?"oscuro":_s);document.documentElement.setAttribute("data-theme",_t);}catch(e){document.documentElement.setAttribute("data-skin","actual");document.documentElement.setAttribute("data-theme","light");}</script>
+try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");var _s=_d&&_d.skin||"actual";if(["actual","minimalista","azul","oscuro","pastel"].indexOf(_s)<0)_s="actual";var _t=localStorage.getItem("corazon-fuerte-tema");if(!_t)_t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-skin",_t==="dark"?"oscuro":_s);document.documentElement.setAttribute("data-theme",_t);document.documentElement.setAttribute("data-densidad",(_d&&_d.compacta)?"compacta":"normal");}catch(e){document.documentElement.setAttribute("data-skin","actual");document.documentElement.setAttribute("data-theme","light");document.documentElement.setAttribute("data-densidad","normal");}</script>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -122,6 +123,30 @@ header.top .brand span a{color:var(--header-ink);text-decoration:underline;text-
 .iconbtn.sos .sos-tel{font-size:14px;line-height:1}
 .punto-conectado{width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);flex:none;align-self:center}
 main{max-width:720px;margin:0 auto;padding:14px 12px 16px}
+/* v1.57: vista compacta (Configuración → Aspecto → «Vista compacta»). No es un aspecto más: combina con cualquiera de los 5 aspectos. */
+html[data-densidad="compacta"] body{font-size:15px;line-height:1.45}
+html[data-densidad="compacta"] h1{font-size:20px}
+html[data-densidad="compacta"] h2{font-size:18px;margin-bottom:8px}
+html[data-densidad="compacta"] h3{font-size:16px;margin:12px 0 4px}
+html[data-densidad="compacta"] main{padding:10px 10px 12px}
+html[data-densidad="compacta"] .card{padding:12px;margin-bottom:10px;border-radius:16px}
+html[data-densidad="compacta"] .card-cabecera>.card-cuerpo{padding:12px}
+html[data-densidad="compacta"] .view-head{padding:12px;margin-bottom:10px}
+html[data-densidad="compacta"] .view-head h1{font-size:19px}
+html[data-densidad="compacta"] .view-head .ic{font-size:26px;padding:6px}
+html[data-densidad="compacta"] .view-head p{font-size:14px}
+html[data-densidad="compacta"] label{margin:10px 0 4px;font-size:15px}
+html[data-densidad="compacta"] input,html[data-densidad="compacta"] select,html[data-densidad="compacta"] textarea{font-size:15px;padding:9px 10px}
+html[data-densidad="compacta"] .btn{min-height:44px;padding:10px 14px;font-size:16px;margin-top:10px}
+html[data-densidad="compacta"] .btn.small{min-height:40px;font-size:15px;padding:8px 14px}
+html[data-densidad="compacta"] header.top{padding:6px 8px}
+html[data-densidad="compacta"] .logo-round{width:38px;height:38px}
+html[data-densidad="compacta"] .iconbtn{min-height:40px;min-width:38px;font-size:19px}
+html[data-densidad="compacta"] .drawer button{padding:10px 12px;font-size:16px}
+html[data-densidad="compacta"] .aviso-orientativo{padding:9px 11px;font-size:14px;margin-bottom:10px}
+html[data-densidad="compacta"] .titulo-hoy{font-size:20px;margin-bottom:10px}
+html[data-densidad="compacta"] .semaforo{padding:10px 8px;gap:8px}
+html[data-densidad="compacta"] .luz{width:44px;height:44px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin:0 0 16px;box-shadow:var(--shadow)}
 .view{display:none}
 .view.active{display:block}
@@ -137,6 +162,7 @@ main{max-width:720px;margin:0 auto;padding:14px 12px 16px}
 .c-pauta{background:linear-gradient(135deg,#2563EB,#1E40AF)}
 .c-andar{background:linear-gradient(135deg,#15803D,#166534)}
 .c-tension{background:linear-gradient(135deg,#C2410C,#9A3412)}
+.c-misdatos{background:linear-gradient(135deg,#0E7490,#155E75)}
 .c-pastillero{background:linear-gradient(135deg,#7C3AED,#5B21B6)}
 /* v1.31: Pastillero en un solo cuadro — la cabecera va dentro de la tarjeta. */
 .card-cabecera{padding:0;overflow:hidden}
@@ -304,7 +330,8 @@ footer a{color:var(--muted)}
 .fila-mini{flex:none;min-height:32px;padding:4px 12px;border-radius:999px;border:1.5px solid var(--link);background:var(--card);color:var(--link);font-weight:700;font-size:14px;cursor:pointer}
 .table-wrap.fit table{min-width:0}
 .thumb{max-width:100%;border-radius:12px;border:1px solid var(--line);margin-top:10px}
-.free-badge{background:var(--ok-bg);border:2px solid var(--green);border-radius:16px;padding:10px 14px;font-weight:800;margin:0 0 14px;text-align:center}
+.titulo-hoy{text-align:center;font-size:24px;margin:2px 0 14px}
+#hoy-revision .alert, #hoy-revision .warnbox{cursor:pointer}
 .chart-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}
 .chart-box svg{width:100%;height:auto;display:block}
 .chart-toggle{display:flex;gap:8px;margin:0 0 10px}
@@ -410,14 +437,14 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.56 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.57 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
 <!-- ============ HOY ============ -->
 <section class="view active" id="view-hoy">
-  <p class="free-badge" id="free-badge">Gratis</p>
-  <div class="card"><h2>☀️ Tu día <button type="button" class="info-btn" data-info-toggle="tu-dia-colores" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2><p data-info-for="tu-dia-colores" hidden class="info-text"><span style="color:var(--green)">✓ Verde:</span> registrado hoy.<br><span style="color:var(--red)">✗ Rojo:</span> aún sin registrar.<br><span style="color:var(--muted)">— Gris:</span> no hay nada que registrar.</p><ol class="rutina" id="hoy-rutina"></ol>
+  <h1 class="titulo-hoy">☀️ Tu día <button type="button" class="info-btn" data-info-toggle="tu-dia-colores" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h1>
+  <div class="card"><p data-info-for="tu-dia-colores" hidden class="info-text"><span style="color:var(--green)">✓ Verde:</span> registrado hoy.<br><span style="color:var(--red)">✗ Rojo:</span> aún sin registrar.<br><span style="color:var(--muted)">— Gris:</span> no hay nada que registrar.</p><ol class="rutina" id="hoy-rutina"></ol>
 <button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px">➕ Añadir Widget</button>
 <div id="selector-widgets" hidden style="margin-top:10px"></div></div>
   <div id="hoy-revision"></div>
@@ -473,6 +500,17 @@ footer a{color:var(--muted)}
     <div id="andar-donuts"></div>
     <p style="margin-top:12px"><a class="btn secondary" id="link-hoja-descargar" href="#" target="_blank" rel="noopener" style="display:none">Descargar la hoja (Excel)</a></p>
     </div></div>
+  <div class="card" id="card-preguntar-datos"><h2>💬 Pregúntale a tus datos</h2>
+    <p class="muted">Pregunta por tus marchas, tu tensión, tus pastillas o tu peso, por ejemplo «dime la tensión media de esta semana». Gemini te contesta solo con lo que has apuntado en la app. Si no hay datos, te lo dirá.</p>
+    <div id="pregunta-sin-clave" hidden><div class="warnbox"><b>Para preguntar necesitas tu clave de Gemini.</b><br>Es la misma clave de las fotos. Se guarda solo en este móvil.<br><br><button type="button" class="btn" id="btn-pregunta-ir-config">Ir a Configuración</button></div></div>
+    <div id="pregunta-form">
+      <label for="pregunta-texto">Tu pregunta</label>
+      <textarea id="pregunta-texto" placeholder="Por ejemplo: dime las pulsaciones medias que he tenido esta última semana"></textarea>
+      <p><button type="button" class="mic-btn" id="btn-voz-pregunta" style="display:none">🎤 Preguntar por voz</button></p>
+      <button class="btn" id="btn-preguntar">Preguntar</button>
+    </div>
+    <div id="pregunta-respuesta" style="margin-top:12px"></div>
+  </div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
 
@@ -489,6 +527,17 @@ footer a{color:var(--muted)}
   <div class="card"><h2>Mis registros</h2><div id="tension-aviso"></div><div id="lista-tensiones"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-tension-apuntar" aria-expanded="false"><span class="plegable-titulo">🩺 Apuntar tensión y pulso</span><span class="flecha" aria-hidden="true">▾</span></button>
     <div id="tension-apuntar-bloque" hidden>
+    <h3>Foto al tensiómetro <button type="button" class="info-btn" data-info-toggle="tension-foto" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h3>
+    <div data-info-for="tension-foto" hidden class="info-text">
+      <p style="margin-top:0">Haz una foto a la pantalla del tensiómetro y Gemini leerá la tensión y el pulso. Te los enseñará para que los confirmes antes de guardarlos. Nada se guarda sin tu confirmación.</p>
+      <p class="muted" id="foto-ayuda" style="margin-bottom:0"></p>
+    </div>
+    <label class="btn green" for="foto-tensiometro" style="margin-top:6px">📷 Foto al tensiómetro</label>
+    <input id="foto-tensiometro" type="file" accept="image/*" capture="environment" style="display:none">
+    <div id="foto-preview"></div>
+    <div id="foto-resultado"></div>
+    <p style="margin-top:16px"><button type="button" class="btn secondary" id="btn-tension-manual" aria-expanded="false">✏️ Apuntar a mano</button></p>
+    <div id="tension-manual-bloque" hidden>
     <h3>Apuntar a mano <button type="button" class="info-btn" data-info-toggle="tension-manual" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h3>
     <p data-info-for="tension-manual" hidden class="info-text">Apunta la tensión y el pulso a mano, las veces que quieras. Quedan guardados en «Mis registros» y, si conectas Google, también en tu Google Drive.</p>
     <label for="t-fecha">Fecha y hora</label><input id="t-fecha" type="datetime-local">
@@ -502,16 +551,68 @@ footer a{color:var(--muted)}
     <button type="button" class="mic-btn" id="btn-voz-obs" style="display:none">🎤 Dictar observaciones</button>
     <button type="button" class="mic-btn" id="btn-voz-tension" style="display:none">🎤 Dictar tensión y pulso</button>
     <button class="btn" id="btn-guardar-tension">Guardar tensión y pulso</button>
-    <h3 style="margin-top:18px">Foto al tensiómetro <button type="button" class="info-btn" data-info-toggle="tension-foto" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h3>
-    <div data-info-for="tension-foto" hidden class="info-text">
-      <p style="margin-top:0">Haz una foto a la pantalla del tensiómetro y Gemini leerá la tensión y el pulso. Te los enseñará para que los confirmes antes de guardarlos. Nada se guarda sin tu confirmación.</p>
-      <p class="muted" id="foto-ayuda" style="margin-bottom:0"></p>
     </div>
-    <label class="btn green" for="foto-tensiometro" style="margin-top:6px">📷 Foto al tensiómetro</label>
-    <input id="foto-tensiometro" type="file" accept="image/*" capture="environment" style="display:none">
-    <div id="foto-preview"></div>
-    <div id="foto-resultado"></div>
     </div>
+  </div>
+  <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
+</section>
+
+<!-- ============ MIS DATOS (v1.57) ============ -->
+<section class="view" id="view-misdatos">
+  <div class="view-head c-misdatos"><span class="ic">📊</span><div><h1>Mis datos</h1><p>Todo lo que apuntas de tu salud, en un solo sitio.</p></div></div>
+  <div class="card"><h2>¿Qué quieres apuntar?</h2>
+    <p><button class="btn" id="btn-hub-grabar">🚶 Grabar caminata</button></p>
+    <p><button class="btn secondary" id="btn-hub-tension">🩺 Tomar la tensión</button></p>
+    <p><button class="btn secondary" id="btn-hub-importar">📥 Importar datos de salud</button></p>
+    <p><button class="btn secondary" id="btn-hub-peso">⚖️ Mi peso</button></p>
+    <p><button class="btn secondary" id="btn-hub-sueno">😴 Mi sueño</button></p>
+    <p><button class="btn secondary" id="btn-hub-spo2">🫁 Oxígeno (SpO2)</button></p>
+    <p><button class="btn secondary" id="btn-hub-pasos">👣 Mis pasos</button></p>
+    <p><button class="btn secondary" id="btn-hub-estadisticas">📊 Mis estadísticas</button></p>
+    <p><button class="btn secondary" id="btn-hub-medico">👨‍⚕️ Para el médico</button></p>
+  </div>
+  <div class="card" id="card-grabar-caminata" hidden><h2>🚶 Grabar caminata</h2>
+    <p class="muted">El móvil mide la distancia mientras andas. Al parar, completa el BORG y el pulso y guarda la marcha.</p>
+    <p class="muted">En esta versión web, si se apaga la pantalla la grabación puede tener huecos. En la app de Google Play graba aunque el móvil esté en el bolsillo.</p>
+    <p style="font-size:22px;font-weight:800"><span id="grab-tiempo">00:00</span> · <span id="grab-km">0,00 km</span></p>
+    <p><button class="btn green" id="btn-grabar-empezar">▶ Empezar a grabar</button></p>
+    <p><button class="btn" id="btn-grabar-parar" hidden>⏹ Parar y guardar la marcha</button></p>
+    <p class="muted" id="grab-estado"></p>
+  </div>
+  <div class="card" id="card-peso"><h2>⚖️ Mi peso</h2>
+    <p class="muted">Pésate siempre a la misma hora, por ejemplo por la mañana. Solo se guarda el número: nada de consejos.</p>
+    <div class="frow"><div><label for="peso-fecha">Fecha</label><input id="peso-fecha" type="date"></div>
+    <div><label for="peso-kg">Peso (kg)</label><input id="peso-kg" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="Ej.: 78,5"></div></div>
+    <button class="btn" id="btn-guardar-peso">Guardar peso</button>
+    <p id="peso-cambio" style="margin-top:10px"></p>
+    <div id="peso-historial"></div>
+    <div class="chart-box" id="grafico-peso" style="margin-top:10px"></div>
+  </div>
+  <div class="card" id="card-sueno"><h2>😴 Mi sueño</h2>
+    <p class="muted">Cuánto dormiste y cómo dormiste, cada día.</p>
+    <div class="frow"><div><label for="sueno-fecha">Fecha</label><input id="sueno-fecha" type="date"></div>
+    <div><label for="sueno-horas">Horas dormidas</label><input id="sueno-horas" type="number" min="0" max="16" step="0.5" inputmode="decimal" placeholder="Ej.: 7,5"></div></div>
+    <label for="sueno-calidad">¿Cómo dormiste?</label>
+    <select id="sueno-calidad"><option value="">Elige…</option><option>Muy mal</option><option>Mal</option><option>Regular</option><option>Bien</option><option>Muy bien</option></select>
+    <button class="btn" id="btn-guardar-sueno">Guardar sueño</button>
+    <div id="sueno-historial"></div>
+    <div class="chart-box" id="grafico-sueno" style="margin-top:10px"></div>
+  </div>
+  <div class="card" id="card-spo2"><h2>🫁 Oxígeno (SpO2)</h2>
+    <p class="muted">El porcentaje de oxígeno en sangre, si lo mides con tu aparato.</p>
+    <div class="frow"><div><label for="spo2-fecha">Fecha</label><input id="spo2-fecha" type="date"></div>
+    <div><label for="spo2-valor">Oxígeno (%)</label><input id="spo2-valor" type="number" min="70" max="100" inputmode="numeric" placeholder="Ej.: 97"></div></div>
+    <button class="btn" id="btn-guardar-spo2">Guardar oxígeno</button>
+    <div id="spo2-historial"></div>
+    <div class="chart-box" id="grafico-spo2" style="margin-top:10px"></div>
+  </div>
+  <div class="card" id="card-pasos"><h2>👣 Mis pasos</h2>
+    <p class="muted">Los pasos de cada día, como te los cuenta tu móvil o tu reloj.</p>
+    <div class="frow"><div><label for="pasos-fecha">Fecha</label><input id="pasos-fecha" type="date"></div>
+    <div><label for="pasos-num">Pasos</label><input id="pasos-num" type="number" min="0" max="100000" inputmode="numeric" placeholder="Ej.: 8000"></div></div>
+    <button class="btn" id="btn-guardar-pasos">Guardar pasos</button>
+    <div id="pasos-historial"></div>
+    <div class="chart-box" id="grafico-pasos" style="margin-top:10px"></div>
   </div>
   <p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>
 </section>
@@ -522,6 +623,7 @@ footer a{color:var(--muted)}
     <div class="view-head c-pastillero"><span class="ic">💊</span><div><h1>Pastillero</h1><p>Tus medicinas, con sus horas y su recordatorio.</p></div></div>
     <div class="card-cuerpo">
     <div id="hoy-avisos"></div>
+    <p id="linea-avisos-activos" class="muted" hidden style="margin-top:6px">Avisos activados ✓ <small>(<a href="#" id="link-desactivar-avisos">pulsa aquí para desactivar las notificaciones</a>)</small></p>
     <p data-info-for="avisos-hoy" hidden class="info-text">Marca cada toma cuando te la tomes. El recordatorio te avisa de cada pastilla mientras la app está abierta; si la cierras, al abrirla verás las tomas pendientes. Los avisos con la app cerrada se activan en <a href="#" data-ir-config>Configuración</a>.</p>
     <div id="lista-pastillero"></div>
     </div>
@@ -801,6 +903,8 @@ footer a{color:var(--muted)}
       <button type="button" class="skin-opcion" data-skin="oscuro" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#121826"></i><i style="background:#1E2637"></i><i style="background:#FF6B7A"></i></span><span class="skin-nombre"><b>Oscuro elegante</b><span>Fondo oscuro, de noche</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
       <button type="button" class="skin-opcion" data-skin="pastel" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFF8F0"></i><i style="background:#FFFFFF"></i><i style="background:#C2410C"></i></span><span class="skin-nombre"><b>Pastel cálido</b><span>Crema y tonos suaves</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
     </div>
+    <p style="margin-top:16px"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer"><input type="checkbox" id="chk-compacta" style="width:26px;height:26px;flex:none;margin-top:2px"> Vista compacta (más pequeña)</label></p>
+    <p class="muted" style="margin-top:4px">Todo más pequeño: botones, texto y huecos. Vale con cualquiera de los aspectos de arriba. La vista grande sigue siendo la de siempre.</p>
   </div>
   </div>
   <div class="card" id="card-dia-inicio"><h2>🌅 Tu día empieza a las</h2>
@@ -861,7 +965,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.56</p>
+    <p class="muted">Versión v1.57</p>
+    <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto, y grabar la caminata con el móvil.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
     <p class="muted"><b>Qué cambia en la v1.56:</b><br>· Arreglo: al mover una tabla hacia los lados ya no cambia de pantalla.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
@@ -886,7 +991,7 @@ footer a{color:var(--muted)}
 </main>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.56 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.57 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -907,8 +1012,8 @@ footer a{color:var(--muted)}
 </div></div>
 <script>
 "use strict";
-/* Corazón Fuerte — v1.47. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.56";
+/* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
+var APP_VERSION = "v1.57";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -920,6 +1025,10 @@ var DRIVE_LAST_KEY = "corazon-fuerte-drive-ultima";
 var SHEET_TITLE = "Corazón Fuerte - Control";
 var SHEET_TAB = "Andar";
 var SHEET_TAB_TENSION = "Tensión"; /* v1.39: pestaña de tensiones en la misma hoja */
+var SHEET_TAB_PESO = "Peso"; /* v1.57: pestañas de Mis datos */
+var SHEET_TAB_SUENO = "Sueño";
+var SHEET_TAB_SPO2 = "Oxígeno";
+var SHEET_TAB_PASOS = "Pasos";
 var SHEET_ID_KEY = "corazon-fuerte-sheet-id";
 var SHEET_URL_KEY = "corazon-fuerte-sheet-url";
 var SHEET_LAST_KEY = "corazon-fuerte-sheet-ultima";
@@ -999,7 +1108,7 @@ function toastAccion(msg, etiqueta, fn){
   toastTimer = setTimeout(function(){ t.style.display = "none"; }, 6000);
 }
 /* ---------- Datos ---------- */
-function datosVacios(){ return { skin:"actual", consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
+function datosVacios(){ return { skin:"actual", compacta:false, consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], peso:[], sueno:[], spo2:[], pasos:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
 /* v1.36: un estado solo tiene contenido real si hay pastillas, marchas,
    tensiones o algún campo de la pauta rellenado. Un objeto pauta vacío {}
    es truthy en JS, así que no basta con comprobar que exista: eso aceptaba
@@ -1015,7 +1124,7 @@ function sanearDatos(d){
   /* v1.45: la migración de datos viejos vive aquí para usarla también al
      cargar de Drive y al importar una copia, no solo al cargar en local. */
   if(!d || typeof d !== "object") return datosVacios();
- if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; if(!d.pauta) d.pauta = datosVacios().pauta; /* v1.46: rellenar las claves de pauta que falten en datos viejos (pauta de tensión nueva) con su valor vacío, sin tocar lo guardado */ var _pv = datosVacios().pauta; Object.keys(_pv).forEach(function(k){ if(d.pauta[k] == null) d.pauta[k] = _pv[k]; }); ["walks","tensions","pills","episodios","compra"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
+ if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; d.compacta = d.compacta === true; /* v1.57: vista compacta (Ligero), apagada por defecto */ if(!d.pauta) d.pauta = datosVacios().pauta; /* v1.46: rellenar las claves de pauta que falten en datos viejos (pauta de tensión nueva) con su valor vacío, sin tocar lo guardado */ var _pv = datosVacios().pauta; Object.keys(_pv).forEach(function(k){ if(d.pauta[k] == null) d.pauta[k] = _pv[k]; }); ["walks","tensions","pills","episodios","compra","peso","sueno","spo2","pasos"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
     if(d.semaforo.limiteSaturadas == null) d.semaforo.limiteSaturadas = "";
     if(d.semaforo.limiteAzucares == null) d.semaforo.limiteAzucares = "5"; /* límite nuevo en v1.21: azúcares 5 g por 100 g */
     delete d.semaforo.objetivoLdl; delete d.semaforo.objetivoTrig; /* v1.17: los objetivos de LDL y triglicéridos ya no existen */
@@ -1065,7 +1174,7 @@ window.addEventListener("pagehide", function(){ flushDriveAlSalir(); flushSheets
 
 /* ---------- Navegación ---------- */
 var VIEWS = [
-  ["hoy","❤️","Hoy"],["andar","🚶","Andar"],["tension","🩺","Tensión y pulso"],
+  ["hoy","❤️","Hoy"],["andar","🚶","Andar"],["tension","🩺","Tensión y pulso"],["misdatos","📊","Mis datos"],
   ["pastillero","💊","Pastillero"],["alimentacion","🥗","Alimentación"],["dolor","🚨","Dolor en el pecho"],["programa","📖","Mi programa"],
   ["medico","👨‍⚕️","Para el médico"],["pautas","📋","Pautas"],["config","⚙️","Configuración"]
 ];
@@ -1204,9 +1313,13 @@ $("scrim").addEventListener("click", closeDrawer);
 /* ---------- Tema claro / oscuro ---------- */
 /* ---------- Aspecto (v1.19) ---------- */
 function isNight(){ var t = localStorage.getItem(THEME_KEY); if(!t){ t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } return t === "dark"; }
-function applyTheme(){ var night = isNight(); var skin = (data && data.skin) || "actual"; if(SKINS.indexOf(skin) < 0) skin = "actual"; document.documentElement.setAttribute("data-theme", night ? "dark" : "light"); document.documentElement.setAttribute("data-skin", night ? "oscuro" : skin); $("btn-theme").textContent = night ? "☀️" : "🌙"; updateSkinPicker(); }
-function updateSkinPicker(){ var cur = (data && data.skin) || "actual"; Array.prototype.forEach.call(document.querySelectorAll(".skin-opcion"), function(b){ b.setAttribute("aria-checked", b.getAttribute("data-skin") === cur ? "true" : "false"); }); }
+function applyTheme(){ var night = isNight(); var skin = (data && data.skin) || "actual"; if(SKINS.indexOf(skin) < 0) skin = "actual"; document.documentElement.setAttribute("data-theme", night ? "dark" : "light"); document.documentElement.setAttribute("data-skin", night ? "oscuro" : skin); $("btn-theme").textContent = night ? "☀️" : "🌙"; applyDensity(); updateSkinPicker(); }
+/* v1.57: vista compacta (Ligero). No es un aspecto: combina con cualquiera de los 5. */
+function applyDensity(){ document.documentElement.setAttribute("data-densidad", (data && data.compacta) ? "compacta" : "normal"); var c = $("chk-compacta"); if(c) c.checked = !!(data && data.compacta); }
+function setCompacta(on){ data.compacta = !!on; saveAll(); applyDensity(); toast(on ? "Vista compacta activada." : "Vista grande activada."); }
+function updateSkinPicker(){ var cur = (data && data.skin) || "actual"; Array.prototype.forEach.call(document.querySelectorAll(".skin-opcion"), function(b){ b.setAttribute("aria-checked", b.getAttribute("data-skin") === cur ? "true" : "false"); }); var c = $("chk-compacta"); if(c) c.checked = !!(data && data.compacta); }
 function setSkin(s){ if(SKINS.indexOf(s) < 0) s = "actual"; data.skin = s; localStorage.setItem(THEME_KEY, "light"); saveAll(); applyTheme(); toast("Aspecto cambiado."); }
+$("chk-compacta").addEventListener("change", function(){ setCompacta(this.checked); });
 $("btn-theme").addEventListener("click", function(){ var t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"; localStorage.setItem(THEME_KEY, t); applyTheme(); });
 Array.prototype.forEach.call(document.querySelectorAll(".skin-opcion"), function(b){ b.addEventListener("click", function(){ setSkin(b.getAttribute("data-skin")); }); });
 /* Ventana emergente de información (v1.20): al pulsar una (i) se abre un recuadro con una punta hacia la (i), el texto y una × para cerrar. Solo una abierta a la vez; se cierra con la ×, tocando fuera, pulsando la misma (i) o con Escape. El texto se copia del elemento [data-info-for] en el momento de abrir, así que siempre es el actual. */
@@ -1368,7 +1481,7 @@ $("btn-guardar-pauta-tension").addEventListener("click", function(){
   if((sMax != null && sMin != null && sMin > sMax) || (dMax != null && dMin != null && dMin > dMax)){ toast("La tensión mínima no puede ser mayor que la máxima."); return; }
   guardarPautaCompleta();
   $("pauta-tension-guardada").textContent = "Tu pauta de tensión queda guardada. Si tu médico te la cambia, la cambias aquí.";
-  toast("Pauta de tensión guardada."); actualizarResumenPautaTension(); renderAll(); });
+  toast("Pauta de tensión guardada."); actualizarResumenPautaTension(); var _dpt = $("det-pauta-tension"); if(_dpt) _dpt.open = false; renderAll(); });
 /* ---------- Mi pauta plegada (v1.24): un solo bloque con luz de estado ---------- */
 var pautaDesplegada = false;
 function campoLleno(v){ return String(v == null ? "" : v).trim() !== ""; }
@@ -1513,6 +1626,17 @@ function desplegarTension(abrir){
   btn.classList.toggle("abierto", tensionApuntarAbierto);
   btn.setAttribute("aria-expanded", tensionApuntarAbierto ? "true" : "false");
 }
+/* v1.57: el formulario a mano queda escondido detrás del botón «Apuntar a mano»; la foto va primero. */
+var tensionManualAbierto = false;
+function desplegarTensionManual(abrir){
+  tensionManualAbierto = (abrir == null) ? !tensionManualAbierto : !!abrir;
+  var b = $("tension-manual-bloque"), btn = $("btn-tension-manual");
+  if(!b || !btn) return;
+  b.hidden = !tensionManualAbierto;
+  btn.classList.toggle("abierto", tensionManualAbierto);
+  btn.setAttribute("aria-expanded", tensionManualAbierto ? "true" : "false");
+  btn.textContent = tensionManualAbierto ? "✏️ Apuntar a mano ▴" : "✏️ Apuntar a mano";
+}
 function desplegarAndarPauta(abrir){
   andarPautaAbierta = (abrir == null) ? !andarPautaAbierta : !!abrir;
   var b = $("andar-pauta-bloque"), btn = $("btn-andar-pauta");
@@ -1568,6 +1692,9 @@ $("btn-mis-datos").addEventListener("click", function(){ desplegarMisDatos(); })
 $("btn-aspecto").addEventListener("click", function(){ desplegarAspecto(); });
 $("btn-google-plegable").addEventListener("click", function(){ desplegarGoogle(); });
 $("btn-tension-apuntar").addEventListener("click", function(){ desplegarTension(); });
+$("btn-tension-manual").addEventListener("click", function(){ desplegarTensionManual(); });
+/* v1.57: desactivar los avisos locales (solo en la app nativa). */
+$("link-desactivar-avisos").addEventListener("click", function(ev){ ev.preventDefault(); desactivarAvisosLocales(); });
 $("btn-andar-pauta").addEventListener("click", function(){ desplegarAndarPauta(); });
 $("btn-andar-apuntar").addEventListener("click", function(){ desplegarAndar(); });
 $("btn-andar-estadisticas").addEventListener("click", function(){ desplegarAndarEstadisticas(); });
@@ -1771,6 +1898,7 @@ function initVoz(){
   var bT = $("btn-voz-tension"), bO = $("btn-voz-obs");
   if(bT) bT.style.display = "inline-flex";
   if(bO) bO.style.display = "inline-flex";
+  var bP = $("btn-voz-pregunta"); if(bP){ bP.style.display = "inline-flex"; bP.addEventListener("click", dictarPregunta); }
   if(bT) bT.addEventListener("click", function(){
     dictar(function(txt){
       var nums = palabrasANumero(txt);
@@ -2398,7 +2526,22 @@ function renderRutina(){
 $("btn-anadir-widget").addEventListener("click", function(){ var box = $("selector-widgets"); if(box){ box.hidden = !box.hidden; renderSelectorWidgets(); } });
 function renderHoy(){ var hoy = hoyISO();
   renderRutina();
-  $("hoy-revision").innerHTML = reviewWarningHTML();
+  /* v1.57 (lote 13): el aviso de revisión en Hoy se puede tocar entero: lleva a Pautas con la pauta médica abierta, para cambiar la fecha o quitarla (al quitarla, el aviso desaparece). */
+  var hr = $("hoy-revision");
+  hr.innerHTML = reviewWarningHTML();
+  var tarjetaAviso = hr.querySelector(".alert, .warnbox");
+  if(tarjetaAviso){
+    tarjetaAviso.setAttribute("role", "button");
+    tarjetaAviso.setAttribute("tabindex", "0");
+    tarjetaAviso.setAttribute("aria-label", "Cambiar la fecha de revisión en tu pauta");
+    var pista = document.createElement("div");
+    pista.className = "muted";
+    pista.style.marginTop = "8px";
+    pista.textContent = "👉 Toca aquí para cambiar la fecha en tu pauta.";
+    tarjetaAviso.appendChild(pista);
+    tarjetaAviso.addEventListener("click", function(){ irAPautaMedica(); });
+    tarjetaAviso.addEventListener("keydown", function(ev){ if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); irAPautaMedica(); } });
+  }
   var pr = $("pauta-revision-aviso"); if(pr) pr.innerHTML = reviewWarningHTML();
   var andado = data.walks.some(function(w){ return w.fecha === hoy; });
   $("hoy-andar").innerHTML = andado ? '<p><span class="pill">✅ Marcha de hoy apuntada</span></p>' : '<div class="card"><h2>🚶 ¿Has andado hoy?</h2><p><span class="pill warn">⏳ Hoy todavía no has apuntado la marcha</span></p><button class="btn" onclick="pedirExpandir(\'andar\');goto(\'andar\')">Apuntar la marcha de hoy</button></div>';
@@ -2510,7 +2653,7 @@ function renderMedico(){ var p = data.pauta; var el = $("resumen-medico");
     + '<h3>Últimas tensiones</h3>' + (tens ? '<div class="table-wrap"><table><tr><th>Fecha</th><th>Tensión</th><th>Pulso</th><th>Observaciones</th></tr>'+tens+'</table></div>' : '<p class="muted">Sin registros de tensión en este periodo.</p>')
     + '<h3>Episodios</h3>' + (inf.episodios.length ? '<ul class="tight">' + inf.episodios.map(function(e){ return '<li><b>'+fmtFechaHora(e.fecha)+'</b> — '+esc(e.texto)+'</li>'; }).join("") + '</ul>' : '<p class="muted">Sin episodios apuntados en este periodo.</p>')
     + '<h3>Pastillero</h3>' + (data.pills.length ? '<ul class="tight">' + data.pills.map(function(m){ return '<li><b>'+esc(m.nombre)+'</b> ' + esc(m.dosis||"") + ' — ' + esc(m.horas.join(", ")) + '</li>'; }).join("") + '</ul>' : '<p class="muted">Sin medicinas en el pastillero.</p>') + '<p class="muted"><small>Los cálculos y gráficas mostrados son orientativos y se basan en los datos introducidos. Ante cualquier duda sobre tu salud, acude a tu médico.</small></p>' + '<p class="muted"><small>Esta app es una herramienta de apoyo y seguimiento personal. Los resultados no constituyen un diagnóstico; consulta siempre con tu especialista.</small></p>' + '<p class="aviso-orientativo">⚠️ Datos meramente orientativos. Ante cualquier duda, consulta con tu médico.</p>'; }
-function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); actualizarResumenPautaTension(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); }
+function renderAll(){ renderHoy(); renderWalks(); renderTensions(); actualizarTensionEstadisticas(); renderPills(); renderAvisosHoy(); renderEpisodios(); renderSemaforo(); renderCompra(); renderMedico(); renderCharts(); actualizarResumenPautaTension(); updateDriveUI(); updateSheetsUI(); updateKeyUI(); updatePushUI(); updateRecetaUI(); updateConsentUI(); updateAsistenteUI(); actualizarLineaAvisosLocales(); renderMisDatos(); updatePreguntaUI(); }
 </script>
 <script>
 "use strict";
@@ -2669,9 +2812,9 @@ async function loadFromDrive(){
       var selloRemoto = remote.actualizado || f.modifiedTime || null;
       if(selloLocal && selloRemoto && datosConContenido(data)){
         var tL = Date.parse(selloLocal), tR = Date.parse(selloRemoto);
-        if(!isNaN(tL) && !isNaN(tR) && tL > tR){ await saveToDrive(false); return false; }
+        if(!isNaN(tL) && !isNaN(tR) && tL > tR){ await saveToDrive(false); trasCargarDatosAvisos(); return false; }
       }
-      data = sanearDatos(remote); saveLocal(true); renderAll(); sincronizarRuedaDiaInicio(); return true;
+      data = sanearDatos(remote); saveLocal(true); renderAll(); sincronizarRuedaDiaInicio(); trasCargarDatosAvisos(); return true;
     }
     return false;
   }catch(e){ return false; } }
@@ -2693,6 +2836,11 @@ function tensionSheetValues(){ var rows = [["Fecha y hora","Sistólica","Diastó
   /* v1.39: TODAS las tensiones, de la más antigua a la más reciente, para que la primera sincronización importe lo ya grabado. */
   data.tensions.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(t){ rows.push([fmtFechaHora(t.fecha), t.sistolica||"", t.diastolica||"", t.pulso||"", t.origen==="foto" ? "Foto al tensiómetro" : "A mano", t.observaciones||""]); });
   return rows; }
+/* v1.57: pestañas de Mis datos (de la más antigua a la más reciente). */
+function pesoSheetValues(){ var rows = [["Fecha","Peso (kg)"]]; data.peso.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.kg||""]); }); return rows; }
+function suenoSheetValues(){ var rows = [["Fecha","Horas","Calidad"]]; data.sueno.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.horas||"", x.calidad||""]); }); return rows; }
+function spo2SheetValues(){ var rows = [["Fecha","Oxígeno (%)"]]; data.spo2.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.spo2||""]); }); return rows; }
+function pasosSheetValues(){ var rows = [["Fecha","Pasos"]]; data.pasos.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.pasos||""]); }); return rows; }
 async function sheetsFetch(url, opts){ var r = await driveFetch(url, opts); if(r.status === 403){ var e = new Error("Sheets 403"); e.sheets403 = true; throw e; } return r; }
 async function ensureSheet(){
   var cached = localStorage.getItem(SHEET_ID_KEY); if(cached) return { id: cached, url: localStorage.getItem(SHEET_URL_KEY) || ("https://docs.google.com/spreadsheets/d/" + cached) };
@@ -2716,6 +2864,10 @@ async function ensureSheet(){
     var reqs = [];
     if(titles.indexOf(SHEET_TAB) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB } } });
     if(titles.indexOf(SHEET_TAB_TENSION) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_TENSION } } }); /* v1.39 */
+    if(titles.indexOf(SHEET_TAB_PESO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PESO } } }); /* v1.57 */
+    if(titles.indexOf(SHEET_TAB_SUENO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SUENO } } });
+    if(titles.indexOf(SHEET_TAB_SPO2) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SPO2 } } });
+    if(titles.indexOf(SHEET_TAB_PASOS) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PASOS } } });
     if(reqs.length){ await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + file.id + ":batchUpdate", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ requests: reqs }) }); }
   }catch(e){ if(e.sheets403) throw e; }
   return { id: file.id, url: url }; }
@@ -2732,6 +2884,10 @@ async function saveToSheets(manual){
     await putSheetValues(sheet.id, "'" + SHEET_TAB + "'!A1:I" + values.length, values);
     var tValues = tensionSheetValues(); /* v1.39: la pestaña Tensión se reescribe entera, así la primera sincronización importa lo ya grabado */
     await putSheetValues(sheet.id, "'" + SHEET_TAB_TENSION + "'!A1:F" + tValues.length, tValues);
+    var pValues = pesoSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_PESO + "'!A1:B" + pValues.length, pValues); /* v1.57 */
+    var sValues = suenoSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_SUENO + "'!A1:C" + sValues.length, sValues);
+    var oValues = spo2SheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_SPO2 + "'!A1:B" + oValues.length, oValues);
+    var psValues = pasosSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_PASOS + "'!A1:B" + psValues.length, psValues);
     try{
       var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + "?fields=sheets.properties");
       var gj = await g.json();
@@ -2788,7 +2944,6 @@ function conectadoConTodo(){ return isConnected() && !!localStorage.getItem(GEMI
 function actualizarPuntoConectado(){
   var ok = conectadoConTodo();
   var punto = $("punto-conectado"); if(punto) punto.hidden = !ok;
-  var badge = $("free-badge"); if(badge) badge.hidden = ok;
 }
 function updateDriveUI(){
   var connected = isConnected();
@@ -2843,6 +2998,245 @@ async function geminiCallImage(base64, prompt){
     }
   }
   throw new Error("Gemini no responde."); }
+async function geminiCallTexto(prompt){
+  /* v1.57: igual que geminiCallImage pero solo texto (preguntas sobre tus datos): Lite primero, Flash de reserva en 429/503 con reintentos de 2/4/8/16 s. */
+  var key = localStorage.getItem(GEMINI_KEY); if(!key) throw new Error("Sin clave de Gemini");
+  var models = ["gemini-3.5-flash-lite", "gemini-3.8-flash"];
+  for(var mi = 0; mi < models.length; mi++){
+    var delay = 2000;
+    for(var attempt = 0; attempt < 4; attempt++){
+      try{
+        var r = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + models[mi] + ":generateContent?key=" + encodeURIComponent(key),
+          { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ contents:[{ parts:[{ text: prompt }] }] }) });
+        if(r.status === 429 || r.status === 503){ await sleep(delay); delay *= 2; continue; }
+        if(!r.ok) throw new Error("Gemini " + r.status);
+        var j = await r.json();
+        return (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts || []).map(function(pp){ return pp.text || ""; }).join("");
+      }catch(e){ if(attempt === 3) break; await sleep(delay); delay *= 2; }
+    }
+  }
+  throw new Error("Gemini no responde."); }
+/* v1.57: resumen de tus datos para preguntarle a Gemini. Solo lo apuntado; nada inventado. */
+function resumenDatosParaGemini(){
+  var L = [], hay = false;
+  function ultimos(arr, n){ return (arr || []).slice().sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); }).slice(0, n || 30); }
+  var w = ultimos(data.walks); if(w.length){ hay = true; L.push("MARCHAS (de más reciente a más antigua):"); w.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": reposo " + (x.reposo || "?") + ", medio " + (x.medio || "?") + ", máximo " + (x.maximo || "?") + ", BORG " + (x.borg || "?") + ", " + (x.minutos || "?") + " min, " + (x.km || "?") + " km"); }); }
+  var t = ultimos(data.tensions); if(t.length){ hay = true; L.push("TENSIONES (de más reciente a más antigua):"); t.forEach(function(x){ L.push("- " + fmtFechaHora(x.fecha) + ": " + (x.sistolica || "?") + "/" + (x.diastolica || "?") + ", pulso " + (x.pulso || "?")); }); }
+  if(data.pills.length){ hay = true; L.push("PASTILLERO:"); data.pills.forEach(function(m){ L.push("- " + m.nombre + (m.dosis ? " " + m.dosis : "") + ": " + (m.horas || []).join(", ")); });
+    var hoy = hoyISO(); L.push("TOMAS DE HOY (" + fmtFecha(hoy) + "):");
+    data.pills.forEach(function(m){ (m.horas || []).forEach(function(h){ var hecha = (m.tomadas && m.tomadas[hoy] || []).indexOf(h) >= 0; L.push("- " + m.nombre + " " + h + ": " + (hecha ? "tomada" : "pendiente")); }); }); }
+  var p = ultimos(data.peso); if(p.length){ hay = true; L.push("PESO:"); p.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": " + x.kg + " kg"); }); }
+  var s = ultimos(data.sueno); if(s.length){ hay = true; L.push("SUEÑO:"); s.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": " + x.horas + " horas, calidad " + (x.calidad || "?")); }); }
+  var o = ultimos(data.spo2); if(o.length){ hay = true; L.push("OXÍGENO (SpO2):"); o.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": " + x.spo2 + " %"); }); }
+  var ps = ultimos(data.pasos); if(ps.length){ hay = true; L.push("PASOS:"); ps.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": " + x.pasos + " pasos"); }); }
+  var pa = data.pauta || {};
+  if(pa.duracion || pa.dias || pa.pulso || (pa.borgMin && pa.borgMax)) L.push("TU PAUTA DE ANDAR: " + (pa.duracion ? pa.duracion + " min" : "?") + ", " + (pa.dias ? pa.dias + " días por semana" : "?") + ", pulso " + (pa.pulso || "?") + ", BORG " + (pa.borgMin || "?") + "-" + (pa.borgMax || "?") + ".");
+  if(pa.tensionSisMax || pa.tensionDiaMax) L.push("TU PAUTA DE TENSIÓN: máxima " + (pa.tensionSisMax || "?") + "/" + (pa.tensionDiaMax || "?") + ".");
+  return { texto: L.join("\n"), hay: hay };
+}
+function updatePreguntaUI(){
+  var sin = $("pregunta-sin-clave"), form = $("pregunta-form");
+  if(!sin || !form) return;
+  var hay = !!localStorage.getItem(GEMINI_KEY);
+  sin.hidden = hay; form.hidden = !hay;
+}
+async function preguntarDatos(){
+  var q = ($("pregunta-texto").value || "").trim();
+  if(!q){ toast("Escribe tu pregunta primero."); return; }
+  var res = resumenDatosParaGemini();
+  var caja = $("pregunta-respuesta");
+  if(!res.hay){ caja.innerHTML = '<div class="warnbox"><b>Todavía no hay datos apuntados.</b><br>Apunta alguna marcha, tensión, pastilla o peso, y luego vuelve a preguntar.</div>'; return; }
+  caja.innerHTML = '<p class="muted">Pensando…</p>';
+  var prompt = "Eres el asistente de la app Corazón Fuerte. El usuario pregunta por sus propios datos de salud, apuntados por él mismo en la app.\nResponde SOLO con los datos que te doy abajo. No inventes ningún número ni ningún dato. Si la pregunta no se puede contestar con estos datos, di claramente que no hay datos suficientes para contestarla. No des consejos médicos ni cambies ninguna pauta: solo resume lo apuntado.\nResponde en español, en pocas frases, con los números concretos.\nDATOS:\n" + res.texto + "\nPREGUNTA: " + q;
+  try{
+    var r = await geminiCallTexto(prompt);
+    var txt = (r || "").trim();
+    if(!txt) throw new Error("Respuesta vacía");
+    caja.innerHTML = '<div class="card" style="margin:0"><p id="pregunta-respuesta-texto" style="margin-top:0;white-space:pre-wrap"></p><p style="margin-bottom:0"><button type="button" class="btn secondary" id="btn-leer-respuesta">🔊 Escuchar</button></p></div>';
+    $("pregunta-respuesta-texto").textContent = txt;
+    $("btn-leer-respuesta").addEventListener("click", leerRespuesta);
+  }catch(e){
+    caja.innerHTML = '<div class="warnbox"><b>No se pudo preguntar.</b><br>' + esc(e.message) + '<br>Comprueba que tienes internet y que la clave de Gemini sigue en Configuración.</div>';
+  }
+}
+/* v1.57: leer la respuesta con la voz del propio móvil (speechSynthesis, en español). No es la voz de Gemini. */
+var leyendoVoz = false;
+function actualizarBtnLeer(){ var b = $("btn-leer-respuesta"); if(b) b.textContent = leyendoVoz ? "⏹ Parar" : "🔊 Escuchar"; }
+function leerRespuesta(){
+  if(!("speechSynthesis" in window)){ toast("Este móvil no puede leer en voz alta."); return; }
+  var el = $("pregunta-respuesta-texto");
+  if(!el || !el.textContent.trim()) return;
+  if(leyendoVoz){ window.speechSynthesis.cancel(); leyendoVoz = false; actualizarBtnLeer(); return; }
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(el.textContent);
+  u.lang = "es-ES";
+  try{
+    var voces = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    var v = null; voces.forEach(function(x){ if(!v && (x.lang || "").toLowerCase().indexOf("es") === 0) v = x; });
+    if(v) u.voice = v;
+  }catch(e){}
+  u.onend = u.onerror = function(){ leyendoVoz = false; actualizarBtnLeer(); };
+  leyendoVoz = true; actualizarBtnLeer();
+  try{ window.speechSynthesis.speak(u); }catch(e){ leyendoVoz = false; actualizarBtnLeer(); toast("Este móvil no puede leer en voz alta."); }
+}
+function dictarPregunta(){
+  if(!SpeechRec){ toast("Este navegador no admite el dictado por voz."); return; }
+  var rec = new SpeechRec(); rec.lang = "es-ES"; rec.interimResults = false; rec.maxAlternatives = 1;
+  rec.onresult = function(ev){ var txt = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : ""; if(txt){ $("pregunta-texto").value = txt; toast("Pregunta dictada: revisa y pulsa Preguntar."); } };
+  rec.onerror = function(){ toast("No se pudo dictar. Prueba de nuevo."); };
+  try{ rec.start(); toast("🎤 Escuchando… haz tu pregunta."); }catch(e){ toast("No se pudo empezar el dictado."); }
+}
+$("btn-preguntar").addEventListener("click", preguntarDatos);
+$("btn-pregunta-ir-config").addEventListener("click", function(){ goto("config"); });
+
+/* ---------- v1.57: «Mis datos»: peso, sueño, oxígeno, pasos y grabar caminata ---------- */
+function addPeso(kg, fecha){
+  var v = num(kg); if(v == null || v <= 0){ toast("Pon tu peso en kilos."); return false; }
+  data.peso.push({ id: uid(), fecha: fecha || hoyISO(), kg: Math.round(v * 10) / 10 });
+  data.peso.sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); });
+  saveAll(); scheduleSheetSync(); renderAll(); toast("Peso guardado."); return true;
+}
+function addSueno(horas, calidad, fecha){
+  var v = num(horas); if(v == null || v < 0 || v > 16){ toast("Pon las horas dormidas, de 0 a 16."); return false; }
+  data.sueno.push({ id: uid(), fecha: fecha || hoyISO(), horas: Math.round(v * 2) / 2, calidad: calidad || "" });
+  data.sueno.sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); });
+  saveAll(); scheduleSheetSync(); renderAll(); toast("Sueño guardado."); return true;
+}
+function addSpo2(valor, fecha){
+  var v = num(valor); if(v == null || v < 70 || v > 100){ toast("Pon el oxígeno, de 70 a 100."); return false; }
+  data.spo2.push({ id: uid(), fecha: fecha || hoyISO(), spo2: Math.round(v) });
+  data.spo2.sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); });
+  saveAll(); scheduleSheetSync(); renderAll(); toast("Oxígeno guardado."); return true;
+}
+function addPasos(n, fecha){
+  var v = num(n); if(v == null || v < 0){ toast("Pon los pasos de ese día."); return false; }
+  data.pasos.push({ id: uid(), fecha: fecha || hoyISO(), pasos: Math.round(v) });
+  data.pasos.sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); });
+  saveAll(); scheduleSheetSync(); renderAll(); toast("Pasos guardados."); return true;
+}
+function pesoCambioTexto(){
+  var arr = (data.peso || []).slice().sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); });
+  if(arr.length < 2) return "";
+  var u = arr[0], p = arr[1];
+  var d = new Date(u.fecha + "T12:00:00"), dp = new Date(p.fecha + "T12:00:00");
+  var dias = Math.max(1, Math.round((d - dp) / 86400000));
+  var dif = Math.round((u.kg - p.kg) * 10) / 10;
+  var signo = dif > 0 ? "+" : (dif < 0 ? "−" : "");
+  var txt = String(Math.abs(dif)).replace(".", ",");
+  if(dif === 0) return "Igual que hace " + dias + (dias === 1 ? " día" : " días") + " (" + String(u.kg).replace(".", ",") + " kg).";
+  return signo + txt + " kg desde hace " + dias + (dias === 1 ? " día" : " días") + ".";
+}
+function historialSerieHTML(arr, texto, vacio, delAttr){
+  var ult = (arr || []).slice().sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); }).slice(0, 10);
+  if(!ult.length) return '<p class="muted">' + vacio + '</p>';
+  return ult.map(function(x){ return '<div class="fila"><div class="fila-txt"><b>' + fmtFecha(x.fecha) + '</b> · ' + texto(x) + '</div><button type="button" class="fila-quitar" aria-label="Borrar este registro" data-' + delAttr + '="' + x.id + '">×</button></div>'; }).join("");
+}
+function chartSerieSVG(arr, getValor, color, unidad, vacio){
+  var puntos = (arr || []).slice().sort(function(a,b){ return (a.fecha < b.fecha ? -1 : 1); }).slice(0, 30).reverse();
+  if(!puntos.length) return '<p class="muted">' + vacio + '</p>';
+  var W = 340, H = 170, PL = 34, PR = 6, PT = 30, PB = 24;
+  var vals = puntos.map(function(p){ return getValor(p); });
+  var maxV = Math.max.apply(null, vals.concat([1]));
+  var minV = Math.min.apply(null, vals.concat([0]));
+  var rango = (maxV - minV) || 1;
+  var slot = (W - PL - PR) / puntos.length, bw = Math.max(6, Math.min(30, slot * 0.6));
+  function y(v){ return PT + (1 - (v - minV) / rango) * (H - PT - PB); }
+  var bars = puntos.map(function(p, i){ var cx = PL + slot * i + slot / 2; var v = getValor(p);
+    var d = new Date(p.fecha + "T12:00:00");
+    return '<rect x="' + (cx - bw / 2) + '" y="' + y(v) + '" width="' + bw + '" height="' + Math.max(2, (H - PB) - y(v)) + '" rx="3" fill="' + color + '"/>'
+      + '<text x="' + cx + '" y="' + (y(v) - 4) + '" font-size="11" font-weight="700" style="fill:var(--ink)" text-anchor="middle">' + esc(String(v).replace(".", ",")) + '</text>'
+      + '<text x="' + cx + '" y="' + (H - 6) + '" font-size="10" style="fill:var(--muted)" text-anchor="middle">' + d.getDate() + '/' + (d.getMonth() + 1) + '</text>'; }).join("");
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Gráfico de ' + esc(unidad) + ' por día">' + bars + '</svg>';
+}
+function renderMisDatos(){
+  var hoy = hoyISO();
+  [["peso-fecha"],["sueno-fecha"],["spo2-fecha"],["pasos-fecha"]].forEach(function(par){ var el = $(par[0]); if(el && !el.value) el.value = hoy; });
+  var pc = $("peso-cambio"); if(pc){ var t = pesoCambioTexto(); pc.textContent = t; pc.className = t ? "" : "muted"; }
+  var ph = $("peso-historial"); if(ph){ ph.innerHTML = historialSerieHTML(data.peso, function(x){ return String(x.kg).replace(".", ",") + " kg"; }, "Todavía no hay pesos apuntados.", "del-peso");
+    Array.prototype.forEach.call(ph.querySelectorAll("[data-del-peso]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este peso?")) return; data.peso = data.peso.filter(function(x){ return x.id !== b.getAttribute("data-del-peso"); }); saveAll(); scheduleSheetSync(); toast("Peso borrado."); renderAll(); }); }); }
+  var sh = $("sueno-historial"); if(sh){ sh.innerHTML = historialSerieHTML(data.sueno, function(x){ return String(x.horas).replace(".", ",") + " h" + (x.calidad ? " · " + esc(x.calidad) : ""); }, "Todavía no hay noches apuntadas.", "del-sueno");
+    Array.prototype.forEach.call(sh.querySelectorAll("[data-del-sueno]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar esta noche?")) return; data.sueno = data.sueno.filter(function(x){ return x.id !== b.getAttribute("data-del-sueno"); }); saveAll(); scheduleSheetSync(); toast("Sueño borrado."); renderAll(); }); }); }
+  var oh = $("spo2-historial"); if(oh){ oh.innerHTML = historialSerieHTML(data.spo2, function(x){ return x.spo2 + " %"; }, "Todavía no hay oxígeno apuntado.", "del-spo2");
+    Array.prototype.forEach.call(oh.querySelectorAll("[data-del-spo2]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar este oxígeno?")) return; data.spo2 = data.spo2.filter(function(x){ return x.id !== b.getAttribute("data-del-spo2"); }); saveAll(); scheduleSheetSync(); toast("Oxígeno borrado."); renderAll(); }); }); }
+  var ah = $("pasos-historial"); if(ah){ ah.innerHTML = historialSerieHTML(data.pasos, function(x){ return x.pasos + " pasos"; }, "Todavía no hay pasos apuntados.", "del-pasos");
+    Array.prototype.forEach.call(ah.querySelectorAll("[data-del-pasos]"), function(b){ b.addEventListener("click", function(){ if(!confirm("¿Borrar estos pasos?")) return; data.pasos = data.pasos.filter(function(x){ return x.id !== b.getAttribute("data-del-pasos"); }); saveAll(); scheduleSheetSync(); toast("Pasos borrados."); renderAll(); }); }); }
+  var gp = $("grafico-peso"); if(gp) gp.innerHTML = chartSerieSVG(data.peso, function(x){ return x.kg; }, "#0E7490", "peso", "Sin pesos todavía: apunta el primero y aquí verás cómo cambia.");
+  var gs = $("grafico-sueno"); if(gs) gs.innerHTML = chartSerieSVG(data.sueno, function(x){ return x.horas; }, "#7C3AED", "horas de sueño", "Sin noches todavía: apunta la primera y aquí verás tus horas.");
+  var go = $("grafico-spo2"); if(go) go.innerHTML = chartSerieSVG(data.spo2, function(x){ return x.spo2; }, "#15803D", "oxígeno", "Sin oxígeno todavía: apunta el primero y aquí verás tus valores.");
+  var ga2 = $("grafico-pasos"); if(ga2) ga2.innerHTML = chartSerieSVG(data.pasos, function(x){ return x.pasos; }, "#B45309", "pasos", "Sin pasos todavía: apunta los primeros y aquí verás tus días.");
+}
+$("btn-guardar-peso").addEventListener("click", function(){ if(addPeso($("peso-kg").value, $("peso-fecha").value)){ $("peso-kg").value = ""; } });
+$("btn-guardar-sueno").addEventListener("click", function(){ if(addSueno($("sueno-horas").value, $("sueno-calidad").value, $("sueno-fecha").value)){ $("sueno-horas").value = ""; $("sueno-calidad").value = ""; } });
+$("btn-guardar-spo2").addEventListener("click", function(){ if(addSpo2($("spo2-valor").value, $("spo2-fecha").value)){ $("spo2-valor").value = ""; } });
+$("btn-guardar-pasos").addEventListener("click", function(){ if(addPasos($("pasos-num").value, $("pasos-fecha").value)){ $("pasos-num").value = ""; } });
+/* Botones del centro «Mis datos» (v1.57). Andar y Tensión no se mueven: el centro solo enlaza con ellos. */
+$("btn-hub-tension").addEventListener("click", function(){ goto("tension"); desplegarTension(true); });
+$("btn-hub-estadisticas").addEventListener("click", function(){ goto("andar"); desplegarAndarEstadisticas(true); });
+$("btn-hub-medico").addEventListener("click", function(){ goto("medico"); });
+function irACardMisDatos(id, campo){ var c = $(id); if(c){ c.hidden = false; c.scrollIntoView({ behavior: "smooth", block: "start" }); } if(campo){ var f = $(campo); if(f) setTimeout(function(){ f.focus(); }, 400); } }
+$("btn-hub-peso").addEventListener("click", function(){ irACardMisDatos("card-peso", "peso-kg"); });
+$("btn-hub-sueno").addEventListener("click", function(){ irACardMisDatos("card-sueno", "sueno-horas"); });
+$("btn-hub-spo2").addEventListener("click", function(){ irACardMisDatos("card-spo2", "spo2-valor"); });
+$("btn-hub-pasos").addEventListener("click", function(){ irACardMisDatos("card-pasos", "pasos-num"); });
+$("btn-hub-grabar").addEventListener("click", function(){ var c = $("card-grabar-caminata"); if(c){ c.hidden = false; c.scrollIntoView({ behavior: "smooth", block: "start" }); } });
+$("btn-hub-importar").addEventListener("click", function(){
+  var nativa = (typeof isNative === "function" && isNative());
+  abrirPopupTexto(nativa
+    ? "<b>Importar datos de salud</b><br><br>La importación desde tu app de salud todavía no está disponible en esta versión. Llegará pronto."
+    : "<b>Importar datos de salud</b><br><br>La importación solo funciona en la app de Google Play. En esta versión web no se puede importar: el navegador no deja leer los datos de salud del móvil.<br><br>Cuando tengas la app de Play instalada, aquí mismo podrás traer los datos de tu caminata de hoy.", this);
+});
+/* Grabar caminata por GPS (v1.57, solo web: en la app nativa graba en el bolsillo). */
+var grabando = false, grabWatchId = null, grabPuntos = [], grabInicio = null, grabTimer = null, grabWakeLock = null, grabDistancia = 0;
+function distanciaKm(lat1, lon1, lat2, lon2){
+  var R = 6371, dLa = (lat2 - lat1) * Math.PI / 180, dLo = (lon2 - lon1) * Math.PI / 180;
+  var a = Math.sin(dLa / 2) * Math.sin(dLa / 2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLo / 2) * Math.sin(dLo / 2);
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+function actualizarGrabacionUI(){
+  if(!grabInicio) return;
+  var s = Math.floor((Date.now() - grabInicio) / 1000);
+  $("grab-tiempo").textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0");
+  $("grab-km").textContent = grabDistancia.toFixed(2).replace(".", ",") + " km";
+}
+function empezarGrabacion(){
+  if(!("geolocation" in navigator)){ toast("Este móvil no permite grabar la caminata."); return; }
+  grabPuntos = []; grabDistancia = 0; grabInicio = Date.now();
+  grabWatchId = navigator.geolocation.watchPosition(function(pos){
+    var p = { lat: pos.coords.latitude, lon: pos.coords.longitude, t: Date.now(), acc: pos.coords.accuracy };
+    if(p.acc != null && p.acc > 50) return;
+    var ant = grabPuntos[grabPuntos.length - 1];
+    if(ant){
+      var d = distanciaKm(ant.lat, ant.lon, p.lat, p.lon);
+      var dt = (p.t - ant.t) / 1000;
+      if(dt > 0 && d / dt * 3600 > 20) return;
+      grabDistancia += d;
+    }
+    grabPuntos.push(p);
+    actualizarGrabacionUI();
+  }, function(err){ toast("No se pudo grabar: " + (err.message || "sin permiso de ubicación.")); pararGrabacion(false); }, { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+  grabando = true;
+  $("btn-grabar-empezar").hidden = true; $("btn-grabar-parar").hidden = false;
+  $("grab-estado").textContent = "Grabando… anda como siempre. La distancia se va sumando aquí.";
+  grabTimer = setInterval(actualizarGrabacionUI, 1000);
+  if("wakeLock" in navigator){ try{ navigator.wakeLock.request("screen").then(function(w){ grabWakeLock = w; }).catch(function(){}); }catch(e){} }
+}
+function pararGrabacion(guardar){
+  if(grabWatchId != null){ try{ navigator.geolocation.clearWatch(grabWatchId); }catch(e){} grabWatchId = null; }
+  if(grabTimer){ clearInterval(grabTimer); grabTimer = null; }
+  if(grabWakeLock){ try{ grabWakeLock.release(); }catch(e){} grabWakeLock = null; }
+  grabando = false;
+  $("btn-grabar-empezar").hidden = false; $("btn-grabar-parar").hidden = true;
+  if(!guardar){ $("grab-estado").textContent = ""; grabInicio = null; return; }
+  var minutos = Math.max(1, Math.round((Date.now() - grabInicio) / 60000));
+  var km = Math.round(grabDistancia * 100) / 100;
+  grabInicio = null;
+  $("grab-estado").textContent = "";
+  goto("andar"); desplegarAndar(true);
+  $("w-minutos").value = minutos; $("w-km").value = String(km);
+  toast("Marcha grabada: " + minutos + " min, " + String(km).replace(".", ",") + " km. Completa el BORG y el pulso y pulsa Guardar.");
+}
+$("btn-grabar-empezar").addEventListener("click", empezarGrabacion);
+$("btn-grabar-parar").addEventListener("click", function(){ pararGrabacion(true); });
 async function geminiReadTensiometer(base64){
   var prompt = "Lee la pantalla de este tensiómetro (aparato de medir la tensión arterial). Devuelve SOLO un JSON, sin más texto, con este formato exacto: {\"sistolica\": 120, \"diastolica\": 80, \"pulso\": 72}. Sistólica es la tensión alta (SYS), diastólica la baja (DIA) y pulso es PUL o el corazón. Si algún valor no se ve, pon null. No inventes ningún valor que no se vea en la foto.";
   var text = await geminiCallImage(base64, prompt);
@@ -2892,8 +3286,8 @@ $("foto-tensiometro").addEventListener("change", async function(ev){
       if(addTension(vals.sistolica, vals.diastolica, vals.pulso, "Leído de la foto del tensiómetro", "foto")){ $("foto-resultado").innerHTML = ""; $("foto-preview").innerHTML = ""; pendingTension = null; if(document.activeElement) document.activeElement.blur(); goto("hoy"); /* v1.22: igual que al guardar a mano */ toast("Tensión guardada."); } });
     $("btn-cancelar-tension").addEventListener("click", function(){
       if(vals.sistolica != null) $("t-sis").value = vals.sistolica; if(vals.diastolica != null) $("t-dia").value = vals.diastolica; if(vals.pulso != null) $("t-pulso").value = vals.pulso;
-      $("foto-resultado").innerHTML = ""; pendingTension = null; toast("Corrige los valores a mano y pulsa Guardar."); });
-  }catch(e){ $("foto-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Apunta la tensión a mano.</div>'; } });
+      $("foto-resultado").innerHTML = ""; pendingTension = null; desplegarTensionManual(true); toast("Corrige los valores a mano y pulsa Guardar."); });
+  }catch(e){ $("foto-resultado").innerHTML = '<div class="warnbox"><b>No se pudo leer la foto.</b><br>' + esc(e.message) + '<br>Apunta la tensión a mano.</div>'; desplegarTensionManual(true); } });
 
 
 /* ---------- Semáforo de la sal (y de todo lo que tú marques) ---------- */
@@ -3055,7 +3449,7 @@ $("btn-guardar-limites").addEventListener("click", function(){
   data.semaforo.limiteSal = sal === "" ? "" : String(num(sal));
   data.semaforo.limiteSaturadas = sat === "" ? "" : String(num(sat));
   data.semaforo.limiteAzucares = az === "" ? "" : String(num(az));
-  saveAll(); toast("Límites guardados."); renderAll(); });
+  saveAll(); toast("Pauta guardada."); var _dl = $("det-limites"); if(_dl) _dl.open = false; renderAll(); });
 
 /* ---------- v1.37: a qué hora empieza «Tu día» (Configuración) ---------- */
 var DIA_MINUTOS = ["00","15","30","45"];
@@ -3358,6 +3752,52 @@ $("btn-borrar-todo").addEventListener("click", async function(){
     var ok = await saveToDrive(false, true);
     toast(ok ? "Todos los datos borrados, también de Drive. Las copias con fecha siguen en tu Drive." : "Datos borrados de este dispositivo, pero no se pudo borrar la copia de Drive. Inténtalo de nuevo con conexión.");
   } else toast("Todos los datos borrados de este dispositivo."); });
+
+/* ---------- v1.57: avisos locales en la app de Google Play (nativa) ----------
+   En la web estas funciones no hacen nada (el push web queda como está).
+   En la app nativa, transform.py sustituye el bloque push de abajo por
+   programarAvisosLocales / resendPushSchedule / activarAvisosLocales /
+   actualizarAvisosLocalesUI y define isNative(). Este bloque vive FUERA de
+   esa zona, así que llega intacto a la app nativa. Todo con typeof: en la
+   web esas funciones no existen y no debe romperse nada. */
+var AVISOS_LOCALES_PEDIDOS_KEY = "corazon-fuerte-aviso-permiso-pedido-v1";
+function esNativaAvisos(){
+  return (typeof isNative === "function" && isNative()) && (typeof programarAvisosLocales === "function") && !!(window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications);
+}
+function trasCargarDatosAvisos(){
+  if(!esNativaAvisos()) return;
+  /* (3) con los datos ya cargados de Drive, programa los avisos de las pastillas guardadas, sin que nadie pulse nada. */
+  try{ if(typeof resendPushSchedule === "function") resendPushSchedule(); }catch(e){}
+  /* (4) una sola vez, tras la primera carga, pide el permiso del sistema. */
+  try{
+    if(typeof activarAvisosLocales === "function" && !localStorage.getItem(AVISOS_LOCALES_PEDIDOS_KEY)){
+      localStorage.setItem(AVISOS_LOCALES_PEDIDOS_KEY, "1");
+      activarAvisosLocales();
+    }
+  }catch(e){}
+  actualizarLineaAvisosLocales();
+  /* La reprogramación tarda ~1,2 s y el permiso se contesta a mano: refresca la línea un poco después. */
+  setTimeout(actualizarLineaAvisosLocales, 3000);
+}
+function actualizarLineaAvisosLocales(){
+  var el = $("linea-avisos-activos");
+  if(!el) return;
+  el.hidden = !(esNativaAvisos() && window.avisosLocalesActivos === true);
+}
+async function desactivarAvisosLocales(){
+  if(!esNativaAvisos()) return;
+  try{
+    var LN = window.Capacitor.Plugins.LocalNotifications;
+    var ids = (typeof notifIdsGuardados === "function") ? notifIdsGuardados() : [];
+    if(ids.length){ try{ await LN.cancel({ notifications: ids.map(function(id){ return { id: id }; }) }); }catch(e){} }
+    if(typeof guardarNotifIds === "function") guardarNotifIds([]);
+    window.avisosLocalesActivos = false;
+  }catch(e){}
+  try{ if(typeof actualizarAvisosLocalesUI === "function") actualizarAvisosLocalesUI(); }catch(e){}
+  try{ if(typeof renderAvisosHoy === "function") renderAvisosHoy(); }catch(e){}
+  actualizarLineaAvisosLocales();
+  toast("Avisos desactivados.");
+}
 
 /* ---------- Avisos push aunque la app esté cerrada ---------- */
 function getPushWorkerUrl(){ return (localStorage.getItem(PUSH_WORKER_URL_KEY) || PUSH_WORKER_URL_DEFAULT).trim().replace(/\/$/, ""); }
