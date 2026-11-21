@@ -473,7 +473,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.62 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.63 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -534,7 +534,7 @@ footer a{color:var(--muted)}
     <div id="pregunta-form">
       <label for="pregunta-texto">Tu pregunta</label>
       <textarea id="pregunta-texto" placeholder="Por ejemplo: dime las pulsaciones medias que he tenido esta última semana"></textarea>
-      <p><button type="button" class="mic-btn" id="btn-voz-pregunta" style="display:none">🎤 Preguntar por voz</button></p>
+      <p><button type="button" class="mic-btn" id="btn-voz-pregunta" style="display:none">🎤 Preguntar por voz</button> <button type="button" class="mic-btn" id="btn-conversacion" style="display:none">💬 Hablar con CorazónIA</button></p>
       <button class="btn" id="btn-preguntar">Preguntar</button>
     </div>
     <p id="pregunta-bienvenida" style="margin-top:12px">Recuerda: te doy información general, pero lo que manda es tu médico o el especialista, que son quienes conocen tu caso.</p>
@@ -998,7 +998,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.62</p>
+    <p class="muted">Versión v1.63</p>
+    <p class="muted"><b>Qué cambia en la v1.63:</b><br>· El botón «Preguntar por voz» ahora abre la ventana de voz del móvil directamente y funciona en la app instalada. Nuevo botón «Hablar con CorazónIA»: hablas, te contesta y te lo lee en voz alta, sin tocar nada.</p>
     <p class="muted"><b>Qué cambia en la v1.62:</b><br>· <b>Pregúntale a CorazónIA.</b> La sección de preguntas ahora se llama CorazónIA y sabe más: responde con tus datos y con información general sobre el cuidado del corazón. En la app de Google Play, además, ya puedes dictar la pregunta por voz.<br>· <b>Informe en PDF.</b> En «Informe para el Médico» puedes descargar el informe como PDF, con las mismas tablas.<br>· <b>Fotos más ligeras.</b> Las fotos que se envían a Gemini se comprimen antes, para que suban más rápido.</p>
     <p class="muted"><b>Qué cambia en la v1.61:</b><br>· <b>Sal, aditivos y conservantes.</b> Nueva lista en Alimentación, y el chequeo se pone en rojo si el producto lleva nitratos, nitritos, benzoatos o sulfitos.</p>
     <p class="muted"><b>Qué cambia en la v1.60:</b><br>· «Pregúntale a tus datos» ahora está arriba, sin tener que bajar.<br>· <b>Estadísticas más legibles.</b> Las medias de Mi Actividad ya no se parten: cada valor va en su propia línea, a todo el ancho.<br>· <b>Mi Actividad, más limpia.</b> El resumen «Mi pauta» ya no está en Mi Actividad: tu pauta completa sigue en Pautas y en «Informe para el Médico».<br>· <b>Semáforo BORG más limpio.</b> En «Mis marchas» ahora se ve un solo punto, el del color que toca.<br>· <b>Tabla completa.</b> En «Mis marchas» hay un botón para ver la tabla a pantalla completa, sin desplazar de lado.<br>· <b>Menú más corto.</b> El menú tiene 6 elementos: «Tensión y pulso» se abre desde Mi Actividad, y «Mis pautas», «Pastillero», «Mi programa» e «Informe para el Médico» desde «Mis datos».<br>· <b>«Mi Actividad».</b> La sección «Andar» ahora se llama «Mi Actividad»; todo lo demás sigue igual.<br>· <b>«Informe para el Médico».</b> La sección «Para el médico» ahora se llama «Informe para el Médico»; todo lo demás sigue igual.<br>· <b>Importar datos de salud.</b> Ahora se indica con qué relojes funciona: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS.<br>· <b>Apuntar tensión, arriba.</b> En «Tensión y pulso» el bloque para apuntar está ahora el primero, antes de la evolución y de tus registros.<br>· <b>Menos avisos.</b> El aviso de datos orientativos ya solo sale en Alimentación (y en el informe ya no sale); en las demás vistas ya no sale.</p>
@@ -1034,7 +1035,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.62 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.63 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4016,7 +4017,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.62";
+var APP_VERSION = "v1.63";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -4921,12 +4922,12 @@ function palabrasANumero(texto){
   flush();
   return nums;
 }
-function dictar(onResult){
+function dictar(onResult, aviso){
   if(!SpeechRec){ toast("Este navegador no admite el dictado por voz."); return; }
   var rec = new SpeechRec(); rec.lang = "es-ES"; rec.interimResults = false; rec.maxAlternatives = 1;
   rec.onresult = function(ev){ var txt = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : ""; onResult(txt); };
   rec.onerror = function(){ toast("No se pudo dictar. Prueba de nuevo."); };
-  try{ rec.start(); toast("🎤 Escuchando… di la tensión, por ejemplo «ciento veinte ochenta»."); }catch(e){ toast("No se pudo empezar el dictado."); }
+  try{ rec.start(); toast(aviso || "🎤 Escuchando… di la tensión, por ejemplo «ciento veinte ochenta»."); }catch(e){ toast("No se pudo empezar el dictado."); }
 }
 function initVoz(){
   if(!SpeechRec) return; /* sin soporte, los botones de micrófono quedan ocultos */
@@ -4934,6 +4935,7 @@ function initVoz(){
   if(bT) bT.style.display = "inline-flex";
   if(bO) bO.style.display = "inline-flex";
   var bP = $("btn-voz-pregunta"); if(bP){ bP.style.display = "inline-flex"; bP.addEventListener("click", dictarPregunta); }
+  var bC = $("btn-conversacion"); if(bC){ bC.style.display = "inline-flex"; bC.addEventListener("click", dictarConversacion); }
   if(bT) bT.addEventListener("click", function(){
     dictar(function(txt){
       var nums = palabrasANumero(txt);
@@ -6181,12 +6183,14 @@ function updatePreguntaUI(){
   var hay = !!localStorage.getItem(GEMINI_KEY);
   sin.hidden = hay; form.hidden = !hay;
 }
+/* v1.63: conversación por voz — si la pregunta viene del botón «Hablar con CorazónIA», la respuesta se lee sola en voz alta. */
+var leerAutoTrasResponder = false;
 async function preguntarDatos(){
   var q = ($("pregunta-texto").value || "").trim();
-  if(!q){ toast("Escribe tu pregunta primero."); return; }
+  if(!q){ leerAutoTrasResponder = false; toast("Escribe tu pregunta primero."); return; }
   var res = resumenDatosParaGemini();
   var caja = $("pregunta-respuesta");
-  if(!res.hay){ caja.innerHTML = '<div class="warnbox"><b>Todavía no hay datos apuntados.</b><br>Apunta alguna marcha, tensión, pastilla o peso, y luego vuelve a preguntar.</div>'; return; }
+  if(!res.hay){ leerAutoTrasResponder = false; caja.innerHTML = '<div class="warnbox"><b>Todavía no hay datos apuntados.</b><br>Apunta alguna marcha, tensión, pastilla o peso, y luego vuelve a preguntar.</div>'; return; }
   caja.innerHTML = '<p class="muted">Pensando…</p>';
   var prompt = "Eres CorazónIA, el asistente de la app Corazón Fuerte. El usuario pregunta por sus propios datos de salud y por información general sobre el cuidado del corazón.\nResponde primero con los datos del usuario que te doy abajo. Si la pregunta es general, usa el bloque CONOCIMIENTO GENERAL y sigue sus reglas de «CÓMO RESPONDER». Responde en español sencillo, con frases cortas, con los números concretos.\nDATOS DEL USUARIO:\n" + res.texto + "\nCONOCIMIENTO GENERAL:\n" + CONOCIMIENTO_CORAZONIA + "\nPREGUNTA: " + q;
   try{
@@ -6195,19 +6199,21 @@ async function preguntarDatos(){
     if(!txt) throw new Error("Respuesta vacía");
     caja.innerHTML = '<div class="card" style="margin:0"><p id="pregunta-respuesta-texto" style="margin-top:0;white-space:pre-wrap"></p><p style="margin-bottom:0"><button type="button" class="btn secondary" id="btn-leer-respuesta">🔊 Escuchar</button></p></div>';
     $("pregunta-respuesta-texto").textContent = txt;
-    $("btn-leer-respuesta").addEventListener("click", leerRespuesta);
+    $("btn-leer-respuesta").addEventListener("click", function(){ leerRespuesta(); });
+    if(leerAutoTrasResponder){ leerAutoTrasResponder = false; leerRespuesta(true); }
   }catch(e){
+    leerAutoTrasResponder = false;
     caja.innerHTML = '<div class="warnbox"><b>No se pudo preguntar.</b><br>' + esc(e.message) + '<br>Comprueba que tienes internet y que la clave de Gemini sigue en Configuración.</div>';
   }
 }
 /* v1.57: leer la respuesta con la voz del propio móvil (speechSynthesis, en español). No es la voz de Gemini. */
 var leyendoVoz = false;
 function actualizarBtnLeer(){ var b = $("btn-leer-respuesta"); if(b) b.textContent = leyendoVoz ? "⏹ Parar" : "🔊 Escuchar"; }
-function leerRespuesta(){
+function leerRespuesta(forzar){
   if(!("speechSynthesis" in window)){ toast("Este móvil no puede leer en voz alta."); return; }
   var el = $("pregunta-respuesta-texto");
   if(!el || !el.textContent.trim()) return;
-  if(leyendoVoz){ window.speechSynthesis.cancel(); leyendoVoz = false; actualizarBtnLeer(); return; }
+  if(leyendoVoz){ window.speechSynthesis.cancel(); leyendoVoz = false; actualizarBtnLeer(); if(forzar !== true) return; }
   window.speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(el.textContent);
   u.lang = "es-ES";
@@ -6219,6 +6225,19 @@ function leerRespuesta(){
   u.onend = u.onerror = function(){ leyendoVoz = false; actualizarBtnLeer(); };
   leyendoVoz = true; actualizarBtnLeer();
   try{ window.speechSynthesis.speak(u); }catch(e){ leyendoVoz = false; actualizarBtnLeer(); toast("Este móvil no puede leer en voz alta."); }
+}
+/* v1.63: conversación por voz con CorazónIA: se dicta, se envía sola y la
+   respuesta se lee en voz alta automáticamente. El micrófono NO se vuelve a
+   abrir solo tras la respuesta (oiría su propia voz): para otro turno, se
+   pulsa el botón otra vez. Si no se entiende nada, no se envía nada. */
+function dictarConversacion(){
+  dictar(function(txt){
+    txt = (txt || "").trim();
+    if(!txt){ toast("No se ha entendido nada. Prueba de nuevo."); return; }
+    $("pregunta-texto").value = txt;
+    leerAutoTrasResponder = true;
+    preguntarDatos();
+  }, "🎤 Escuchando… haz tu pregunta.");
 }
 function dictarPregunta(){
   if(!SpeechRec){ toast("Este navegador no admite el dictado por voz."); return; }
