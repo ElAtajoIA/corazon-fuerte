@@ -473,7 +473,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.63 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.64 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -534,7 +534,6 @@ footer a{color:var(--muted)}
     <div id="pregunta-form">
       <label for="pregunta-texto">Tu pregunta</label>
       <textarea id="pregunta-texto" placeholder="Por ejemplo: dime las pulsaciones medias que he tenido esta última semana"></textarea>
-      <p><button type="button" class="mic-btn" id="btn-voz-pregunta" style="display:none">🎤 Preguntar por voz</button> <button type="button" class="mic-btn" id="btn-conversacion" style="display:none">💬 Hablar con CorazónIA</button></p>
       <button class="btn" id="btn-preguntar">Preguntar</button>
     </div>
     <p id="pregunta-bienvenida" style="margin-top:12px">Recuerda: te doy información general, pero lo que manda es tu médico o el especialista, que son quienes conocen tu caso.</p>
@@ -998,7 +997,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.63</p>
+    <p class="muted">Versión v1.64</p>
+    <p class="muted"><b>Qué cambia en la v1.64:</b><br>· <b>Los botones de voz ya no están.</b> En algunos móviles no funcionaban. La pregunta se sigue escribiendo en «Pregúntale a CorazónIA», y el micrófono del teclado sigue funcionando para dictarla.</p>
     <p class="muted"><b>Qué cambia en la v1.63:</b><br>· El botón «Preguntar por voz» ahora abre la ventana de voz del móvil directamente y funciona en la app instalada. Nuevo botón «Hablar con CorazónIA»: hablas, te contesta y te lo lee en voz alta, sin tocar nada.</p>
     <p class="muted"><b>Qué cambia en la v1.62:</b><br>· <b>Pregúntale a CorazónIA.</b> La sección de preguntas ahora se llama CorazónIA y sabe más: responde con tus datos y con información general sobre el cuidado del corazón. En la app de Google Play, además, ya puedes dictar la pregunta por voz.<br>· <b>Informe en PDF.</b> En «Informe para el Médico» puedes descargar el informe como PDF, con las mismas tablas.<br>· <b>Fotos más ligeras.</b> Las fotos que se envían a Gemini se comprimen antes, para que suban más rápido.</p>
     <p class="muted"><b>Qué cambia en la v1.61:</b><br>· <b>Sal, aditivos y conservantes.</b> Nueva lista en Alimentación, y el chequeo se pone en rojo si el producto lleva nitratos, nitritos, benzoatos o sulfitos.</p>
@@ -1006,7 +1006,6 @@ footer a{color:var(--muted)}
     <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
     <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
     <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
-    <p class="muted"><b>Qué cambia en la v1.56:</b><br>· Arreglo: al mover una tabla hacia los lados ya no cambia de pantalla.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
     <p class="muted"><b>Qué cambia en la v1.53:</b><br>· Nuevo: alarmas del móvil por comida desde el Pastillero, con botón para ponerlas todas y alarmas propias.</p>
@@ -1035,7 +1034,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.63 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.64 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4017,7 +4016,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.63";
+var APP_VERSION = "v1.64";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
