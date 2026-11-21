@@ -200,6 +200,8 @@ textarea{min-height:76px;resize:vertical}
 .btn{display:block;width:100%;min-height:56px;margin:14px 0 0;padding:14px 18px;font-size:18px;font-weight:800;border:none;border-radius:999px;background:var(--btn-bg);color:#fff;cursor:pointer;text-align:center;text-decoration:none;box-shadow:var(--btn-shadow)}
 .btn:active{transform:scale(.98)}
 .btn.secondary{background:var(--card);color:var(--link);border:2px solid var(--link);box-shadow:0 4px 12px rgba(120,40,50,.10)}
+/* v1.65: «Tabla completa» ya no parece un botón: solo texto con el símbolo, sin halo de botón. */
+.btn-texto{display:inline-block;width:auto;min-height:48px;margin:8px 0 0;padding:10px 4px;font-size:17px;font-weight:800;background:none;border:none;box-shadow:none;color:var(--link);text-decoration:underline;cursor:pointer;text-align:left}
 .btn.green{background:linear-gradient(135deg,#15803D,#22A355);box-shadow:0 6px 16px rgba(21,128,61,.32)}
 .btn.dark{background:var(--ink);color:var(--bg);box-shadow:0 6px 16px rgba(0,0,0,.25)}
 .btn.small{width:auto;display:inline-block;min-height:48px;font-size:16px;padding:11px 18px;margin:8px 6px 0 0}
@@ -473,7 +475,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.64 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.65 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -523,7 +525,7 @@ footer a{color:var(--muted)}
     <div id="sheets-aviso"></div>
     <p><button class="btn secondary" id="btn-guardar-hoja" style="display:none">Actualizar hoja en Sheets</button>
     <a class="btn secondary" id="link-hoja-sheets" href="#" target="_blank" rel="noopener" style="display:none">Abrir hoja en Sheets</a></p>
-    <p><button class="btn secondary" id="btn-tabla-completa" type="button">⛶ Tabla completa</button></p>
+    <p><button class="btn-texto" id="btn-tabla-completa" type="button">⛶ Tabla completa</button></p>
     <p class="muted" id="sheets-estado"></p>
     <div id="lista-marchas"></div><p class="muted">Registro de seguimiento informativo. No sustituye el criterio médico.</p></div>
   <div class="card"><button type="button" class="plegable-cab" id="btn-andar-estadisticas" aria-expanded="false"><span class="plegable-titulo">📊 Estadísticas</span><span class="flecha" aria-hidden="true">▾</span></button>
@@ -997,7 +999,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.64</p>
+    <p class="muted">Versión v1.65</p>
+    <p class="muted"><b>Qué cambia en la v1.65:</b><br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.</p>
     <p class="muted"><b>Qué cambia en la v1.64:</b><br>· <b>Los botones de voz ya no están.</b> En algunos móviles no funcionaban. La pregunta se sigue escribiendo en «Pregúntale a CorazónIA», y el micrófono del teclado sigue funcionando para dictarla.</p>
     <p class="muted"><b>Qué cambia en la v1.63:</b><br>· El botón «Preguntar por voz» ahora abre la ventana de voz del móvil directamente y funciona en la app instalada. Nuevo botón «Hablar con CorazónIA»: hablas, te contesta y te lo lee en voz alta, sin tocar nada.</p>
     <p class="muted"><b>Qué cambia en la v1.62:</b><br>· <b>Pregúntale a CorazónIA.</b> La sección de preguntas ahora se llama CorazónIA y sabe más: responde con tus datos y con información general sobre el cuidado del corazón. En la app de Google Play, además, ya puedes dictar la pregunta por voz.<br>· <b>Informe en PDF.</b> En «Informe para el Médico» puedes descargar el informe como PDF, con las mismas tablas.<br>· <b>Fotos más ligeras.</b> Las fotos que se envían a Gemini se comprimen antes, para que suban más rápido.</p>
@@ -1005,7 +1008,6 @@ footer a{color:var(--muted)}
     <p class="muted"><b>Qué cambia en la v1.60:</b><br>· «Pregúntale a tus datos» ahora está arriba, sin tener que bajar.<br>· <b>Estadísticas más legibles.</b> Las medias de Mi Actividad ya no se parten: cada valor va en su propia línea, a todo el ancho.<br>· <b>Mi Actividad, más limpia.</b> El resumen «Mi pauta» ya no está en Mi Actividad: tu pauta completa sigue en Pautas y en «Informe para el Médico».<br>· <b>Semáforo BORG más limpio.</b> En «Mis marchas» ahora se ve un solo punto, el del color que toca.<br>· <b>Tabla completa.</b> En «Mis marchas» hay un botón para ver la tabla a pantalla completa, sin desplazar de lado.<br>· <b>Menú más corto.</b> El menú tiene 6 elementos: «Tensión y pulso» se abre desde Mi Actividad, y «Mis pautas», «Pastillero», «Mi programa» e «Informe para el Médico» desde «Mis datos».<br>· <b>«Mi Actividad».</b> La sección «Andar» ahora se llama «Mi Actividad»; todo lo demás sigue igual.<br>· <b>«Informe para el Médico».</b> La sección «Para el médico» ahora se llama «Informe para el Médico»; todo lo demás sigue igual.<br>· <b>Importar datos de salud.</b> Ahora se indica con qué relojes funciona: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS.<br>· <b>Apuntar tensión, arriba.</b> En «Tensión y pulso» el bloque para apuntar está ahora el primero, antes de la evolución y de tus registros.<br>· <b>Menos avisos.</b> El aviso de datos orientativos ya solo sale en Alimentación (y en el informe ya no sale); en las demás vistas ya no sale.</p>
     <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
     <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
-    <p class="muted"><b>Qué cambia en la v1.57:</b><br>· <b>Logo nuevo.</b> El corazón, con el mismo color y más limpio.<br>· <b>Nueva sección «Mis datos».</b> Tu peso, tu sueño, tu oxígeno y tus pasos, todo junto.<br>· <b>Pregúntale a tus datos.</b> En Estadísticas puedes preguntar por voz o por escrito, por ejemplo «dime la tensión media de esta semana», y Gemini te contesta con lo que has apuntado.<br>· <b>Tensión: la foto primero.</b> Al apuntar la tensión, la foto al tensiómetro sale arriba; lo de apuntar a mano queda detrás de un botón.<br>· <b>Vista compacta.</b> En Configuración → Aspecto puedes ponerlo todo más pequeño, si prefieres.<br>· <b>Avisos de las pastillas.</b> En la app de Google Play se programan solos al entrar, sin tener que pulsar nada.<br>· <b>Hoy, más limpio.</b> Arriba solo pone «Tu día», sin la insignia verde.<br>· <b>Aviso de revisión.</b> Si te toca revisar el implante, toca la tarjeta y se abre tu pauta para cambiar la fecha.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
     <p class="muted"><b>Qué cambia en la v1.53:</b><br>· Nuevo: alarmas del móvil por comida desde el Pastillero, con botón para ponerlas todas y alarmas propias.</p>
@@ -1034,7 +1036,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.64 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.65 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4016,7 +4018,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.64";
+var APP_VERSION = "v1.65";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -5968,8 +5970,27 @@ function suenoSheetValues(){ var rows = [["Fecha","Horas","Calidad"]]; data.suen
 function spo2SheetValues(){ var rows = [["Fecha","Oxígeno (%)"]]; data.spo2.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.spo2||""]); }); return rows; }
 function pasosSheetValues(){ var rows = [["Fecha","Pasos"]]; data.pasos.slice().sort(function(a,b){ return (a.fecha<b.fecha?-1:1); }).forEach(function(x){ rows.push([fmtFecha(x.fecha), x.pasos||""]); }); return rows; }
 async function sheetsFetch(url, opts){ var r = await driveFetch(url, opts); if(r.status === 403){ var e = new Error("Sheets 403"); e.sheets403 = true; throw e; } return r; }
+/* v1.65: crea las pestañas que falten en la hoja de Sheets. Antes, con el id
+   de la hoja guardado, la app no comprobaba nada: una hoja creada antes de la
+   v1.57 no tenía la pestaña «Peso» y cada guardado fallaba con «Unable to
+   parse range: 'Peso'!A1:B1». El 403 se propaga como antes; los demás fallos
+   no rompen el guardado (las escrituras se intentan igual). */
+async function ensureSheetTabs(sheetId){
+  try{
+    var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheetId + "?fields=sheets.properties");
+    var gj = await g.json();
+    var titles = (gj.sheets || []).map(function(s){ return s.properties && s.properties.title; });
+    var reqs = [];
+    if(titles.indexOf(SHEET_TAB) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB } } });
+    if(titles.indexOf(SHEET_TAB_TENSION) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_TENSION } } }); /* v1.39 */
+    if(titles.indexOf(SHEET_TAB_PESO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PESO } } }); /* v1.57 */
+    if(titles.indexOf(SHEET_TAB_SUENO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SUENO } } });
+    if(titles.indexOf(SHEET_TAB_SPO2) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SPO2 } } });
+    if(titles.indexOf(SHEET_TAB_PASOS) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PASOS } } });
+    if(reqs.length){ await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheetId + ":batchUpdate", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ requests: reqs }) }); }
+  }catch(e){ if(e.sheets403) throw e; } }
 async function ensureSheet(){
-  var cached = localStorage.getItem(SHEET_ID_KEY); if(cached) return { id: cached, url: localStorage.getItem(SHEET_URL_KEY) || ("https://docs.google.com/spreadsheets/d/" + cached) };
+  var cached = localStorage.getItem(SHEET_ID_KEY); if(cached){ await ensureSheetTabs(cached); return { id: cached, url: localStorage.getItem(SHEET_URL_KEY) || ("https://docs.google.com/spreadsheets/d/" + cached) }; }
   var folderId = await ensureDriveFolder();
   var q = encodeURIComponent("name = '" + SHEET_TITLE + "' and '" + folderId + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false");
   var r = await driveFetch("https://www.googleapis.com/drive/v3/files?q=" + q + "&fields=files(id,name,webViewLink)&spaces=drive");
@@ -5983,23 +6004,18 @@ async function ensureSheet(){
   localStorage.setItem(SHEET_ID_KEY, file.id);
   var url = file.webViewLink || ("https://docs.google.com/spreadsheets/d/" + file.id);
   localStorage.setItem(SHEET_URL_KEY, url);
-  try{
-    var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + file.id + "?fields=sheets.properties");
-    var gj = await g.json();
-    var titles = (gj.sheets || []).map(function(s){ return s.properties && s.properties.title; });
-    var reqs = [];
-    if(titles.indexOf(SHEET_TAB) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB } } });
-    if(titles.indexOf(SHEET_TAB_TENSION) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_TENSION } } }); /* v1.39 */
-    if(titles.indexOf(SHEET_TAB_PESO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PESO } } }); /* v1.57 */
-    if(titles.indexOf(SHEET_TAB_SUENO) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SUENO } } });
-    if(titles.indexOf(SHEET_TAB_SPO2) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_SPO2 } } });
-    if(titles.indexOf(SHEET_TAB_PASOS) < 0) reqs.push({ addSheet:{ properties:{ title: SHEET_TAB_PASOS } } });
-    if(reqs.length){ await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + file.id + ":batchUpdate", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ requests: reqs }) }); }
-  }catch(e){ if(e.sheets403) throw e; }
+  await ensureSheetTabs(file.id);
   return { id: file.id, url: url }; }
 async function putSheetValues(sheetId, range, values){ var wr = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheetId + "/values/" + encodeURIComponent(range) + "?valueInputOption=USER_ENTERED", { method:"PUT", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ range: range, majorDimension:"ROWS", values: values }) });
   if(!wr.ok){ var wj = await wr.json().catch(function(){ return {}; }); var err = new Error((wj.error && wj.error.message) || ("Sheets " + wr.status)); if(wr.status === 403) err.sheets403 = true; throw err; }
   return wr; }
+
+/* v1.65: red de seguridad — si una escritura falla porque la pestaña no existe
+   («Unable to parse range»), se crean las pestañas que falten y se reintenta
+   esa escritura una sola vez. Si vuelve a fallar, el error es el de siempre. */
+async function putSheetValuesConReintento(sheetId, range, values){
+  try{ return await putSheetValues(sheetId, range, values); }
+  catch(e){ if(/Unable to parse range/.test(e.message || "")){ await ensureSheetTabs(sheetId); return await putSheetValues(sheetId, range, values); } throw e; } }
 async function saveToSheets(manual){
   /* v1.49: un guardado directo deja sin efecto el envío con retardo que estuviera esperando. */
   clearTimeout(sheetSaveTimer); sheetPendiente = false;
@@ -6007,13 +6023,13 @@ async function saveToSheets(manual){
   try{
     var sheet = await ensureSheet();
     var values = andarSheetValues();
-    await putSheetValues(sheet.id, "'" + SHEET_TAB + "'!A1:I" + values.length, values);
+    await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB + "'!A1:I" + values.length, values);
     var tValues = tensionSheetValues(); /* v1.39: la pestaña Tensión se reescribe entera, así la primera sincronización importa lo ya grabado */
-    await putSheetValues(sheet.id, "'" + SHEET_TAB_TENSION + "'!A1:F" + tValues.length, tValues);
-    var pValues = pesoSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_PESO + "'!A1:B" + pValues.length, pValues); /* v1.57 */
-    var sValues = suenoSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_SUENO + "'!A1:C" + sValues.length, sValues);
-    var oValues = spo2SheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_SPO2 + "'!A1:B" + oValues.length, oValues);
-    var psValues = pasosSheetValues(); await putSheetValues(sheet.id, "'" + SHEET_TAB_PASOS + "'!A1:B" + psValues.length, psValues);
+    await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB_TENSION + "'!A1:F" + tValues.length, tValues);
+    var pValues = pesoSheetValues(); await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB_PESO + "'!A1:B" + pValues.length, pValues); /* v1.57 */
+    var sValues = suenoSheetValues(); await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB_SUENO + "'!A1:C" + sValues.length, sValues);
+    var oValues = spo2SheetValues(); await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB_SPO2 + "'!A1:B" + oValues.length, oValues);
+    var psValues = pasosSheetValues(); await putSheetValuesConReintento(sheet.id, "'" + SHEET_TAB_PASOS + "'!A1:B" + psValues.length, psValues);
     try{
       var g = await sheetsFetch("https://sheets.googleapis.com/v4/spreadsheets/" + sheet.id + "?fields=sheets.properties");
       var gj = await g.json();
