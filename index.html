@@ -112,6 +112,26 @@ try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");v
 }
 [data-skin="minimal"] .view-head{background:var(--head-bg);color:var(--head-ink);box-shadow:none;border:1px solid var(--line)}
 [data-skin="minimal"] .view-head .ic{background:var(--head-ic-bg)}
+/* v1.67: modo minimalista (Hoy). Solo líneas finas y el círculo azul, como
+   el aspecto «Minimal»: usa --line y --blue, así combina con cualquier
+   aspecto. Las filas son botones a todo el ancho, sin tarjetas. */
+#hoy-minimal h1{font-size:32px;text-align:left;margin:28px 0 4px}
+#hoy-minimal .subtitulo-minimal{font-size:16px;line-height:1.5;color:var(--muted);margin-bottom:28px}
+#hoy-minimal .fila-minimal{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;text-align:left;background:none;border:0;border-top:1px solid var(--line);padding:20px 0;cursor:pointer;font:inherit;color:var(--ink)}
+#hoy-minimal .fila-minimal:last-of-type{border-bottom:1px solid var(--line)}
+#hoy-minimal .fila-minimal .etiqueta{display:block;font-size:14px;color:var(--muted);margin-bottom:4px}
+#hoy-minimal .fila-minimal .valor{display:block;font-size:21px;font-weight:600;line-height:1.25}
+#hoy-minimal .fila-minimal .detalle{display:block;font-size:14px;color:var(--muted);margin-top:4px}
+#hoy-minimal .marca-hecho{flex:none;width:28px;height:28px;border-radius:999px;border:1.5px solid var(--blue);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600}
+#hoy-minimal .marca-hecho.hecho{background:var(--blue);color:#fff;border-color:var(--blue)}
+#hoy-minimal .fila-minimal.gris .valor{color:var(--muted);font-weight:500}
+#hoy-minimal .fila-minimal.gris .marca-hecho{border-color:var(--muted);color:var(--muted)}
+#hoy-minimal .btn{width:100%;margin-top:28px}
+#hoy-minimal .btn-texto{display:block;width:100%;text-align:center}
+/* v1.67: con el modo minimalista plegado, solo se ve #hoy-minimal: el
+   resto de los hijos de Hoy se esconde con la clase, sin envolverlos en
+   otro div (así la tarjeta de dolor sigue siendo el último elemento). */
+#view-hoy.minimal-plegado > :not(#hoy-minimal){display:none}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px}
 a{color:var(--link)}
@@ -488,12 +508,19 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.66 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.67 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
 <!-- ============ HOY ============ -->
 <section class="view active" id="view-hoy">
+  <div id="hoy-minimal" hidden>
+    <h1>Tu día</h1>
+    <p class="subtitulo-minimal">Solo lo de hoy. Lo demás está guardado, no estorba.</p>
+    <div id="hoy-minimal-filas"></div>
+    <button class="btn" id="btn-minimal-tension" type="button" onclick="pedirExpandir('tension');goto('tension')">Apuntar tensión</button>
+    <button class="btn-texto" id="btn-minimal-ver-mas" type="button">Ver más ›</button>
+  </div>
   <h1 class="titulo-hoy">☀️ Tu día <button type="button" class="info-btn" data-info-toggle="tu-dia-colores" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h1>
   <div class="card"><p data-info-for="tu-dia-colores" hidden class="info-text"><span style="color:var(--green)">✓ Verde:</span> registrado hoy.<br><span style="color:var(--red)">✗ Rojo:</span> aún sin registrar.<br><span style="color:var(--muted)">— Gris:</span> no hay nada que registrar.</p><ol class="rutina" id="hoy-rutina"></ol>
 <button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px">➕ Añadir Widget</button>
@@ -953,6 +980,8 @@ footer a{color:var(--muted)}
     </div>
     <p style="margin-top:16px"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer"><input type="checkbox" id="chk-compacta" style="width:26px;height:26px;flex:none;margin-top:2px"> Vista compacta (más pequeña)</label></p>
     <p class="muted" style="margin-top:4px">Todo más pequeño: botones, texto y huecos. Vale con cualquiera de los aspectos de arriba. La vista grande sigue siendo la de siempre.</p>
+    <p style="margin-top:16px"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer"><input type="checkbox" id="chk-minimalista" style="width:26px;height:26px;flex:none;margin-top:2px"> Modo minimalista</label></p>
+    <p class="muted" style="margin-top:4px">Hoy solo muestra lo de hoy: la próxima pastilla, la marcha y la última tensión. Lo demás queda detrás de «Ver más». Vale con cualquiera de los aspectos de arriba.</p>
   </div>
   </div>
   <div class="card" id="card-dia-inicio"><h2>🌅 Tu día empieza a las</h2>
@@ -1013,7 +1042,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.66</p>
+    <p class="muted">Versión v1.67</p>
+    <p class="muted"><b>Qué cambia en la v1.67:</b><br>· <b>Modo minimalista en Configuración → Aspecto:</b> Hoy solo muestra lo de hoy, lo demás detrás de «Ver más».</p>
     <p class="muted"><b>Qué cambia en la v1.66:</b><br>· <b>Nueva piel «Minimal» en Configuración → Aspecto.</b> Blanco roto, un solo azul y sin sombras.</p>
     <p class="muted"><b>Qué cambia en la v1.65:</b><br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.</p>
     <p class="muted"><b>Qué cambia en la v1.64:</b><br>· <b>Los botones de voz ya no están.</b> En algunos móviles no funcionaban. La pregunta se sigue escribiendo en «Pregúntale a CorazónIA», y el micrófono del teclado sigue funcionando para dictarla.</p>
@@ -1022,7 +1052,6 @@ footer a{color:var(--muted)}
     <p class="muted"><b>Qué cambia en la v1.61:</b><br>· <b>Sal, aditivos y conservantes.</b> Nueva lista en Alimentación, y el chequeo se pone en rojo si el producto lleva nitratos, nitritos, benzoatos o sulfitos.</p>
     <p class="muted"><b>Qué cambia en la v1.60:</b><br>· «Pregúntale a tus datos» ahora está arriba, sin tener que bajar.<br>· <b>Estadísticas más legibles.</b> Las medias de Mi Actividad ya no se parten: cada valor va en su propia línea, a todo el ancho.<br>· <b>Mi Actividad, más limpia.</b> El resumen «Mi pauta» ya no está en Mi Actividad: tu pauta completa sigue en Pautas y en «Informe para el Médico».<br>· <b>Semáforo BORG más limpio.</b> En «Mis marchas» ahora se ve un solo punto, el del color que toca.<br>· <b>Tabla completa.</b> En «Mis marchas» hay un botón para ver la tabla a pantalla completa, sin desplazar de lado.<br>· <b>Menú más corto.</b> El menú tiene 6 elementos: «Tensión y pulso» se abre desde Mi Actividad, y «Mis pautas», «Pastillero», «Mi programa» e «Informe para el Médico» desde «Mis datos».<br>· <b>«Mi Actividad».</b> La sección «Andar» ahora se llama «Mi Actividad»; todo lo demás sigue igual.<br>· <b>«Informe para el Médico».</b> La sección «Para el médico» ahora se llama «Informe para el Médico»; todo lo demás sigue igual.<br>· <b>Importar datos de salud.</b> Ahora se indica con qué relojes funciona: Garmin, Samsung, Xiaomi, Amazfit, Fitbit, Polar y COROS.<br>· <b>Apuntar tensión, arriba.</b> En «Tensión y pulso» el bloque para apuntar está ahora el primero, antes de la evolución y de tus registros.<br>· <b>Menos avisos.</b> El aviso de datos orientativos ya solo sale en Alimentación (y en el informe ya no sale); en las demás vistas ya no sale.</p>
     <p class="muted"><b>Qué cambia en la v1.59:</b><br>· <b>Tu pauta ya aparece rellena.</b> Al abrir Pautas se ven los valores que ya tenías guardados.<br>· <b>Pautas más recogida.</b> La explicación larga está detrás de la (i), y al abrir Pautas se ve solo el resumen.</p>
-    <p class="muted"><b>Qué cambia en la v1.58:</b><br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
     <p class="muted"><b>Qué cambia en la v1.55:</b><br>· Las alarmas del móvil ya no están: en algunos móviles no funcionaban. Los avisos de las pastillas siguen llegando por notificaciones.<br>· <b>Vídeo tutorial.</b> En Configuración ya puedes ver el vídeo que enseña, paso a paso, cómo se usa la app.</p>
     <p class="muted"><b>Qué cambia en la v1.54:</b><br>· Las alarmas del móvil ahora se abren directo en el Reloj y la tarjeta es más compacta.</p>
     <p class="muted"><b>Qué cambia en la v1.53:</b><br>· Nuevo: alarmas del móvil por comida desde el Pastillero, con botón para ponerlas todas y alarmas propias.</p>
@@ -1051,7 +1080,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.66 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.67 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4033,7 +4062,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.66";
+var APP_VERSION = "v1.67";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -4128,7 +4157,7 @@ function toastAccion(msg, etiqueta, fn){
   toastTimer = setTimeout(function(){ t.style.display = "none"; }, 6000);
 }
 /* ---------- Datos ---------- */
-function datosVacios(){ return { skin:"actual", compacta:false, consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], peso:[], sueno:[], spo2:[], pasos:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
+function datosVacios(){ return { skin:"actual", compacta:false, minimalista:false, consentAlimentacion:null, diaInicio: "05:00", pauta:{ tipo:"", duracion:"", dias:"", pulso:"", borgMin:"", borgMax:"", fcMaxima:"", tensionSisMax:"", tensionSisMin:"", tensionDiaMax:"", tensionDiaMin:"", diagnostico:"", dispositivo:"", modelo:"", revision:"", medico:"", telMedico:"" }, walks:[], tensions:[], pills:[], episodios:[], widgets:null, compra:[], peso:[], sueno:[], spo2:[], pasos:[], semaforo:{ limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] }, creado: new Date().toISOString(), actualizado: new Date().toISOString() }; }
 /* v1.36: un estado solo tiene contenido real si hay pastillas, marchas,
    tensiones o algún campo de la pauta rellenado. Un objeto pauta vacío {}
    es truthy en JS, así que no basta con comprobar que exista: eso aceptaba
@@ -4144,7 +4173,7 @@ function sanearDatos(d){
   /* v1.45: la migración de datos viejos vive aquí para usarla también al
      cargar de Drive y al importar una copia, no solo al cargar en local. */
   if(!d || typeof d !== "object") return datosVacios();
- if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; d.compacta = d.compacta === true; /* v1.57: vista compacta (Ligero), apagada por defecto */ if(!d.pauta) d.pauta = datosVacios().pauta; /* v1.46: rellenar las claves de pauta que falten en datos viejos (pauta de tensión nueva) con su valor vacío, sin tocar lo guardado */ var _pv = datosVacios().pauta; Object.keys(_pv).forEach(function(k){ if(d.pauta[k] == null) d.pauta[k] = _pv[k]; }); ["walks","tensions","pills","episodios","compra","peso","sueno","spo2","pasos"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
+ if(SKINS.indexOf(d.skin) < 0) d.skin = "actual"; d.compacta = d.compacta === true; d.minimalista = d.minimalista === true; /* v1.67: modo minimalista (Hoy), apagado por defecto */ if(!d.pauta) d.pauta = datosVacios().pauta; /* v1.46: rellenar las claves de pauta que falten en datos viejos (pauta de tensión nueva) con su valor vacío, sin tocar lo guardado */ var _pv = datosVacios().pauta; Object.keys(_pv).forEach(function(k){ if(d.pauta[k] == null) d.pauta[k] = _pv[k]; }); ["walks","tensions","pills","episodios","compra","peso","sueno","spo2","pasos"].forEach(function(k){ if(!Array.isArray(d[k])) d[k] = []; }); if(d.widgets != null && !Array.isArray(d.widgets)) d.widgets = null; if(!d.semaforo || typeof d.semaforo !== "object") d.semaforo = { limiteSal:"1", limiteSaturadas:"", limiteAzucares:"5", campos:[], historial:[] };
     if(d.semaforo.limiteSaturadas == null) d.semaforo.limiteSaturadas = "";
     if(d.semaforo.limiteAzucares == null) d.semaforo.limiteAzucares = "5"; /* límite nuevo en v1.21: azúcares 5 g por 100 g */
     delete d.semaforo.objetivoLdl; delete d.semaforo.objetivoTrig; /* v1.17: los objetivos de LDL y triglicéridos ya no existen */
@@ -4354,6 +4383,68 @@ function setCompacta(on){ data.compacta = !!on; saveAll(); applyDensity(); toast
 function updateSkinPicker(){ var cur = (data && data.skin) || "actual"; Array.prototype.forEach.call(document.querySelectorAll(".skin-opcion"), function(b){ b.setAttribute("aria-checked", b.getAttribute("data-skin") === cur ? "true" : "false"); }); var c = $("chk-compacta"); if(c) c.checked = !!(data && data.compacta); }
 function setSkin(s){ if(SKINS.indexOf(s) < 0) s = "actual"; data.skin = s; localStorage.setItem(THEME_KEY, "light"); saveAll(); applyTheme(); toast("Aspecto cambiado."); }
 $("chk-compacta").addEventListener("change", function(){ setCompacta(this.checked); });
+/* v1.67: modo minimalista (Hoy). No es un aspecto: combina con cualquiera
+   de los 6. Solo cambia Hoy: muestra las tres filas de hoy y esconde el
+   resto detrás de «Ver más». El desplegado es por sesión (al cargar la
+   app, Hoy vuelve plegado); el modo sí se guarda con los datos. */
+var hoyMinimalDesplegado = false;
+function setMinimalista(on){ data.minimalista = !!on; saveAll(); aplicarMinimalista(); toast(on ? "Modo minimalista activado." : "Modo minimalista desactivado."); }
+function aplicarMinimalista(){
+  var on = !!(data && data.minimalista);
+  var m = $("chk-minimalista"); if(m) m.checked = on;
+  var bloque = $("hoy-minimal");
+  if(bloque) bloque.hidden = !on;
+  var sec = $("view-hoy");
+  if(sec) sec.classList.toggle("minimal-plegado", on && !hoyMinimalDesplegado);
+  var vm = $("btn-minimal-ver-mas");
+  if(vm) vm.textContent = hoyMinimalDesplegado ? "Ver menos ‹" : "Ver más ›";
+  if(on) renderFilasMinimal();
+}
+function toggleMinimalHoy(){ hoyMinimalDesplegado = !hoyMinimalDesplegado; aplicarMinimalista(); }
+function filaMinimal(vista, etiqueta, valor, detalle, claseExtra, hecho){
+  var onclick = vista === "tension" ? "pedirExpandir('tension');goto('tension')" : "goto('" + vista + "')";
+  return '<button type="button" class="fila-minimal' + (claseExtra ? ' ' + claseExtra : '') + '" onclick="' + onclick + '"><span><span class="etiqueta">' + esc(etiqueta) + '</span><span class="valor">' + esc(valor) + '</span>' + (detalle ? '<span class="detalle">' + esc(detalle) + '</span>' : '') + '</span><span class="marca-hecho' + (hecho ? ' hecho' : '') + '" aria-hidden="true">' + (hecho ? '✓' : '') + '</span></button>';
+}
+function renderFilasMinimal(){
+  var el = $("hoy-minimal-filas"); if(!el) return;
+  var hoy = hoyISO();
+  /* a. Próxima pastilla: la primera dosis que queda por tomar hoy. */
+  var dosisRestantes = [];
+  data.pills.forEach(function(m){ (m.horas || []).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
+  dosisRestantes.sort(function(a,b){ return a.hora < b.hora ? -1 : 1; });
+  var filaPastilla;
+  if(!data.pills.length){
+    filaPastilla = filaMinimal("pastillero", "Próxima pastilla", "Sin medicinas en el pastillero", "", "gris", false);
+  } else if(dosisRestantes.length){
+    var d0 = dosisRestantes[0];
+    filaPastilla = filaMinimal("pastillero", "Próxima pastilla", d0.med.nombre, d0.hora + (d0.med.dosis ? " · " + d0.med.dosis : ""), "", false);
+  } else {
+    filaPastilla = filaMinimal("pastillero", "Próxima pastilla", "Todas hechas", "Todas las tomas de hoy, hechas", "", true);
+  }
+  /* b. Marcha de hoy: minutos de la pauta (60 si no hay) y si ya se anduvo. */
+  var marchaHoy = null;
+  data.walks.forEach(function(w){ if(w.fecha === hoy) marchaHoy = w; });
+  var dur = (data.pauta && data.pauta.duracion) || "60";
+  var dias = (data.pauta && data.pauta.dias) || "";
+  var filaMarcha;
+  if(marchaHoy){
+    filaMarcha = filaMinimal("andar", "Marcha de hoy", (marchaHoy.minutos || dur) + " min", "Hoy" + (marchaHoy.km ? " · " + marchaHoy.km + " km" : ""), "", true);
+  } else {
+    filaMarcha = filaMinimal("andar", "Marcha de hoy", dur + " min", "Pauta: " + dur + " min" + (dias ? " · " + dias + " días a la semana" : ""), "", false);
+  }
+  /* c. Última tensión: la más reciente; hecha si es de hoy. */
+  var ult = data.tensions[0];
+  var filaTension;
+  if(!ult){
+    filaTension = filaMinimal("tension", "Última tensión", "Sin registros todavía", "", "gris", false);
+  } else {
+    var esHoy = (ult.fecha || "").slice(0, 10) === hoy;
+    filaTension = filaMinimal("tension", "Última tensión", (ult.sistolica || "—") + "/" + (ult.diastolica || "—"), "Pulso " + (ult.pulso || "—") + " · " + fmtFechaHoraCorta(ult.fecha), "", esHoy);
+  }
+  el.innerHTML = filaPastilla + filaMarcha + filaTension;
+}
+$("chk-minimalista").addEventListener("change", function(){ setMinimalista(this.checked); });
+$("btn-minimal-ver-mas").addEventListener("click", toggleMinimalHoy);
 $("btn-theme").addEventListener("click", function(){ var t = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark"; localStorage.setItem(THEME_KEY, t); applyTheme(); });
 Array.prototype.forEach.call(document.querySelectorAll(".skin-opcion"), function(b){ b.addEventListener("click", function(){ setSkin(b.getAttribute("data-skin")); }); });
 /* Ventana emergente de información (v1.20): al pulsar una (i) se abre un recuadro con una punta hacia la (i), el texto y una × para cerrar. Solo una abierta a la vez; se cierra con la ×, tocando fuera, pulsando la misma (i) o con Escape. El texto se copia del elemento [data-info-for] en el momento de abrir, así que siempre es el actual. */
@@ -5578,6 +5669,7 @@ function renderRutina(){
 }
 $("btn-anadir-widget").addEventListener("click", function(){ var box = $("selector-widgets"); if(box){ box.hidden = !box.hidden; renderSelectorWidgets(); } });
 function renderHoy(){ var hoy = hoyISO();
+  aplicarMinimalista(); /* v1.67: modo minimalista (Hoy plegado / completo) */
   renderRutina();
   /* v1.57 (lote 13): el aviso de revisión en Hoy se puede tocar entero: lleva a Pautas con la pauta médica abierta, para cambiar la fecha o quitarla (al quitarla, el aviso desaparece). */
   var hr = $("hoy-revision");
