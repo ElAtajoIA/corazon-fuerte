@@ -1,1 +1,92 @@
-placeholder
+# Compila el APK y el AAB de Corazón Fuerte en la nube (GitHub Actions).
+# Se dispara a mano (Actions > Build Android > Run workflow) y también solo
+# cuando cambia algo de android-app/ o este propio archivo.
+# La firma release usa la clave guardada en los secretos del repo:
+#   CF_KEYSTORE_BASE64, CF_KEYSTORE_PASSWORD, CF_KEY_ALIAS, CF_KEY_PASSWORD
+# El APK queda como artefacto para probar y el AAB para publicar en Play.
+# Binarios: los iconos y el vídeo de android-app/www/ se copian desde la raíz
+# del repo (son los mismos archivos, ya publicados); los iconos y splashes
+# de android/app/src/main/res/ llegan en android-app/res-binarios.zip y se
+# descomprimen antes de compilar. El resto de android/app/src/main/assets/
+# lo regenera `npx cap sync android`, así que no se publica en el repo.
+
+name: Build Android (APK + AAB)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'android-app/**'
+      - '.github/workflows/build-android.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Compilar APK y AAB
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Copiar iconos y vídeo desde la raíz
+        run: |
+          cp icon-192.png icon-512.png icon-maskable-512.png apple-touch-icon.png logo-round.png logo.webp tutorial-corazon-fuerte.mp4 android-app/www/
+
+      - name: Descomprimir iconos y splashes
+        working-directory: android-app
+        run: unzip -o res-binarios.zip -d android/app/src/main/res/
+
+      - name: Instalar dependencias (npm ci)
+        working-directory: android-app
+        run: npm ci
+
+      - name: Sincronizar Capacitor
+        working-directory: android-app
+        run: npx cap sync android
+
+      - name: Instalar Android SDK 36
+        run: |
+          yes | "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0"
+
+      - name: Decodificar la clave de firma
+        run: |
+          echo "${{ secrets.CF_KEYSTORE_BASE64 }}" | base64 --decode > "${{ runner.temp }}/corazon-fuerte-clave"
+          echo "CF_KEYSTORE_PATH=${{ runner.temp }}/corazon-fuerte-clave" >> "$GITHUB_ENV"
+
+      - name: Compilar APK y AAB (release)
+        working-directory: android-app/android
+        env:
+          CF_KEYSTORE_PASSWORD: ${{ secrets.CF_KEYSTORE_PASSWORD }}
+          CF_KEY_ALIAS: ${{ secrets.CF_KEY_ALIAS }}
+          CF_KEY_PASSWORD: ${{ secrets.CF_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease bundleRelease --stacktrace
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: corazon-fuerte-apk
+          path: android-app/android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+
+      - name: Subir AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: corazon-fuerte-aab
+          path: android-app/android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
