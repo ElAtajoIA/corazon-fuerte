@@ -30,7 +30,7 @@
 <meta name="apple-mobile-web-app-title" content="Corazón Fuerte" />
 <meta name="google-site-verification" content="Tj32COZfoXzLUMCOExFf5HOoU7sXsqkUqvzHGPHWV_M" />
 <script>/* v1.19: aplica el aspecto guardado antes del primer pintado, para no ver un parpadeo. */
-try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");var _s=_d&&_d.skin||"actual";if(["actual","minimalista","azul","oscuro","pastel"].indexOf(_s)<0)_s="actual";var _t=localStorage.getItem("corazon-fuerte-tema");if(!_t)_t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-skin",_t==="dark"?"oscuro":_s);document.documentElement.setAttribute("data-theme",_t);document.documentElement.setAttribute("data-densidad",(_d&&_d.compacta)?"compacta":"normal");}catch(e){document.documentElement.setAttribute("data-skin","actual");document.documentElement.setAttribute("data-theme","light");document.documentElement.setAttribute("data-densidad","normal");}</script>
+try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");var _s=_d&&_d.skin||"actual";if(["actual","minimalista","azul","oscuro","pastel","minimal"].indexOf(_s)<0)_s="actual";var _t=localStorage.getItem("corazon-fuerte-tema");if(!_t)_t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-skin",_t==="dark"?"oscuro":_s);document.documentElement.setAttribute("data-theme",_t);document.documentElement.setAttribute("data-densidad",(_d&&_d.compacta)?"compacta":"normal");}catch(e){document.documentElement.setAttribute("data-skin","actual");document.documentElement.setAttribute("data-theme","light");document.documentElement.setAttribute("data-densidad","normal");}</script>
 <style>
 *{box-sizing:border-box}
 :root{
@@ -99,6 +99,19 @@ try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");v
 }
 [data-skin="pastel"] .view-head{background:var(--head-bg);color:var(--head-ink)}
 [data-skin="pastel"] .view-head .ic{background:var(--head-ic-bg)}
+/* v1.66: aspecto «Minimal», estilo OpenBot: fondo casi blanco, un solo azul, sin sombras. */
+[data-skin="minimal"]{
+  --bg:#F5F5F6; --card:#FFFFFF; --ink:#141414; --muted:#6B6B70; --line:rgba(20,20,20,.08);
+  --red:#C81E3A; --red-dark:#991B1B; --green:#15803D; --blue:#007CF7; --amber:#B45309;
+  --input-bg:#FFFFFF; --input-ink:#141414; --input-border:rgba(20,20,20,.16); --link:#007CF7;
+  --danger-bg:#FDECEC; --ok-bg:#EAF7EE; --warn-bg:#FFF4E0; --shadow:none;
+  --header-bg:#F5F5F6; --header-ink:#141414; --header-btn-bg:#FFFFFF; --header-btn-border:rgba(20,20,20,.08); --header-btn-ink:#141414; --header-shadow:none; --header-ring:rgba(20,20,20,.08);
+  --sos-bg:#141414; --sos-ink:#FFFFFF;
+  --btn-bg:#141414; --btn-shadow:none;
+  --head-bg:#FFFFFF; --head-ink:#141414; --head-ic-bg:#F5F5F6;
+}
+[data-skin="minimal"] .view-head{background:var(--head-bg);color:var(--head-ink);box-shadow:none;border:1px solid var(--line)}
+[data-skin="minimal"] .view-head .ic{background:var(--head-ic-bg)}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px}
 a{color:var(--link)}
@@ -123,7 +136,7 @@ header.top .brand span a{color:var(--header-ink);text-decoration:underline;text-
 .iconbtn.sos .sos-tel{font-size:14px;line-height:1}
 .punto-conectado{width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.15);flex:none;align-self:center}
 main{max-width:720px;margin:0 auto;padding:14px 12px 16px}
-/* v1.57: vista compacta (Configuración → Aspecto → «Vista compacta»). No es un aspecto más: combina con cualquiera de los 5 aspectos. */
+/* v1.57: vista compacta (Configuración → Aspecto → «Vista compacta»). No es un aspecto más: combina con cualquiera de los 6 aspectos. */
 html[data-densidad="compacta"] body{font-size:15px;line-height:1.45}
 html[data-densidad="compacta"] h1{font-size:20px}
 html[data-densidad="compacta"] h2{font-size:18px;margin-bottom:8px}
@@ -261,7 +274,7 @@ textarea{min-height:76px;resize:vertical}
 .info-btn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;flex:none;border:1.5px solid var(--link);color:var(--link);background:var(--card);font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:.95rem;vertical-align:4px;margin-left:8px;padding:0;line-height:1;cursor:pointer}
 .info-btn[aria-expanded="true"]{background:var(--link);color:var(--card)}
 .info-text{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
-/* Ventana emergente de información (v1.20): al pulsar una (i) se abre un recuadro con una punta hacia la (i), el texto y una × para cerrar. Usa las variables del aspecto, así vale en los 5 aspectos. */
+/* Ventana emergente de información (v1.20): al pulsar una (i) se abre un recuadro con una punta hacia la (i), el texto y una × para cerrar. Usa las variables del aspecto, así vale en los 6 aspectos. */
 #info-popup{position:fixed;z-index:90;left:0;top:0;width:340px;max-width:calc(100vw - 16px)}
 #info-popup .info-popup-bubble{position:relative;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px 42px 14px 16px;max-height:60vh;overflow-y:auto;font-size:16px;line-height:1.45}
 /* La punta va en el contenedor exterior, no en la burbuja: la burbuja tiene overflow-y:auto y recortaría la punta. */
@@ -475,7 +488,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.65 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.66 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -932,10 +945,11 @@ footer a{color:var(--muted)}
     <p>Elige cómo se ve la app. Se guarda con tus datos, así que te sigue en todos tus dispositivos.</p>
     <div class="skin-list" role="radiogroup" aria-label="Aspecto de la app">
       <button type="button" class="skin-opcion" data-skin="actual" role="radio" aria-checked="true"><span class="skin-muestras"><i style="background:#FFF5F0"></i><i style="background:#FFFFFF"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Actual</b><span>El de siempre, melocotón cálido</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
-      <button type="button" class="skin-opcion" data-skin="minimalista" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFFFFF"></i><i style="background:#F3F4F6"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Minimalista</b><span>Blanco, limpio, sin adornos</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="minimalista" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFFFFF"></i><i style="background:#F3F4F6"></i><i style="background:#C81E3A"></i></span><span class="skin-nombre"><b>Blanco</b><span>Blanco, limpio, sin adornos</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
       <button type="button" class="skin-opcion" data-skin="azul" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#F2F7FB"></i><i style="background:#FFFFFF"></i><i style="background:#0E7490"></i></span><span class="skin-nombre"><b>Azul sereno</b><span>Azul pálido, tranquilo</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
       <button type="button" class="skin-opcion" data-skin="oscuro" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#121826"></i><i style="background:#1E2637"></i><i style="background:#FF6B7A"></i></span><span class="skin-nombre"><b>Oscuro elegante</b><span>Fondo oscuro, de noche</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
       <button type="button" class="skin-opcion" data-skin="pastel" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#FFF8F0"></i><i style="background:#FFFFFF"></i><i style="background:#C2410C"></i></span><span class="skin-nombre"><b>Pastel cálido</b><span>Crema y tonos suaves</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
+      <button type="button" class="skin-opcion" data-skin="minimal" role="radio" aria-checked="false"><span class="skin-muestras"><i style="background:#F5F5F6"></i><i style="background:#FFFFFF"></i><i style="background:#007CF7"></i></span><span class="skin-nombre"><b>Minimal</b><span>Blanco roto, un solo azul, sin sombras</span></span><span class="skin-marca" aria-hidden="true">✓</span></button>
     </div>
     <p style="margin-top:16px"><label style="display:flex;gap:10px;align-items:flex-start;font-weight:700;cursor:pointer"><input type="checkbox" id="chk-compacta" style="width:26px;height:26px;flex:none;margin-top:2px"> Vista compacta (más pequeña)</label></p>
     <p class="muted" style="margin-top:4px">Todo más pequeño: botones, texto y huecos. Vale con cualquiera de los aspectos de arriba. La vista grande sigue siendo la de siempre.</p>
@@ -999,7 +1013,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.65</p>
+    <p class="muted">Versión v1.66</p>
+    <p class="muted"><b>Qué cambia en la v1.66:</b><br>· <b>Nueva piel «Minimal» en Configuración → Aspecto.</b> Blanco roto, un solo azul y sin sombras.</p>
     <p class="muted"><b>Qué cambia en la v1.65:</b><br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.</p>
     <p class="muted"><b>Qué cambia en la v1.64:</b><br>· <b>Los botones de voz ya no están.</b> En algunos móviles no funcionaban. La pregunta se sigue escribiendo en «Pregúntale a CorazónIA», y el micrófono del teclado sigue funcionando para dictarla.</p>
     <p class="muted"><b>Qué cambia en la v1.63:</b><br>· El botón «Preguntar por voz» ahora abre la ventana de voz del móvil directamente y funciona en la app instalada. Nuevo botón «Hablar con CorazónIA»: hablas, te contesta y te lo lee en voz alta, sin tocar nada.</p>
@@ -1036,7 +1051,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.65 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.66 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4018,11 +4033,11 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.65";
+var APP_VERSION = "v1.66";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
-var SKINS = ["actual","minimalista","azul","oscuro","pastel"];
+var SKINS = ["actual","minimalista","azul","oscuro","pastel","minimal"];
 var DRIVE_TOKENS_KEY = "corazon-fuerte-drive-tokens";
 var DRIVE_FOLDER_ID_KEY = "corazon-fuerte-drive-folder-id";
 var DRIVE_FILE_ID_KEY = "corazon-fuerte-drive-file-id";
