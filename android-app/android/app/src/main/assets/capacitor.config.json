@@ -1,1 +1,6 @@
-placeholder
+{
+	"appId": "com.elatajoia.corazonfuerte",
+	"appName": "Corazón Fuerte",
+	"webDir": "www",
+	"backgroundColor": "#ffffff"
+}
