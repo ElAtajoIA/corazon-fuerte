@@ -112,6 +112,29 @@ try{var _d=JSON.parse(localStorage.getItem("corazon-fuerte-datos-v1")||"null");v
 }
 [data-skin="minimal"] .view-head{background:var(--head-bg);color:var(--head-ink);box-shadow:none;border:1px solid var(--line)}
 [data-skin="minimal"] .view-head .ic{background:var(--head-ic-bg)}
+/* v1.68: piel «Minimal», tarjetas más limpias (mismo Hoy, mismo orden):
+   tarjetas planas sin sombras y con más aire, filas separadas por líneas
+   finas (sin el borde gordo verde/rojo), número en círculo neutro y estado
+   en un circulito pequeño; el botón «Añadir Widget» pasa a ser solo texto. */
+[data-skin="minimal"] .card{padding:24px 20px}
+[data-skin="minimal"] .card-cabecera{padding:0}
+[data-skin="minimal"] .card-cabecera>.card-cuerpo{padding:24px 20px}
+[data-skin="minimal"] .rutina{gap:0}
+[data-skin="minimal"] .rutina li{border-top:1px solid rgba(20,20,20,.07)}
+[data-skin="minimal"] .rutina li:last-child{border-bottom:1px solid rgba(20,20,20,.07)}
+[data-skin="minimal"] .rutina button.paso{background:#fff;border:none;border-radius:0;padding:14px 8px;min-height:56px}
+[data-skin="minimal"] .rutina button.paso.hecho{border:none;background:#fff}
+[data-skin="minimal"] .rutina button.paso.pendiente{background:#fff}
+[data-skin="minimal"] .rutina .num{background:none;border:1.5px solid rgba(20,20,20,.25);color:var(--muted)}
+[data-skin="minimal"] .rutina button.paso.hecho .num{background:none;color:var(--muted)}
+[data-skin="minimal"] .rutina .estado{flex:none;width:28px;height:28px;border-radius:999px;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:15px}
+[data-skin="minimal"] .rutina .estado.ok{border-color:var(--green);color:var(--green)}
+[data-skin="minimal"] .rutina .estado.no{border-color:var(--red);color:var(--red)}
+[data-skin="minimal"] .rutina .estado.neutro{border-color:var(--muted);color:var(--muted)}
+[data-skin="minimal"] .paso-quitar{border-radius:999px}
+[data-skin="minimal"] #btn-anadir-widget{display:block;width:100%;min-height:48px;margin:10px 0 0;padding:10px 4px;background:none;border:none;box-shadow:none;border-radius:0;color:var(--link);font-size:16px;font-weight:700;text-align:center;text-decoration:underline;cursor:pointer}
+[data-skin="minimal"] #btn-anadir-widget span{display:none}
+[data-skin="minimal"] #btn-anadir-widget::before{content:"+ ";font-weight:800}
 /* v1.67: modo minimalista (Hoy). Solo líneas finas y el círculo azul, como
    el aspecto «Minimal»: usa --line y --blue, así combina con cualquier
    aspecto. Las filas son botones a todo el ancho, sin tarjetas. */
@@ -508,7 +531,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.67 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.68 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -523,7 +546,7 @@ footer a{color:var(--muted)}
   </div>
   <h1 class="titulo-hoy">☀️ Tu día <button type="button" class="info-btn" data-info-toggle="tu-dia-colores" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h1>
   <div class="card"><p data-info-for="tu-dia-colores" hidden class="info-text"><span style="color:var(--green)">✓ Verde:</span> registrado hoy.<br><span style="color:var(--red)">✗ Rojo:</span> aún sin registrar.<br><span style="color:var(--muted)">— Gris:</span> no hay nada que registrar.</p><ol class="rutina" id="hoy-rutina"></ol>
-<button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px">➕ Añadir Widget</button>
+<button class="btn secondary" id="btn-anadir-widget" style="margin-top:10px"><span aria-hidden="true">➕</span> Añadir Widget</button>
 <div id="selector-widgets" hidden style="margin-top:10px"></div></div>
   <div id="hoy-revision"></div>
   <div id="hoy-pauta-vacia"></div>
@@ -1042,7 +1065,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.67</p>
+    <p class="muted">Versión v1.68</p>
+    <p class="muted"><b>Qué cambia en la v1.68:</b><br>· Piel «Minimal» con tarjetas más limpias.</p>
     <p class="muted"><b>Qué cambia en la v1.67:</b><br>· <b>Modo minimalista en Configuración → Aspecto:</b> Hoy solo muestra lo de hoy, lo demás detrás de «Ver más».</p>
     <p class="muted"><b>Qué cambia en la v1.66:</b><br>· <b>Nueva piel «Minimal» en Configuración → Aspecto.</b> Blanco roto, un solo azul y sin sombras.</p>
     <p class="muted"><b>Qué cambia en la v1.65:</b><br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.</p>
@@ -1080,7 +1104,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.67 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.68 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4062,7 +4086,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.67";
+var APP_VERSION = "v1.68";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
