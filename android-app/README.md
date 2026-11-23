@@ -15,7 +15,7 @@ aquí es solo la envoltura Android.
 - `package.json` / `package-lock.json` — dependencias Capacitor 8.6.2
   (`@capacitor/app`, `browser`, `local-notifications`, `@capgo/capacitor-health`,
   `@capacitor-community/speech-recognition`).
-- `capacitor.config.ts` — `appId: com.elatajoia.corazonfuerte`,
+- `capacitor.config.ts` — `appId: com.ambitoweb.corazonfuerte`,
   `webDir: www`.
 
 ## Compilación en la nube
