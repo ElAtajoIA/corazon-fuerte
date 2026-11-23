@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">Corazón Fuerte</string>
     <string name="title_activity_main">Corazón Fuerte</string>
-    <string name="package_name">com.elatajoia.corazonfuerte</string>
-    <string name="custom_url_scheme">com.elatajoia.corazonfuerte</string>
+    <string name="package_name">com.ambitoweb.corazonfuerte</string>
+    <string name="custom_url_scheme">com.ambitoweb.corazonfuerte</string>
     <!-- Health Connect: la pantalla de permisos muestra nuestra política de privacidad -->
     <string name="health_connect_privacy_policy_url">https://corazon-fuerte.pages.dev/privacidad.html</string>
 </resources>
