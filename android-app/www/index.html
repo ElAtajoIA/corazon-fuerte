@@ -4098,8 +4098,8 @@ var APP_VERSION = "1.0";
    del envoltorio Android (window.Capacitor existe); en el navegador sigue
    siendo la web y todos los caminos web quedan intactos. */
 function isNative(){ return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); }
-var NATIVE_REDIRECT_URI = "com.elatajoia.corazonfuerte:/oauth2redirect";
-var ANDROID_CLIENT_ID_DEFAULT = "956211762586-6gqe9aejnv2c4odh6ocuaaaqv9cs4ir2.apps.googleusercontent.com";
+var NATIVE_REDIRECT_URI = "com.ambitoweb.corazonfuerte:/oauth2redirect";
+var ANDROID_CLIENT_ID_DEFAULT = "956211762586-q6acnesr9t3ajt5pdcs8oqkk6k0moghs.apps.googleusercontent.com";
 var ANDROID_CLIENT_ID_KEY = "corazon-fuerte-android-client-id";
 function getAndroidClientId(){ var v = ""; try{ v = localStorage.getItem(ANDROID_CLIENT_ID_KEY) || ""; }catch(e){} return (v || ANDROID_CLIENT_ID_DEFAULT).trim(); }
 function androidClientConfigured(){ var id = getAndroidClientId(); return !!id && id.indexOf("PON_AQUI") !== 0; }
@@ -6058,7 +6058,7 @@ async function getAccessToken(){
    client_secret para clientes web. Un cliente Android es público por diseño
    (sin secreto): el intercambio del código y el refresco se hacen directos
    contra oauth2.googleapis.com. La vuelta llega por el esquema propio
-   com.elatajoia.corazonfuerte:/oauth2redirect, que el plugin App entrega
+   com.ambitoweb.corazonfuerte:/oauth2redirect, que el plugin App entrega
    con appUrlOpen (app ya abierta) o getLaunchUrl (app cerrada). */
 var ultimoRetornoOAuth = null;
 async function startGoogleLoginNativo(){
@@ -6086,7 +6086,7 @@ async function startGoogleLoginNativo(){
   }catch(e){ toast("No se pudo abrir la entrada con Google: " + e.message); }
 }
 async function procesarRetornoOAuthNativo(url){
-  if(!url || url.indexOf("com.elatajoia.corazonfuerte:/oauth2redirect") !== 0) return;
+  if(!url || url.indexOf("com.ambitoweb.corazonfuerte:/oauth2redirect") !== 0) return;
   if(url === ultimoRetornoOAuth) return; /* el código solo vale una vez */
   ultimoRetornoOAuth = url;
   var q = url.indexOf("?") >= 0 ? url.slice(url.indexOf("?") + 1) : "";
