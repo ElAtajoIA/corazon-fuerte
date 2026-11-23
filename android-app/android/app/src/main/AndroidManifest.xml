@@ -34,12 +34,12 @@
             </intent-filter>
 
             <!-- Entrada con Google: la vuelta de OAuth llega por el esquema propio
-                 com.elatajoia.corazonfuerte:/oauth2redirect (cliente Android, sin secreto) -->
+                 com.ambitoweb.corazonfuerte:/oauth2redirect (cliente Android, sin secreto) -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="com.elatajoia.corazonfuerte" />
+                <data android:scheme="com.ambitoweb.corazonfuerte" />
             </intent-filter>
 
         </activity>
