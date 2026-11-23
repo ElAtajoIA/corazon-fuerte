@@ -531,7 +531,7 @@ footer a{color:var(--muted)}
 <nav class="drawer" id="drawer" aria-label="Menú principal">
   <h2><img class="logo-round small" src="logo-round.png" alt=""> Corazón Fuerte</h2>
   <div id="drawer-nav"></div>
-  <div class="foot">Versión v1.68 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
+  <div class="foot">Versión v1.69 · Gratis.<br>Tus datos se guardan en tu dispositivo y, si conectas Google, en tu Google Drive.</div>
 </nav>
 
 <main>
@@ -759,7 +759,16 @@ footer a{color:var(--muted)}
   <div class="card">
     <div id="barcode-resultado"></div>
   </div>
-  <div class="card"><h2>Qué comer: verde, ámbar y rojo</h2>
+  <div class="card"><h2>Tus límites</h2>
+    <p id="limites-resumen"></p>
+    <button class="btn secondary" id="btn-ir-limites">Modificar mis límites</button>
+  </div>
+  <div class="card" id="card-compra"><h2>Lista de la compra</h2>
+<div id="lista-compra"></div>
+<div class="compra-add"><input id="compra-nuevo" type="text" placeholder="Producto (por ejemplo: tomates)" autocomplete="off"><button class="btn" id="btn-compra-anadir">Añadir</button></div>
+</div>
+  <div class="card" id="card-que-comer"><button type="button" class="plegable-cab" id="btn-que-comer" aria-expanded="false"><span class="plegable-titulo">Qué comer: verde, ámbar y rojo</span><span class="flecha" aria-hidden="true">▾</span></button>
+  <div id="que-comer-cuerpo" hidden>
     <p class="muted">Guía de la pauta base. Si tu médico te pauta otra cosa, manda la suya.</p>
     <p>🟢 <b>Verde — lo de todos los días:</b> verduras naturales; queso fresco 0% grasa con sal controlada; lácteos altos en proteína sin azúcares añadidos; cereales integrales limpios como la avena; aceite de oliva virgen extra (verde, mínimo 2–3 cucharadas al día, preferentemente en crudo; debe ser la principal grasa para cocinar); carnes blancas (pollo, pavo, conejo; lomo y solomillo de cerdo); legumbres 3 o más veces por semana; pescado azul 2 veces por semana (en conserva, solo en aceite de oliva o al natural); pan integral; huevos 4 o 5 a la semana; café natural 2 o 3 al día; especias en lugar de sal.</p>
     <p>🟡 <b>Ámbar — con medida:</b> frutos secos sin sal en raciones de 30 g (lo que cabe en la palma de la mano), 2 o 3 veces por semana (a diario si no hay sobrepeso); jamón serrano, el embutido menos procesado; carne roja, solo 1 o 2 veces cada 15 días; bebidas vegetales (avena, soja, almendra), desaconsejadas; repostería casera, menos de 3 veces por semana; versiones light ocasionales, solo si pasan el filtro de sal.</p>
@@ -768,6 +777,7 @@ footer a{color:var(--muted)}
     <p>🍳 <b>Preparación:</b> freidora de aire o vapor.</p>
     <p>🎉 <b>Excepciones sociales:</b> solo puntuales y en porción mínima.</p>
   </div>
+  </div>
   <div class="card" id="card-aditivos"><h2>Sal, aditivos y conservantes</h2>
     <p>🧂 <b>Sal la justa.</b> Evita la sal oculta en los ultraprocesados.</p>
     <p>Los aditivos no todos son malos: algunos son inocuos, como los antioxidantes y los conservantes.</p>
@@ -775,14 +785,6 @@ footer a{color:var(--muted)}
     <p class="muted">E-100 colorantes · E-200 conservantes · E-300 antioxidantes · E-400 estabilizantes · E-500 regulan la acidez · E-600 potenciadores del sabor.</p>
   </div>
   <div class="card"><h2>Productos comprobados</h2><div id="lista-semaforo"></div></div>
-  <div class="card" id="card-compra"><h2>Lista de la compra</h2>
-<div id="lista-compra"></div>
-<div class="compra-add"><input id="compra-nuevo" type="text" placeholder="Producto (por ejemplo: tomates)" autocomplete="off"><button class="btn" id="btn-compra-anadir">Añadir</button></div>
-</div>
-  <div class="card"><h2>Tus límites</h2>
-    <p id="limites-resumen"></p>
-    <button class="btn secondary" id="btn-ir-limites">Modificar mis límites</button>
-  </div>
 </section>
 
 <!-- ============ DOLOR ============ -->
@@ -1065,7 +1067,8 @@ footer a{color:var(--muted)}
     <button class="btn secondary" id="btn-importar">Importar copia</button><input type="file" id="import-file" accept="application/json,.json" hidden>
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
-    <p class="muted">Versión v1.68</p>
+    <p class="muted">Versión v1.69</p>
+    <p class="muted"><b>Qué cambia en la v1.69:</b><br>· En Alimentación: «Tus límites» y «Lista de la compra» justo debajo de la foto, y «Qué comer» plegado.</p>
     <p class="muted"><b>Qué cambia en la v1.68:</b><br>· Piel «Minimal» con tarjetas más limpias.</p>
     <p class="muted"><b>Qué cambia en la v1.67:</b><br>· <b>Modo minimalista en Configuración → Aspecto:</b> Hoy solo muestra lo de hoy, lo demás detrás de «Ver más».</p>
     <p class="muted"><b>Qué cambia en la v1.66:</b><br>· <b>Nueva piel «Minimal» en Configuración → Aspecto.</b> Blanco roto, un solo azul y sin sombras.</p>
@@ -1104,7 +1107,7 @@ footer a{color:var(--muted)}
 </div>
 
 <footer>
-  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.68 · Gratis</p>
+  <p><img class="logo-round tiny" src="logo-round.png" alt="" style="vertical-align:-8px"> <b>Corazón Fuerte</b> · Versión v1.69 · Gratis</p>
   <p>Hecho por El Atajo IA (@El_AtajoIA) · <a href="privacidad.html">Privacidad</a> · <a href="condiciones.html">Condiciones</a></p>
   <p><small>Esta app no sustituye el consejo de tu médico.</small></p>
 </footer>
@@ -4086,7 +4089,7 @@ exports["default"] = autoTable;
 <script>
 "use strict";
 /* Corazón Fuerte — v1.57. Una sola página. Datos en localStorage y, si te conectas, en tu Google Drive. */
-var APP_VERSION = "v1.68";
+var APP_VERSION = "v1.69";
 var DATA_KEY = "corazon-fuerte-datos-v1";
 var GEMINI_KEY = "corazon-fuerte-gemini-key";
 var THEME_KEY = "corazon-fuerte-tema";
@@ -4853,6 +4856,16 @@ function desplegarGoogle(abrir){
   btn.classList.toggle("abierto", googleAbierto);
   btn.setAttribute("aria-expanded", googleAbierto ? "true" : "false");
 }
+/* v1.69: «Qué comer» plegado por defecto en Alimentación (mismo patrón que Configuración). */
+var queComerAbierto = false;
+function desplegarQueComer(abrir){
+  queComerAbierto = (abrir == null) ? !queComerAbierto : !!abrir;
+  var b = $("que-comer-cuerpo"), btn = $("btn-que-comer");
+  if(!b || !btn) return;
+  b.hidden = !queComerAbierto;
+  btn.classList.toggle("abierto", queComerAbierto);
+  btn.setAttribute("aria-expanded", queComerAbierto ? "true" : "false");
+}
 $("btn-mis-datos").addEventListener("click", function(){ desplegarMisDatos(); });
 $("btn-aspecto").addEventListener("click", function(){ desplegarAspecto(); });
 $("btn-google-plegable").addEventListener("click", function(){ desplegarGoogle(); });
@@ -4862,6 +4875,7 @@ $("btn-tension-manual").addEventListener("click", function(){ desplegarTensionMa
 $("link-desactivar-avisos").addEventListener("click", function(ev){ ev.preventDefault(); desactivarAvisosLocales(); });
 $("btn-andar-apuntar").addEventListener("click", function(){ desplegarAndar(); });
 $("btn-andar-estadisticas").addEventListener("click", function(){ desplegarAndarEstadisticas(); });
+$("btn-que-comer").addEventListener("click", function(){ desplegarQueComer(); });
 $("btn-andar-tension").addEventListener("click", function(){ goto("tension"); });
 $("btn-tabla-completa").addEventListener("click", abrirTablaCompleta);
 $("btn-cerrar-tabla").addEventListener("click", cerrarTablaCompleta);
@@ -6309,6 +6323,39 @@ var CONOCIMIENTO_CORAZONIA = "INFORMACIÓN GENERAL PARA CUIDAR EL CORAZÓN. Es i
 function resumenDatosParaGemini(){
   var L = [], hay = false;
   function ultimos(arr, n){ return (arr || []).slice().sort(function(a,b){ return (a.fecha < b.fecha ? 1 : -1); }).slice(0, n || 30); }
+  /* v1.69: medias precalculadas de los últimos 7 días (mismo patrón de media que las estadísticas cruzadas): así, si preguntan por una media, Gemini responde con el número, no con la lista día a día. */
+  function media(arr){ var vs = arr.filter(function(v){ return v != null; }); if(!vs.length) return null; return vs.reduce(function(a,b){ return a+b; }, 0) / vs.length; }
+  function mediaKey(arr, key){ return media(arr.map(function(x){ return num(x[key]); })); }
+  var hoy7 = hoyISO();
+  var c7 = new Date(hoy7 + "T00:00:00"); c7.setDate(c7.getDate() - 6);
+  var desde7 = c7.getFullYear() + "-" + String(c7.getMonth()+1).padStart(2,"0") + "-" + String(c7.getDate()).padStart(2,"0");
+  function en7(x){ var f = (x.fecha || "").slice(0,10); return f >= desde7 && f <= hoy7; }
+  var m7 = [];
+  var t7 = (data.tensions || []).filter(en7);
+  if(t7.length){
+    var pm7 = mediaKey(t7, "pulso"), sm7 = mediaKey(t7, "sistolica"), dm7 = mediaKey(t7, "diastolica");
+    if(pm7 != null) m7.push("- Pulso medio: " + Math.round(pm7) + " l.p.m. (" + t7.length + (t7.length === 1 ? " registro" : " registros") + ").");
+    if(sm7 != null && dm7 != null) m7.push("- Tensión media: " + Math.round(sm7) + "/" + Math.round(dm7) + " (" + t7.length + (t7.length === 1 ? " registro" : " registros") + ").");
+  }
+  var p7 = (data.peso || []).filter(en7);
+  if(p7.length){ var v7 = mediaKey(p7, "kg"); if(v7 != null) m7.push("- Peso medio: " + fmtG(v7) + " kg (" + p7.length + (p7.length === 1 ? " registro" : " registros") + ")."); }
+  var s7 = (data.sueno || []).filter(en7);
+  if(s7.length){ var v7 = mediaKey(s7, "horas"); if(v7 != null) m7.push("- Sueño medio: " + fmtG(v7) + " horas (" + s7.length + (s7.length === 1 ? " registro" : " registros") + ")."); }
+  var o7 = (data.spo2 || []).filter(en7);
+  if(o7.length){ var v7 = mediaKey(o7, "spo2"); if(v7 != null) m7.push("- Oxígeno medio (SpO2): " + Math.round(v7) + " % (" + o7.length + (o7.length === 1 ? " registro" : " registros") + ")."); }
+  var ps7 = (data.pasos || []).filter(en7);
+  if(ps7.length){ var v7 = mediaKey(ps7, "pasos"); if(v7 != null) m7.push("- Pasos medios por día: " + Math.round(v7) + " pasos (" + ps7.length + (ps7.length === 1 ? " día con registros" : " días con registros") + ")."); }
+  var w7 = (data.walks || []).filter(en7);
+  if(w7.length){
+    var b7 = mediaKey(w7, "borg"), mi7 = mediaKey(w7, "minutos"), k7 = mediaKey(w7, "km"), pu7 = mediaKey(w7, "medio");
+    var partes7 = [];
+    if(b7 != null) partes7.push("BORG medio " + fmtG(b7));
+    if(mi7 != null) partes7.push(fmtG(mi7) + " min de media");
+    if(k7 != null) partes7.push(fmtG(k7) + " km de media");
+    if(pu7 != null) partes7.push("pulso medio " + Math.round(pu7) + " l.p.m.");
+    if(partes7.length) m7.push("- Marchas (" + w7.length + (w7.length === 1 ? " marcha" : " marchas") + "): " + partes7.join(", ") + ".");
+  }
+  if(m7.length){ L.push("MEDIAS DE LOS ÚLTIMOS 7 DÍAS (del " + fmtFecha(desde7) + " al " + fmtFecha(hoy7) + "):"); m7.forEach(function(x){ L.push(x); }); }
   var w = ultimos(data.walks); if(w.length){ hay = true; L.push("MARCHAS (de más reciente a más antigua):"); w.forEach(function(x){ L.push("- " + fmtFecha(x.fecha) + ": reposo " + (x.reposo || "?") + ", medio " + (x.medio || "?") + ", máximo " + (x.maximo || "?") + ", BORG " + (x.borg || "?") + ", " + (x.minutos || "?") + " min, " + (x.km || "?") + " km"); }); }
   var t = ultimos(data.tensions); if(t.length){ hay = true; L.push("TENSIONES (de más reciente a más antigua):"); t.forEach(function(x){ L.push("- " + fmtFechaHora(x.fecha) + ": " + (x.sistolica || "?") + "/" + (x.diastolica || "?") + ", pulso " + (x.pulso || "?")); }); }
   if(data.pills.length){ hay = true; L.push("PASTILLERO:"); data.pills.forEach(function(m){ L.push("- " + m.nombre + (m.dosis ? " " + m.dosis : "") + ": " + (m.horas || []).join(", ")); });
@@ -6338,7 +6385,7 @@ async function preguntarDatos(){
   var caja = $("pregunta-respuesta");
   if(!res.hay){ leerAutoTrasResponder = false; caja.innerHTML = '<div class="warnbox"><b>Todavía no hay datos apuntados.</b><br>Apunta alguna marcha, tensión, pastilla o peso, y luego vuelve a preguntar.</div>'; return; }
   caja.innerHTML = '<p class="muted">Pensando…</p>';
-  var prompt = "Eres CorazónIA, el asistente de la app Corazón Fuerte. El usuario pregunta por sus propios datos de salud y por información general sobre el cuidado del corazón.\nResponde primero con los datos del usuario que te doy abajo. Si la pregunta es general, usa el bloque CONOCIMIENTO GENERAL y sigue sus reglas de «CÓMO RESPONDER». Responde en español sencillo, con frases cortas, con los números concretos.\nDATOS DEL USUARIO:\n" + res.texto + "\nCONOCIMIENTO GENERAL:\n" + CONOCIMIENTO_CORAZONIA + "\nPREGUNTA: " + q;
+  var prompt = "Eres CorazónIA, el asistente de la app Corazón Fuerte. El usuario pregunta por sus propios datos de salud y por información general sobre el cuidado del corazón.\nResponde primero con los datos del usuario que te doy abajo. Si la pregunta es general, usa el bloque CONOCIMIENTO GENERAL y sigue sus reglas de «CÓMO RESPONDER». Responde en español sencillo, con frases cortas, con los números concretos. Si te piden una media, responde con el número de la media, no con la lista día a día. Solo da la lista si te la piden expresamente.\nDATOS DEL USUARIO:\n" + res.texto + "\nCONOCIMIENTO GENERAL:\n" + CONOCIMIENTO_CORAZONIA + "\nPREGUNTA: " + q;
   try{
     var r = await geminiCallTexto(prompt);
     var txt = (r || "").trim();
@@ -6353,24 +6400,47 @@ async function preguntarDatos(){
   }
 }
 /* v1.57: leer la respuesta con la voz del propio móvil (speechSynthesis, en español). No es la voz de Gemini. */
-var leyendoVoz = false;
+/* v1.69: en la WebView de la app instalada las voces cargan de forma asíncrona y al pulsar «Escuchar» la lista aún llega vacía: se precargan al arrancar y, si al pulsar todavía no están, se espera a voiceschanged (máximo ~1 s) y se lee igualmente con lang es-ES. Si la lectura falla, se avisa (antes fallaba en silencio). */
+var leyendoVoz = false, vocesLecturaListas = false, esperandoVoces = false;
+function precargarVocesLectura(){
+  if(!("speechSynthesis" in window) || !window.speechSynthesis.getVoices) return;
+  try{
+    if(window.speechSynthesis.getVoices().length) vocesLecturaListas = true;
+    window.speechSynthesis.onvoiceschanged = function(){ vocesLecturaListas = true; };
+    window.speechSynthesis.getVoices();
+  }catch(e){}
+}
 function actualizarBtnLeer(){ var b = $("btn-leer-respuesta"); if(b) b.textContent = leyendoVoz ? "⏹ Parar" : "🔊 Escuchar"; }
 function leerRespuesta(forzar){
   if(!("speechSynthesis" in window)){ toast("Este móvil no puede leer en voz alta."); return; }
   var el = $("pregunta-respuesta-texto");
   if(!el || !el.textContent.trim()) return;
   if(leyendoVoz){ window.speechSynthesis.cancel(); leyendoVoz = false; actualizarBtnLeer(); if(forzar !== true) return; }
+  if(esperandoVoces) return; /* ya hay una lectura esperando a que lleguen las voces */
   window.speechSynthesis.cancel();
   var u = new SpeechSynthesisUtterance(el.textContent);
   u.lang = "es-ES";
-  try{
-    var voces = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
-    var v = null; voces.forEach(function(x){ if(!v && (x.lang || "").toLowerCase().indexOf("es") === 0) v = x; });
-    if(v) u.voice = v;
-  }catch(e){}
-  u.onend = u.onerror = function(){ leyendoVoz = false; actualizarBtnLeer(); };
-  leyendoVoz = true; actualizarBtnLeer();
-  try{ window.speechSynthesis.speak(u); }catch(e){ leyendoVoz = false; actualizarBtnLeer(); toast("Este móvil no puede leer en voz alta."); }
+  function hablar(){
+    try{
+      var voces = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+      var v = null; voces.forEach(function(x){ if(!v && (x.lang || "").toLowerCase().indexOf("es") === 0) v = x; });
+      if(v) u.voice = v;
+    }catch(e){}
+    u.onend = function(){ leyendoVoz = false; actualizarBtnLeer(); };
+    u.onerror = function(ev){ leyendoVoz = false; actualizarBtnLeer(); if(ev && (ev.error === "canceled" || ev.error === "interrupted")) return; toast("Este móvil no puede leer en voz alta."); };
+    leyendoVoz = true; actualizarBtnLeer();
+    try{ window.speechSynthesis.speak(u); }catch(e){ leyendoVoz = false; actualizarBtnLeer(); toast("Este móvil no puede leer en voz alta."); }
+  }
+  if(vocesLecturaListas){ hablar(); return; }
+  var ya = [];
+  try{ ya = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : []; }catch(e){}
+  if(ya.length){ vocesLecturaListas = true; hablar(); return; }
+  esperandoVoces = true;
+  var hecho = false;
+  var antes = window.speechSynthesis.onvoiceschanged;
+  function listo(){ if(hecho) return; hecho = true; esperandoVoces = false; window.speechSynthesis.onvoiceschanged = antes; vocesLecturaListas = true; hablar(); }
+  window.speechSynthesis.onvoiceschanged = function(){ if(antes){ try{ antes(); }catch(e){} } listo(); };
+  setTimeout(listo, 1000);
 }
 /* v1.63: conversación por voz con CorazónIA: se dicta, se envía sola y la
    respuesta se lee en voz alta automáticamente. El micrófono NO se vuelve a
@@ -7582,7 +7652,7 @@ function initAsistente(){
   buildDrawer();
   fillPautaForm();
   actualizarPautaPlegada();
-  initVoz();
+  initVoz(); precargarVocesLectura(); /* v1.69: voces de lectura listas antes de pulsar «Escuchar» */
   initBarcode();
   initPush();
   cargarAsistente(); /* v1.45 (asistente): el progreso vive aparte, antes del primer renderAll */

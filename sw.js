@@ -3,7 +3,7 @@
    (display standalone) y que la app abra aunque falle la conexión.
    Solo cachea los ficheros propios de la app: nunca intercepta las
    llamadas a Google (Drive, Gemini), que siempre van directas a la red. */
-var CACHE = "corazon-fuerte-pwa-v1.68";
+var CACHE = "corazon-fuerte-pwa-v1.69";
 var CORE = [
   "./index.html",
   "./manifest.webmanifest",
