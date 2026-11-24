@@ -377,6 +377,10 @@ ul.tight li{margin:7px 0}
 footer{max-width:720px;margin:0 auto;padding:0 14px 40px;text-align:center;font-size:14px;color:var(--muted)}
 footer a{color:var(--muted)}
 .check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin:8px 0;background:var(--card);box-shadow:0 4px 12px rgba(120,40,50,.07)}
+/* v1.70: botones de días de la semana del formulario de medicina (como una alarma del móvil). */
+.dia-btn{flex:1;min-height:48px;border:2px solid var(--line);border-radius:12px;background:var(--card);font-size:18px;font-weight:700;color:var(--ink);padding:0}
+.dia-btn[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+#m-dias-todos[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
 .check input{width:26px;height:26px;flex:none;margin-top:2px;accent-color:var(--green)}
 .check.done{opacity:.65}
 .check.done .nm{text-decoration:line-through}
@@ -729,6 +733,18 @@ footer a{color:var(--muted)}
     <label for="m-nombre">Medicamento</label><input id="m-nombre" type="text" placeholder="Nombre del medicamento" autocomplete="off">
     <label for="m-dosis">Dosis</label><input id="m-dosis" type="text" placeholder="Por ejemplo: 1 comprimido de 5 mg" autocomplete="off">
     <label for="m-horas">Horas (separadas por comas)</label><input id="m-horas" type="text" placeholder="Por ejemplo: 08:00, 20:00" autocomplete="off">
+    <p style="margin:14px 0 6px"><b>Días de la semana</b></p>
+    <p class="muted" style="margin-top:0">¿Qué días te toca esta pastilla? Por defecto, todos los días.</p>
+    <button type="button" class="btn secondary" id="m-dias-todos" aria-pressed="true">✓ Todos los días</button>
+    <div id="m-dias-semana" style="display:flex;gap:6px;margin-top:8px">
+      <button type="button" class="dia-btn" data-dia="1" aria-pressed="true" aria-label="Lunes">L</button>
+      <button type="button" class="dia-btn" data-dia="2" aria-pressed="true" aria-label="Martes">M</button>
+      <button type="button" class="dia-btn" data-dia="3" aria-pressed="true" aria-label="Miércoles">X</button>
+      <button type="button" class="dia-btn" data-dia="4" aria-pressed="true" aria-label="Jueves">J</button>
+      <button type="button" class="dia-btn" data-dia="5" aria-pressed="true" aria-label="Viernes">V</button>
+      <button type="button" class="dia-btn" data-dia="6" aria-pressed="true" aria-label="Sábado">S</button>
+      <button type="button" class="dia-btn" data-dia="0" aria-pressed="true" aria-label="Domingo">D</button>
+    </div>
     <label for="m-notas">Notas (opcional)</label><input id="m-notas" type="text" placeholder="Con la comida, antes de dormir…" autocomplete="off">
     <label class="check" style="margin-top:10px"><input type="checkbox" id="m-stock-lleva"> <span>Llevar el stock de esta medicina</span></label>
     <div id="m-stock-campos" hidden>
@@ -1030,7 +1046,7 @@ footer a{color:var(--muted)}
   </div>
   <div class="card" id="card-avisos-locales"><h2>Avisos aunque la app esté cerrada <button type="button" class="info-btn" data-info-toggle="avisos-locales-info" aria-expanded="false" aria-label="Mostrar u ocultar la explicación" title="Explicación">i</button></h2>
     <p>Te avisa de cada pastilla y de la revisión, aunque la app esté cerrada. Los avisos se programan en el propio móvil, sin internet ni servidores.</p>
-    <p data-info-for="avisos-locales-info" hidden class="info-text">Cada vez que guardas una pastilla, la app programa un aviso diario a cada una de sus horas. Si cambias o quitas una pastilla, sus avisos se actualizan solos. Para que suenen, deja las notificaciones de la app activadas en los ajustes del móvil.</p>
+    <p data-info-for="avisos-locales-info" hidden class="info-text">Cada vez que guardas una pastilla, la app programa un aviso a cada una de sus horas, solo los días que le tocan. Si cambias o quitas una pastilla, sus avisos se actualizan solos. Para que suenen, deja las notificaciones de la app activadas en los ajustes del móvil.</p>
     <p><span class="pill" id="avisos-locales-estado">Comprobando los avisos…</span></p>
     <p><button class="btn secondary" id="btn-avisos-locales">🔔 Activar avisos</button> <button class="btn secondary" id="btn-probar-aviso-local">🔔 Probar aviso</button></p>
   </div>
@@ -1074,7 +1090,8 @@ footer a{color:var(--muted)}
     <p class="muted">Para pasar tus datos a otro móvil: 1) pulsa «Descargar copia» y guarda el archivo; 2) pásalo al otro móvil por correo, WhatsApp o Drive; 3) en el otro móvil, abre la app, pulsa «Importar copia» y elige el archivo.</p>
     <button class="btn secondary" id="btn-borrar-todo" style="color:var(--link);border-color:var(--link)">Borrar todos mis datos</button>
     <p class="muted">Versión 1.0</p>
-    <p class="muted"><b>Qué cambia en la 1.0:</b><br>· Basada en la web v1.69: «Tus límites» y «Lista de la compra» justo debajo de la foto, y «Qué comer» plegado.<br>· Piel «Minimal» con tarjetas más limpias.<br>· Modo minimalista en Configuración → Aspecto: Hoy solo muestra lo de hoy (próxima pastilla, marcha y última tensión), lo demás detrás de «Ver más».<br>· Nueva piel «Minimal» en Configuración → Aspecto (blanco roto, un solo azul, sin sombras). «Pregúntale a CorazónIA» responde con tus datos y con información general sobre el cuidado del corazón. Los botones de voz ya no están: en algunos móviles no funcionaban. La pregunta se escribe, y el micrófono del teclado sigue funcionando para dictarla.<br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.<br>· <b>Tabla completa.</b> En «Mis marchas» ya no parece un botón: solo el texto con el símbolo, sin halo.<br>· <b>Informe en PDF.</b> En «Informe para el Médico» puedes descargar el informe como PDF.<br>· <b>Fotos más ligeras.</b> Las fotos que se envían a Gemini se comprimen antes.<br>· <b>Importar la caminata de hoy</b> desde tu app de salud (Health Connect).<br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
+    <p class="muted"><b>Qué cambia en la 1.0:</b><br>· Basada en la web v1.70: cada pastilla con sus días de la semana.<br>· Basada en la web v1.69: «Tus límites» y «Lista de la compra» justo debajo de la foto, y «Qué comer» plegado.<br>· Piel «Minimal» con tarjetas más limpias.<br>· Modo minimalista en Configuración → Aspecto: Hoy solo muestra lo de hoy (próxima pastilla, marcha y última tensión), lo demás detrás de «Ver más».<br>· Nueva piel «Minimal» en Configuración → Aspecto (blanco roto, un solo azul, sin sombras). «Pregúntale a CorazónIA» responde con tus datos y con información general sobre el cuidado del corazón. Los botones de voz ya no están: en algunos móviles no funcionaban. La pregunta se escribe, y el micrófono del teclado sigue funcionando para dictarla.<br>· <b>Se arregló el error al guardar en Sheets.</b> En algunas hojas antiguas faltaba la pestaña de Peso y el guardado fallaba. Ahora la app crea ella misma las pestañas que falten antes de guardar.<br>· <b>Tabla completa.</b> En «Mis marchas» ya no parece un botón: solo el texto con el símbolo, sin halo.<br>· <b>Informe en PDF.</b> En «Informe para el Médico» puedes descargar el informe como PDF.<br>· <b>Fotos más ligeras.</b> Las fotos que se envían a Gemini se comprimen antes.<br>· <b>Importar la caminata de hoy</b> desde tu app de salud (Health Connect).<br>· <b>Avisos de las pastillas.</b> Ahora suenan a su hora, aunque la app esté cerrada.</p>
+    <p class="muted"><b>Qué cambia en la v1.70:</b><br>· En el pastillero: cada pastilla con sus días de la semana.</p>
     <p class="muted"><b>Qué cambia en la v1.69:</b><br>· En Alimentación: «Tus límites» y «Lista de la compra» justo debajo de la foto, y «Qué comer» plegado.</p>
     <p class="muted"><b>Qué cambia en la v1.68:</b><br>· Piel «Minimal» con tarjetas más limpias.</p>
     <p class="muted"><b>Qué cambia en la v1.67:</b><br>· <b>Modo minimalista en Configuración → Aspecto:</b> Hoy solo muestra lo de hoy, lo demás detrás de «Ver más».</p>
@@ -4098,8 +4115,8 @@ var APP_VERSION = "1.0";
    del envoltorio Android (window.Capacitor existe); en el navegador sigue
    siendo la web y todos los caminos web quedan intactos. */
 function isNative(){ return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); }
-var NATIVE_REDIRECT_URI = "com.ambitoweb.corazonfuerte:/oauth2redirect";
-var ANDROID_CLIENT_ID_DEFAULT = "956211762586-hcv6if7t8cq6btba725pn84okcaholjs.apps.googleusercontent.com";
+var NATIVE_REDIRECT_URI = "com.elatajoia.corazonfuerte:/oauth2redirect";
+var ANDROID_CLIENT_ID_DEFAULT = "PON_AQUI_EL_CLIENT_ID_ANDROID";
 var ANDROID_CLIENT_ID_KEY = "corazon-fuerte-android-client-id";
 function getAndroidClientId(){ var v = ""; try{ v = localStorage.getItem(ANDROID_CLIENT_ID_KEY) || ""; }catch(e){} return (v || ANDROID_CLIENT_ID_DEFAULT).trim(); }
 function androidClientConfigured(){ var id = getAndroidClientId(); return !!id && id.indexOf("PON_AQUI") !== 0; }
@@ -4142,6 +4159,16 @@ function uid(){ return "id" + Date.now().toString(36) + Math.random().toString(3
 function diaInicio(){ var v = (typeof data !== "undefined" && data && data.diaInicio) || "05:00"; var p = String(v).split(":"); var h = parseInt(p[0],10); var m = parseInt(p[1],10); if(isNaN(h) || h < 0 || h > 23) h = 5; if(isNaN(m) || m < 0 || m > 59) m = 0; return { h: h, m: m }; }
 /* v1.37: el «día» de la app empieza a la hora elegida, no a medianoche: antes de esa hora, el día de la app sigue siendo el de ayer. */
 function hoyISO(){ var d = new Date(); var ini = diaInicio(); if(d.getHours() < ini.h || (d.getHours() === ini.h && d.getMinutes() < ini.m)){ d.setDate(d.getDate() - 1); } return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+/* v1.70: días de la semana de cada medicina (0=domingo … 6=sábado, como
+   getDay()). Sin `dias` (datos viejos), la medicina toca todos los días. */
+var DIAS_TODOS = [0, 1, 2, 3, 4, 5, 6];
+var DIAS_NOMBRES = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+function diasDeMedicina(m){ if(!m) return DIAS_TODOS.slice(); if(!Array.isArray(m.dias)) return DIAS_TODOS.slice(); var d = m.dias.filter(function(x){ return typeof x === "number" && x >= 0 && x <= 6; }); return d.length ? d : DIAS_TODOS.slice(); }
+/* Día de la semana del día de la app (con diaInicio, como el resto de «hoy»). */
+function diaSemanaApp(){ var f = hoyISO().split("-"); var d = new Date(+f[0], +f[1] - 1, +f[2], 12, 0, 0); return d.getDay(); }
+function tocaHoy(m){ return diasDeMedicina(m).indexOf(diaSemanaApp()) >= 0; }
+/* Texto corto de los días, de lunes a domingo: «lunes, miércoles y jueves». */
+function diasTexto(m){ var d = diasDeMedicina(m); if(d.length === 7) return "todos los días"; return d.slice().sort(function(a, b){ return ((a + 6) % 7) - ((b + 6) % 7); }).map(function(x){ return DIAS_NOMBRES[x]; }).join(", "); }
 /* v1.37: día de la app al que pertenece una fecha-hora (una tensión de las 00:30 pertenece al día anterior si el día empieza a las 05:00). */
 function diaDeFecha(v){ var d = new Date(v); if(isNaN(d)) return (v||"").slice(0,10); var ini = diaInicio(); if(d.getHours() < ini.h || (d.getHours() === ini.h && d.getMinutes() < ini.m)){ d.setDate(d.getDate() - 1); } return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 /* v1.45 (E1): normalizar las horas de las pastillas («8:00»→«08:00»,
@@ -4445,11 +4472,13 @@ function renderFilasMinimal(){
   var hoy = hoyISO();
   /* a. Próxima pastilla: la primera dosis que queda por tomar hoy. */
   var dosisRestantes = [];
-  data.pills.forEach(function(m){ (m.horas || []).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
+  data.pills.forEach(function(m){ if(!tocaHoy(m)) return; /* v1.70: hoy solo cuentan las medicinas que tocan hoy */ (m.horas || []).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
   dosisRestantes.sort(function(a,b){ return a.hora < b.hora ? -1 : 1; });
   var filaPastilla;
   if(!data.pills.length){
     filaPastilla = filaMinimal("pastillero", "Próxima pastilla", "Sin medicinas en el pastillero", "", "gris", false);
+  } else if(!data.pills.some(function(m){ return tocaHoy(m); })){
+    filaPastilla = filaMinimal("pastillero", "Próxima pastilla", "Hoy no toca ninguna", "", "gris", true);
   } else if(dosisRestantes.length){
     var d0 = dosisRestantes[0];
     filaPastilla = filaMinimal("pastillero", "Próxima pastilla", d0.med.nombre, d0.hora + (d0.med.dosis ? " · " + d0.med.dosis : ""), "", false);
@@ -5164,6 +5193,7 @@ function salirModoEditar(){
 function cancelarEditarMedicina(){
   ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
   limpiarStockFormulario();
+  ponerDiasFormulario(DIAS_TODOS); /* v1.70: el selector vuelve a «Todos los días» */
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
   var fr = $("foto-receta"); if(fr) fr.value = "";
   salirModoEditar();
@@ -5178,6 +5208,7 @@ function empezarEditarMedicina(id){
   $("m-horas").value = (m.horas || []).join(", ");
   $("m-notas").value = m.notas || "";
   rellenarStockFormulario(m);
+  ponerDiasFormulario(diasDeMedicina(m)); /* v1.70: el selector enseña los días guardados (o todos, si es una medicina vieja sin días) */
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
   var b = $("btn-guardar-medicina"); if(b) b.textContent = "Guardar cambios";
   var c = $("btn-cancelar-medicina"); if(c) c.hidden = false;
@@ -5254,15 +5285,44 @@ function limpiarStockFormulario(){
   $("m-stock-campos").hidden = true;
   $("m-stock-caja").value = ""; $("m-stock-quedan").value = "";
 }
+/* v1.70: selector de días de la semana del formulario de medicina.
+   «Todos los días» va primero y está activado por defecto; después se
+   marcan los días uno a uno, como en una alarma del móvil. Si se
+   desmarca un día, «Todos los días» se apaga; si se marcan los 7 uno a
+   uno, «Todos los días» se enciende solo. */
+var diasFormulario = DIAS_TODOS.slice();
+function actualizarDiasFormulario(){
+  var t = $("m-dias-todos");
+  if(t){ var todos = diasFormulario.length === 7; t.setAttribute("aria-pressed", todos ? "true" : "false"); t.textContent = (todos ? "✓ " : "") + "Todos los días"; }
+  Array.prototype.forEach.call(document.querySelectorAll("#m-dias-semana .dia-btn"), function(b){
+    b.setAttribute("aria-pressed", diasFormulario.indexOf(parseInt(b.getAttribute("data-dia"), 10)) >= 0 ? "true" : "false");
+  });
+}
+function leerDiasFormulario(){ return diasFormulario.slice(); }
+function ponerDiasFormulario(d){
+  diasFormulario = (Array.isArray(d) ? d : []).filter(function(x){ return typeof x === "number" && x >= 0 && x <= 6; }).filter(function(v, i, a){ return a.indexOf(v) === i; });
+  if(!diasFormulario.length) diasFormulario = DIAS_TODOS.slice();
+  actualizarDiasFormulario();
+}
+$("m-dias-todos").addEventListener("click", function(){ diasFormulario = DIAS_TODOS.slice(); actualizarDiasFormulario(); });
+Array.prototype.forEach.call(document.querySelectorAll("#m-dias-semana .dia-btn"), function(b){
+  b.addEventListener("click", function(){
+    var d = parseInt(b.getAttribute("data-dia"), 10);
+    var i = diasFormulario.indexOf(d);
+    if(i >= 0){ if(diasFormulario.length === 1){ toast("Marca al menos un día."); return; } diasFormulario.splice(i, 1); }
+    else diasFormulario.push(d);
+    actualizarDiasFormulario();
+  });
+});
 /* v1.45 (asistente): añadir una medicina con las mismas reglas que el Pastillero (horas normalizadas E1, aviso de pastillas reenviado). Devuelve la medicina o null si algo no es válido. */
-function anadirMedicina(nombre, dosis, horasCrudas, notas, stock){
+function anadirMedicina(nombre, dosis, horasCrudas, notas, stock, dias){
   var horas = horasCrudas.map(normalizarHora);
   var mala = horasCrudas.find(function(h, i){ return horas[i] == null; });
   if(mala){ toast("La hora «" + mala + "» no es válida. Ponla como 08:00."); return null; }
   horas = horas.filter(Boolean).filter(function(v,i,a){ return a.indexOf(v) === i; });
   if(!nombre){ toast("Pon el nombre del medicamento."); return null; }
   if(!horas.length){ toast("Pon al menos una hora, por ejemplo 08:00."); return null; }
-  var m = { id: uid(), nombre: nombre, dosis: dosis, horas: horas, notas: notas, tomadas: {}, stock: (stock && stock.stock != null) ? stock.stock : null, stockCaja: (stock && stock.stockCaja != null) ? stock.stockCaja : null };
+  var m = { id: uid(), nombre: nombre, dosis: dosis, horas: horas, notas: notas, tomadas: {}, dias: (Array.isArray(dias) && dias.length) ? dias.slice() : DIAS_TODOS.slice(), stock: (stock && stock.stock != null) ? stock.stock : null, stockCaja: (stock && stock.stockCaja != null) ? stock.stockCaja : null };
   data.pills.push(m);
   saveAll(); resendPushSchedule();
   return m;
@@ -5281,6 +5341,7 @@ $("btn-guardar-medicina").addEventListener("click", function(){
     var ex = data.pills.find(function(x){ return x.id === editandoMedicina; });
     if(ex){
       ex.nombre = nombre; ex.dosis = $("m-dosis").value.trim(); ex.horas = horas; ex.notas = $("m-notas").value.trim();
+      ex.dias = leerDiasFormulario(); /* v1.70: los días se guardan al editar, igual que las horas */
       ex.stock = st.stock; ex.stockCaja = st.stockCaja;
       /* Se conservan las tomas marcadas de las horas que siguen existiendo. */
       if(ex.tomadas) Object.keys(ex.tomadas).forEach(function(d){ ex.tomadas[d] = ex.tomadas[d].filter(function(h){ return horas.indexOf(h) >= 0; }); });
@@ -5289,11 +5350,12 @@ $("btn-guardar-medicina").addEventListener("click", function(){
     salirModoEditar();
   }
   if(!editado){
-    var m = anadirMedicina(nombre, $("m-dosis").value.trim(), horasCrudas, $("m-notas").value.trim(), st);
+    var m = anadirMedicina(nombre, $("m-dosis").value.trim(), horasCrudas, $("m-notas").value.trim(), st, leerDiasFormulario());
     if(!m) return;
   }
   ["m-nombre","m-dosis","m-horas","m-notas"].forEach(function(id){ $(id).value = ""; });
   limpiarStockFormulario();
+  ponerDiasFormulario(DIAS_TODOS); /* v1.70: el selector vuelve a «Todos los días» para la siguiente medicina */
   /* v1.25: al guardar, la foto vuelve a su estado de origen: sin vista
      previa ni resultado, y el input reseteado para la siguiente foto. */
   $("receta-preview").innerHTML = ""; $("receta-resultado").innerHTML = "";
@@ -5303,7 +5365,12 @@ $("btn-guardar-medicina").addEventListener("click", function(){
 function hoyKey(){ return hoyISO(); }
 function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
   if(!data.pills.length){ el.innerHTML = '<p class="muted">Todavía no hay medicinas. Añade la primera arriba.</p>'; return; }
-  el.innerHTML = data.pills.map(function(m){ var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
+  /* v1.70: las tomas de hoy son solo de las medicinas que tocan hoy. Las
+     que hoy no tocan no aparecen como no tomadas: salen en una línea
+     aparte, sin casillas, y se pueden editar tocando su nombre. */
+  var hoyPills = data.pills.filter(function(m){ return tocaHoy(m); });
+  var noHoy = data.pills.filter(function(m){ return !tocaHoy(m); });
+  el.innerHTML = hoyPills.map(function(m){ var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
     var checks = m.horas.map(function(h){ var done = tomadas.indexOf(h) >= 0;
       return '<label class="check'+(done?" done":"")+'"><input type="checkbox" data-pill="'+m.id+'" data-hora="'+esc(h)+'"'+(done?" checked":"")+'><span><span class="nm"><b>'+esc(h)+'</b> — '+esc(m.nombre)+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+'</span></span></label>'; }).join("");
     /* v1.48 (M5): aviso si a la medicina le falta la dosis o las horas.
@@ -5321,7 +5388,8 @@ function renderPills(){ var el = $("lista-pastillero"); var hoy = hoyKey();
         + (quedan <= 5 ? '<p class="aviso-med"><span class="pill warn">⚠️ Quedan ' + fmtStock(quedan) + ' comprimidos</span></p>' : '')
         + '<button type="button" class="btn secondary" data-renovar-stock="' + m.id + '" style="margin-top:8px">🔄 Renovar stock</button>';
     }
-    return '<div style="margin-bottom:14px"><div style="display:flex;gap:8px;align-items:center"><div style="flex:1;min-width:0"><b>'+esc(m.nombre)+'</b>'+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+(m.notas?'<br><span class="muted">'+esc(m.notas)+'</span>':"")+'</div><button type="button" class="fila-quitar" aria-label="Editar esta medicina" data-edit-pill="'+m.id+'">✏️</button><button type="button" class="fila-quitar" aria-label="Quitar esta medicina" data-del-pill="'+m.id+'">×</button></div>'+avisoM5+checks+stockHTML+'</div>'; }).join("");
+    return '<div style="margin-bottom:14px"><div style="display:flex;gap:8px;align-items:center"><div style="flex:1;min-width:0"><b>'+esc(m.nombre)+'</b>'+(m.dosis?' <span class="muted">· '+esc(m.dosis)+'</span>':"")+(m.notas?'<br><span class="muted">'+esc(m.notas)+'</span>':"")+(diasDeMedicina(m).length < 7 ? '<br><span class="muted">Días: ' + esc(diasTexto(m)) + '</span>' : '')+'</div><button type="button" class="fila-quitar" aria-label="Editar esta medicina" data-edit-pill="'+m.id+'">✏️</button><button type="button" class="fila-quitar" aria-label="Quitar esta medicina" data-del-pill="'+m.id+'">×</button></div>'+avisoM5+checks+stockHTML+'</div>'; }).join("")
+    + (noHoy.length ? '<p class="muted" style="margin-top:10px">Hoy no toca: ' + noHoy.map(function(m){ return '<button type="button" class="btn-texto" data-edit-pill="' + m.id + '">' + esc(m.nombre) + '</button> (' + esc(diasTexto(m)) + ')'; }).join(", ") + '</p>' : '');
   Array.prototype.forEach.call(el.querySelectorAll("[data-pill]"), function(cb){ cb.addEventListener("change", function(){ var m = data.pills.find(function(x){ return x.id === cb.getAttribute("data-pill"); }); if(!m) return; var h = cb.getAttribute("data-hora");
     marcarToma(m, h, hoy, cb.checked);
     saveAll(); renderAll(); }); });
@@ -5390,7 +5458,7 @@ function marcarAvisoDado(clave){
 function checkReminders(){ if(isNative()) return; if(!("Notification" in window) || Notification.permission !== "granted") return; var now = new Date(); var hoy = hoyKey();
   var ahoraMin = now.getHours() * 60 + now.getMinutes();
   var dados = avisosDadosHoy();
-  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
+  data.pills.forEach(function(m){ if(!tocaHoy(m)) return; /* v1.70: el día que no toca, no se recuerda */ (m.horas||[]).forEach(function(h){
     var partes = String(h).split(":");
     var minHora = parseInt(partes[0], 10) * 60 + parseInt(partes[1], 10);
     if(isNaN(minHora)) return;
@@ -5539,7 +5607,7 @@ function widgetsElegidos(){
 }
 function medStats(desdeMin, hastaMin){
   var hoy = hoyISO(); var total = 0, hechas = 0;
-  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
+  data.pills.forEach(function(m){ if(!tocaHoy(m)) return; /* v1.70: hoy solo cuentan las medicinas que tocan hoy */ (m.horas||[]).forEach(function(h){
     var mins = horaAMinutos(h); if(mins == null) return;
     if(mins >= desdeMin && mins < hastaMin){ total++; var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) >= 0) hechas++; }
   }); });
@@ -5707,7 +5775,7 @@ function listaMedHTML(p){
   var comida = p.tipo === "medicacion-desayuno" ? "desayuno" : p.tipo === "medicacion-comida" ? "comida" : "cena";
   var hoy = hoyISO();
   var filas = [];
-  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){
+  data.pills.forEach(function(m){ if(!tocaHoy(m)) return; /* v1.70: hoy solo salen las medicinas que tocan hoy */ (m.horas||[]).forEach(function(h){
     if(horaEnVentana(h, win)){
       var tomadas = (m.tomadas && m.tomadas[hoy]) || [];
       var done = tomadas.indexOf(h) >= 0;
@@ -5792,10 +5860,11 @@ function renderHoy(){ var hoy = hoyISO();
   var avH = $("hoy-tension-aviso");
   if(avH){ var wH = filasTension.length ? avisoTension(filasTension[0]) : null; avH.innerHTML = wH ? '<div class="warnbox">' + esc(wH.texto) + '</div>' : ""; }
   var dosisRestantes = [];
-  data.pills.forEach(function(m){ (m.horas||[]).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
+  data.pills.forEach(function(m){ if(!tocaHoy(m)) return; /* v1.70: hoy solo cuentan las medicinas que tocan hoy */ (m.horas||[]).forEach(function(h){ var tomadas = (m.tomadas && m.tomadas[hoy]) || []; if(tomadas.indexOf(h) < 0) dosisRestantes.push({ hora: h, med: m }); }); });
   dosisRestantes.sort(function(a,b){ return a.hora < b.hora ? -1 : 1; });
   /* v1.28: sin línea estática cuando hay dosis pendientes — la rueda es la que muestra la próxima. */
-  $("hoy-pastilla").innerHTML = !data.pills.length ? '<p class="muted">No hay medicinas en el pastillero.</p>' : (dosisRestantes.length ? '' : '<p><span class="pill">✅ Todas las tomas de hoy, hechas</span></p>');
+  var pillsHoy = data.pills.filter(function(m){ return tocaHoy(m); });
+  $("hoy-pastilla").innerHTML = !data.pills.length ? '<p class="muted">No hay medicinas en el pastillero.</p>' : (!pillsHoy.length ? '<p class="muted">Hoy no toca ninguna pastilla.</p>' : (dosisRestantes.length ? '' : '<p><span class="pill">✅ Todas las tomas de hoy, hechas</span></p>'));
   /* v1.27: rueda de las pastillas que quedan por tomar hoy. */
   crearRueda($("hoy-pastilla-rueda"), dosisRestantes.map(function(d){ return '<span class="rueda-hora">' + esc(d.hora) + '</span><span class="rueda-nombre">' + esc(d.med.nombre) + (d.med.dosis ? ' <span class="rueda-pulso">· ' + esc(d.med.dosis) + '</span>' : '') + '</span>'; }), "pastilla");
   $("hoy-pauta-vacia").innerHTML = pautaCompleta() ? "" : '<div class="warnbox"><b>👋 Empieza por tu pauta.</b><br>Rellena una sola vez tus valores (ejercicio, pulso, BORG…) y queda guardada. <button class="btn small" onclick="irAPautaMedica()" style="margin-top:10px">Rellenar mi pauta</button></div>';
@@ -6058,7 +6127,7 @@ async function getAccessToken(){
    client_secret para clientes web. Un cliente Android es público por diseño
    (sin secreto): el intercambio del código y el refresco se hacen directos
    contra oauth2.googleapis.com. La vuelta llega por el esquema propio
-   com.ambitoweb.corazonfuerte:/oauth2redirect, que el plugin App entrega
+   com.elatajoia.corazonfuerte:/oauth2redirect, que el plugin App entrega
    con appUrlOpen (app ya abierta) o getLaunchUrl (app cerrada). */
 var ultimoRetornoOAuth = null;
 async function startGoogleLoginNativo(){
@@ -6086,7 +6155,7 @@ async function startGoogleLoginNativo(){
   }catch(e){ toast("No se pudo abrir la entrada con Google: " + e.message); }
 }
 async function procesarRetornoOAuthNativo(url){
-  if(!url || url.indexOf("com.ambitoweb.corazonfuerte:/oauth2redirect") !== 0) return;
+  if(!url || url.indexOf("com.elatajoia.corazonfuerte:/oauth2redirect") !== 0) return;
   if(url === ultimoRetornoOAuth) return; /* el código solo vale una vez */
   ultimoRetornoOAuth = url;
   var q = url.indexOf("?") >= 0 ? url.slice(url.indexOf("?") + 1) : "";
@@ -7313,10 +7382,20 @@ async function programarAvisosLocales(){
   var nuevos = [];
   var lista = [];
   (data.pills || []).forEach(function(m){
+    var dias = (typeof diasDeMedicina === "function") ? diasDeMedicina(m) : [0, 1, 2, 3, 4, 5, 6];
     (m.horas || []).forEach(function(h){
       var min = horaAMinutos(h);
       if(min == null) return;
-      lista.push({ id: siguienteNotifId(), titulo: "💊 " + etiquetaComidaParaMin(min), cuerpo: m.nombre + (m.dosis ? " — " + m.dosis : "") + " · " + h, hora: Math.floor(min / 60), minuto: min % 60 });
+      /* v1.70: si la medicina toca todos los días, un aviso diario (como
+         hasta ahora). Si no, un aviso por cada día que le toca, con
+         repetición semanal (on.weekday: 1=domingo … 7=sábado, getDay()+1). */
+      if(dias.length === 7){
+        lista.push({ id: siguienteNotifId(), titulo: "💊 " + etiquetaComidaParaMin(min), cuerpo: m.nombre + (m.dosis ? " — " + m.dosis : "") + " · " + h, hora: Math.floor(min / 60), minuto: min % 60 });
+      } else {
+        dias.forEach(function(d){
+          lista.push({ id: siguienteNotifId(), titulo: "💊 " + etiquetaComidaParaMin(min), cuerpo: m.nombre + (m.dosis ? " — " + m.dosis : "") + " · " + h, hora: Math.floor(min / 60), minuto: min % 60, weekday: d + 1 });
+        });
+      }
     });
   });
   /* Revisión del implante: un aviso el día de la revisión y otro 7 días antes, a las 09:00, solo si aún no han pasado. */
@@ -7337,7 +7416,9 @@ async function programarAvisosLocales(){
     if(n.fecha){ notif.schedule = { at: n.fecha, allowWhileIdle: true }; }
     /* v1.59: SIN every: "day" — el plugin ignora `on` cuando `every` está
        puesto (la hora se perdía y el primer aviso llegaba 24 h después).
-       Con solo `on`, suena a su hora y el plugin lo reprograma al día siguiente. */
+       Con solo `on`, suena a su hora y el plugin lo reprograma al día siguiente.
+       v1.70: con `weekday` en `on`, el aviso se repite cada semana ese día. */
+    else if(n.weekday){ notif.schedule = { on: { weekday: n.weekday, hour: n.hora, minute: n.minuto }, allowWhileIdle: true }; }
     else { notif.schedule = { on: { hour: n.hora, minute: n.minuto }, allowWhileIdle: true }; }
     try{ await LN.schedule({ notifications: [notif] }); nuevos.push(n.id); }catch(e){}
   }
