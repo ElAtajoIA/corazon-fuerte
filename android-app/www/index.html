@@ -4099,7 +4099,7 @@ var APP_VERSION = "1.0";
    siendo la web y todos los caminos web quedan intactos. */
 function isNative(){ return !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()); }
 var NATIVE_REDIRECT_URI = "com.ambitoweb.corazonfuerte:/oauth2redirect";
-var ANDROID_CLIENT_ID_DEFAULT = "956211762586-q6acnesr9t3ajt5pdcs8oqkk6k0moghs.apps.googleusercontent.com";
+var ANDROID_CLIENT_ID_DEFAULT = "956211762586-hcv6if7t8cq6btba725pn84okcaholjs.apps.googleusercontent.com";
 var ANDROID_CLIENT_ID_KEY = "corazon-fuerte-android-client-id";
 function getAndroidClientId(){ var v = ""; try{ v = localStorage.getItem(ANDROID_CLIENT_ID_KEY) || ""; }catch(e){} return (v || ANDROID_CLIENT_ID_DEFAULT).trim(); }
 function androidClientConfigured(){ var id = getAndroidClientId(); return !!id && id.indexOf("PON_AQUI") !== 0; }
