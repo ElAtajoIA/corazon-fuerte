@@ -13,7 +13,7 @@ aquí es solo la envoltura Android.
   targetSdk 36, minSdk 26, JVM 21). Incluye `MainActivity.java` y el
   complemento local `VozDirectaPlugin.java`.
 - `package.json` / `package-lock.json` — dependencias Capacitor 8.6.2
-  (`@capacitor/app`, `browser`, `local-notifications`, `@capgo/capacitor-health`,
+  (`@capacitor/app`, `browser`, `local-notifications`,
   `@capacitor-community/speech-recognition`).
 - `capacitor.config.ts` — `appId: com.ambitoweb.corazonfuerte`,
   `webDir: www`.
